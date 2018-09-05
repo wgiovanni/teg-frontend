@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <div class="container">
-      <router-view/>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+
 export default {
-  name: 'App'
+  name: 'App',
 }
 </script>
 
 <style>
+.container-login-register {
+  padding-top: 10%;
+}
 </style>
+
+
