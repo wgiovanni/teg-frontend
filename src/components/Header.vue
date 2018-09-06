@@ -24,10 +24,10 @@
                     <router-link tag="li" to="/" class="nav-item">
                     <a class="nav-link">Integración</a>
                 </router-link>
-                    <router-link tag="li" to="/" class="nav-item">
+                <router-link tag="li" to="/" class="nav-item">
                     <a class="nav-link">Reportes</a>
                 </router-link>
-                    <router-link tag="li" to="/" class="nav-item">
+                <router-link tag="li" to="/admin" class="nav-item">
                     <a class="nav-link">Administración</a>
                 </router-link> 
             </ul>
@@ -35,6 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
+                    
                     <a id="navbarDropdown" class="nav-link dropdown-toggle mr" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         Usuario<span class="caret"></span>
                     </a>

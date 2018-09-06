@@ -76,7 +76,7 @@ export default {
       console.log(this.email)
       console.log(this.password)
       console.log(req)
-      this.$router.replace(this.$route.query.redirect || '/authors')
+      this.$router.replace(this.$route.query.redirect || '/root')
     },
     loginFailed () {
       this.error = 'Login failed!'
