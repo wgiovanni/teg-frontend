@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header></Header>
+        <Header :myProp="items"></Header>
         <div class="container">
             <form class="col s12" @submit.prevent="save">
               <!--h2 class="form-signin-heading">Please sign in</h2-->
@@ -55,7 +55,8 @@ export default {
         last_name: '',
         email: '',
         password: '',
-        error: false
+		error: false, 
+		items: 'Estudiantes'		
     }
   },
   methods: {

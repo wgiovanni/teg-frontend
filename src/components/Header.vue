@@ -12,7 +12,7 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav mx-auto">
                 <!-- Authentication Links -->
-                <router-link tag="li" to="/" class="nav-item">
+                <!--router-link tag="li" to="/" class="nav-item">
                     <a class="nav-link">Estudiantes</a>
                 </router-link>
                 <router-link tag="li" to="/register" class="nav-item">
@@ -29,7 +29,25 @@
                 </router-link>
                 <router-link tag="li" to="/admin" class="nav-item">
                     <a class="nav-link">Administración</a>
-                </router-link> 
+                </router-link--> 
+                <li  class="nav-item">
+                    <a class="nav-link" href="/">{{myProp}}</a>
+                </li>
+                <!--router-link tag="li" to="/register" class="nav-item">
+                    <a class="nav-link">Profesores</a>
+                </router-link>
+                    <router-link tag="li" to="/" class="nav-item">
+                    <a class="nav-link">Egresados</a>
+                </router-link>
+                    <router-link tag="li" to="/" class="nav-item">
+                    <a class="nav-link">Integración</a>
+                </router-link>
+                <router-link tag="li" to="/" class="nav-item">
+                    <a class="nav-link">Reportes</a>
+                </router-link>
+                <router-link tag="li" to="/admin" class="nav-item">
+                    <a class="nav-link">Administración</a>
+                </router-link--> 
             </ul>
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -50,3 +68,11 @@
         </div>
     </nav>
 </template>
+
+<script>
+export default {
+    props:[
+        'myProp'
+    ]
+}
+</script>
