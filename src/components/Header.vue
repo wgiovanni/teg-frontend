@@ -12,7 +12,7 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav mx-auto">
                 <!-- Authentication Links -->
-                <!--router-link tag="li" to="/" class="nav-item">
+                <router-link tag="li" to="/" class="nav-item">
                     <a class="nav-link">Estudiantes</a>
                 </router-link>
                 <router-link tag="li" to="/register" class="nav-item">
@@ -29,10 +29,10 @@
                 </router-link>
                 <router-link tag="li" to="/admin" class="nav-item">
                     <a class="nav-link">Administración</a>
-                </router-link--> 
-                <li  class="nav-item">
+                </router-link> 
+                <!--li  class="nav-item">
                     <a class="nav-link" href="/">{{myProp}}</a>
-                </li>
+                </li-->
                 <!--router-link tag="li" to="/register" class="nav-item">
                     <a class="nav-link">Profesores</a>
                 </router-link>

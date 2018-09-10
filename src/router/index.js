@@ -7,6 +7,7 @@ import Root from '@/components/Root'
 import Admin from '@/components/Admin'
 import Admin2 from '@/components/Admin2'
 import Users from '@/components/users/Users'
+import BodyUser from '@/components/BodyUser'
 
 Vue.use(Router)
 
@@ -46,6 +47,16 @@ export default new Router({
       path: '/adminUsers',
       name: 'Users',
       component: Users
+    },
+    {
+      path: '/admin2',
+      name: 'Admin2',
+      component: Admin2
+    },
+    {
+      path: '/bodyUser',
+      name: 'BodyUser',
+      component: BodyUser
     }
   ]
 })
