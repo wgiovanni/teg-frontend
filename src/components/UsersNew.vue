@@ -71,7 +71,8 @@ export default {
       console.log(this.email)
       console.log(this.password)
       console.log(req)
-      //this.$router.replace(this.$route.query.redirect || '/prueba')
+      this.$parent.usersAll(); //Esta linea actualiza la tabla de usuarios en caso de que se ingrese un nuevo usuario.
+      //this.$router.replace(this.$route.query.redirect || '/Admin2')
     },
     userFailed () {
       this.error = 'User failed!'

@@ -3,7 +3,8 @@
         <div class="container col-md-2 ">
                
             <UsersNew :show="showModal" @close="showModal = false"></UsersNew>
-            <button class="btn btn-primary" id="show-modal" @click="showModal = true">Nuevo Usuario</button>
+            <button class="btn btn-default" id="show-modal" @click="showModal = true"><i class="material-icons">add</i></button>
+            <button class="btn btn-default"><i class="material-icons">close</i></button>
             <table class="table border border-primary">
             <thead class="thead-dark">
                 <tr>

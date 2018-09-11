@@ -58,5 +58,6 @@ export default new Router({
       name: 'BodyUser',
       component: BodyUser
     }
-  ]
+  ],
+  mode: 'history'
 })
