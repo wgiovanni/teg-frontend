@@ -1,19 +1,39 @@
 <template>
     <main role="main" class="col-md-9">
-        <div class="container col-md-2 ">
+        <div class="container col-md-4 ">
                
             <UsersNew :show="showModal" @close="showModal = false"></UsersNew>
             <button class="btn btn-default" id="show-modal" @click="showModal = true"><i class="material-icons">add</i></button>
-            <button class="btn btn-default"><i class="material-icons">close</i></button>
             <table class="table border border-primary">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Usuarios</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Acciones</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="user in users" :key="user.id">
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
                     <td>{{user.email}}</td>
+                    <td><button
+                        type="button"
+                        class="btn btn-warning btn-sm"
+                        v-b-modal.book-update-modal
+                        @click="editBook(book)">
+                        <i class="material-icons">edit</i>
+                        </button>
+                    </td>
+                    <td><button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        @click="onDeleteBook(book)">
+                        <i class="material-icons">delete</i>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>

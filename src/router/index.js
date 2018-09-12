@@ -1,63 +1,72 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
-import HelloWorld from '@/components/HelloWorld'
+import Students from '@/components/students/Students'
 import Register from '@/components/Register'
-import Root from '@/components/Root'
-import Admin from '@/components/Admin'
-import Admin2 from '@/components/Admin2'
-import Users from '@/components/users/Users'
-import BodyUser from '@/components/BodyUser'
+import Home from '@/components/Home'
+import Users from '@/components/admin/Users'
+import Dashboard from '@/components/layout/Dashboard'
+import Teachers from '@/components/teachers/Teachers'
+import Graduates from '@/components/graduates/Graduates'
+import Reports from '@/components/reports/Reports'
+import Integration from '@/components/integration/Integration'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login
     },
     {
-      path: '/authors',
-      name: 'Authors',
-      component: HelloWorld
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    }, 
-    {
-      path:'/root',
-      name: 'Root',
-      component: Root
-    },
-    {
-      path: '/admin',
-      name: 'Admin',
-      component: Admin
-    },
-    {
-      path: '/prueba',
-      name: 'Prueba',
-      component: Admin2
-    },
-    {
-      path: '/adminUsers',
-      name: 'Users',
-      component: Users
-    },
-    {
-      path: '/admin2',
-      name: 'Admin2',
-      component: Admin2
-    },
-    {
-      path: '/bodyUser',
-      name: 'BodyUser',
-      component: BodyUser
+      path: '/',
+      component: Dashboard,
+      redirect: '/home',
+      children: [
+        {
+          path:'/home',
+          name: 'Home',
+          component: Home
+        },
+        {
+          path: '/students',
+          name: 'Students',
+          component: Students
+        },
+        {
+          path: '/teachers',
+          name: 'Teachers',
+          component: Teachers
+        },
+        {
+          path: '/graduates',
+          name: 'Graduates',
+          component: Graduates
+        },
+        {
+          path: '/reports',
+          name: 'Reports',
+          component: Reports
+        },
+        {
+          path: '/integration',
+          name: 'Integration',
+          component: Integration
+        },
+        {
+          path: '/register',
+          name: 'Register',
+          component: Register
+        }, 
+        {
+          path: '/admin',
+          name: 'Admin',
+          component: Users
+        },
+      ]
     }
   ],
-  mode: 'history'
+  mode: 'history',
 })
