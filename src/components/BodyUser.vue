@@ -2,7 +2,7 @@
     <main role="main" class="col-md-9">
         <div class="container col-md-4 ">
                
-            <UsersNew :show="showModal" @close="showModal = false"></UsersNew>
+            <!--New :show="showModal" @close="showModal = false"></New-->
             <button class="btn btn-default" id="show-modal" @click="showModal = true"><i class="material-icons">add</i></button>
             <table class="table border border-primary">
             <thead class="thead-dark">
@@ -19,11 +19,17 @@
                     <td>{{user.first_name}}</td>
                     <td>{{user.last_name}}</td>
                     <td>{{user.email}}</td>
-                    <td><button
+                    <Edit :show="showModalEdit" @close="showModal = false"></Edit>
+                    <td><!--button
                         type="button"
                         class="btn btn-warning btn-sm"
-                        v-b-modal.book-update-modal
-                        @click="editBook(book)">
+                        @click="showModalEdit = true">
+                        <i class="material-icons">edit</i>
+                        </button-->
+                        <button 
+                        class="btn btn-warning btn-sm"
+                        id="show-modal" 
+                        @click="showModalEdit = true">
                         <i class="material-icons">edit</i>
                         </button>
                     </td>
@@ -44,17 +50,20 @@
 <script>
 import axios from 'axios';
 
-import UsersNew from '@/components/UsersNew'
+import New from '@/components/admin/New'
+import Edit from '@/components/admin/Edit'
 
 export default {
   name: 'BodyUser',
   components: {
-      UsersNew
+      New,
+      Edit
   },
   data() {
       return {
           users: [],
-          showModal: false
+          showModal: false,
+          showModalEdit: false
       };  
   },
   methods: {
@@ -72,6 +81,9 @@ export default {
     loginFailed () {
       this.error = 'Login failed!'
       console.log("Error Login")
+    },
+    handler () {
+
     }
   },
   created() {

@@ -10,6 +10,9 @@ import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
 import Reports from '@/components/reports/Reports'
 import Integration from '@/components/integration/Integration'
+import New2 from '@/components/admin/New2'
+import Edit from '@/components/admin/Edit'
+import Delete from '@/components/admin/Delete'
 
 Vue.use(Router)
 
@@ -63,7 +66,22 @@ export default new Router({
         {
           path: '/admin',
           name: 'Admin',
-          component: Users
+          component: Users,
+        },
+        {
+          path: '/admin/new',
+          name: 'New2',
+          component: New2,
+        },
+        {
+          path: '/admin/edit/:id',
+          name: 'Edit',
+          component: Edit,
+        },
+        {
+          path: '/admin/delete/:id',
+          name: 'Delete',
+          component: Delete,
         },
       ]
     }
