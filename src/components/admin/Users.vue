@@ -13,16 +13,20 @@
             <tr>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
+                <th scope="col">Usuario</th>
                 <th scope="col">Correo</th>
+                <th scope="col">Role</th>
                 <th scope="col">Acciones</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="user in users" :key="user.id">
-                <td>{{user.first_name}}</td>
-                <td>{{user.last_name}}</td>
-                <td>{{user.email}}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.id_role }}</td>
                 <!--Edit :show="showModalEdit" @close="showModal = false"></Edit-->
                 <td>
                   <router-link :to="`/admin/edit/${user.id}`" tag="button" class="btn btn-warning">

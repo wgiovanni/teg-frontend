@@ -9,15 +9,17 @@
                 <div class="col-md-6">
                   <input v-model="first_name" type="text" id="first_name" class="form-control" placeholder="Nombre" required>
                 </div>
-              </div>
-              <!--div class="form-group">
-                <label for="first_name">Nombre</label>
-                <input type="text" class="form-control" id="first_name" placeholder="Nombre" required>
-              </div-->             
+              </div>            
               <div class="form-group row">
                 <label for="last_name" class="col-sm-4 col-form-label text-md-right">Apellido</label>
                 <div class="col-md-6">
                   <input v-model="last_name" type="text" id="last_name" class="form-control" placeholder="Apellido" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="username" class="col-sm-4 col-form-label text-md-right">Nombre de usuario</label>
+                <div class="col-md-6">
+                  <input v-model="username" type="text" id="username" class="form-control" placeholder="Nombre de usuario" required>
                 </div>
               </div>
               <div class="form-group row">
@@ -30,6 +32,15 @@
                 <label for="inputPassword" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                 <div class="col-md-6">
                   <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputRole" class="col-md-4 col-form-label text-md-right">Role</label>
+                <div class="col-md-6">
+                  <select class="form-control" :required="true" v-model="id_role">
+                    <!--option disabled value=""></option-->
+                    <option v-for="role in roles" :key="role.id" v-bind:value="role.id">{{ role.name }}</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group row mb-0">
@@ -52,15 +63,25 @@ export default {
         id: this.$route.params.id,
         first_name: '',
         last_name: '',
+        username: '',
         email: '',
         password: '',
-        error: false,
+        id_role:'',
+		    error: false, 
+        roles: []
     }
   },
    methods: {
     savePost: function () {
     const path = 'http://localhost:5000/user' + '/' + this.id;
-    axios.put(path, { first_name: this.first_name, last_name: this.last_name, email: this.email, password: this.password })
+    axios.put(path, { 
+      first_name: this.first_name, 
+      last_name: this.last_name, 
+      username: this.username, 
+      email: this.email, 
+      password: this.password, 
+      id_role: this.id_role 
+      })
         .then(request => this.userSuccessful(request))
         .catch(() => this.userFailed())
     },
@@ -95,17 +116,41 @@ export default {
         this.id = request.data.id;
         this.first_name = request.data.first_name;
         this.last_name = request.data.last_name;
+        this.username = request.data.username;
         this.email = request.data.email;
         this.password = request.data.password;
+        this.id_role = request.data.id_role;
         console.log(this.first_name)
         console.log(this.last_name)
         console.log(this.email)
         console.log(this.password)
         
-    }
+    },
+    roleAll () {
+      const path = 'http://localhost:5000/role';
+      axios.get(path)
+       .then(request => this.roleSuccessful(request))
+        .catch(() => this.roleFailed())
+    },
+    roleSuccessful (req) {
+      console.log(req)
+      this.roles = req.data;
+      //this.$router.replace(this.$route.query.redirect || '/bodyUser')
+    },
+    roleFailed () {
+      this.error = 'Role failed!'
+      console.log("Error Role")
+    }/*,
+    getRoleId() {
+      const path = 'http://localhost:5000/role';
+      axios.get(path)
+       .then(request => this.roleSuccessful(request))
+        .catch(() => this.roleFailed())
+    }*/
   },
   created () {
       this.findById();
+      this.roleAll();
   }
 }
 </script>
