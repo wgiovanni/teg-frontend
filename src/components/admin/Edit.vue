@@ -43,10 +43,9 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-4">
-                  <button class="btn btn-primary row" type="submit">Guardar</button>
-                </div>
+              <div class="form-group row col-md-8">
+                <a class="btn btn-danger" type="button" href="/admin">Cancelar</a>
+                <button class="btn btn-primary" type="submit">Guardar</button>
               </div>
             </form>
         </div>
@@ -66,7 +65,7 @@ export default {
         username: '',
         email: '',
         password: '',
-        id_role:'',
+        id_role: '',
 		    error: false, 
         roles: []
     }
@@ -74,7 +73,8 @@ export default {
    methods: {
     savePost: function () {
     const path = 'http://localhost:5000/user' + '/' + this.id;
-    axios.put(path, { 
+    axios.put(path, {
+      id: this.id, 
       first_name: this.first_name, 
       last_name: this.last_name, 
       username: this.username, 
@@ -89,30 +89,19 @@ export default {
     
     },
     userSuccessful (req) {
-    console.log(this.first_name)
-    console.log(this.last_name)
-    console.log(this.email)
-    console.log(this.password)
-    console.log(req)
     //this.$parent.usersAll(); //Esta linea actualiza la tabla de usuarios en caso de que se ingrese un nuevo usuario.
     this.$router.replace(this.$route.query.redirect || '/admin')
     },
     userFailed () {
     this.error = 'User failed!'
-    console.log("User Login")
-    /*this.$store.dispatch('logout')
-    delete localStorage.*/
     },
     findById () {
-        console.log(this.id);
         const path = 'http://localhost:5000/user'.concat('/' + this.id);
-        console.log(path);
         axios.get(path)
         .then(request => this.findByIdSuccess(request))
         .catch(() => console.log("Error Login"))
     },
     findByIdSuccess(request) {
-        console.log(request)
         this.id = request.data.id;
         this.first_name = request.data.first_name;
         this.last_name = request.data.last_name;
@@ -120,10 +109,6 @@ export default {
         this.email = request.data.email;
         this.password = request.data.password;
         this.id_role = request.data.id_role;
-        console.log(this.first_name)
-        console.log(this.last_name)
-        console.log(this.email)
-        console.log(this.password)
         
     },
     roleAll () {
@@ -133,20 +118,11 @@ export default {
         .catch(() => this.roleFailed())
     },
     roleSuccessful (req) {
-      console.log(req)
       this.roles = req.data;
-      //this.$router.replace(this.$route.query.redirect || '/bodyUser')
     },
     roleFailed () {
       this.error = 'Role failed!'
-      console.log("Error Role")
-    }/*,
-    getRoleId() {
-      const path = 'http://localhost:5000/role';
-      axios.get(path)
-       .then(request => this.roleSuccessful(request))
-        .catch(() => this.roleFailed())
-    }*/
+    }
   },
   created () {
       this.findById();

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Login from '@/components/Login'
 import Students from '@/components/students/Students'
 import Register from '@/components/Register'
@@ -10,7 +11,7 @@ import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
 import Reports from '@/components/reports/Reports'
 import Integration from '@/components/integration/Integration'
-import New2 from '@/components/admin/New2'
+import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 import Delete from '@/components/admin/Delete'
 
@@ -70,8 +71,8 @@ export default new Router({
         },
         {
           path: '/admin/new',
-          name: 'New2',
-          component: New2,
+          name: 'New',
+          component: New,
         },
         {
           path: '/admin/edit/:id',

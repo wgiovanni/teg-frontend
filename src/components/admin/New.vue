@@ -1,144 +1,110 @@
 <template>
-    <Modal v-show="show" @close="close">
-        <div class="modal-header">
-            <h3>New Post</h3>
+    <div>
+        <div class="container">
+            <form class="col s12" @submit.prevent="savePost">
+              <div class="alert alert-danger" v-if="error">{{ error }}</div>
+              <div class="form-group row">
+                <label for="first_name" class="col-sm-4 col-form-label text-md-right">Nombre</label>
+                <div class="col-md-6">
+                  <input v-model="first_name" type="text" id="first_name" class="form-control" placeholder="Nombre" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="last_name" class="col-sm-4 col-form-label text-md-right">Apellido</label>
+                <div class="col-md-6">
+                  <input v-model="last_name" type="text" id="last_name" class="form-control" placeholder="Apellido" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="username" class="col-sm-4 col-form-label text-md-right">Nombre de usuario</label>
+                <div class="col-md-6">
+                  <input v-model="username" type="text" id="username" class="form-control" placeholder="Nombre de usuario" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputEmail" class="col-sm-4 col-form-label text-md-right">Correo Electrónico</label>
+                <div class="col-md-6">
+                  <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required autofocus>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPassword" class="col-md-4 col-form-label text-md-right">Contraseña</label>
+                <div class="col-md-6">
+                  <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputRole" class="col-md-4 col-form-label text-md-right">Role</label>
+                <div class="col-md-6">
+                  <select class="form-control" v-model="id_role">
+                    <option disabled value="">Seleccionar Role</option>
+                    <option v-for="role in roles" :key="role.id" v-bind:value="role.id">{{ role.name }}</option>
+                  </select>
+                </div>
+              </div>
+                
+              <div class="form-group row col-md-8">
+                  <a class="btn btn-danger" type="button" href="/admin">Cancelar</a>
+                  <button class="btn btn-primary" type="submit">Guardar</button>
+              </div>
+            </form>
         </div>
-
-        <div class="modal-body">
-            <label class="form-label">
-                Nombre
-                <input v-model="first_name" class="form-control">
-            </label>
-            <label class="form-label">
-                Apellido
-                <input v-model="last_name" class="form-control">
-            </label>
-            <label class="form-label">
-                Correo Electrónico
-                <input v-model="email" class="form-control">
-            </label>
-            <label class="form-label">
-                Contraseña
-                <input v-model="password" class="form-control">
-            </label>
-        </div>
-
-        <div class="modal-footer text-right">
-            <button class="btn btn-primary" @click="savePost()">
-                Save
-            </button>
-        </div>
-    </Modal>
+    </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Modal from '@/components/layout/Modal'
 
 export default {
-    name: 'NewUsers',
-    components: {
-        Modal
-    },
-    props: ['show'],
-    data: function () {
-        return {
-            first_name: '',
-            last_name: '',
-            email: '',
-            password: ''
-        };
-    },
-    methods: {
-        savePost: function () {
-        const path = 'http://localhost:5000/user';
-        axios.post(path, { first_name: this.first_name, last_name: this.last_name, email: this.email, password: this.password })
-            .then(request => this.userSuccessful(request))
-            .catch(() => this.userFailed())
-            this.close();
-        },
-        close: function () {
-            this.$emit('close');
-            this.first_name = '';
-            this.last_name = '';
-            this.email = '';
-            this.password = '';
-        },
-        save () {
-        
-        },
-        userSuccessful (req) {
-        console.log(this.first_name)
-        console.log(this.last_name)
-        console.log(this.email)
-        console.log(this.password)
-        console.log(req)
-        this.$parent.usersAll(); //Esta linea actualiza la tabla de usuarios en caso de que se ingrese un nuevo usuario.
-        //this.$router.replace(this.$route.query.redirect || '/Admin2')
-        },
-        userFailed () {
-        this.error = 'User failed!'
-        console.log("User Login")
-        /*this.$store.dispatch('logout')
-        delete localStorage.*/
-        }
+  name: 'New',
+   data () {
+    return {
+        first_name: '',
+        last_name: '',
+        username: '',
+        email: '',
+        password: '',
+        id_role: '',
+		    error: false, 
+        roles: []
     }
+  },
+   methods: {
+    savePost: function () {
+    const path = 'http://localhost:5000/user';
+    axios.post(path, { 
+      first_name: this.first_name, 
+      last_name: this.last_name, 
+      username: this.username, 
+      email: this.email, 
+      password: this.password, 
+      id_role: this.id_role 
+      })
+        .then(request => this.userSuccessful(request))
+        .catch(() => this.userFailed())
+    },
+    userSuccessful (req) {
+    //this.$parent.usersAll(); //Esta linea actualiza la tabla de usuarios en caso de que se ingrese un nuevo usuario.
+    this.$router.replace(this.$route.query.redirect || '/admin')
+    },
+    userFailed () {
+    this.error = 'User failed!'
+    },
+    roleAll () {
+      const path = 'http://localhost:5000/role';
+      axios.get(path)
+       .then(request => this.roleSuccessful(request))
+        .catch(() => this.roleFailed())
+    },
+    roleSuccessful (req) {
+      this.roles = req.data;
+    },
+    roleFailed () {
+      this.error = 'Role failed!'
+    },
+  },
+  created() {
+      this.roleAll();
+  }
 }
 </script>
-
-<style>
-.modal-header h3 {
-    margin-top: 0;
-    color: #42b983;
-}
-
-.modal-body {
-    margin: 20px 0;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 1em;
-}
-
-.form-label > .form-control {
-    margin-top: 0.5em;
-}
-
-.form-control {
-    display: block;
-    width: 100%;
-    padding: 0.5em 1em;
-    line-height: 1.5;
-    border: 1px solid #ddd;
-}
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-</style>
-

@@ -16,9 +16,6 @@
                 v-for="link in links" 
                 v-bind:key="link.id" 
                 :to="`${link.path}`"><a class="nav-link">{{link.name}}</a></router-link> 
-                <!--li  class="nav-item">
-                    <a class="nav-link" href="/">{{myProp}}</a>
-                </li-->
             </ul>
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

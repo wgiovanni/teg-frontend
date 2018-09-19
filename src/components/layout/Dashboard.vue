@@ -3,7 +3,7 @@
         <!--Parte superior-->
         <TopNarbar></TopNarbar>
 
-        <!--Parte superior-->
+        <!--Cuerpo de las vistas-->
         <Content></Content>
 
         <!--Footer-->
