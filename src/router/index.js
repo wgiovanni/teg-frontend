@@ -10,7 +10,9 @@ import Dashboard from '@/components/layout/Dashboard'
 import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
 import Reports from '@/components/reports/Reports'
-import Integration from '@/components/integration/Integration'
+//import Integration from '@/components/integration/Integration'
+import SystemParameterList from '@/components/integration/SystemParameterList'
+import SystemParameterEdit from '@/components/integration/SystemParameterEdit'
 import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 import Delete from '@/components/admin/Delete'
@@ -56,8 +58,13 @@ export default new Router({
         },
         {
           path: '/integration',
-          name: 'Integration',
-          component: Integration
+          name: 'SystemParameterList',
+          component: SystemParameterList
+        },
+        {
+          path: '/integration/edit/:id',
+          name: 'SystemParameterEdit',
+          component: SystemParameterEdit
         },
         {
           path: '/register',
