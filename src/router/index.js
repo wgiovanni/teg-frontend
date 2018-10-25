@@ -16,6 +16,7 @@ import SystemParameterEdit from '@/components/integration/SystemParameterEdit'
 import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 import Delete from '@/components/admin/Delete'
+import store from '@/store'
 
 Vue.use(Router)
 
@@ -59,7 +60,17 @@ export default new Router({
         {
           path: '/integration',
           name: 'SystemParameterList',
-          component: SystemParameterList
+          component: SystemParameterList,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
         {
           path: '/integration/edit/:id',
