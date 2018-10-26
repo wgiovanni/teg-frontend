@@ -20,7 +20,7 @@ import store from '@/store'
 
 Vue.use(Router)
 
-export default new Router({
+export const router = new Router({
   routes: [
     {
       path: '/login',
@@ -106,4 +106,18 @@ export default new Router({
     }
   ],
   mode: 'history',
+});
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  //const loggedIn = store.state.user;
+
+  if (authRequired) {
+    //validador de token y todo lo demas
+    // https://stackoverflow.com/questions/43378726/checks-in-vue-router-beforeeach-not-restricting-access-to-routes
+    return next('/login')
+  }
+  next();
 })
