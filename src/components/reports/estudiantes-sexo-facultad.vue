@@ -4,7 +4,7 @@
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="pie" class="vue-plotly"/>
+    <div ref="bar" class="vue-plotly"/>
       
     <!--Download buttons--> 
     <div class="row">  
@@ -74,15 +74,14 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Proporción de Académicos con Doctorado o pHD";
+var reportName = "estudiantes-sexo-facultad";
 var img;
- 
+
 export default {
   mounted() {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
-    
-  },
+   },
 
   data() {
     return {
@@ -91,13 +90,13 @@ export default {
   },
 
   created() {
-    //this.load();
+    this.load();
   },
 
   methods: {
 
      load() {
-      const path = "http://localhost:5000/profesor-doctorado-proporcion";
+      const path = "http://localhost:5000/estudiantes-sexo-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -107,27 +106,98 @@ export default {
     successful(req) {    
 
       var datos = []; // Saves data from JSON
-      var totalProfesores;
-      var totalDoctorado;
-      var total2;
+      var facultades = [];
+      var yMasculino = [];
+      var yFemenino = [];
       var i;
       var size = req.data.length;
       var d = req.data;
 
-      totalProfesores = d[0][""];
-      totalInternacional = d[1][""];
-      total2 = totalProfesores - totalDoctorado;
+      for (i = 0; i < size; i++) {
+        facultades.push(d[i]["facultad"]);
+        yMasculino.push(d[i]["masculino"]);
+        yFemenino.push(d[i]["femenino"]);
+      }
+
+      console.log(facultades);
+      console.log(yMasculino);
+      console.log(yFemenino);
 
       datos.push({
-        
-        values: [totalDoctorado, total2],
-        labels: ['Profesores con Doctorado', 'Profesores'],
-        type: "pie",
-        marker: { colors:['#ff9f43','#54a0ff']  }
+        x: facultades,
+        y: yMasculino,
+        //text: [],
+        textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
+        name: "Masculino",
+        type: "bar",
+        marker: { color: "#00cec9" }
+      });
+
+      datos.push({
+        x: facultades,
+        y: yFemenino,
+        //text:[],
+        name: "Femenino",
+        type: "bar",
+        marker: { color: "rgb(195,86,234)" }
       });
 
       console.log(datos);
       this.data = datos;
+
+      /*** LAYOUT ***/
+
+      var layout = {
+        //title:"",
+        //titlefont:{size: 24}, 
+        //annotations: [{}],             
+        xaxis: {
+          fixedrange: true
+        },
+        yaxis: {
+          fixedrange: true
+        },
+        editable: false,
+        autosize: true,
+        responsive: true,
+        margin: {
+          l: 200,
+          r: 200,
+          b: 200,
+          t: 50,
+          pad: -1
+        },
+        //width: 720,
+        //height: 480,
+      };
+
+      var config = {
+        displaylogo: false,
+        displayModeBar: false,
+        doubleClick: "reset+autosize",
+        responsive: true
+      };
+
+
+      /*** GRAPH ***/
+
+      //Exports plot as image
+      var d3 = Plotly.d3;
+      var img_jpg = d3.select("#jpg-export");
+      // Displays graph
+      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
+        //Saves plot as image
+        gd.on("plotly_legendclick", () => false);
+
+        Plotly.toImage(gd, {height: 768, width: 1024}, {title: "hola"}).then(function(url) {
+          img_jpg.attr("src", url);
+          return Plotly.toImage(gd, {
+            format: "jpeg",       
+            height: 768,
+            width: 1024,
+          })
+        });
+      });//plotly_plot
 
     }, //successful(req)
 
