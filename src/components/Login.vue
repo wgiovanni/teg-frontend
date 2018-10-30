@@ -7,13 +7,13 @@
         <div class="card">
           <div class="card-header">Iniciar Sesión</div>
           <div class="card-body">
-            <form class="col s12" @submit.prevent="login">
+            <!--form class="col s12" @submit.prevent="login"-->
               <!--h2 class="form-signin-heading">Please sign in</h2-->
               <div class="alert alert-danger" v-if="error">{{ error }}</div>
               <div class="form-group row">
-                <label for="inputEmail" class="col-sm-4 col-form-label text-md-right">Correo Electrónico</label>
+                <label for="inputUsername" class="col-sm-4 col-form-label text-md-right">Usuario</label>
                 <div class="col-md-6">
-                  <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required autofocus>
+                  <input v-model="username" type="username" id="inputUsername" class="form-control" placeholder="Nombre de usuario" required autofocus>
                 </div>
               </div>
               <div class="form-group row">
@@ -24,11 +24,10 @@
               </div>
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button class="btn btn-primary row" type="submit">Iniciar Sesión</button>
+                  <button class="btn btn-primary row" @click="authenticate">Iniciar Sesión</button>
                 </div>
               </div>
-              
-            </form>
+            <!--/form-->
           </div>
         </div>
       </div>
@@ -38,8 +37,10 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+import { mapState, mapActions } from 'vuex'
 
+import { EventBus } from '@/utils'
 import Navbar from '@/components/Navbar'
 
 export default {
@@ -49,7 +50,7 @@ export default {
   },
   data () {
     return {
-      email: '',
+      username: '',
       password: '',
       error: false
     }
@@ -59,13 +60,13 @@ export default {
       console.log(this.email)
       console.log(this.password)
     },*/
-    login () {
+    /*login () {
       const path = 'http://localhost:5000/auth';
       axios.post(path, { email: this.email, password: this.password })
        .then(request => this.loginSuccessful(request))
         .catch(() => this.loginFailed())
     },
-    loginSuccessful (req) {
+    loginSuccessful (req) {*/
       /*if (!req.data.token) {
         this.loginFailed()
         return
@@ -73,7 +74,7 @@ export default {
       this.error = false
       localStorage.token = req.data.token
       this.$store.dispatch('login')*/
-      console.log(this.email)
+      /*console.log(this.email)
       console.log(this.password)
       console.log(req)
       this.$router.replace(this.$route.query.redirect || '/root')
@@ -82,8 +83,25 @@ export default {
       this.error = 'Login failed!'
       console.log("Error Login")
       /*this.$store.dispatch('logout')
-      delete localStorage.*/
-    }
+      delete localStorage.
+    }*/
+    authenticate () {
+      this.$store.dispatch('login', { username: this.username, password: this.password })
+        .then(() => this.$router.push('/'))
+        .catch(() => this.error ="Fallo")
+    },
+  },
+  mounted () {
+    /*EventBus.$on('failedRegistering', (msg) => {
+      this.errorMsg = msg
+    })*/
+    EventBus.$on('failedAuthentication', (msg) => {
+      this.error = msg
+    })
+  },
+  beforeDestroy () {
+    //EventBus.$off('failedRegistering')
+    EventBus.$off('failedAuthentication')
   }
 }
 </script>

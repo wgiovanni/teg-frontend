@@ -10,14 +10,17 @@ import Dashboard from '@/components/layout/Dashboard'
 import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
 import Reports from '@/components/reports/Reports'
-import Integration from '@/components/integration/Integration'
+//import Integration from '@/components/integration/Integration'
+import SystemParameterList from '@/components/integration/SystemParameterList'
+import SystemParameterEdit from '@/components/integration/SystemParameterEdit'
 import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 import Delete from '@/components/admin/Delete'
+import store from '@/store'
 
 Vue.use(Router)
 
-export default new Router({
+export const router = new Router({
   routes: [
     {
       path: '/login',
@@ -56,8 +59,23 @@ export default new Router({
         },
         {
           path: '/integration',
-          name: 'Integration',
-          component: Integration
+          name: 'SystemParameterList',
+          component: SystemParameterList,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/integration/edit/:id',
+          name: 'SystemParameterEdit',
+          component: SystemParameterEdit
         },
         {
           path: '/register',
@@ -88,4 +106,25 @@ export default new Router({
     }
   ],
   mode: 'history',
+});
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  //const loggedIn = ;
+  console.log(store.state.user.username);
+  if (authRequired && (store.state.user.username == undefined || store.state.user.username == null)) {
+
+    //validador de token y todo lo demas
+    // https://stackoverflow.com/questions/43378726/checks-in-vue-router-beforeeach-not-restricting-access-to-routes
+    return next('/login')
+  }
+  next();
+  /*store.dispatch('login').then(response => {
+    next()
+  }).catch(error => {
+    next('/login')
+  })*/
+
 })

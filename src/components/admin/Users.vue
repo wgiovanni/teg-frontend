@@ -39,12 +39,12 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
 
 import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 
-export default {
+/*export default {
   name: 'List',
   components: {
       New,
@@ -74,6 +74,21 @@ export default {
   },
   created() {
       this.usersAll();
+  }
+  
+}*/
+import { mapState } from 'vuex'  
+export default {
+  name: 'List',
+  components: {
+      New,
+      Edit
+  },  
+  computed: mapState({
+    users: state => state.users
+  }),
+  beforeMount() {
+    this.$store.dispatch('loadUsers')
   }
 }
 </script>
