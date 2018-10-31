@@ -96,7 +96,7 @@ export default {
   methods: {
 
      load() {
-      const path = "http://localhost:5000/citas-facultad";
+      const path = "http://localhost:5000/api/v1/citas-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -122,7 +122,7 @@ export default {
 
       datos.push({
         x: facultades,
-        y: yMasculino,
+        y: numCitaciones,
         name: "Citaciones",
         type: "bar",
         marker: { color: "#00cec9" }

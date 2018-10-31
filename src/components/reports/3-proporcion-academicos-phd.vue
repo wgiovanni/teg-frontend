@@ -97,7 +97,7 @@ export default {
   methods: {
 
      load() {
-      const path = "http://localhost:5000/profesor-doctorado-proporcion";
+      const path = "http://localhost:5000/api/v1/profesor-doctorado-proporcion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -114,13 +114,17 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      totalProfesores = d[0][""];
-      totalInternacional = d[1][""];
+      totalDoctorado = d[0]["profesores-doctorado"];
+      totalProfesores = d[1]["total-profesores"];
+
+      console.log(totalProfesores);
+      console.log(totalDoctorado);
+
       total2 = totalProfesores - totalDoctorado;
 
       datos.push({
         
-        values: [totalDoctorado, total2],
+        values: [4, 25],
         labels: ['Profesores con Doctorado', 'Profesores'],
         type: "pie",
         marker: { colors:['#ff9f43','#54a0ff']  }
@@ -128,6 +132,55 @@ export default {
 
       console.log(datos);
       this.data = datos;
+
+       var layout = {         
+        xaxis: {
+          fixedrange: true
+        },
+        yaxis: {
+          fixedrange: true
+        },
+        editable: false,
+        autosize: true,
+        responsive: true,
+        margin: {
+          l: 100,
+          r: 130,
+          b: 100,
+          t: 100,
+          pad: -1
+        },
+        //width: 720,
+        //height: 480,
+      };
+
+      var config = {
+        displaylogo: false,
+        displayModeBar: false,
+        doubleClick: "reset+autosize",
+        responsive: true
+      };
+
+        /*** GRAPH ***/
+
+     // Exports plot as image
+      var d3 = Plotly.d3;
+      var img_jpg = d3.select("#jpg-export");
+     // Displays graph
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      //  Saves plot as image
+        gd.on("plotly_legendclick", () => false);
+
+        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+          img_jpg.attr("src", url);
+          return Plotly.toImage(gd, {
+            format: "jpeg",       
+            height: 768,
+            width: 1024,
+          })
+        });
+      });//plotly_plot
+
 
     }, //successful(req)
 

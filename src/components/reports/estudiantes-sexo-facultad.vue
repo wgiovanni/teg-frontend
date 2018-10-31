@@ -96,7 +96,7 @@ export default {
   methods: {
 
      load() {
-      const path = "http://localhost:5000/estudiantes-sexo-facultad";
+      const path = "http://localhost:5000/api/v1/estudiantes-sexo-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))

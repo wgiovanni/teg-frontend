@@ -82,7 +82,54 @@ export default {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
 
-     var layout = {         
+  },
+
+  data() {
+    return {
+      data: []
+    };
+  },
+
+  created() {
+    //this.load();
+  },
+
+  methods: { 
+
+     load() {
+      const path = "http://localhost:5000/api/v1/estudiantes-internacionales-proporcion";
+      axios
+        .get(path)
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
+    successful(req) {    
+
+      var datos = []; // Saves data from JSON
+      var totalEstudiantes;
+      var totalInternacional;
+      var totalNacional;
+      var i;
+      var size = req.data.length;
+      var d = req.data;
+
+      totalEstudiantes = d[0][""];
+      totalInternacional = d[1][""];
+      totalNacional = totalEstudiantes - totalInternacional;
+
+      datos.push({
+        
+        values: [totalInternacional, totalNacional],
+        labels: ['Estudiantes Internacionales', 'Estudiantes Nacionales'],
+        type: "pie",
+        marker: { colors:['#FF4036','#2AC63D'] }
+      });
+
+      console.log(datos);
+      this.data = datos;
+
+      var layout = {         
         xaxis: {
           fixedrange: true
         },
@@ -131,63 +178,7 @@ export default {
       });//plotly_plot
 
 
-  },
-
-  data() {
-    return {
-
-      data: [
-          {
-        values: [155,553],
-        labels: ['Estudiantes Internacionales', 'Estudiantes Nacionales'],
-        type: "pie",
-        marker: { colors:['#FF4036','#2AC63D'] }
-        }
-
-      ]
-    };
-  },
-
-  created() {
-    //this.load();
-  },
-
-  methods: { 
-
-    //  load() {
-    //   const path = "http://localhost:5000/estudiantes-internacionales-proporcion";
-    //   axios
-    //     .get(path)
-    //     .then(request => this.successful(request))
-    //     .catch(() => this.failed());
-    // },
-
-    // successful(req) {    
-
-    //   var datos = []; // Saves data from JSON
-    //   var totalEstudiantes;
-    //   var totalInternacional;
-    //   var totalNacional;
-    //   var i;
-    //   var size = req.data.length;
-    //   var d = req.data;
-
-    //   totalEstudiantes = d[0][""];
-    //   totalInternacional = d[1][""];
-    //   totalNacional = totalEstudiantes - totalInternacional;
-
-    //   datos.push({
-        
-    //     values: [totalInternacional, totalNacional];
-    //     labels: ['Estudiantes Internacionales', 'Estudiantes Nacionales'],
-    //     type: "pie",
-    //     marker: { colors:['#FF4036','#2AC63D'] }
-    //   });
-
-    //   console.log(datos);
-    //   this.data = datos;
-
-    // }, //successful(req)
+    }, //successful(req)
 
     failed() {
       this.error = "User failed!";
