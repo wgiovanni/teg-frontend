@@ -114,11 +114,12 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicPages.includes(to.path);
   //const loggedIn = ;
   console.log(store.state.user.username);
+  /*
   if (authRequired && (store.state.user.username == undefined || store.state.user.username == null)) {
 
     //validador de token y todo lo demas
     // https://stackoverflow.com/questions/43378726/checks-in-vue-router-beforeeach-not-restricting-access-to-routes
     return next('/login')
-  }
+  }*/
   next();
 })

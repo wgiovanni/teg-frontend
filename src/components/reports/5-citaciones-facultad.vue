@@ -74,7 +74,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "estudiantes-sexo-facultad";
+var reportName = "Citaciones por Facultad";
 var img;
 
 export default {
@@ -96,7 +96,7 @@ export default {
   methods: {
 
      load() {
-      const path = "http://localhost:5000/api/v1/estudiantes-sexo-facultad";
+      const path = "http://localhost:5000/api/v1/citas-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -107,40 +107,27 @@ export default {
 
       var datos = []; // Saves data from JSON
       var facultades = [];
-      var yMasculino = [];
-      var yFemenino = [];
+      var numCitaciones = [];
       var i;
       var size = req.data.length;
       var d = req.data;
 
       for (i = 0; i < size; i++) {
         facultades.push(d[i]["facultad"]);
-        yMasculino.push(d[i]["masculino"]);
-        yFemenino.push(d[i]["femenino"]);
+        numCitaciones.push(d[i]["citaciones"]);
       }
 
       console.log(facultades);
-      console.log(yMasculino);
-      console.log(yFemenino);
+      console.log(numCitaciones);
 
       datos.push({
         x: facultades,
-        y: yMasculino,
-        //text: [],
-        textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
-        name: "Masculino",
+        y: numCitaciones,
+        name: "Citaciones",
         type: "bar",
         marker: { color: "#00cec9" }
       });
 
-      datos.push({
-        x: facultades,
-        y: yFemenino,
-        //text:[],
-        name: "Femenino",
-        type: "bar",
-        marker: { color: "rgb(195,86,234)" }
-      });
 
       console.log(datos);
       this.data = datos;
@@ -189,7 +176,7 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}, {title: "hola"}).then(function(url) {
+        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",       

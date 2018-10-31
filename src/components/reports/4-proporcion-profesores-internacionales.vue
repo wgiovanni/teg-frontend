@@ -74,7 +74,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Proporción de Académicos con Doctorado o pHD";
+var reportName = "Proporción de Profesores Internacionales";
 var img;
  
 export default {
@@ -97,7 +97,7 @@ export default {
   methods: {
 
      load() {
-      const path = "http://localhost:5000/profesor-doctorado-proporcion";
+      const path = "http://localhost:5000/profesores-internacionales-proporcion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -108,22 +108,21 @@ export default {
 
       var datos = []; // Saves data from JSON
       var totalProfesores;
-      var totalDoctorado;
-      var total2;
-      var i;
-      var size = req.data.length;
+      var totalInternacional;
+      var totalNacional;   
       var d = req.data;
 
-      totalProfesores = d[0][""];
-      totalInternacional = d[1][""];
-      total2 = totalProfesores - totalDoctorado;
+      
+      totalInternacional = d[0][""];
+      totalProfesores = d[1][""];
+      totalNacional = totalProfesores - totalInternacional;
 
       datos.push({
         
-        values: [totalDoctorado, total2],
-        labels: ['Profesores con Doctorado', 'Profesores'],
+        values: [totalInternacional, totalNacional],
+        labels: ['Profesores Internacionales', 'Profesores Nacionales'],
         type: "pie",
-        marker: { colors:['#ff9f43','#54a0ff']  }
+        marker: { colors:['#182C61','#6D214F']  }
       });
 
       console.log(datos);
