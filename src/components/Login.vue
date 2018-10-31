@@ -55,6 +55,9 @@ export default {
       error: false
     }
   },
+  computed: {
+    ...mapState('', ['user'])
+  },
   methods: {
     /*login () {
       console.log(this.email)

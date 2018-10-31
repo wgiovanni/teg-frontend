@@ -1,5 +1,9 @@
 <template>
-    <div class="container col-md-4 ">
+    <div class="container col-md-4">
+      <div v-if="loading == true">
+        <Spinner></Spinner>
+      </div>
+      <div v-else>
         <router-link to="/admin/new" tag="button" class="btn btn-primary">
           <i class="material-icons">add</i>
         </router-link>
@@ -33,38 +37,42 @@
                     </router-link>
                   </td>
               </tr>
-          </tbody>
-      </table>
+            </tbody>
+          </table>
+       </div>  
   </div>
 </template>
 
 <script>
-//import axios from 'axios';
+import axios from 'axios';
 
 import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
+import Spinner from '@/components/Spinner'
 
-/*export default {
+export default {
   name: 'List',
   components: {
       New,
-      Edit
+      Edit,
+      Spinner
   },
   data() {
       return {
           users: [],
-          showModal: false,
-          showModalEdit: false
+          loading: true
       };  
   },
   methods: {
     usersAll () {
-      const path = 'http://localhost:5000/user';
+      const path = 'http://localhost:8084/user';
+      this.loading = true;
       axios.get(path)
        .then(request => this.userSuccessful(request))
         .catch(() => this.loginFailed())
     },
     userSuccessful (req) {
+      this.loading = false;
       this.users = req.data;
       //this.$router.replace(this.$route.query.redirect || '/bodyUser')
     },
@@ -74,22 +82,45 @@ import Edit from '@/components/admin/Edit'
   },
   created() {
       this.usersAll();
+  },
+  mounted() {
+    this.usersAll();
   }
   
-}*/
-import { mapState } from 'vuex'  
+}
+/*import { mapState } from 'vuex'  
 export default {
   name: 'List',
   components: {
       New,
-      Edit
-  },  
+      Edit,
+      Spinner
+  },
+  data() {
+      return {
+        loading: true
+      };  
+  },
+  methods: {
+    usersAll () {
+      this.loading = true;
+      this.$store.dispatch('loadUsers');
+      this.loading = false;
+    }
+  }, 
   computed: mapState({
     users: state => state.users
   }),
-  beforeMount() {
-    this.$store.dispatch('loadUsers')
+  /*beforeMount() {
+    this.$store.dispatch('loadUsers');
+    this.loading = false;
+  },
+  created(){
+    this.usersAll();
+  },
+  mounted() {
+    this.usersAll();
   }
-}
+}*/
 </script>
 

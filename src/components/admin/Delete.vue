@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         findById () {
-            const path = 'http://localhost:5000/user'.concat('/' + this.id);
+            const path = 'http://localhost:8084/user'.concat('/' + this.id);
             axios.get(path)
             .then(request => this.findByIdSuccess(request))
             .catch(() => console.log("Error Login"))
@@ -41,7 +41,7 @@ export default {
             this.password = request.data.password;
         },
         deleteUser () {
-            const path = 'http://localhost:5000/user/' + this.id;
+            const path = 'http://localhost:8084/user/' + this.id;
             axios.delete(path)
                 .then(request => this.userSuccessful(request))
                 .catch(() => this.userFailed())

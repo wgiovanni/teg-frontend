@@ -72,7 +72,7 @@ export default {
   },
    methods: {
     savePost: function () {
-    const path = 'http://localhost:5000/user' + '/' + this.id;
+    const path = 'http://localhost:8084/user' + '/' + this.id;
     axios.put(path, {
       id: this.id, 
       first_name: this.first_name, 
@@ -96,7 +96,7 @@ export default {
     this.error = 'User failed!'
     },
     findById () {
-        const path = 'http://localhost:5000/user'.concat('/' + this.id);
+        const path = 'http://localhost:8084/user'.concat('/' + this.id);
         axios.get(path)
         .then(request => this.findByIdSuccess(request))
         .catch(() => console.log("Error Login"))
@@ -112,7 +112,7 @@ export default {
         
     },
     roleAll () {
-      const path = 'http://localhost:5000/role';
+      const path = 'http://localhost:8084/role';
       axios.get(path)
        .then(request => this.roleSuccessful(request))
         .catch(() => this.roleFailed())
