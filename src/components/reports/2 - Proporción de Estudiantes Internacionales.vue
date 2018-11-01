@@ -4,7 +4,7 @@
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
+    <div ref="pie" class="vue-plotly"/>
       
     <!--Download buttons--> 
     <div class="row">  
@@ -74,70 +74,22 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Citaciones por Facultad";
+var reportName = "Proporción de Estudiantes Internacionales en Relación con el Total de Estudiantes de la Universidad";
 var img;
 
+var totalEstudiantes = 65000;
+var totalInternacional = 1246;
+var totalNacional;
+totalNacional = totalEstudiantes - totalInternacional;
+
+ 
 export default {
   mounted() {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
-   },
 
-  data() {
-    return {
-      data: []
-    };
-  },
-
-  created() {
-    this.load();
-  },
-
-  methods: {
-
-     load() {
-      const path = "http://localhost:5000/api/v1/citas-facultad";
-      axios
-        .get(path)
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
-    },
-
-    successful(req) {    
-
-      var datos = []; // Saves data from JSON
-      var facultades = [];
-      var numCitaciones = [];
-      var i;
-      var size = req.data.length;
-      var d = req.data;
-
-      for (i = 0; i < size; i++) {
-        facultades.push(d[i]["facultad"]);
-        numCitaciones.push(d[i]["citaciones"]);
-      }
-
-      console.log(facultades);
-      console.log(numCitaciones);
-
-      datos.push({
-        x: facultades,
-        y: numCitaciones,
-        name: "Citaciones",
-        type: "bar",
-        marker: { color: "#00cec9" }
-      });
-
-
-      console.log(datos);
-      this.data = datos;
-
-      /*** LAYOUT ***/
-
-      var layout = {
-        //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
+    
+    var layout = {         
         xaxis: {
           fixedrange: true
         },
@@ -148,10 +100,10 @@ export default {
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 200,
-          t: 50,
+          l: 100,
+          r: 130,
+          b: 100,
+          t: 100,
           pad: -1
         },
         //width: 720,
@@ -165,15 +117,14 @@ export default {
         responsive: true
       };
 
+      // GRAPH
 
-      /*** GRAPH ***/
-
-      //Exports plot as image
+     // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
-      // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //Saves plot as image
+     // Displays graph
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
         Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
@@ -186,11 +137,120 @@ export default {
         });
       });//plotly_plot
 
+  },
+
+  data() {
+    return {
+      
+      data: [{      
+
+        values: [totalInternacional, totalNacional],
+        labels: ['Estudiantes Internacionales', 'Estudiantes Nacionales'],
+        type: "pie",
+        marker: { colors:['#FF4036','#2AC63D'] }
+    }]
+
+    };
+  },
+
+  created() {
+    //this.load();
+  },
+
+  methods: { 
+    /*
+     load() {
+      const path = "http://localhost:5000/api/v1/estudiantes-internacionales-proporcion";
+      axios
+        .get(path)
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
+    successful(req) {    
+
+      var datos = []; // Saves data from JSON
+      var totalEstudiantes;
+      var totalInternacional;
+      var totalNacional;
+      var i;
+      var size = req.data.length;
+      var d = req.data;
+
+      totalEstudiantes = d[0][""];
+      totalInternacional = d[1][""];
+      totalNacional = totalEstudiantes - totalInternacional;
+
+      datos.push({
+        
+        values: [totalInternacional, totalNacional],
+        labels: ['Estudiantes Internacionales', 'Estudiantes Nacionales'],
+        type: "pie",
+        marker: { colors:['#FF4036','#2AC63D'] }
+      });
+
+      console.log(datos);
+      this.data = datos;
+
+      //LAYOUT
+
+      var layout = {         
+        xaxis: {
+          fixedrange: true
+        },
+        yaxis: {
+          fixedrange: true
+        },
+        editable: false,
+        autosize: true,
+        responsive: true,
+        margin: {
+          l: 100,
+          r: 130,
+          b: 100,
+          t: 100,
+          pad: -1
+        },
+        //width: 720,
+        //height: 480,
+      };
+
+      var config = {
+        displaylogo: false,
+        displayModeBar: false,
+        doubleClick: "reset+autosize",
+        responsive: true
+      };
+
+      // GRAPH
+
+     // Exports plot as image
+      var d3 = Plotly.d3;
+      var img_jpg = d3.select("#jpg-export");
+     // Displays graph
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      //  Saves plot as image
+        gd.on("plotly_legendclick", () => false);
+
+        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+          img_jpg.attr("src", url);
+          return Plotly.toImage(gd, {
+            format: "jpeg",       
+            height: 768,
+            width: 1024,
+          })
+        });
+      });//plotly_plot
+
+    
     }, //successful(req)
 
+    
     failed() {
       this.error = "User failed!";
     },
+
+    */
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
