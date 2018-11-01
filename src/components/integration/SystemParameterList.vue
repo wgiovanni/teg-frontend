@@ -1,11 +1,12 @@
 <template>
     <div class="container-fluid margen">
-        <div v-if="loading==true">
+        <div v-if="loading==true" class="d-flex justify-content-center">
             <Spinner></Spinner>
         </div>
-        <div v-else>
-            <table class="table border border-primary">
-                <thead class="thead-dark">
+        <div v-else class="table-responsive-md">
+            <div><h2>Listado de parámetros del sistema</h2></div>
+            <table class="table table-striped">
+                <thead>
                     <tr>
                         <th scope="col">Código</th>
                         <th scope="col">Nombre</th>
@@ -71,16 +72,17 @@ export default {
   },
   created() {
       this.systemParameterAll();
-  },
-  mounted() {
-      this.systemParameterAll();
   }
+  /*mounted() {
+      this.systemParameterAll();
+  }*/
 }
 </script>
 <style>
 .margen {
     margin-top: 5%;    
 }
+
 </style>
 
 

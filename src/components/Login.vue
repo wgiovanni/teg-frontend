@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid">
+<div>
   <Navbar></Navbar>
   <div class="container container-login-register">
     <div class="row justify-content-center">
@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-header">Iniciar Sesión</div>
           <div class="card-body">
-            <!--form class="col s12" @submit.prevent="login"-->
+            <form class="col s12" @submit.prevent="authenticate">
               <!--h2 class="form-signin-heading">Please sign in</h2-->
               <div class="alert alert-danger" v-if="error">{{ error }}</div>
               <div class="form-group row">
@@ -23,11 +23,11 @@
                 </div>
               </div>
               <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-4">
-                  <button class="btn btn-primary row" @click="authenticate">Iniciar Sesión</button>
+                <div class="col-md-8 offset-md-4 button-iniciar-sesion">
+                  <button type="submit" class="btn btn-primary row">Iniciar Sesión</button>
                 </div>
               </div>
-            <!--/form-->
+            </form>
           </div>
         </div>
       </div>
@@ -98,6 +98,10 @@ export default {
     /*EventBus.$on('failedRegistering', (msg) => {
       this.errorMsg = msg
     })*/
+    if (localStorage.getItem('username') && localStorage.getItem('user')){
+      localStorage.removeItem('username');
+      localStorage.removeItem('user');
+    }
     EventBus.$on('failedAuthentication', (msg) => {
       this.error = msg
     })
@@ -112,5 +116,8 @@ export default {
 <style>
 .container-login-register {
   padding-top: 10%;
+}
+.button-iniciar-sesion {
+      margin-left: 35.5%;
 }
 </style>

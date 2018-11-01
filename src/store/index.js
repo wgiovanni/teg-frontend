@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // imports of AJAX functions will go here
-import { fetchUsers, fetchUser, updateUser, saveUser, deleteUser, authenticate } from '@/api'
+import { fetchUsers, fetchUser, updateUser, saveUser, getByUsername, deleteUser, authenticate } from '@/api'
 import { isValidJwt, EventBus } from '@/utils'
 
 Vue.use(Vuex)
@@ -12,8 +12,8 @@ Vue.use(Vuex)
 const state = {
     // single source of data
     users: [],
-    currentUser: {},
     user: {},
+    username: localStorage.getItem('username') || '',
     jwt: ''
 }
 
@@ -31,6 +31,12 @@ const actions = {
                 context.commit('setUser', { user: response.data })
             })
     },
+    getUsername(context, {username}) {
+        return getByUsername(username)
+            .then((response) => {
+                context.commit('setUser', {user: response.data})
+            })
+    },
     updateUserResponse(context) {
         return updateUser(context.state.currentUser)
     },
@@ -38,20 +44,25 @@ const actions = {
         context.commit('setUserData', { userData })
         return authenticate(userData)
             .then(response => {
+                console.log(response.data.user);
                 context.commit('setJwtToken', { jwt: response.data });
-                //localStorage.setItem('user', JSON.stringify(response.data.user))
+                localStorage.setItem('username', response.data.user.username);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+
             })
             .catch(error => {
                 console.log('Error Authenticating: ', error)
+                localStorage.removeItem('username');
+                localStorage.removeItem('user');
                 EventBus.emit('failedAuthentication', error)
             })
     },
-    /*logout(context) {
-        /*clearIdToken();
-        clearAccessToken();
-        router.go('/');
+    logout(context) {
+        localStorage.removeItem('username');
+        localStorage.removeItem('user') 
+        router.go('/login');
         context.commit('logout');
-    },*/
+    },
     /*
     register (context, userData) {
     context.commit('setUserData', { userData })
@@ -73,7 +84,8 @@ const mutations = {
         state.users = payload.users
     },
     setUser(state, payload) {
-        state.currentUser = payload.user
+        state.user = payload.user
+        state.username = payload.user.username
     },
     setUserData(state, payload) {
         console.log('setUserData payload = ', payload)
@@ -84,7 +96,6 @@ const mutations = {
     },
     setJwtToken(state, payload) {
         console.log('setJwtToken payload = ', payload)
-        localStorage.token = payload.jwt.token
         state.jwt = payload.jwt
         state.user = payload.jwt.user
     },

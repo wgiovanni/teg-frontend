@@ -9,7 +9,9 @@ import Users from '@/components/admin/Users'
 import Dashboard from '@/components/layout/Dashboard'
 import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
-import Reports from '@/components/reports/Reports'
+import Reports2 from '@/components/reports/Reports2'
+import Report from '@/components/reports/Report'
+import StudentSexFaculty from '@/components/reports/StudentSexFaculty'
 //import Integration from '@/components/integration/Integration'
 import SystemParameterList from '@/components/integration/SystemParameterList'
 import SystemParameterEdit from '@/components/integration/SystemParameterEdit'
@@ -40,12 +42,32 @@ export const router = new Router({
         {
           path: '/students',
           name: 'Students',
-          component: Students
+          component: Students,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "facultad") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
         {
           path: '/teachers',
           name: 'Teachers',
-          component: Teachers
+          component: Teachers,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "facultad") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
         {
           path: '/graduates',
@@ -54,15 +76,21 @@ export const router = new Router({
         },
         {
           path: '/reports',
-          name: 'Reports',
-          component: Reports
+          name: 'Report',
+          component: Report
+        },
+        {
+          path: '/report/rm/estudiantes-sexo-facultad',
+          name: 'Estudiantes-Sexo-Facultad',
+          component: StudentSexFaculty
         },
         {
           path: '/integration',
           name: 'SystemParameterList',
           component: SystemParameterList,
           beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
             if (store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
@@ -86,21 +114,61 @@ export const router = new Router({
           path: '/admin',
           name: 'Admin',
           component: Users,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
         {
           path: '/admin/new',
           name: 'New',
           component: New,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
         {
           path: '/admin/edit/:id',
           name: 'Edit',
           component: Edit,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
         {
           path: '/admin/delete/:id',
           name: 'Delete',
           component: Delete,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
       ]
     }
@@ -113,13 +181,81 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
   //const loggedIn = ;
-  console.log(store.state.user.username);
-  /*
-  if (authRequired && (store.state.user.username == undefined || store.state.user.username == null)) {
+  //console.log(store.state.user.username);
+  
+  /*if (authRequired && (store.state.user.username == undefined || store.state.user.username == null)) {
 
     //validador de token y todo lo demas
     // https://stackoverflow.com/questions/43378726/checks-in-vue-router-beforeeach-not-restricting-access-to-routes
     return next('/login')
   }*/
-  next();
+  //next();
+  if (authRequired && !localStorage.getItem('username') && !localStorage.getItem('user')){
+    console.log("entro1");
+    console.log("mandar al login");
+    store.username = '';
+    store.user = {};
+    next('/login');
+
+  } else {
+    console.log(authRequired);
+    console.log(localStorage.getItem('username'));
+    store.state.username = localStorage.getItem('username')
+    store.state.user = JSON.parse(localStorage.getItem('user'));
+    //store.user = {}
+    store.dispatch('getUsername', { username:  store.state.username})
+        .then((response) => {
+          store.state.user = response.data;
+          next()
+        }) 
+        .catch(() => this.error ="Fallo")
+    next();
+  }
+ 
+  /*
+  if (localStorage.getItem('username')){
+    console.log("entro aqui");
+    if (authRequired && (store.state.username == undefined || store.state.username == null || store.state.username == '')){
+      console.log("entro aqui1.1");
+      store.state.username = localStorage.getItem('username');
+      store.dispatch('getUsername', { username:  store.state.username})
+        .then((response) => {
+          store.state.user = response.data;
+          next()
+        }) 
+        .catch(() => this.error ="Fallo")
+      next();
+    }
+  } else {
+    console.log("entro aqui2");
+    return next('/login');
+    /*if (authRequired){
+      console.log("entro aqui2.1");
+      
+    }
+  }
+  console.log("usuario: " +store.state.username);*/
+  /*if (authRequired && !localStorage.getItem('username') && (store.state.username == undefined || store.state.username == null || store.state.username == '')){
+    store.state.username = localStorage.getItem('username');
+    //store.state.user = store.state.actions.getUsername(store.state.username)
+    return next('/login');
+  } else {
+    if (!authRequired && localStorage.getItem('username') && (store.state.username != undefined || store.state.username != null || store.state.username == '')){
+      console.log("entro aqui");
+      store.state.username = localStorage.getItem('username');
+      console.log("entrrousuario: " +store.state.username);
+      store.dispatch('getUsername', { username:  store.state.username})
+        .then((response) => {
+          store.state.user = response.data;
+          next()
+        }) 
+        .catch(() => this.error ="Fallo")
+      //store.state.user = store.state.actions.getUsername(store.state.username);
+    } else {
+      next('/login')
+    }
+
+  }*/
+ 
 })
+

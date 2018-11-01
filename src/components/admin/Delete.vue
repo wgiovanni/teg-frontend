@@ -1,13 +1,17 @@
 <template>
     <div>
-        <h2>Eliminar usuario {{first_name}}</h2>
-        <form @submit.prevent="deleteUser">
-            <p>La acción no puede deshacerse.</p>
-            <router-link to="/admin" tag="button" class="btn btn-primary">
-                Cancelar
-            </router-link>
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
+        <div class="container margen">
+            <div class="col s12"><h2>Eliminar el usuario {{first_name}}</h2></div>
+            <form class="col s12" @submit.prevent="deleteUser">
+                <div class="form-group">
+                    <p>La acción no puede deshacerse.</p>
+                    <router-link to="/admin" tag="button" class="btn btn-primary">
+                        Cancelar
+                    </router-link>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -28,7 +32,7 @@ export default {
     },
     methods: {
         findById () {
-            const path = 'http://localhost:8084/user'.concat('/' + this.id);
+            const path = 'http://localhost:8084/api/v1/user'.concat('/' + this.id);
             axios.get(path)
             .then(request => this.findByIdSuccess(request))
             .catch(() => console.log("Error Login"))
@@ -41,7 +45,7 @@ export default {
             this.password = request.data.password;
         },
         deleteUser () {
-            const path = 'http://localhost:8084/user/' + this.id;
+            const path = 'http://localhost:8084/api/v1/user/' + this.id;
             axios.delete(path)
                 .then(request => this.userSuccessful(request))
                 .catch(() => this.userFailed())

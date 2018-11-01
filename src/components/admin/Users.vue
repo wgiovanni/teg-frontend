@@ -1,44 +1,47 @@
 <template>
-    <div class="container col-md-4">
-      <div v-if="loading == true">
-        <Spinner></Spinner>
+    <div class="container margen">
+      <div v-if="loading==true" class="d-flex justify-content-center">
+          <Spinner></Spinner>
       </div>
       <div v-else>
+        <div><h2>Listado de usuarios</h2></div>
         <router-link to="/admin/new" tag="button" class="btn btn-primary">
           <i class="material-icons">add</i>
         </router-link>
-        <table class="table border border-primary">
-          <thead class="thead-dark">
-              <tr>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Apellido</th>
-                  <th scope="col">Usuario</th>
-                  <th scope="col">Correo</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Acciones</th>
-                  <th></th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr v-for="user in users" :key="user.id">
-                  <td>{{ user.first_name }}</td>
-                  <td>{{ user.last_name }}</td>
-                  <td>{{ user.username }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.name }}</td> <!--El nombre del role-->
-                  <td>
-                    <router-link :to="`/admin/edit/${user.id}`" tag="button" class="btn btn-warning">
-                      <i class="material-icons">edit</i>
-                    </router-link>
-                  </td>
-                  <td>
-                    <router-link :to="`/admin/delete/${user.id}`" tag="button" class="btn btn-danger">
-                      <i class="material-icons">delete</i>
-                    </router-link>
-                  </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="table-responsive-md">
+          <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Acciones</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in users" :key="user.id">
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.name }}</td> <!--El nombre del role-->
+                    <td>
+                      <router-link :to="`/admin/edit/${user.id}`" tag="button" class="btn btn-warning">
+                        <i class="material-icons">edit</i>
+                      </router-link>
+                    </td>
+                    <td>
+                      <router-link :to="`/admin/delete/${user.id}`" tag="button" class="btn btn-danger">
+                        <i class="material-icons">delete</i>
+                      </router-link>
+                    </td>
+                </tr>
+              </tbody>
+            </table>   
+        </div>
        </div>  
   </div>
 </template>
@@ -65,7 +68,7 @@ export default {
   },
   methods: {
     usersAll () {
-      const path = 'http://localhost:8084/user';
+      const path = 'http://localhost:8084/api/v1/user';
       this.loading = true;
       axios.get(path)
        .then(request => this.userSuccessful(request))
@@ -124,3 +127,8 @@ export default {
 }*/
 </script>
 
+<style>
+.margen {
+    margin-top: 2%;    
+}
+</style>

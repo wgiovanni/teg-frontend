@@ -1,12 +1,8 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                RANKING QS 
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+        <a class="navbar-brand mr-auto" href="/">
+            <img src="../assets/rankings_logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            RANKING QS 
+        </a>
     </nav>
 </template>

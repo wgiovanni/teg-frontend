@@ -1,51 +1,47 @@
 <template>
     <div>
-        <div class="container">
+        <div class="container margen">
+          <div class="col s12"><h2>Nuevo usuario</h2></div>
             <form class="col s12" @submit.prevent="savePost">
               <div class="alert alert-danger" v-if="error">{{ error }}</div>
-              <div class="form-group row">
-                <label for="first_name" class="col-sm-4 col-form-label text-md-right">Nombre</label>
-                <div class="col-md-6">
-                  <input v-model="first_name" type="text" id="first_name" class="form-control" placeholder="Nombre" required>
-                </div>
+              <div class="form-group">
+                <label for="first_name">Nombre</label>
+                <input v-model="first_name" type="text" id="first_name" class="form-control" placeholder="Nombre" required>
               </div>
-              <div class="form-group row">
-                <label for="last_name" class="col-sm-4 col-form-label text-md-right">Apellido</label>
-                <div class="col-md-6">
-                  <input v-model="last_name" type="text" id="last_name" class="form-control" placeholder="Apellido" required>
-                </div>
+              <div class="form-group">
+                <label for="last_name">Apellido</label>
+                <input v-model="last_name" type="text" id="last_name" class="form-control" placeholder="Apellido" required>
               </div>
-              <div class="form-group row">
-                <label for="username" class="col-sm-4 col-form-label text-md-right">Nombre de usuario</label>
-                <div class="col-md-6">
-                  <input v-model="username" type="text" id="username" class="form-control" placeholder="Nombre de usuario" required>
-                </div>
+              <div class="form-group">
+                <label for="username">Nombre de usuario</label>
+                <input v-model="username" type="text" id="username" class="form-control" placeholder="Nombre de usuario" required>
               </div>
-              <div class="form-group row">
-                <label for="inputEmail" class="col-sm-4 col-form-label text-md-right">Correo Electrónico</label>
-                <div class="col-md-6">
-                  <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required autofocus>
-                </div>
+              <div class="form-group">
+                <label for="inputEmail">Correo Electrónico</label>
+                <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required autofocus>
               </div>
-              <div class="form-group row">
-                <label for="inputPassword" class="col-md-4 col-form-label text-md-right">Contraseña</label>
-                <div class="col-md-6">
-                  <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
-                </div>
+              <div class="form-group">
+                <label for="inputPassword">Contraseña</label>
+                <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
               </div>
-              <div class="form-group row">
-                <label for="inputRole" class="col-md-4 col-form-label text-md-right">Role</label>
-                <div class="col-md-6">
-                  <select class="form-control" v-model="id_role">
-                    <option disabled value="">Seleccionar Role</option>
-                    <option v-for="role in roles" :key="role.id" v-bind:value="role.id">{{ role.name }}</option>
-                  </select>
-                </div>
+              <div class="form-group">
+                <label for="inputRole">Role</label>
+                <select class="form-control" v-model="id_role">
+                  <option disabled value="">Seleccionar Role</option>
+                  <option v-for="role in roles" :key="role.id" v-bind:value="role.id">{{ role.name }}</option>
+                </select>
               </div>
                 
               <div class="form-group row col-md-8">
-                  <a class="btn btn-danger" type="button" href="/admin">Cancelar</a>
+                <div>
+                  <!--a class="btn btn-danger margin" style="margin-right: 8px;" type="button" href="/admin">Cancelar</a-->
+                   <router-link to="/admin" tag="button" style="margin-right: 8px;" class="btn btn-danger">
+                   Cancelar
+                  </router-link>
+                </div>
+                <div>
                   <button class="btn btn-primary" type="submit">Guardar</button>
+                </div>
               </div>
             </form>
         </div>
@@ -76,7 +72,7 @@ export default {
   },
    methods: {
     savePost: function () {
-    const path = 'http://localhost:8084/user';
+    const path = 'http://localhost:8084/api/v1/user';
     //this.loading = true;
     axios.post(path, { 
       first_name: this.first_name, 
@@ -98,7 +94,7 @@ export default {
     this.error = 'User failed!'
     },
     roleAll () {
-      const path = 'http://localhost:8084/role';
+      const path = 'http://localhost:8084/api/v1/role';
       this.loading = true;
       axios.get(path)
        .then(request => this.roleSuccessful(request))
@@ -117,3 +113,9 @@ export default {
   }
 }
 </script>
+<style>
+.margen {
+    margin-top: 2%;    
+}
+
+</style>

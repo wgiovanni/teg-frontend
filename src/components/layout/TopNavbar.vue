@@ -41,7 +41,7 @@ export default {
   name: "TopNavbar",
   data: () => ({
     usuario: {
-      username: "xxxx"
+      username: localStorage.getItem('username') || null
     },
     links: [
       {

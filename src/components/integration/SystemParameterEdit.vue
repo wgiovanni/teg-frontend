@@ -1,37 +1,36 @@
 <template>
     <div>
-        <div class="container">
+        <div class="container margen">
+          <div class="col s12"><h2>Editar parámetro del sistema</h2></div>
             <form class="col s12" @submit.prevent="save">
               <div class="alert alert-danger" v-if="error">{{ error }}</div>
-              <div class="form-group row">
-                <label for="codigo" class="col-sm-4 col-form-label text-md-right">Código</label>
-                <div class="col-md-6">
-                  <input v-model="codigo" type="text" id="codigo" class="form-control" placeholder="Código" readonly>
-                </div>
+              <div class="form-group">
+                <label for="codigo">Código</label>
+                <input v-model="codigo" type="text" id="codigo" class="form-control" placeholder="Código" readonly>
               </div>            
-              <div class="form-group row">
-                <label for="nombre" class="col-sm-4 col-form-label text-md-right">Nombre</label>
-                <div class="col-md-6">
-                  <input v-model="nombre" type="text" id="nombre" class="form-control" placeholder="Nombre" required>
-                </div>
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input v-model="nombre" type="text" id="nombre" class="form-control" placeholder="Nombre" required>
               </div>
-              <div class="form-group row">
-                <label for="descripcion" class="col-sm-4 col-form-label text-md-right">Descripción</label>
-                <div class="col-md-6">
-                  <!--input v-model="descripcion" type="text" id="descripcion" class="form-control" placeholder="Descripción" required-->
-                  <textarea v-model="descripcion" class="form-control" id="descripcion" rows="3" required></textarea>
-                </div>
+              <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <!--input v-model="descripcion" type="text" id="descripcion" class="form-control" placeholder="Descripción" required-->
+                <textarea v-model="descripcion" class="form-control" id="descripcion" rows="3" required></textarea>
               </div>
-              <div class="form-group row">
-                <label for="definicion" class="col-sm-4 col-form-label text-md-right">Definición</label>
-                <div class="col-md-6">
-                  <!--input v-model="definicion" type="text" id="definicion" class="form-control" placeholder="Definición" required-->
-                  <textarea v-model="definicion" class="form-control" id="definicion" rows="3" required></textarea>
-                </div>
+              <div class="form-group">
+                <label for="definicion">Definición</label>
+                <!--input v-model="definicion" type="text" id="definicion" class="form-control" placeholder="Definición" required-->
+                <textarea v-model="definicion" class="form-control" id="definicion" rows="3" required></textarea>
               </div>
-              <div class="form-group row col-6">
-                <a class="btn btn-danger" type="button" href="/integration">Cancelar</a>
-                <button class="btn btn-primary" type="submit">Guardar</button>
+              <div class="form-group row col-md-8">
+                <div>
+                   <router-link to="/integration" tag="button" style="margin-right: 8px;" class="btn btn-danger">
+                   Cancelar
+                  </router-link>
+                </div>
+                <div>
+                  <button class="btn btn-primary" type="submit">Guardar</button>
+                </div>
               </div>
             </form>
         </div>
@@ -91,3 +90,8 @@ export default {
   }
 }
 </script>
+<style>
+.margen {
+    margin-top: 2%;    
+}
+</style>
