@@ -63,7 +63,7 @@ export const router = new Router({
           component: SystemParameterList,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
-            if (store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -122,10 +122,4 @@ router.beforeEach((to, from, next) => {
     return next('/login')
   }*/
   next();
-  /*store.dispatch('login').then(response => {
-    next()
-  }).catch(error => {
-    next('/login')
-  })*/
-
 })

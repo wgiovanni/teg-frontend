@@ -54,9 +54,13 @@
 
 <script>
 import axios from 'axios';
+import Spinner from '@/components/Spinner'
 
 export default {
   name: 'New',
+  components: {
+    Spinner
+  },
    data () {
     return {
         first_name: '',
@@ -66,12 +70,14 @@ export default {
         password: '',
         id_role: '',
 		    error: false, 
-        roles: []
+        roles: [],
+        loading: false
     }
   },
    methods: {
     savePost: function () {
-    const path = 'http://localhost:5000/user';
+    const path = 'http://localhost:8084/user';
+    //this.loading = true;
     axios.post(path, { 
       first_name: this.first_name, 
       last_name: this.last_name, 
@@ -85,18 +91,21 @@ export default {
     },
     userSuccessful (req) {
     //this.$parent.usersAll(); //Esta linea actualiza la tabla de usuarios en caso de que se ingrese un nuevo usuario.
+    //loading = false
     this.$router.replace(this.$route.query.redirect || '/admin')
     },
     userFailed () {
     this.error = 'User failed!'
     },
     roleAll () {
-      const path = 'http://localhost:5000/role';
+      const path = 'http://localhost:8084/role';
+      this.loading = true;
       axios.get(path)
        .then(request => this.roleSuccessful(request))
         .catch(() => this.roleFailed())
     },
     roleSuccessful (req) {
+      this.loading = false;
       this.roles = req.data;
     },
     roleFailed () {

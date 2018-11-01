@@ -1,7 +1,7 @@
 //api/index.js
 import axios from 'axios'
 
-const API_URL = "http://localhost:5000"
+const API_URL = "http://localhost:8084"
 
 export function fetchUsers() {
     return axios.get(`${API_URL}/user`)
@@ -9,6 +9,10 @@ export function fetchUsers() {
 
 export function fetchUser(userId) {
     return axios.get(`${API_URL}/user/${userId}`)
+}
+
+export function getByUsername(username) {
+    return axios.get(`${API_URL}/user/${username}`)
 }
 
 export function updateUser (userResponse) {
