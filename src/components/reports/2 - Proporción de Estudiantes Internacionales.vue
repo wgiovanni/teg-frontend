@@ -76,91 +76,30 @@ import Plotly from "plotly.js";
 
 var reportName = "Proporción de Estudiantes Internacionales en Relación con el Total de Estudiantes de la Universidad";
 var img;
-
-var totalEstudiantes = 65000;
-var totalInternacional = 1246;
-var totalNacional;
-totalNacional = totalEstudiantes - totalInternacional;
-
  
 export default {
   mounted() {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
 
-    
-    var layout = {         
-        xaxis: {
-          fixedrange: true
-        },
-        yaxis: {
-          fixedrange: true
-        },
-        editable: false,
-        autosize: true,
-        responsive: true,
-        margin: {
-          l: 100,
-          r: 130,
-          b: 100,
-          t: 100,
-          pad: -1
-        },
-        //width: 720,
-        //height: 480,
-      };
-
-      var config = {
-        displaylogo: false,
-        displayModeBar: false,
-        doubleClick: "reset+autosize",
-        responsive: true
-      };
-
-      // GRAPH
-
-     // Exports plot as image
-      var d3 = Plotly.d3;
-      var img_jpg = d3.select("#jpg-export");
-     // Displays graph
-      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
-      //  Saves plot as image
-        gd.on("plotly_legendclick", () => false);
-
-        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
-          img_jpg.attr("src", url);
-          return Plotly.toImage(gd, {
-            format: "jpeg",       
-            height: 768,
-            width: 1024,
-          })
-        });
-      });//plotly_plot
-
   },
 
   data() {
     return {
       
-      data: [{      
-
-        values: [totalInternacional, totalNacional],
-        labels: ['Estudiantes Internacionales', 'Estudiantes Nacionales'],
-        type: "pie",
-        marker: { colors:['#FF4036','#2AC63D'] }
-    }]
+      data: []
 
     };
   },
 
   created() {
-    //this.load();
+    this.load();
   },
 
   methods: { 
-    /*
+    
      load() {
-      const path = "http://localhost:5000/api/v1/estudiantes-internacionales-proporcion";
+      const path = "http://127.0.0.1:5000/api/v1/estudiantes-internacionales-proporcion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -169,17 +108,23 @@ export default {
 
     successful(req) {    
 
+      console.log("Hola");
+
       var datos = []; // Saves data from JSON
       var totalEstudiantes;
       var totalInternacional;
       var totalNacional;
-      var i;
-      var size = req.data.length;
       var d = req.data;
 
-      totalEstudiantes = d[0][""];
-      totalInternacional = d[1][""];
+      console.log(d);
+
+      totalInternacional = d["estudiantes-internacionales"];
+      totalEstudiantes = d["total-estudiantes"];
+      
       totalNacional = totalEstudiantes - totalInternacional;
+
+      console.log(totalEstudiantes);
+      console.log(totalInternacional);
 
       datos.push({
         
@@ -250,7 +195,7 @@ export default {
       this.error = "User failed!";
     },
 
-    */
+    
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");

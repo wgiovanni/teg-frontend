@@ -212,7 +212,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
  
-  /*
+  
   if (localStorage.getItem('username')){
     console.log("entro aqui");
     if (authRequired && (store.state.username == undefined || store.state.username == null || store.state.username == '')){
@@ -229,13 +229,13 @@ router.beforeEach((to, from, next) => {
   } else {
     console.log("entro aqui2");
     return next('/login');
-    /*if (authRequired){
+    if (authRequired){
       console.log("entro aqui2.1");
       
     }
   }
-  console.log("usuario: " +store.state.username);*/
-  /*if (authRequired && !localStorage.getItem('username') && (store.state.username == undefined || store.state.username == null || store.state.username == '')){
+  console.log("usuario: " +store.state.username);
+  if (authRequired && !localStorage.getItem('username') && (store.state.username == undefined || store.state.username == null || store.state.username == '')){
     store.state.username = localStorage.getItem('username');
     //store.state.user = store.state.actions.getUsername(store.state.username)
     return next('/login');
@@ -255,7 +255,7 @@ router.beforeEach((to, from, next) => {
       next('/login')
     }
 
-  }*/
+  }
  
 })
 

@@ -76,17 +76,20 @@ import Plotly from "plotly.js";
 var reportName = "Proporción de Profesores con Doctorado o PhD";
 var img;
 
+/*
 var totalProfesores = 23541;
 var totalDoctorado = 1250;
 var total2;
 
 total2 = totalProfesores - totalDoctorado;
+*/
 
 export default {
   mounted() {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
 
+/*
     // LAYOUT
 
     var layout = {
@@ -136,18 +139,20 @@ export default {
         });
       });
     }); //plotly_plot
+
+*/
   },
 
   data() {
     return {
-      data: [
+      data: [/*
         {
           values: [totalDoctorado, total2],
           labels: ["Profesores con Doctorado", "Profesores sin Doctorado"],
           type: "pie",
           marker: { colors: ["#ff9f43", "#54a0ff"] }
         }
-      ]
+     */ ]
     };
   },
 
@@ -156,9 +161,9 @@ export default {
   },
 
   methods: {
-    /*
+    
      load() {
-      const path = "http://localhost:5000/api/v1/profesor-doctorado-proporcion";
+      const path = "http://127.0.0.1:5000/api/v1/profesor-doctorado-proporcion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -175,6 +180,8 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
+      console.log(d);
+
       totalDoctorado = d[0]["profesores-doctorado"];
       totalProfesores = d[1]["total-profesores"];
 
@@ -185,8 +192,8 @@ export default {
 
       datos.push({
         
-        values: [4, 25],
-        labels: ['Profesores con Doctorado', 'Profesores'],
+        values: [totalDoctorado, total2],
+        labels: ['Profesores con Doctorado', 'Profesores sin Doctorado'],
         type: "pie",
         marker: { colors:['#ff9f43','#54a0ff']  }
       });
@@ -251,7 +258,7 @@ export default {
       this.error = "User failed!";
     },
 
-    */
+   
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");

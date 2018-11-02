@@ -4,7 +4,7 @@
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
+    <div ref="pie" class="vue-plotly"/>
       
     <!--Download buttons--> 
     <div class="row">  
@@ -33,12 +33,12 @@
 
 .download-buttons {
   text-align: center;
-  width: 100%
+  width: 100%;
 }
 
 .button {
   background-color: #f2f2f2;
-  font-size: 14px;  
+  font-size: 14px;
   padding: 8px 20px;
   margin: 10px;
   border: 12px;
@@ -68,20 +68,22 @@
 
 
 <script>
-
 import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "estudiantes-sexo-facultad";
+var reportName = "Proporción de Profesores Internacionales";
 var img;
+
 
 export default {
   mounted() {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
-   },
+
+  
+  },
 
   data() {
     return {
@@ -94,9 +96,9 @@ export default {
   },
 
   methods: {
-
+    
      load() {
-      const path = "http://127.0.0.1:5000/api/v1/estudiantes-sexo-facultad";
+      const path = "http://127.0.0.1:5000/api/v1/profesores-internacionales-proporcion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -106,51 +108,31 @@ export default {
     successful(req) {    
 
       var datos = []; // Saves data from JSON
-      var facultades = [];
-      var yMasculino = [];
-      var yFemenino = [];
-      var i;
-      var size = req.data.length;
+      var totalProfesores;
+      var totalInternacional;
+      var totalNacional;   
       var d = req.data;
 
-      for (i = 0; i < size; i++) {
-        facultades.push(d[i]["facultad"]);
-        yMasculino.push(d[i]["masculino"]);
-        yFemenino.push(d[i]["femenino"]);
-      }
-
-      console.log(facultades);
-      console.log(yMasculino);
-      console.log(yFemenino);
+      totalInternacional = d["profesores-internacionales"];
+      totalProfesores = d["total-profesores"];
+      totalNacional = totalProfesores - totalInternacional;
 
       datos.push({
-        x: facultades,
-        y: yMasculino,
-        //text: [],
-        textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
-        name: "Masculino",
-        type: "bar",
-        marker: { color: "#00cec9" }
-      });
-
-      datos.push({
-        x: facultades,
-        y: yFemenino,
-        //text:[],
-        name: "Femenino",
-        type: "bar",
-        marker: { color: "rgb(195,86,234)" }
+        
+        values: [totalInternacional, totalNacional],
+        labels: ['Profesores Internacionales', 'Profesores Nacionales'],
+        type: "pie",
+        marker: { colors:['#182C61','#6D214F'],
+                  line: {color: "#FFFFFF"}  },
+        insidetextfont: {color: "#FFFFFF"}
       });
 
       console.log(datos);
       this.data = datos;
 
-      /*** LAYOUT ***/
+      //LAYOUT
 
-      var layout = {
-        //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
+      var layout = {         
         xaxis: {
           fixedrange: true
         },
@@ -161,10 +143,10 @@ export default {
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 200,
-          t: 50,
+          l: 100,
+          r: 130,
+          b: 100,
+          t: 100,
           pad: -1
         },
         //width: 720,
@@ -178,18 +160,17 @@ export default {
         responsive: true
       };
 
+      // GRAPH
 
-      /*** GRAPH ***/
-
-      //Exports plot as image
+     // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
-      // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //Saves plot as image
+     // Displays graph
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}, {title: "hola"}).then(function(url) {
+        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",       
@@ -205,11 +186,13 @@ export default {
       this.error = "User failed!";
     },
 
+    
+
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");
       doc.setFontType("bold");
-      doc.text(reportName, 15, 15);     
+      doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 10, 10);
       doc.save("Reporte - " + reportName + ".pdf");
     }, //end_of_download()

@@ -4,7 +4,7 @@
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="pie" class="vue-plotly"/>
+    <div ref="bar" class="vue-plotly"/>
       
     <!--Download buttons--> 
     <div class="row">  
@@ -33,12 +33,12 @@
 
 .download-buttons {
   text-align: center;
-  width: 100%;
+  width: 100%
 }
 
 .button {
   background-color: #f2f2f2;
-  font-size: 14px;
+  font-size: 14px;  
   padding: 8px 20px;
   margin: 10px;
   border: 12px;
@@ -68,99 +68,37 @@
 
 
 <script>
+
 import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Proporción de Profesores Internacionales";
+var reportName = "Citaciones por Facultad";
 var img;
-
-var totalProfesores = 23541;
-var totalInternacional = 694;
-var totalNacional;
-
-totalNacional = totalProfesores - totalInternacional;
 
 export default {
   mounted() {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
 
-    var layout = {
-      xaxis: {
-        fixedrange: true
-      },
-      yaxis: {
-        fixedrange: true
-      },
-      editable: false,
-      autosize: true,
-      responsive: true,
-      margin: {
-        l: 100,
-        r: 130,
-        b: 100,
-        t: 100,
-        pad: -1
-      }
-      //width: 720,
-      //height: 480,
-    };
-
-    var config = {
-      displaylogo: false,
-      displayModeBar: false,
-      doubleClick: "reset+autosize",
-      responsive: true
-    };
-
-    // GRAPH
-
-    // Exports plot as image
-    var d3 = Plotly.d3;
-    var img_jpg = d3.select("#jpg-export");
-    // Displays graph
-    Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
-      //  Saves plot as image
-      gd.on("plotly_legendclick", () => false);
-
-      Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
-        img_jpg.attr("src", url);
-        return Plotly.toImage(gd, {
-          format: "jpeg",
-          height: 768,
-          width: 1024
-        });
-      });
-    }); //plotly_plot
-  },
+    },
 
   data() {
     return {
-      data: [
-        {
-          values: [totalInternacional, totalNacional],
-          labels: ["Profesores Internacionales", "Profesores Nacionales"],
-          type: "pie",
-          marker: { colors: ["#182C61", "#6D214F"], 
-                    line: { color: "#000000" }
-                  },
-          insidetextfont: {color: "#000000"}
-          
-        }
-      ]
+      data: []
     };
   },
 
   created() {
-    //this.load();
+    this.load();
   },
 
   methods: {
-    /*
+
+    
      load() {
-      const path = "http://localhost:5000/profesores-internacionales-proporcion";
+      const path = "http://127.0.0.1:5000/api/v1/citas-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -170,25 +108,85 @@ export default {
     successful(req) {    
 
       var datos = []; // Saves data from JSON
-      var totalProfesores;
-      var totalInternacional;
-      var totalNacional;   
+      var facultades = [];
+      var numCitaciones = [];
+      var i;
+      var size = req.data.length;
       var d = req.data;
 
-      totalInternacional = d[0][""];
-      totalProfesores = d[1][""];
-      totalNacional = totalProfesores - totalInternacional;
+      for (i = 0; i < size; i++) {
+        facultades.push(d[i]["facultad"]);
+        numCitaciones.push(d[i]["citaciones"]);
+      }
+
+      console.log(facultades);
+      console.log(numCitaciones);
 
       datos.push({
-        
-        values: [totalInternacional, totalNacional],
-        labels: ['Profesores Internacionales', 'Profesores Nacionales'],
-        type: "pie",
-        marker: { colors:['#182C61','#6D214F']  }
+        x: facultades,
+        y: numCitaciones,
+        name: "Citaciones",
+        type: "bar",
+        marker: { color: "#00cec9" }
       });
+
 
       console.log(datos);
       this.data = datos;
+
+      // LAYOUT
+
+      var layout = {
+        //title:"",
+        //titlefont:{size: 24}, 
+        //annotations: [{}],             
+        xaxis: {
+          fixedrange: true
+        },
+        yaxis: {
+          fixedrange: true
+        },
+        editable: false,
+        autosize: true,
+        responsive: true,
+        margin: {
+          l: 200,
+          r: 200,
+          b: 200,
+          t: 50,
+          pad: -1
+        },
+        //width: 720,
+        //height: 480,
+      };
+
+      var config = {
+        displaylogo: false,
+        displayModeBar: false,
+        doubleClick: "reset+autosize",
+        responsive: true
+      };
+
+
+      // GRAPH
+
+      //Exports plot as image
+      var d3 = Plotly.d3;
+      var img_jpg = d3.select("#jpg-export");
+      // Displays graph
+      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
+        //Saves plot as image
+        gd.on("plotly_legendclick", () => false);
+
+        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+          img_jpg.attr("src", url);
+          return Plotly.toImage(gd, {
+            format: "jpeg",       
+            height: 768,
+            width: 1024,
+          })
+        });
+      });//plotly_plot
 
     }, //successful(req)
 
@@ -196,13 +194,13 @@ export default {
       this.error = "User failed!";
     },
 
-    */
+    
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");
       doc.setFontType("bold");
-      doc.text(reportName, 15, 15);
+      doc.text(reportName, 15, 15);     
       doc.addImage(img, "JPG", 10, 10);
       doc.save("Reporte - " + reportName + ".pdf");
     }, //end_of_download()
