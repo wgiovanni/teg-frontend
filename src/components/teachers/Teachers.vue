@@ -1,18 +1,17 @@
 <template>
 	<div class="container">
 		<div class="large-12 medium-12 small-12 cell">
-      <div id= "i" class="alert alert-secondary" role="alert">
-      Por favor ingrese un archivo .csv
-    </div>
-    <div class="archivo normal" id="archi">
-		  <label>Archivo
-		    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-		  </label>
-		  <button class="btn btn-outline-secondary" id="enviar"v-on:click="submitFile()">Enviar</button>
-      </div>
+            <div id= "i" class="alert alert-secondary" role="alert">
+                Por favor ingrese un archivo .csv
+            </div>
+            <div class="archivo normal row" id="archi">
+                <label>Archivo
+                    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                </label>
+                <button class="btn btn-outline-secondary" id="enviar" v-on:click="submitFile()">Enviar</button>
+            </div>
 		</div>
 	</div>
-
 </template>
 
 <script>

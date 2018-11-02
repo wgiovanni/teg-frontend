@@ -5,7 +5,7 @@
       </div>
       <div v-else>
         <div><h2>Listado de usuarios</h2></div>
-        <router-link to="/admin/new" tag="button" class="btn btn-primary">
+        <router-link to="/admin/new" tag="button" class="btn btn-primary" style="display: -webkit-inline-box;">
           <i class="material-icons">add</i>
         </router-link>
         <div class="table-responsive-md">

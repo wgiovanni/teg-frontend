@@ -45,7 +45,7 @@ export const router = new Router({
           component: Students,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
-            if (store.state.user.name != "facultad") {
+            if (store.state.user.name != "facultad" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -60,7 +60,7 @@ export const router = new Router({
           component: Teachers,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
-            if (store.state.user.name != "facultad") {
+            if (store.state.user.name != "facultad" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -68,12 +68,12 @@ export const router = new Router({
               next()
             }
           }
-        },
+        },/*,
         {
           path: '/graduates',
           name: 'Graduates',
           component: Graduates
-        },
+        },*/
         {
           path: '/reports',
           name: 'Report',
@@ -180,16 +180,7 @@ router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
-  //const loggedIn = ;
-  //console.log(store.state.user.username);
-  
-  /*if (authRequired && (store.state.user.username == undefined || store.state.user.username == null)) {
 
-    //validador de token y todo lo demas
-    // https://stackoverflow.com/questions/43378726/checks-in-vue-router-beforeeach-not-restricting-access-to-routes
-    return next('/login')
-  }*/
-  //next();
   if (authRequired && !localStorage.getItem('username') && !localStorage.getItem('user')){
     console.log("entro1");
     console.log("mandar al login");
@@ -210,51 +201,6 @@ router.beforeEach((to, from, next) => {
         }) 
         .catch(() => this.error ="Fallo")
     next();
-  }
- 
-  
-  if (localStorage.getItem('username')){
-    console.log("entro aqui");
-    if (authRequired && (store.state.username == undefined || store.state.username == null || store.state.username == '')){
-      console.log("entro aqui1.1");
-      store.state.username = localStorage.getItem('username');
-      store.dispatch('getUsername', { username:  store.state.username})
-        .then((response) => {
-          store.state.user = response.data;
-          next()
-        }) 
-        .catch(() => this.error ="Fallo")
-      next();
-    }
-  } else {
-    console.log("entro aqui2");
-    return next('/login');
-    if (authRequired){
-      console.log("entro aqui2.1");
-      
-    }
-  }
-  console.log("usuario: " +store.state.username);
-  if (authRequired && !localStorage.getItem('username') && (store.state.username == undefined || store.state.username == null || store.state.username == '')){
-    store.state.username = localStorage.getItem('username');
-    //store.state.user = store.state.actions.getUsername(store.state.username)
-    return next('/login');
-  } else {
-    if (!authRequired && localStorage.getItem('username') && (store.state.username != undefined || store.state.username != null || store.state.username == '')){
-      console.log("entro aqui");
-      store.state.username = localStorage.getItem('username');
-      console.log("entrrousuario: " +store.state.username);
-      store.dispatch('getUsername', { username:  store.state.username})
-        .then((response) => {
-          store.state.user = response.data;
-          next()
-        }) 
-        .catch(() => this.error ="Fallo")
-      //store.state.user = store.state.actions.getUsername(store.state.username);
-    } else {
-      next('/login')
-    }
-
   }
  
 })

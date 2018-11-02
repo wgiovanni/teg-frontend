@@ -54,23 +54,23 @@ export default {
         name: "Profesores",
         path: "/teachers"
       },
-      {
+      /*{
         id: 2,
         name: "Egresados",
         path: "/graduates"
-      },
+      },*/
       {
-        id: 3,
+        id: 2,
         name: "Integración",
         path: "/integration"
       },
       {
-        id: 4,
+        id: 3,
         name: "Reportes",
         path: "/reports"
       },
       {
-        id: 5,
+        id: 4,
         name: "Administración",
         path: "/admin"
       }

@@ -39,7 +39,7 @@
   <div class="btn-group-vertical btn-group-toggle text-center">
   
 <div class="custom-control custom-radio selec">
-  <input type="radio" class="custom-control-input" id="Informacion-estudiante"  v-on:change="cambia_titulo();" name="groupOfDefaultRadios"checked>
+  <input type="radio" class="custom-control-input" id="Informacion-estudiante"  v-on:change="cambia_titulo();" name="groupOfDefaultRadios" checked>
   <label class="custom-control-label " for="Informacion-estudiante"><br>Informacion estudiante</label>
 </div>
 
