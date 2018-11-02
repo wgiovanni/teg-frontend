@@ -9,9 +9,9 @@ import Users from '@/components/admin/Users'
 import Dashboard from '@/components/layout/Dashboard'
 import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
-import Reports2 from '@/components/reports/Reports2'
+//import Reports2 from '@/components/reports/Reports2'
 import Report from '@/components/reports/Report'
-import StudentSexFaculty from '@/components/reports/StudentSexFaculty'
+//import StudentSexFaculty from '@/components/reports/StudentSexFaculty'
 //import Integration from '@/components/integration/Integration'
 import SystemParameterList from '@/components/integration/SystemParameterList'
 import SystemParameterEdit from '@/components/integration/SystemParameterEdit'
@@ -79,11 +79,11 @@ export const router = new Router({
           name: 'Report',
           component: Report
         },
-        {
-          path: '/report/rm/estudiantes-sexo-facultad',
-          name: 'Estudiantes-Sexo-Facultad',
-          component: StudentSexFaculty
-        },
+       /* {
+          path: '/report/CitationsPerFaculty',
+          name: 'Citaciones por Facultad',
+          component: CitationsPerFaculty
+        },*/
         {
           path: '/integration',
           name: 'SystemParameterList',

@@ -4,7 +4,7 @@
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
+    <div ref="pie" class="vue-plotly"/>
       
     <!--Download buttons--> 
     <div class="row">  
@@ -81,7 +81,6 @@ export default {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
 
-  
     return {
       data: []
     };
@@ -92,80 +91,55 @@ export default {
   },
 
   methods: {
-    
-     load() {
-      const URL = "http://127.0.0.1:5000/api/v1";
-      const pathStudent = "/estudiantes-total";
-      const pathTeacher = "/profesor-total";
+    load() {
+      const path =
+        "http://127.0.0.1:5000/api/v1/profesor-estudiante-proporcion";
 
       axios
-        .get(URL + pathStudent)
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
-
-      axios
-        .get(URL + pathTeacher)
+        .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
-    successful(req) {   
-          
-
+    successful(req) {
       var datos = []; // Saves data from JSON
       var totalEstudiantes;
-      var totalEmpleados;      
+      var totalEmpleados;
       var d = req.data;
 
-      totalEmpleados = d["total-empleado"];   
-      
+      totalEmpleados = d["total-empleado"];
+      totalEstudiantes = d["total-estudiantes"];
+
       console.log("Total Empleados: ", totalEmpleados);
- 
-    }, //successful(req)
 
-    successful(req){
-
-        var d = req.data;
-        var totalEstudiantes;
-        totalEstudiantes = d["total-estudiantes"];
-
-         console.log("Total Estudiantes: ", totalEstudiantes);
-
-        datos.push({
-        x: totalEmpleados,
-        y: totalEstudiantes,     
-        name: "Estudiantes por Facultad",
-       // orientation: 'h',
-        type: "bar",
-        marker: { color: "#2C3A47",
-                  width: 1 }
+      datos.push({
+        
+        values: [totalEmpleados, totalEstudiantes],
+        labels: ['Docentes Empleados', 'Estudiantes Matriculados'],
+        type: "pie",
+        marker: { colors:['#f0932b','#be2edd']  }
       });
 
-      
       console.log(datos);
       this.data = datos;
 
       // LAYOUT
 
-      var layout = {
-        //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
+       var layout = {         
         xaxis: {
           fixedrange: true
         },
         yaxis: {
           fixedrange: true
         },
-       // barmode: 'stack',
         editable: false,
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 200,
-          t: 50,
+          l: 100,
+          r: 130,
+          b: 100,
+          t: 100,
           pad: -1
         },
         //width: 720,
@@ -179,15 +153,14 @@ export default {
         responsive: true
       };
 
+    // GRAPH
 
-      // GRAPH
-
-      //Exports plot as image
+     // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
-      // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //Saves plot as image
+     // Displays graph
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
         Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
@@ -200,15 +173,11 @@ export default {
         });
       });//plotly_plot
 
-
-
-    },
+    }, //successful(req)
 
     failed() {
       this.error = "User failed!";
     },
-
-    
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");

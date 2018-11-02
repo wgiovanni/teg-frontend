@@ -4,7 +4,7 @@
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
+    <div ref="pie" class="vue-plotly"/>
       
     <!--Download buttons--> 
     <div class="row">  
@@ -73,7 +73,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Proporción de Estudiantes por Facultad";
+var reportName = "Relación entre Docentes Empleados y Alumnos Matriculados";
 var img;
 
 export default {
@@ -81,7 +81,6 @@ export default {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
 
-  
     return {
       data: []
     };
@@ -92,74 +91,41 @@ export default {
   },
 
   methods: {
-    
-     load() {
-      const path = "http://127.0.0.1:5000/api/v1/estudiantes-facultad";
+    load() {
+      const path =
+        "http://127.0.0.1:5000/api/v1/profesor-estudiante-proporcion";
+
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
-    successful(req) {    
-
+    successful(req) {
       var datos = []; // Saves data from JSON
       var totalEstudiantes;
-      var studentsTotal = [];
-      var facultades = [];
-      var nombreFacultad = [];
-      var estudiantesFacultad = [];
-      var i;
-      var size;
+      var totalEmpleados;
       var d = req.data;
 
-      totalEstudiantes = d[total-estudiantes];
-      facultades = d[facultad];
-      size = facultades.lenght;
+      totalEmpleados = d["total-empleado"];
+      totalEstudiantes = d["total-estudiantes"];
 
-      console.log(totalEStudiantes);
-      console.log(facultades);
-
-      for (i = 0; i < 7; i++) {
-        studentsTotal[i] = totalEstudiantes;
-      }
-
-      console.log(studentsTotal);
-      
-      for (i = 1; i < size; i++) {
-        nombreFacultad.push(facultades[i]["nombre"]);
-        estudiantesFacultad.push(facultades[i]["total"]);
-      }
-
-      console.log(facultades);
-      console.log(numEstudiantes);
-
-   datos.push({
-        x: estudiantesFacultad,
-        y: nombreFacultad,        
-        name: "Facultades",
-        type: "bar",
-        marker: { color: "#00cec9" }
-      });
+      console.log("Total Empleados: ", totalEmpleados);
 
       datos.push({
-        x: studentsTotal,
-        y: nombreFacultad,
-        name: "Total",
-        type: "bar",
-        marker: { color: "rgb(195,86,234)" }
+        
+        values: [totalEmpleados, totalEstudiantes],
+        labels: ['Docentes Empleados', 'Estudiantes Matriculados'],
+        type: "pie",
+        marker: { colors:['#f0932b','#be2edd']  }
       });
-
 
       console.log(datos);
       this.data = datos;
 
       // LAYOUT
 
-      var layout = {
-        //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
+       var layout = {         
         xaxis: {
           fixedrange: true
         },
@@ -170,10 +136,10 @@ export default {
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 200,
-          t: 50,
+          l: 100,
+          r: 130,
+          b: 100,
+          t: 100,
           pad: -1
         },
         //width: 720,
@@ -187,15 +153,14 @@ export default {
         responsive: true
       };
 
+    // GRAPH
 
-      // GRAPH
-
-      //Exports plot as image
+     // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
-      // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //Saves plot as image
+     // Displays graph
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
         Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
@@ -213,8 +178,6 @@ export default {
     failed() {
       this.error = "User failed!";
     },
-
-    
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
