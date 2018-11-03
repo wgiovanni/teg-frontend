@@ -116,8 +116,8 @@ export default {
 
       console.log(d);
 
-      totalDoctorado = d[0]["profesores-doctorado"];
-      totalProfesores = d[1]["total-profesores"];
+      totalDoctorado = d["profesores-doctorado"];
+      totalProfesores = d["total-profesores"];
 
       console.log(totalProfesores);
       console.log(totalDoctorado);

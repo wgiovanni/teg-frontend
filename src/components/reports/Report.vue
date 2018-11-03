@@ -1,5 +1,4 @@
 <template>
-
     <div class="container">        
       <div class="row">
         <div class="col-sm-3 col-md-3">
@@ -25,7 +24,7 @@
                   
                   <a href="/report/ProportionOfStudentsPerFaculty" class="list-group-item">Proporción de Estudiantes por Facultad</a>
                   <a href="/report/StaffWithAPhD" class="list-group-item">Profesores con Doctorado o PhD</a>
-                  <a href="/report/FacultySudentRatio" class="list-group-item">Relación entre Docentes Empleados y Alumnos Matriculados</a>
+                  <a href="/report/FacultyStudentRatio" class="list-group-item">Relación entre Docentes Empleados y Alumnos Matriculados</a>
                   
                 </div>
               </div>
