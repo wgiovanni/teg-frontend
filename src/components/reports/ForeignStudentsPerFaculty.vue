@@ -4,7 +4,7 @@
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="pie" class="vue-plotly"/>
+    <div ref="bar" class="vue-plotly"/>
       
     <!--Download buttons--> 
     <div class="row">  
@@ -73,7 +73,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Proporción de Estudiantes de Pregrado Extranjeros";
+var reportName = "Cantidad de Estudiantes Extranjeros por Facultad";
 var img;
 
 export default {
@@ -93,7 +93,7 @@ export default {
   methods: {
     load() {
       const path =
-        "http://127.0.0.1:5000/api/v1/estudiantes-pregrado-nacionalidad";
+        "http://127.0.0.1:5000/api/v1/estudiantes-nacionalidad-facultad";
 
       axios
         .get(path)
@@ -102,30 +102,38 @@ export default {
     },
 
     successful(req) {
-
       var datos = []; // Saves data from JSON
-      var estudiantesV;
-      var estudiantesE;
-      var totalEstudiantes;  
+      var facultades = [];
+      var estudiantesV = [];
+      var estudiantesE = [];
+      var i;
+      var size = req.data.length;
       var d = req.data;
 
-      console.log(d);
+      for (i = 0; i < size; i++) {
+        facultades.push(d[i]["facultad"]);
+        estudiantesV.push(d[i]["venezolano"]);
+        estudiantesE.push(d[i]["extranjero"]);
+      }
 
-      estudiantesV = d["Venezolano"];
-      estudiantesE = d["Extranjero"];
-      totalEstudiantes = d["total-estudiantes-pregrado"];
-
+      console.log(facultades);
       console.log(estudiantesV);
       console.log(estudiantesE);
 
       datos.push({
-        
-        values: [estudiantesV, estudiantesE],
-        labels: ['Estudiantes Venezolanos', 'Estudiantes Extranjeros'],
-        type: "pie",
-        marker: { colors:['#f8c291','#079992'],
-                  line: {color: "#FFFFFF"}  },
-        insidetextfont: {color: "#FFFFFF"}
+        x: facultades,
+        y: estudiantesV,        
+        name: "Estudiantes Venezolanos",
+        type: "bar",
+        marker: { color: "#747d8c" }
+      });
+
+      datos.push({
+        x: facultades,
+        y: estudiantesE,        
+        name: "Estudiantes Extranjeros",
+        type: "bar",
+        marker: { color: "#ff6348" }
       });
 
       console.log(datos);
@@ -145,7 +153,7 @@ export default {
         responsive: true,
         margin: {
           l: 100,
-          r: 100,
+          r: 130,
           b: 100,
           t: 100,
           pad: -1
@@ -167,7 +175,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 

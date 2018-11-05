@@ -9,15 +9,26 @@ import Users from '@/components/admin/Users'
 import Dashboard from '@/components/layout/Dashboard'
 import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
-//import Reports2 from '@/components/reports/Reports2'
-import Report from '@/components/reports/Report'
-import ProportionOfInternationalFaculty from '@/components/reports/ProportionOfInternationalFaculty'
-import ProportionOfInternationalStudents from '@/components/reports/ProportionOfInternationalStudents'
-import CitationsPerFaculty from '@/components/reports/CitationsPerFaculty'
-import ProportionOfStudentsPerFaculty from '@/components/reports/ProportionOfStudentsPerFaculty'
-import StaffWithAPhD from '@/components/reports/StaffWithAPhD'
-import FacultyStudentRatio from '@/components/reports/FacultyStudentRatio'
-//import StudentSexFaculty from '@/components/reports/StudentSexFaculty'
+
+// Reports
+import Report from '@/components/reports/Reports'
+
+//QS Ranking
+import CitationsPerFaculty from '@/components/reports/qs/CitationsPerFaculty'
+import FacultyStudentRatio from '@/components/reports/qs/FacultyStudentRatio'
+import ProportionOfInternationalFaculty from '@/components/reports/qs/ProportionOfInternationalFaculty'
+import ProportionOfInternationalStudents from '@/components/reports/qs/ProportionOfInternationalStudents'
+import ProportionOfStudentsPerFaculty from '@/components/reports/qs/ProportionOfStudentsPerFaculty'
+import StaffWithAPhD from '@/components/reports/qs/StaffWithAPhD'
+
+//Others
+//import ForeignStudentsPerFaculty from '@/components/reports/ForeignStudentsPerFaculty'
+//import StudentsDisabilityPerFaculty from '@/components/reports/StudentsDisabilityPerFaculty'
+//import StudentsEthnicGroupsPerFaculty from '@/components/reports/StudentsEthnicGroupsPerFaculty'
+//import StudentsSexFaculty from '@/components/reports/StudentsSexFaculty'
+//import UndergraduateStudentsNationality from '@/components/reports/UndergraduateStudentsNationality'
+//import UndergraduateStudentsSex from '@/components/reports/UndergraduateStudentsSex'
+
 //import Integration from '@/components/integration/Integration'
 import SystemParameterList from '@/components/integration/SystemParameterList'
 import SystemParameterEdit from '@/components/integration/SystemParameterEdit'
@@ -192,11 +203,106 @@ export const router = new Router({
             }
           }
         },
-       /* {
-          path: '/report/CitationsPerFaculty',
-          name: 'Citaciones por Facultad',
-          component: CitationsPerFaculty
-        },*/
+
+        /*
+        {
+          path: '/report/ForeignStudentsPerFaculty',
+          name: 'ForeignStudentsPerFaculty',
+          component: ForeignStudentsPerFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/StudentsDisabilityPerFaculty',
+          name: 'StudentsDisabilityPerFaculty',
+          component: StudentsDisabilityPerFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },               
+        {
+          path: '/report/StudentsEthnicGroupsPerFaculty',
+          name: 'StudentsEthnicGroupsPerFaculty',
+          component: StudentsEthnicGroupsPerFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/StudentsSexFaculty',
+          name: 'StudentsSexFaculty',
+          component: StudentsSexFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+         {
+          path: '/report/UndergraduteStudentsNationality',
+          name: 'UndergraduteStudentsNationality',
+          component: UndergraduteStudentsNationality,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+         {
+          path: '/report/UndergraduteStudentsSex',
+          name: 'UndergraduteStudentsSex',
+          component: UndergraduteStudentsSex,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+     
+        */
         {
           path: '/integration',
           name: 'SystemParameterList',

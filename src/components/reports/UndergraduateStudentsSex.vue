@@ -73,7 +73,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Proporción de Estudiantes de Pregrado Extranjeros";
+var reportName = "Proporción de Estudiantes de Pregrado por Sexo";
 var img;
 
 export default {
@@ -93,7 +93,7 @@ export default {
   methods: {
     load() {
       const path =
-        "http://127.0.0.1:5000/api/v1/estudiantes-pregrado-nacionalidad";
+        "http://127.0.0.1:5000/api/v1/estudiantes-pregrado-sexo";
 
       axios
         .get(path)
@@ -104,26 +104,26 @@ export default {
     successful(req) {
 
       var datos = []; // Saves data from JSON
-      var estudiantesV;
-      var estudiantesE;
+      var masculino;
+      var femenino;
       var totalEstudiantes;  
       var d = req.data;
 
       console.log(d);
 
-      estudiantesV = d["Venezolano"];
-      estudiantesE = d["Extranjero"];
+      masculino = d["Masculino"];
+      femenino = d["Femenino"];
       totalEstudiantes = d["total-estudiantes-pregrado"];
 
-      console.log(estudiantesV);
-      console.log(estudiantesE);
+      console.log(masculino);
+      console.log(femenino);
 
       datos.push({
         
-        values: [estudiantesV, estudiantesE],
-        labels: ['Estudiantes Venezolanos', 'Estudiantes Extranjeros'],
+        values: [masculino, femenino],
+        labels: ['Masculino', 'Femenino'],
         type: "pie",
-        marker: { colors:['#f8c291','#079992'],
+        marker: { colors:['#57606f','#b71540'],
                   line: {color: "#FFFFFF"}  },
         insidetextfont: {color: "#FFFFFF"}
       });
@@ -149,15 +149,12 @@ export default {
           b: 100,
           t: 100,
           pad: -1
-        }
-        //width: 720,
-        //height: 480,
+        }        
       };
 
       var config = {
         displaylogo: false,
-        displayModeBar: false,
-        doubleClick: "reset+autosize",
+        displayModepie: false,        
         responsive: true
       };
 
