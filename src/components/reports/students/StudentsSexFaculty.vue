@@ -33,12 +33,12 @@
 
 .download-buttons {
   text-align: center;
-  width: 100%;
+  width: 100%
 }
 
 .button {
   background-color: #f2f2f2;
-  font-size: 14px;
+  font-size: 14px;  
   padding: 8px 20px;
   margin: 10px;
   border: 12px;
@@ -68,19 +68,22 @@
 
 
 <script>
+
 import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Cantidad de Profesores Extranjeros por Facultad";
+var reportName = "Proporción de Estudiantes por Sexo por Facultad";
 var img;
 
 export default {
   mounted() {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
+   },
 
+  data() {
     return {
       data: []
     };
@@ -91,56 +94,63 @@ export default {
   },
 
   methods: {
-    load() {
-      const path =
-        "http://127.0.0.1:5000/api/v1/profesores-nacionalidad-facultad";
 
+     load() {
+      const path = "http://127.0.0.1:5000/api/v1/estudiantes-sexo-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
-    successful(req) {
+    successful(req) {    
 
       var datos = []; // Saves data from JSON
-      var profesoresV;
-      var profesoresE;
-      var facultad;  
+      var facultades = [];
+      var yMasculino = [];
+      var yFemenino = [];
+      var i;
+      var size = req.data.length;
       var d = req.data;
 
-      console.log(d);
+      for (i = 0; i < size; i++) {
+        facultades.push(d[i]["facultad"]);
+        yMasculino.push(d[i]["masculino"]);
+        yFemenino.push(d[i]["femenino"]);
+      }
 
-      facultad = d["facultad"];
-      profesoresV = d["venezolano"];
-      profesoresE = d["extranjero"];
-      
-
-      console.log(profesoresV);
-      console.log(profesoresE);
+      console.log(facultades);
+      console.log(yMasculino);
+      console.log(yFemenino);
 
       datos.push({
-        x: facultad,
-        y: profesoresV,        
-        name: "Profesores Venezolanos",
+        x: facultades,
+        y: yMasculino,
+        //text: [],
+        textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
+        name: "Masculino",
         type: "bar",
-        marker: { color: "#FC427B" }
+        marker: { color: "#00cec9" }
       });
 
       datos.push({
-        x: facultad,
-        y: profesoresE,        
-        name: "Profesores Extranjeros",
+        x: facultades,
+        y: yFemenino,
+        //text:[],
+        name: "Femenino",
         type: "bar",
-        marker: { color: "#1B9CFC" }
+        marker: { color: "rgb(195,86,234)" }
       });
 
       console.log(datos);
       this.data = datos;
 
-      // LAYOUT
+      /*** LAYOUT ***/
 
       var layout = {
+        //title:"",
+        //titlefont:{size: 24}, 
+        //annotations: [{}],             
         xaxis: {
           fixedrange: true
         },
@@ -151,12 +161,12 @@ export default {
         autosize: true,
         responsive: true,
         margin: {
-          l: 100,
-          r: 100,
-          b: 100,
-          t: 100,
+          l: 200,
+          r: 200,
+          b: 200,
+          t: 50,
           pad: -1
-        }
+        },
         //width: 720,
         //height: 480,
       };
@@ -168,25 +178,27 @@ export default {
         responsive: true
       };
 
-      // GRAPH
 
-      // Exports plot as image
+      /*** GRAPH ***/
+
+      //Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
       Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //  Saves plot as image
+        //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
+        Plotly.toImage(gd, {height: 768, width: 1024}, {title: "hola"}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
-            format: "jpeg",
+            format: "jpeg",       
             height: 768,
-            width: 1024
-          });
+            width: 1024,
+          })
         });
-      }); //plotly_plot
+      });//plotly_plot
+
     }, //successful(req)
 
     failed() {
@@ -197,7 +209,7 @@ export default {
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");
       doc.setFontType("bold");
-      doc.text(reportName, 15, 15);
+      doc.text(reportName, 15, 15);     
       doc.addImage(img, "JPG", 10, 10);
       doc.save("Reporte - " + reportName + ".pdf");
     }, //end_of_download()

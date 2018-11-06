@@ -74,7 +74,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "estudiantes-sexo-facultad";
+var reportName = "Proporción de Profesores por Sexo por Facultad";
 var img;
 
 export default {
@@ -96,7 +96,7 @@ export default {
   methods: {
 
      load() {
-      const path = "http://127.0.0.1:5000/api/v1/estudiantes-sexo-facultad";
+      const path = "http://127.0.0.1:5000/api/v1/profesores-sexo-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -130,7 +130,7 @@ export default {
         textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
         name: "Masculino",
         type: "bar",
-        marker: { color: "#00cec9" }
+        marker: { color: "#00b894" }
       });
 
       datos.push({
@@ -139,7 +139,7 @@ export default {
         //text:[],
         name: "Femenino",
         type: "bar",
-        marker: { color: "rgb(195,86,234)" }
+        marker: { color: "#fdcb6e" }
       });
 
       console.log(datos);

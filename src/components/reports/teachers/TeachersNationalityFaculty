@@ -121,7 +121,9 @@ export default {
 
       datos.push({
         x: facultad,
-        y: profesoresV,        
+        y: profesoresV,
+        //text: [],
+        textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
         name: "Profesores Venezolanos",
         type: "bar",
         marker: { color: "#FC427B" }
@@ -129,7 +131,8 @@ export default {
 
       datos.push({
         x: facultad,
-        y: profesoresE,        
+        y: profesoresE,
+        //text:[],
         name: "Profesores Extranjeros",
         type: "bar",
         marker: { color: "#1B9CFC" }

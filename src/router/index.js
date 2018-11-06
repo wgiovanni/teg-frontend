@@ -21,13 +21,22 @@ import ProportionOfInternationalStudents from '@/components/reports/qs/Proportio
 import ProportionOfStudentsPerFaculty from '@/components/reports/qs/ProportionOfStudentsPerFaculty'
 import StaffWithAPhD from '@/components/reports/qs/StaffWithAPhD'
 
-//Others
-//import ForeignStudentsPerFaculty from '@/components/reports/ForeignStudentsPerFaculty'
-//import StudentsDisabilityPerFaculty from '@/components/reports/StudentsDisabilityPerFaculty'
-//import StudentsEthnicGroupsPerFaculty from '@/components/reports/StudentsEthnicGroupsPerFaculty'
-//import StudentsSexFaculty from '@/components/reports/StudentsSexFaculty'
-//import UndergraduateStudentsNationality from '@/components/reports/UndergraduateStudentsNationality'
-//import UndergraduateStudentsSex from '@/components/reports/UndergraduateStudentsSex'
+//Students
+/*
+import ForeignStudentsPerFaculty from '@/components/reports/students/ForeignStudentsPerFaculty'
+import StudentsDisabilityPerFaculty from '@/components/reports/students/StudentsDisabilityPerFaculty'
+import StudentsEthnicGroupsPerFaculty from '@/components/reports/students/StudentsEthnicGroupsPerFaculty'
+import StudentsSexFaculty from '@/components/reports/students/StudentsSexFaculty'
+import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
+import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'
+*/
+
+//Teachers
+/*
+import PublicationsPerFaculty from '@/components/reports/teachers/PublicationsPerFaculty'
+import TeachersNationalityFaculty from '@/components/reports/teachers/TeachersNationalityFaculty'
+import TeachersSexFaculty from '@/components/reports/teachers/TeachersSexFaculty'
+*/
 
 //import Integration from '@/components/integration/Integration'
 import SystemParameterList from '@/components/integration/SystemParameterList'
@@ -301,6 +310,57 @@ export const router = new Router({
             }
           }
         },
+
+
+         {
+          path: '/report/PublicationsPerFaculty',
+          name: 'PublicationsPerFaculty',
+          component: PublicationsPerFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/TeachersNationalityFaculty',
+          name: 'TeachersNationalityFaculty',
+          component: TeachersNationalityFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/TeachersSexFaculty',
+          name: 'TeachersSexFaculty',
+          component: TeachersSexFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+     
      
         */
         {
