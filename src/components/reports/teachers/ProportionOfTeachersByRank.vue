@@ -21,6 +21,7 @@
 </template>
 
 
+
 <style>
 /* Report titles */
 .title {
@@ -73,7 +74,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Cantidad de Profesores Extranjeros por Facultad";
+var reportName = "Cantidad de Profesores por Escalafón";
 var img;
 
 export default {
@@ -93,7 +94,7 @@ export default {
   methods: {
     load() {
       const path =
-        "http://127.0.0.1:5000/api/v1/profesores-nacionalidad-facultad";
+        "http://127.0.0.1:5000/api/v1/profesores-escalafon-proporcion";
 
       axios
         .get(path)
@@ -104,39 +105,54 @@ export default {
     successful(req) {
 
       var datos = []; // Saves data from JSON
-      var profesoresV;
-      var profesoresE;
-      var facultad;  
+      var totalProfesores;
+      var totalTeachers = [];
+      var escalafones = [];
+      var nombreEscalafon = [];
+      var totalEscalafon = [];
+      var i;
+      var size = req.data.length;
       var d = req.data;
 
-      console.log(d);
 
-      facultad = d["facultad"];
-      profesoresV = d["venezolano"];
-      profesoresE = d["extranjero"];
+      totalProfesores = d["total-profesores"];
+      escalafones = d["escalafon"];
       
 
-      console.log(profesoresV);
-      console.log(profesoresE);
+      for (i = 0; i < 5; i++) {
+        totalTeachers[i] = totalProfesores;
+      }
 
-      datos.push({
-        x: facultad,
-        y: profesoresV,
-        //text: [],
-        textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
-        name: "Profesores Venezolanos",
-        type: "bar",
-        marker: { color: "#FC427B" }
-      });
+      
+      for (i = 0; i < 5; i++) {
+        nombreEscalafon.push(escalafones[i]["nombre"]);
+        totalEscalafon.push(escalafones[i]["total"]);
+      }
 
-      datos.push({
-        x: facultad,
-        y: profesoresE,
-        //text:[],
-        name: "Profesores Extranjeros",
+      
+      console.log(nombreEscalafon);
+      console.log(totalEscalafon);
+
+   datos.push({
+        x: totalEscalafon,
+        y: nombreEscalafon,     
+        name: "Cantidad de Profesores en el Escalafón",
+        orientation: 'h',
         type: "bar",
-        marker: { color: "#1B9CFC" }
+        marker: { color: "#ff4757",
+                  width: 1 }
       });
+/*
+      datos.push({
+        x: totalTeachers,
+        y: nombreEscalafon,
+        name: "Total de Profesores",
+        orientation: 'h',
+        type: "bar",
+        marker: { color: "#ced6e0",
+                  width: 1 }
+      });
+*/
 
       console.log(datos);
       this.data = datos;

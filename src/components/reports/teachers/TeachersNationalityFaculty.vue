@@ -73,7 +73,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 
-var reportName = "Proporción de Estudiantes por Facultad";
+var reportName = "Cantidad de Profesores Extranjeros por Facultad";
 var img;
 
 export default {
@@ -81,7 +81,6 @@ export default {
     document.getElementById("report").innerHTML = reportName;
     img = document.getElementById("jpg-export"); // Gets image
 
-  
     return {
       data: []
     };
@@ -92,66 +91,52 @@ export default {
   },
 
   methods: {
-    
-     load() {
-      const path = "http://127.0.0.1:5000/api/v1/estudiantes-facultad";
+    load() {
+      const path =
+        "http://127.0.0.1:5000/api/v1/profesores-nacionalidad-facultad";
+
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
-    successful(req) {    
+    successful(req) {
 
       var datos = []; // Saves data from JSON
-      var totalEstudiantes;
-      var studentsTotal = [];
-      var facultades = [];
-      var nombreFacultad = [];
-      var estudiantesFacultad = [];
+      var profesoresV = [];
+      var profesoresE = [];
+      var facultad = [];  
+      var d = req.data;
       var i;
       var size = req.data.length;
-      var d = req.data;
 
+      console.log(d);
 
-      totalEstudiantes = d["total-estudiantes"];
-      facultades = d["facultad"];
-      
-
-      for (i = 0; i < 8; i++) {
-        studentsTotal[i] = totalEstudiantes;
+      for (i = 0; i < size; i++) {
+        facultad.push(d[i]["facultad"]);
+        profesoresV.push(d[i]["venezolano"]);
+        profesoresE.push(d[i]["extranjero"]);
       }
 
-      
-      for (i = 0; i < 8; i++) {
-        nombreFacultad.push(facultades[i]["nombre"]);
-        estudiantesFacultad.push(facultades[i]["total"]);
-      }
+      console.log(profesoresV);
+      console.log(profesoresE);
 
-      
-      console.log(nombreFacultad);
-      console.log(estudiantesFacultad);
-
-   datos.push({
-        x: estudiantesFacultad,
-        y: nombreFacultad,     
-        name: "Estudiantes por Facultad",
-        orientation: 'h',
+      datos.push({
+        x: facultad,
+        y: profesoresV,        
+        name: "Profesores Venezolanos",
         type: "bar",
-        marker: { color: "#2C3A47",
-                  width: 1 }
+        marker: { color: "#FC427B" }
       });
 
       datos.push({
-        x: studentsTotal,
-        y: nombreFacultad,
-        name: "Total de Estudiantes",
-        orientation: 'h',
+        x: facultad,
+        y: profesoresE,        
+        name: "Profesores Extranjeros",
         type: "bar",
-        marker: { color: "#BDC581",
-                  width: 1 }
+        marker: { color: "#1B9CFC" }
       });
-
 
       console.log(datos);
       this.data = datos;
@@ -159,26 +144,22 @@ export default {
       // LAYOUT
 
       var layout = {
-        //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
         xaxis: {
           fixedrange: true
         },
         yaxis: {
           fixedrange: true
         },
-        barmode: 'stack',
         editable: false,
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 200,
-          t: 50,
+          l: 100,
+          r: 100,
+          b: 100,
+          t: 100,
           pad: -1
-        },
+        }
         //width: 720,
         //height: 480,
       };
@@ -190,34 +171,30 @@ export default {
         responsive: true
       };
 
-
       // GRAPH
 
-      //Exports plot as image
+      // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
       Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //Saves plot as image
+        //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
-            format: "jpeg",       
+            format: "jpeg",
             height: 768,
-            width: 1024,
-          })
+            width: 1024
+          });
         });
-      });//plotly_plot
-
+      }); //plotly_plot
     }, //successful(req)
 
     failed() {
       this.error = "User failed!";
     },
-
-    
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");

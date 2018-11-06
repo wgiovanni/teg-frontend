@@ -33,6 +33,7 @@ import UndergraduateStudentsSex from '@/components/reports/students/Undergraduat
 
 //Teachers
 /*
+import ProportionOfTeachersByRank from '@/components/reports/teachers/ProportionOfTeachersByRank'
 import PublicationsPerFaculty from '@/components/reports/teachers/PublicationsPerFaculty'
 import TeachersNationalityFaculty from '@/components/reports/teachers/TeachersNationalityFaculty'
 import TeachersSexFaculty from '@/components/reports/teachers/TeachersSexFaculty'
@@ -310,7 +311,22 @@ export const router = new Router({
             }
           }
         },
-
+        {
+          path: '/report/ProportionOfTeachersByRank',
+          name: 'ProportionOfTeachersByRank',
+          component: ProportionOfTeachersByRank,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
 
          {
           path: '/report/PublicationsPerFaculty',
