@@ -39,6 +39,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: 'SystemParameterEdit',
@@ -60,7 +61,8 @@ export default {
       codigo: this.codigo, 
       nombre: this.nombre, 
       descripcion: this.descripcion, 
-      definicion: this.definicion
+      definicion: this.definicion,
+      user: this.user.username
       })
         .then(request => this.successful(request))
         .catch(() => this.failed())
@@ -87,11 +89,9 @@ export default {
   },
   created () {
       this.findById();
+  },
+  computed: {
+    ...mapGetters(["user"])
   }
 }
 </script>
-<style>
-.margen {
-    margin-top: 2%;    
-}
-</style>

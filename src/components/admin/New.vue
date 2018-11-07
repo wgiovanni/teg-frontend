@@ -51,6 +51,7 @@
 <script>
 import axios from 'axios';
 import Spinner from '@/components/Spinner'
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: 'New',
@@ -80,7 +81,8 @@ export default {
       username: this.username, 
       email: this.email, 
       password: this.password, 
-      id_role: this.id_role 
+      id_role: this.id_role,
+      user: this.user.username
       })
         .then(request => this.userSuccessful(request))
         .catch(() => this.userFailed())
@@ -110,12 +112,9 @@ export default {
   },
   created() {
       this.roleAll();
+  },
+  computed: {
+    ...mapGetters(["user"])
   }
 }
 </script>
-<style>
-.margen {
-    margin-top: 2%;    
-}
-
-</style>

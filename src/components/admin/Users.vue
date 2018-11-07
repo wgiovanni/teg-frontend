@@ -1,5 +1,5 @@
 <template>
-    <div class="container margen">
+    <div class="container-fluid margen">
       <div v-if="loading==true" class="d-flex justify-content-center">
           <Spinner></Spinner>
       </div>
@@ -91,44 +91,4 @@ export default {
   }
   
 }
-/*import { mapState } from 'vuex'  
-export default {
-  name: 'List',
-  components: {
-      New,
-      Edit,
-      Spinner
-  },
-  data() {
-      return {
-        loading: true
-      };  
-  },
-  methods: {
-    usersAll () {
-      this.loading = true;
-      this.$store.dispatch('loadUsers');
-      this.loading = false;
-    }
-  }, 
-  computed: mapState({
-    users: state => state.users
-  }),
-  /*beforeMount() {
-    this.$store.dispatch('loadUsers');
-    this.loading = false;
-  },
-  created(){
-    this.usersAll();
-  },
-  mounted() {
-    this.usersAll();
-  }
-}*/
 </script>
-
-<style>
-.margen {
-    margin-top: 2%;    
-}
-</style>

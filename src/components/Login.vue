@@ -37,7 +37,6 @@
 </template>
 
 <script>
-//import axios from 'axios';
 import { mapState, mapActions } from 'vuex'
 
 import { EventBus } from '@/utils'
@@ -59,47 +58,24 @@ export default {
     ...mapState('', ['user'])
   },
   methods: {
-    /*login () {
-      console.log(this.email)
-      console.log(this.password)
-    },*/
-    /*login () {
-      const path = 'http://localhost:5000/auth';
-      axios.post(path, { email: this.email, password: this.password })
-       .then(request => this.loginSuccessful(request))
-        .catch(() => this.loginFailed())
-    },
-    loginSuccessful (req) {*/
-      /*if (!req.data.token) {
-        this.loginFailed()
-        return
-      }
-      this.error = false
-      localStorage.token = req.data.token
-      this.$store.dispatch('login')*/
-      /*console.log(this.email)
-      console.log(this.password)
-      console.log(req)
-      this.$router.replace(this.$route.query.redirect || '/root')
-    },
-    loginFailed () {
-      this.error = 'Login failed!'
-      console.log("Error Login")
-      /*this.$store.dispatch('logout')
-      delete localStorage.
-    }*/
     authenticate () {
-      this.$store.dispatch('login', { username: this.username, password: this.password })
-        .then(() => this.$router.push('/'))
+      this.$store.dispatch('login', { 
+        username: this.username, 
+        password: this.password
+        })
+        .then((response) => {
+          this.$router.push('/')
+          })
+          .then((response) => console.log("Registro auditoria"))
         .catch(() => this.error ="Fallo")
-    },
+    }
   },
   mounted () {
     /*EventBus.$on('failedRegistering', (msg) => {
       this.errorMsg = msg
     })*/
-    if (localStorage.getItem('username') && localStorage.getItem('user')){
-      localStorage.removeItem('username');
+    if (localStorage.getItem('user')){
+      //localStorage.removeItem('username');
       localStorage.removeItem('user');
     }
     EventBus.$on('failedAuthentication', (msg) => {

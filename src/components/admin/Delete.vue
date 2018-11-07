@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container margen">
-            <div class="col s12"><h2>Eliminar el usuario {{first_name}}</h2></div>
+            <div class="col s12"><h2>Eliminar el usuario {{username}}</h2></div>
             <form class="col s12" @submit.prevent="deleteUser">
                 <div class="form-group">
                     <p>La acción no puede deshacerse.</p>
@@ -17,6 +17,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState, mapGetters } from "vuex";
 
 export default {
     name: 'Delete',
@@ -27,7 +28,7 @@ export default {
             last_name: '',
             email: '',
             password: '',
-            error: false,
+            error: false
         }
     },
     methods: {
@@ -43,10 +44,11 @@ export default {
             this.last_name = request.data.last_name;
             this.email = request.data.email;
             this.password = request.data.password;
+            this.username = request.data.username;
         },
         deleteUser () {
             const path = 'http://localhost:8084/api/v1/user/' + this.id;
-            axios.delete(path)
+            axios.delete(path, {data: {user: this.user.username}})
                 .then(request => this.userSuccessful(request))
                 .catch(() => this.userFailed())
         },
@@ -59,7 +61,9 @@ export default {
     },
     created () {
         this.findById();
+    },
+    computed: {
+        ...mapGetters(["user"])
     }
 }
 </script>
-

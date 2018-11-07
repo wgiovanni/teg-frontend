@@ -20,13 +20,17 @@
             <!--Parte izquierdo del Narbar-->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">person</i>{{user.username}}
+                        <i class="material-icons">person</i>{{this.user.username}}
                         <span class="caret"></span>
                     </a>
-
-                    <div class="dropdown-menu dropdown" aria-labelledby="dropdownMenu2">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <div v-if="this.user.name=='vicerrector'">
+                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
+                        </div>
+                        <div v-if="this.user.name=='verificador'">
+                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
+                        </div>
                         <a class="btn btn-danger" href="/login" role="button">Salir</a>
                     </div>
                 </li>   
@@ -35,63 +39,85 @@
     </nav>
 </template>
 <script>
+import axios from 'axios';
 import { mapState, mapGetters } from "vuex";
 import { logout } from '@/store'
 export default {
   name: "TopNavbar",
-  data: () => ({
-    usuario: {
-      username: localStorage.getItem('username') || null
-    },
-    links: [
-      {
-        id: 0,
-        name: "Estudiantes",
-        path: "/students"
+  data () {
+    return {
+        links: [
+            {
+                id: 0,
+                name: "Estudiantes",
+                path: "/students"
+            },
+            {
+                id: 1,
+                name: "Profesores",
+                path: "/teachers"
+            },
+            /*{
+                id: 2,
+                name: "Egresados",
+                path: "/graduates"
+            },*/
+            {
+                id: 2,
+                name: "Integración",
+                path: "/integration"
+            },
+            {
+                id: 3,
+                name: "Reportes",
+                path: "/reports"
+            },
+            {
+                id: 4,
+                name: "Administración",
+                path: "/admin"
+            },
+            {
+                id: 5,
+                name: "Auditoría",
+                path: "/audit"
+            }
+        ]
+    }
+  },
+  methods:{
+      changeRoleVerify: function(){
+        const path = 'http://localhost:8084/api/v1/userVerify' + '/' + this.user.id;
+        axios.get(path)
+            .then(request => {
+                this.user.name = request.data.name;
+                this.id_role = request.data.id;
+                localStorage.setItem('user', JSON.stringify(this.user));
+            })
+            .catch(() => {
+                console.log("FALLO")
+            })
       },
-      {
-        id: 1,
-        name: "Profesores",
-        path: "/teachers"
-      },
-      /*{
-        id: 2,
-        name: "Egresados",
-        path: "/graduates"
-      },*/
-      {
-        id: 2,
-        name: "Integración",
-        path: "/integration"
-      },
-      {
-        id: 3,
-        name: "Reportes",
-        path: "/reports"
-      },
-      {
-        id: 4,
-        name: "Administración",
-        path: "/admin"
+      changeRoleVicerector:function(){
+        const path = 'http://localhost:8084/api/v1/userVicerector' + '/' + this.user.id;
+        axios.get(path)
+            .then(request => {
+                this.user.name = request.data.name;
+                this.id_role = request.data.id;
+                localStorage.setItem('user', JSON.stringify(this.user));
+            })
+            .catch(() => {
+                console.log("FALLO")
+            })
       }
-    ]
-  }),
+  },
   mounted() {
     console.log("Usuario desde el Store: ", this.user);
-    console.log("Usuario Local: ", this.usuario.username)
+    //console.log("Usuario Local: ", this.usuario.username)
     //alert(this.usuario.username);
   },
   computed: {
-    // ...mapState('', ['user'])
     ...mapGetters(["user"])
-  } /*
-    updated: {
-        username: function(){
-            // get user name from vuex
-            //return 'Welcome' + this.$store.state.username;
-            console.log("aqui " + this.$store.state.user.username);
-            return this.$store.state.user.username;
-        }
-    }*/
+  }
 };
 </script>

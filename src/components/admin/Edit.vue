@@ -50,6 +50,8 @@
 
 <script>
 import axios from 'axios';
+import { mapState, mapGetters } from "vuex";
+
 
 export default {
   name: 'Edit',
@@ -62,7 +64,7 @@ export default {
         email: '',
         password: '',
         id_role: '',
-		    error: false, 
+        error: false,
         roles: []
     }
   },
@@ -76,7 +78,8 @@ export default {
       username: this.username, 
       email: this.email, 
       password: this.password, 
-      id_role: this.id_role 
+      id_role: this.id_role,
+      user: this.user.username
       })
         .then(request => this.userSuccessful(request))
         .catch(() => this.userFailed())
@@ -123,11 +126,9 @@ export default {
   created () {
       this.findById();
       this.roleAll();
+  },
+  computed: {
+    ...mapGetters(["user"])
   }
 }
 </script>
-<style>
-.margen {
-    margin-top: 2%;    
-}
-</style>

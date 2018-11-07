@@ -9,7 +9,7 @@ import Users from '@/components/admin/Users'
 import Dashboard from '@/components/layout/Dashboard'
 import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
-
+import AuditList from '@/components/audit/AuditList'
 // Reports
 import Report from '@/components/reports/Reports'
 
@@ -465,6 +465,20 @@ export const router = new Router({
             }
           }
         },
+        {
+          path: '/audit',
+          name: 'AuditList',
+          component: AuditList/*,
+          beforeEnter (to, from, next) {
+            console.log(store.state.user.name);
+            if (store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }*/
+        }
       ]
     }
   ],
@@ -476,25 +490,25 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
 
-  if (authRequired && !localStorage.getItem('username') && !localStorage.getItem('user')){
+  if (authRequired && !localStorage.getItem('user')){
     console.log("entro1");
     console.log("mandar al login");
-    store.username = '';
+    //store.username = '';
     store.user = {};
     next('/login');
 
   } else {
     console.log(authRequired);
-    console.log(localStorage.getItem('username'));
-    store.state.username = localStorage.getItem('username')
+    //console.log(localStorage.getItem('username'));
+    //store.state.username = localStorage.getItem('username')
     store.state.user = JSON.parse(localStorage.getItem('user'));
     //store.user = {}
-    store.dispatch('getUsername', { username:  store.state.username})
+    /*store.dispatch('getUsername', { username:  store.state.username})
         .then((response) => {
           store.state.user = response.data;
           next()
         }) 
-        .catch(() => this.error ="Fallo")
+        .catch(() => this.error ="Fallo")*/
     next();
   }
  

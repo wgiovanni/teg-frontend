@@ -78,11 +78,5 @@ export default {
   }*/
 }
 </script>
-<style>
-.margen {
-    margin-top: 5%;    
-}
-
-</style>
 
 

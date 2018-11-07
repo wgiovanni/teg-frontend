@@ -11,9 +11,9 @@ export function fetchUser(userId) {
     return axios.get(`${API_URL}/user/${userId}`)
 }
 
-export function getByUsername(username) {
+/*export function getByUsername(username) {
     return axios.get(`${API_URL}/username/${username}`)
-}
+}*/
 
 export function updateUser (userResponse) {
     return axios.put(`${API_URL}/user/${userResponse.id}/`, userResponse)
