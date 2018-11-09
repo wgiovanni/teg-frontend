@@ -1,7 +1,6 @@
 <template>
-  <div>   
-
-    <h1 id="prueba"></h1>
+  <div>
+    <div id="table" class="hidden"></div>   
     <!--Title-->    
     <h1 id="report" class="title"/>    
 
@@ -108,9 +107,6 @@ export default {
     },
 
     successful(req) {
-
-      document.getElementById("prueba").innerHTML = reportName;
-
       var datos = []; // Saves data from JSON
       var facultades = [];
       var items = [];
@@ -207,7 +203,7 @@ export default {
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
-      /*doc.setFont("helvetica");
+      doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 10, 10);
@@ -217,50 +213,72 @@ export default {
         author: "Sistema Ranking",
         date: date
       });
-*/
+
       //Info for verification
       doc.addPage();
-      doc.setFontSize(10);
+      doc.setFontSize(8);
 
-      var source = window.document.getElementById("prueba");
-      doc.fromHTML(source, 15, 15, {
-        width: 180    
-      });
+      doc.cellInitialize();
+        $.each(info, function(i, row){
+            $.each(row, function(j, cell){
+              if(j=="correo"){
+                doc.cell(1,10,50,15,cell,i);
 
-      /*
-      doc.text(10, 20, 
-        '    Cédula      '+
-        '     Primer Nombre'   +
-        '     Segundo Nombre   '+
-        '     Primer Apellido   '+
-        '     Segundo Apellido   '+
-        '          Correo        '+
-        '          Área de Investigación  '+
-        '          Facultad   '    
+              }else if (j=="area_de_investigacion" | j=="facultad"){
+
+                doc.cell(1,10,40,15,cell,i);
+
+              }else{
+                doc.cell(1,10,30,15,cell,i);
+
+              }
+
+            })
+
+        });      
+        
+        
+      
+
+      /*      doc.text(
+        10,
+        20,
+        "    Cédula      " +
+          "     Primer Nombre" +
+          "     Segundo Nombre   " +
+          "     Primer Apellido   " +
+          "     Segundo Apellido   " +
+          "          Correo        " +
+          "          Área de Investigación  " +
+          "          Facultad   "
       );
       var aux = 25;
       doc.setFontSize(7);
-      for(var i=0; i<info.length; i++){
-        aux = aux+5;
-        doc.text(10, aux, 
-        "     "+
-        info[i]["cedula"]
-        +"                              "+
-        info[i]["primer_nombre"]
-        +"                         "+
-        info[i]["segundo_nombre"]
-        +"                              "+
-        info[i]["primer_apellido"]
-        +"                              "+
-        info[i]["segundo_apellido"]
-        +"                    "+
-        info[i]["correo"]
-        +"                    "+
-        info[i]["area_de_investigacion"]
-        +"                    "+
-        info[i]["facultad"]
+      for (var i = 0; i < info.length; i++) {
+        aux = aux + 5;
+        doc.text(
+          10,
+          aux,
+          "     " +
+            info[i]["cedula"] +
+            "                              " +
+            info[i]["primer_nombre"] +
+            "                         " +
+            info[i]["segundo_nombre"] +
+            "                              " +
+            info[i]["primer_apellido"] +
+            "                              " +
+            info[i]["segundo_apellido"] +
+            "                    " +
+            info[i]["correo"] +
+            "                    " +
+            info[i]["area_de_investigacion"] +
+            "                    " +
+            info[i]["facultad"]
         );
-      }*/
+      }
+*/
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
