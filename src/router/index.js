@@ -37,6 +37,7 @@ import ProportionOfTeachersByRank from '@/components/reports/teachers/Proportion
 import PublicationsPerFaculty from '@/components/reports/teachers/PublicationsPerFaculty'
 import TeachersNationalityFaculty from '@/components/reports/teachers/TeachersNationalityFaculty'
 import TeachersSexFaculty from '@/components/reports/teachers/TeachersSexFaculty'
+import TeachersWithAPhD from '@/components/reports/teachers/TeachersWithAPhD'
 */
 
 //import Integration from '@/components/integration/Integration'
@@ -364,6 +365,22 @@ export const router = new Router({
           path: '/report/TeachersSexFaculty',
           name: 'TeachersSexFaculty',
           component: TeachersSexFaculty,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/TeachersWithAPhDPerFaculty',
+          name: 'TeachersWithAPhDPerFaculty',
+          component: TeachersWithAPhDPerFaculty,
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);

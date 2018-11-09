@@ -1,7 +1,5 @@
 <template>
   <div>   
-
-    <h1 id="prueba"></h1>
     <!--Title-->    
     <h1 id="report" class="title"/>    
 
@@ -207,7 +205,7 @@ export default {
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
-      /*doc.setFont("helvetica");
+      doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 10, 10);
@@ -217,7 +215,7 @@ export default {
         author: "Sistema Ranking",
         date: date
       });
-*/
+
       //Info for verification
       doc.addPage();
       doc.setFontSize(10);
@@ -227,7 +225,7 @@ export default {
         width: 180    
       });
 
-      /*
+      
       doc.text(10, 20, 
         '    Cédula      '+
         '     Primer Nombre'   +
@@ -260,7 +258,7 @@ export default {
         +"                    "+
         info[i]["facultad"]
         );
-      }*/
+      }
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
