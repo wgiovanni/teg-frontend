@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -22,48 +23,6 @@
 
 
 <style>
-/* Report titles */
-.title {
-  font-size: 30px;
-  text-align: center;
-  margin: 30px;
-}
-
-/* Download Buttons */
-
-.download-buttons {
-  text-align: center;
-  width: 100%;
-}
-
-.button {
-  background-color: #f2f2f2;
-  font-size: 14px;
-  padding: 8px 20px;
-  margin: 10px;
-  border: 12px;
-  border-radius: 10px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.button:hover {
-  background-color: #edf0f8;
-}
-
-.button:active {
-  background-color: #c8d3ea;
-}
-
-.button:focus {
-  outline: 0;
-}
-
-/*Hides image*/
-.hidden {
-  display: none;
-}
 </style>
 
 
@@ -72,16 +31,17 @@ import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
+import XLSX from "xlsx";
 
 var reportName = "Proporción de Estudiantes por Facultad";
 var img;
+var info = []; //Saves data for verification
+var date = new Date();
 
 export default {
   mounted() {
-    document.getElementById("report").innerHTML = reportName;
-    img = document.getElementById("jpg-export"); // Gets image
+   
 
-  
     return {
       data: []
     };
@@ -92,8 +52,7 @@ export default {
   },
 
   methods: {
-    
-     load() {
+    load() {
       const path = "http://127.0.0.1:5000/api/v1/estudiantes-facultad";
       axios
         .get(path)
@@ -101,7 +60,11 @@ export default {
         .catch(() => this.failed());
     },
 
-    successful(req) {    
+    successful(req) {
+
+      document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
+
 
       var datos = []; // Saves data from JSON
       var totalEstudiantes;
@@ -113,45 +76,57 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
+      // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",
+        fecha_nacimiento: "Fecha de Nacimiento",
+        telefono1: "Teléfono",
+        telefono2: "Teléfono 2",
+        email: "Correo",
+        estado_procedencia: "Estado de Procedencia",
+        facultad: "Facultad"
+      });
+      console.log("info ", info);
 
       totalEstudiantes = d["total-estudiantes"];
       facultades = d["facultad"];
-      
-
-      for (i = 0; i < 8; i++) {
+    
+      for (i = 0; i < 7; i++) {
         studentsTotal[i] = totalEstudiantes;
       }
 
-      
-      for (i = 0; i < 8; i++) {
+      for (i = 0; i < 7; i++) {
         nombreFacultad.push(facultades[i]["nombre"]);
         estudiantesFacultad.push(facultades[i]["total"]);
       }
 
-      
-      console.log(nombreFacultad);
-      console.log(estudiantesFacultad);
 
-   datos.push({
+      datos.push({
         x: estudiantesFacultad,
-        y: nombreFacultad,     
+        y: nombreFacultad,
         name: "Estudiantes por Facultad",
-        orientation: 'h',
+        orientation: "h",
         type: "bar",
-        marker: { color: "#2C3A47",
-                  width: 1 }
+        marker: {
+          color: "#2C3A47",
+          width: 1
+        }
       });
 
       datos.push({
         x: studentsTotal,
         y: nombreFacultad,
         name: "Total de Estudiantes",
-        orientation: 'h',
+        orientation: "h",
         type: "bar",
-        marker: { color: "#BDC581",
-                  width: 1 }
+        marker: {
+          color: "#BDC581",
+          width: 1
+        }
       });
-
 
       console.log(datos);
       this.data = datos;
@@ -160,15 +135,15 @@ export default {
 
       var layout = {
         //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
+        //titlefont:{size: 24},
+        //annotations: [{}],
         xaxis: {
           fixedrange: true
         },
         yaxis: {
           fixedrange: true
         },
-        barmode: 'stack',
+        barmode: "stack",
         editable: false,
         autosize: true,
         responsive: true,
@@ -178,7 +153,7 @@ export default {
           b: 200,
           t: 50,
           pad: -1
-        },
+        }
         //width: 720,
         //height: 480,
       };
@@ -190,7 +165,6 @@ export default {
         responsive: true
       };
 
-
       // GRAPH
 
       //Exports plot as image
@@ -201,41 +175,105 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
-            format: "jpeg",       
+            format: "jpeg",
             height: 768,
-            width: 1024,
-          })
+            width: 1024
+          });
         });
-      });//plotly_plot
-
+      }); //plotly_plot
     }, //successful(req)
 
     failed() {
       this.error = "User failed!";
     },
 
-    
-
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.text(reportName, 15, 15);
+
       doc.addImage(img, "JPG", 10, 10);
-      doc.save("Reporte - " + reportName + ".pdf");
+      doc.save(reportName + ".pdf");
+
+      doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(7);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "email" | j == "facultad") {
+            doc.cell(2, 10, 55, 15, cell, i);          
+          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
+            doc.cell(2, 10, 30, 15, cell, i);
+          } else if (j == "cedula") {
+            doc.cell(2, 10, 15, 15, cell, i);
+          } else {
+            doc.cell(2, 10, 25, 15, cell, i);
+          }
+        });
+      });
+
+      doc.save(reportName + ".pdf");
     }, //end_of_download()
 
     download_img() {
       var a = document.createElement("a");
       a.href = img.src;
-      a.download = "Reporte - " + reportName + ".jpg";
+      a.download = reportName + ".jpg";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+
+    download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 40 },
+        { wch: 25 },
+        { wch: 40 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
   }
 };
 </script>

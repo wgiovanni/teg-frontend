@@ -9034,3 +9034,48 @@ a.text-dark:hover, a.text-dark:focus {
 .margen {
   margin-top: 2%;    
 }
+
+/**Reports**/
+/* Report titles */
+.title {
+  font-size: 30px;
+  text-align: center;
+  margin: 30px;
+}
+
+/* Download Buttons */
+
+.download-buttons {
+  text-align: center;
+  width: 100%;
+}
+
+.button {
+  background-color: #f2f2f2;
+  font-size: 14px;
+  padding: 8px 20px;
+  margin: 10px;
+  border: 12px;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #edf0f8;
+}
+
+.button:active {
+  background-color: #c8d3ea;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+/*Hides image*/
+.hidden {
+  display: none;
+}
+

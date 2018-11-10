@@ -22,48 +22,6 @@
 
 
 <style>
-/* Report titles */
-.title {
-  font-size: 30px;
-  text-align: center;
-  margin: 30px;
-}
-
-/* Download Buttons */
-
-.download-buttons {
-  text-align: center;
-  width: 100%;
-}
-
-.button {
-  background-color: #f2f2f2;
-  font-size: 14px;
-  padding: 8px 20px;
-  margin: 10px;
-  border: 12px;
-  border-radius: 10px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.button:hover {
-  background-color: #edf0f8;
-}
-
-.button:active {
-  background-color: #c8d3ea;
-}
-
-.button:focus {
-  outline: 0;
-}
-
-/*Hides image*/
-.hidden {
-  display: none;
-}
 </style>
 
 
@@ -72,15 +30,16 @@ import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
+import XLSX from "xlsx";
 
 var reportName = "Cantidad de Estudiantes Extranjeros por Facultad";
 var img;
+var info = []; //Saves data for verification
+var date = new Date();
 
 export default {
   mounted() {
-    document.getElementById("report").innerHTML = reportName;
-    img = document.getElementById("jpg-export"); // Gets image
-
+    
     return {
       data: []
     };
@@ -102,6 +61,10 @@ export default {
     },
 
     successful(req) {
+
+      document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
+
       var datos = []; // Saves data from JSON
       var facultades = [];
       var estudiantesV = [];
@@ -200,13 +163,13 @@ export default {
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 10, 10);
-      doc.save("Reporte - " + reportName + ".pdf");
+      doc.save(reportName + ".pdf");
     }, //end_of_download()
 
     download_img() {
       var a = document.createElement("a");
       a.href = img.src;
-      a.download = "Reporte - " + reportName + ".jpg";
+      a.download = reportName + ".jpg";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

@@ -73,14 +73,17 @@ import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
+import XLSX from "xlsx";
 
 var reportName = "Proporción de Profesores por Sexo por Facultad";
 var img;
+var info = []; //Saves data for verification
+var date = new Date();
+
 
 export default {
   mounted() {
-    document.getElementById("report").innerHTML = reportName;
-    img = document.getElementById("jpg-export"); // Gets image
+    
    },
 
   data() {
@@ -103,7 +106,10 @@ export default {
         .catch(() => this.failed());
     },
 
-    successful(req) {    
+    successful(req) {  
+      
+      document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
       var facultades = [];
@@ -211,13 +217,13 @@ export default {
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);     
       doc.addImage(img, "JPG", 10, 10);
-      doc.save("Reporte - " + reportName + ".pdf");
+      doc.save(reportName + ".pdf");
     }, //end_of_download()
 
     download_img() {
       var a = document.createElement("a");
       a.href = img.src;
-      a.download = "Reporte - " + reportName + ".jpg";
+      a.download = reportName + ".jpg";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

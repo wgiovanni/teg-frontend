@@ -27,48 +27,6 @@
 
 
 <style>
-/* Report titles */
-.title {
-  font-size: 30px;
-  text-align: center;
-  margin: 30px;
-}
-
-/* Download Buttons */
-
-.download-buttons {
-  text-align: center;
-  width: 100%;
-}
-
-.button {
-  background-color: #f2f2f2;
-  font-size: 14px;
-  padding: 8px 20px;
-  margin: 10px;
-  border: 12px;
-  border-radius: 10px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.button:hover {
-  background-color: #edf0f8;
-}
-
-.button:active {
-  background-color: #c8d3ea;
-}
-
-.button:focus {
-  outline: 0;
-}
-
-/*Hides image*/
-.hidden {
-  display: none;
-}
 </style>
 
 <script>
@@ -86,8 +44,7 @@ var date = new Date();
 
 export default {
   mounted() {
-    document.getElementById("report").innerHTML = reportName;
-    img = document.getElementById("jpg-export"); // Gets image
+    
   },
 
   components: {
@@ -116,8 +73,11 @@ export default {
     },
 
     successful(req) {
-      this.loading = false;
 
+      document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
+
+      this.loading = false;
       var datos = []; // Saves data from JSON
       var facultades = [];
       var items = [];
@@ -246,7 +206,9 @@ export default {
         $.each(row, function(j, cell) {
           if (j == "correo") {
             doc.cell(10, 10, 50, 15, cell, i);
-          } else if ((j == "area_de_investigacion") | (j == "facultad")) {
+          } else if ( (j == "facultad")) {
+            doc.cell(10, 10, 60, 15, cell, i);
+          } else if ((j == "area_de_investigacion")) {
             doc.cell(10, 10, 40, 15, cell, i);
           } else if (j == "cedula") {
             doc.cell(10, 10, 20, 15, cell, i);
@@ -290,9 +252,9 @@ export default {
         { wch: 20 },
         { wch: 20 },
         { wch: 20 },
-        { wch: 30 },
+        { wch: 40 },
         { wch: 25 },
-        { wch: 30 }
+        { wch: 40 }
       ];
       ws["!cols"] = wscols;
 

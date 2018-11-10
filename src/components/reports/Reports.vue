@@ -1,15 +1,11 @@
 <template>
-  <div>    
-    <div v-if="loading==true" class="d-flex justify-content-center">
-          <Spinner></Spinner>
-      </div>    
-    
-  <!--Title-->    
-  <h1 id="report" class="title"/>   
-  
-  <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
-    
+  <div>     
+    <!--Title-->    
+    <h1 id="report" class="title"/>   
+
+    <!--Plotly-->    
+    <div ref="bar" class="vue-plotly"/>    
+
     <!--Download buttons--> 
     <div class="row">  
       <div class="col-md-12 text-center">
@@ -17,58 +13,14 @@
         <button class="button" @click="download_img">Descargar JPG</button>
         <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
-    </div>     
+    </div> 
 
     <!--Saves plot as image-->
-    <img id="jpg-export" class="hidden"/>             
-   
-  </div>  
+    <img id="jpg-export" class="hidden"/>   
+</div>     
 </template>
 
-
 <style>
-/* Report titles */
-.title {
-  font-size: 30px;
-  text-align: center;
-  margin: 30px;
-}
-
-/* Download Buttons */
-
-.download-buttons {
-  text-align: center;
-  width: 100%;
-}
-
-.button {
-  background-color: #f2f2f2;
-  font-size: 14px;
-  padding: 8px 20px;
-  margin: 10px;
-  border: 12px;
-  border-radius: 10px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.button:hover {
-  background-color: #edf0f8;
-}
-
-.button:active {
-  background-color: #c8d3ea;
-}
-
-.button:focus {
-  outline: 0;
-}
-
-/*Hides image*/
-.hidden {
-  display: none;
-}
 </style>
 
 <script>
@@ -79,27 +31,26 @@ import Plotly from "plotly.js";
 import XLSX from "xlsx";
 import Spinner from "@/components/Spinner";
 
-var reportName = "Cantidad de Profesores con Doctorado o PhD por Facultad";
+var reportName = "Proporción de Estudiantes por Facultad";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
 
 export default {
   mounted() {
-    document.getElementById("report").innerHTML = reportName;
-    img = document.getElementById("jpg-export"); // Gets image
+  
+    
   },
-
+  data() {
+    return {
+      data: [],
+      loading:true
+    };
+  },
   components: {
     Spinner
   },
 
-  data() {
-    return {
-      data: [],
-      loading: true
-    };
-  },
 
   created() {
     this.load();
@@ -107,7 +58,7 @@ export default {
 
   methods: {
     load() {
-      const path = "http://127.0.0.1:5000/api/v1/profesor-doctorado-facultad";
+      const path = "http://127.0.0.1:5000/api/v1/estudiantes-facultad";
       this.loading = true;
       axios
         .get(path)
@@ -116,13 +67,16 @@ export default {
     },
 
     successful(req) {
-      this.loading = false;
+      document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
+      //this.loading = false;
 
       var datos = []; // Saves data from JSON
+      var totalEstudiantes;
+      var studentsTotal = [];
       var facultades = [];
-      var items = [];
       var nombreFacultad = [];
-      var totalFacultad = [];
+      var estudiantesFacultad = [];
       var i;
       var size = req.data.length;
       var d = req.data;
@@ -131,34 +85,52 @@ export default {
       info = d["items"];
       info.unshift({
         cedula: "Cédula",
-        primer_nombre: "Primer Nombre",
-        segundo_nombre: "Segundo Nombre",
-        primer_apellido: "Primer Apellido",
-        segundo_apellido: "Segundo Apellido",
-        correo: "Correo",
-        area_de_investigacion: "Área de Investigación",
+        nombre: "Nombre",
+        apellido: "Apellido",
+        fecha_nacimiento: "Fecha de Nacimiento",
+        telefono1: "Teléfono",
+        telefono2: "Teléfono 2",
+        email: "Correo",
+        estado_procedencia: "Estado de Procedencia",
         facultad: "Facultad"
       });
       console.log("info ", info);
 
-      // Saves data for plot
-      facultades = d["facultades"];
-      items = d["items"];
-
-      console.log(facultades);
-      console.log(items);
-
-      for (i = 0; i < facultades.length; i++) {
-        nombreFacultad.push(facultades[i]["facultad"]);
-        totalFacultad.push(facultades[i]["cantidad"]);
+      totalEstudiantes = d["total-estudiantes"];
+      facultades = d["facultad"];
+    
+      for (i = 0; i < 7; i++) {
+        studentsTotal[i] = totalEstudiantes;
       }
 
+      for (i = 0; i < 7; i++) {
+        nombreFacultad.push(facultades[i]["nombre"]);
+        estudiantesFacultad.push(facultades[i]["total"]);
+      }
+
+
       datos.push({
-        x: nombreFacultad,
-        y: totalFacultad,
-        name: "Profesores con PhD",
+        x: estudiantesFacultad,
+        y: nombreFacultad,
+        name: "Estudiantes por Facultad",
+        orientation: "h",
         type: "bar",
-        marker: { color: "#ff5e57" }
+        marker: {
+          color: "#2C3A47",
+          width: 1
+        }
+      });
+
+      datos.push({
+        x: studentsTotal,
+        y: nombreFacultad,
+        name: "Total de Estudiantes",
+        orientation: "h",
+        type: "bar",
+        marker: {
+          color: "#BDC581",
+          width: 1
+        }
       });
 
       console.log(datos);
@@ -176,6 +148,7 @@ export default {
         yaxis: {
           fixedrange: true
         },
+        barmode: "stack",
         editable: false,
         autosize: true,
         responsive: true,
@@ -202,6 +175,7 @@ export default {
       //Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
+      this.loading = false;
       // Displays graph
       Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
         //Saves plot as image
@@ -216,6 +190,7 @@ export default {
           });
         });
       }); //plotly_plot
+      
     }, //successful(req)
 
     failed() {
@@ -224,10 +199,10 @@ export default {
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.text(reportName, 15, 15);
+
       doc.addImage(img, "JPG", 10, 10);
+      doc.save(reportName + ".pdf");
+
       doc.setProperties({
         title: reportName,
         subject: "Reporte",
@@ -237,21 +212,21 @@ export default {
 
       //Info for verification
       doc.addPage();
-      doc.setFontSize(8);
+      doc.setFontSize(7);
 
       // Table
       doc.cellInitialize();
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "correo") {
-            doc.cell(10, 10, 50, 15, cell, i);
-          } else if ((j == "area_de_investigacion") | (j == "facultad")) {
-            doc.cell(10, 10, 40, 15, cell, i);
+          if (j == "email" | j == "facultad") {
+            doc.cell(2, 10, 55, 15, cell, i);          
+          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
+            doc.cell(2, 10, 30, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
+            doc.cell(2, 10, 15, 15, cell, i);
           } else {
-            doc.cell(10, 10, 30, 15, cell, i);
+            doc.cell(2, 10, 25, 15, cell, i);
           }
         });
       });
@@ -270,7 +245,7 @@ export default {
 
     download_excel() {
       // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -289,35 +264,16 @@ export default {
         { wch: 20 },
         { wch: 20 },
         { wch: 20 },
-        { wch: 20 },
-        { wch: 30 },
         { wch: 25 },
-        { wch: 30 }
+        { wch: 25 },
+        { wch: 40 },
+        { wch: 25 },
+        { wch: 40 }
       ];
       ws["!cols"] = wscols;
 
       var wsrows = [{ hpt: 20 }];
       ws["!rows"] = wsrows;
-
-      /*
-      // Header
-      XLSX.utils.sheet_add_aoa(
-        ws,
-        [
-          [
-            "Cédula",
-            "Primer Nombre",
-            "Segundo Nombre",
-            "Primer Apellido",
-            "Segundo Apellido",
-            "Correo",
-            "Área de Investigación",
-            "Facultad"
-          ]
-        ],
-        { origin: "A1" }
-      );
-      */
 
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws, "Reporte");
