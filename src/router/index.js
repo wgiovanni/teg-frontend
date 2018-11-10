@@ -327,7 +327,7 @@ export const router = new Router({
               next()
             }
           }
-        },
+      },
 
          {
           path: '/report/PublicationsPerFaculty',

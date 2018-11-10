@@ -1,12 +1,15 @@
 <template>
-  <div>
-    <div id="table" class="hidden"></div>   
-    <!--Title-->    
-    <h1 id="report" class="title"/>    
-
-    <!--Plotly-->
+  <div>    
+    <div v-if="loading==true" class="d-flex justify-content-center">
+          <Spinner></Spinner>
+      </div>    
+    
+  <!--Title-->    
+  <h1 id="report" class="title"/>   
+  
+  <!--Plotly-->
     <div ref="bar" class="vue-plotly"/>
-      
+    
     <!--Download buttons--> 
     <div class="row">  
       <div class="col-md-12 text-center">
@@ -17,8 +20,8 @@
     </div>     
 
     <!--Saves plot as image-->
-    <img id="jpg-export" class="hidden"/>
-
+    <img id="jpg-export" class="hidden"/>             
+   
   </div>  
 </template>
 
@@ -68,13 +71,13 @@
 }
 </style>
 
-
 <script>
 import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import Spinner from "@/components/Spinner";
 
 var reportName = "Cantidad de Profesores con Doctorado o PhD por Facultad";
 var img;
@@ -87,9 +90,14 @@ export default {
     img = document.getElementById("jpg-export"); // Gets image
   },
 
+  components: {
+    Spinner
+  },
+
   data() {
     return {
-      data: []
+      data: [],
+      loading: true
     };
   },
 
@@ -100,6 +108,7 @@ export default {
   methods: {
     load() {
       const path = "http://127.0.0.1:5000/api/v1/profesor-doctorado-facultad";
+      this.loading = true;
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -107,6 +116,8 @@ export default {
     },
 
     successful(req) {
+      this.loading = false;
+
       var datos = []; // Saves data from JSON
       var facultades = [];
       var items = [];
@@ -118,6 +129,16 @@ export default {
 
       // Saves data for verification
       info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        primer_nombre: "Primer Nombre",
+        segundo_nombre: "Segundo Nombre",
+        primer_apellido: "Primer Apellido",
+        segundo_apellido: "Segundo Apellido",
+        correo: "Correo",
+        area_de_investigacion: "Área de Investigación",
+        facultad: "Facultad"
+      });
       console.log("info ", info);
 
       // Saves data for plot
@@ -218,66 +239,22 @@ export default {
       doc.addPage();
       doc.setFontSize(8);
 
+      // Table
       doc.cellInitialize();
-        $.each(info, function(i, row){
-            $.each(row, function(j, cell){
-              if(j=="correo"){
-                doc.cell(1,10,50,15,cell,i);
 
-              }else if (j=="area_de_investigacion" | j=="facultad"){
-
-                doc.cell(1,10,40,15,cell,i);
-
-              }else{
-                doc.cell(1,10,30,15,cell,i);
-
-              }
-
-            })
-
-        });      
-        
-        
-      
-
-      /*      doc.text(
-        10,
-        20,
-        "    Cédula      " +
-          "     Primer Nombre" +
-          "     Segundo Nombre   " +
-          "     Primer Apellido   " +
-          "     Segundo Apellido   " +
-          "          Correo        " +
-          "          Área de Investigación  " +
-          "          Facultad   "
-      );
-      var aux = 25;
-      doc.setFontSize(7);
-      for (var i = 0; i < info.length; i++) {
-        aux = aux + 5;
-        doc.text(
-          10,
-          aux,
-          "     " +
-            info[i]["cedula"] +
-            "                              " +
-            info[i]["primer_nombre"] +
-            "                         " +
-            info[i]["segundo_nombre"] +
-            "                              " +
-            info[i]["primer_apellido"] +
-            "                              " +
-            info[i]["segundo_apellido"] +
-            "                    " +
-            info[i]["correo"] +
-            "                    " +
-            info[i]["area_de_investigacion"] +
-            "                    " +
-            info[i]["facultad"]
-        );
-      }
-*/
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "correo") {
+            doc.cell(10, 10, 50, 15, cell, i);
+          } else if ((j == "area_de_investigacion") | (j == "facultad")) {
+            doc.cell(10, 10, 40, 15, cell, i);
+          } else if (j == "cedula") {
+            doc.cell(10, 10, 20, 15, cell, i);
+          } else {
+            doc.cell(10, 10, 30, 15, cell, i);
+          }
+        });
+      });
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()
@@ -293,7 +270,7 @@ export default {
 
     download_excel() {
       // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info);
+      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -322,6 +299,7 @@ export default {
       var wsrows = [{ hpt: 20 }];
       ws["!rows"] = wsrows;
 
+      /*
       // Header
       XLSX.utils.sheet_add_aoa(
         ws,
@@ -339,6 +317,7 @@ export default {
         ],
         { origin: "A1" }
       );
+      */
 
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws, "Reporte");
