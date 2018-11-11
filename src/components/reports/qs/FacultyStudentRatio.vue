@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -34,7 +35,8 @@ import XLSX from "xlsx";
 
 var reportName = "Relación entre Docentes Empleados y Alumnos Matriculados";
 var img;
-var info = []; //Saves data for verification
+var infoDocentes = []; //Saves data for verification
+var infoEstudiantes = []; //Saves data for verification
 var date = new Date();
 
 export default {
@@ -69,6 +71,27 @@ export default {
       var totalEstudiantes;
       var totalEmpleados;
       var d = req.data;
+
+       // Saves data for verification
+      infoDocentes = d["items-docentes"];
+      infoDocentes.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",        
+        correo: "Correo",
+        facultad: "Facultad"
+      });
+      console.log("infoDocentes ", infoDocentes);
+
+      infoEstudiantes = d["items-estudiantes"];
+      infoEstudiantes.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",             
+        email: "Correo",        
+        facultad: "Facultad"
+      });
+      console.log("infoEstudiantes ", infoEstudiantes);
 
       totalEmpleados = d["total-empleado"];
       totalEstudiantes = d["total-estudiantes"];
@@ -148,6 +171,52 @@ export default {
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 10, 10);
+
+       doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(7);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(infoDocentes, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "correo" | j == "facultad") {
+            doc.cell(10, 10, 45, 15, cell, i);       
+          } else if (j == "cedula") {
+            doc.cell(10, 10, 20, 15, cell, i);
+          } else {
+            doc.cell(10, 10, 30, 15, cell, i);
+          }
+        });
+      });
+
+      doc.addPage();
+      doc.setFontSize(7);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(infoEstudiantes, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "email" | j == "facultad") {
+            doc.cell(10, 10, 45, 15, cell, i);       
+          } else if (j == "cedula") {
+            doc.cell(10, 10, 20, 15, cell, i);
+          } else {
+            doc.cell(10, 10, 30, 15, cell, i);
+          }
+        });
+      });
+
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -158,7 +227,48 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+
+    download_excel() {
+      // Data from JSON
+      var ws1 = XLSX.utils.json_to_sheet(infoDocentes, { skipHeader: true });
+      var ws2 = XLSX.utils.json_to_sheet(infoEstudiantes, { skipHeader: true });
+     
+     // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 40 },
+        { wch: 40 }      
+      ];
+      ws1["!cols"] = wscols;
+      ws2["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws1["!rows"] = wsrows;
+      ws2["!rows"] = wsrows;
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws1, "Reporte Docentes");
+      XLSX.utils.book_append_sheet(wb, ws2, "Reporte Estudiantes");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
   }
+  
+
 };
 </script>

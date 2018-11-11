@@ -21,23 +21,23 @@ import ProportionOfInternationalStudents from '@/components/reports/qs/Proportio
 import ProportionOfStudentsPerFaculty from '@/components/reports/qs/ProportionOfStudentsPerFaculty'
 import StaffWithAPhD from '@/components/reports/qs/StaffWithAPhD'
 
+
 //Students
-/*
 import ForeignStudentsPerFaculty from '@/components/reports/students/ForeignStudentsPerFaculty'
+/*
 import StudentsDisabilityPerFaculty from '@/components/reports/students/StudentsDisabilityPerFaculty'
 import StudentsEthnicGroupsPerFaculty from '@/components/reports/students/StudentsEthnicGroupsPerFaculty'
 import StudentsSexFaculty from '@/components/reports/students/StudentsSexFaculty'
 import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
 import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'
 */
-
-//Teachers
 /*
+//Teachers
 import ProportionOfTeachersByRank from '@/components/reports/teachers/ProportionOfTeachersByRank'
 import PublicationsPerFaculty from '@/components/reports/teachers/PublicationsPerFaculty'
 import TeachersNationalityFaculty from '@/components/reports/teachers/TeachersNationalityFaculty'
 import TeachersSexFaculty from '@/components/reports/teachers/TeachersSexFaculty'
-import TeachersWithAPhD from '@/components/reports/teachers/TeachersWithAPhD'
+import TeachersWithAPhDPerFaculty from '@/components/reports/teachers/TeachersWithAPhDPerFaculty'
 */
 
 //import Integration from '@/components/integration/Integration'
@@ -215,7 +215,7 @@ export const router = new Router({
           }
         },
 
-        /*
+     
         {
           path: '/report/ForeignStudentsPerFaculty',
           name: 'ForeignStudentsPerFaculty',
@@ -232,6 +232,7 @@ export const router = new Router({
             }
           }
         },
+        /*
         {
           path: '/report/StudentsDisabilityPerFaculty',
           name: 'StudentsDisabilityPerFaculty',
@@ -329,6 +330,8 @@ export const router = new Router({
           }
       },
 
+    
+
          {
           path: '/report/PublicationsPerFaculty',
           name: 'PublicationsPerFaculty',
@@ -393,9 +396,8 @@ export const router = new Router({
             }
           }
         },
-     
-     
-        */
+        
+    
         {
           path: '/integration',
           name: 'SystemParameterList',
@@ -412,6 +414,7 @@ export const router = new Router({
             }
           }
         },
+*/
         {
           path: '/integration/edit/:id',
           name: 'SystemParameterEdit',

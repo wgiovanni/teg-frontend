@@ -38,20 +38,20 @@
               </div>
               <div id="collapseFive" class="panel-collapse collapse">
                 <div class="list-group">
-                  <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Reporte 1</h4>
+                  <a href="/report/ForeignStudentsPerFaculty" class="list-group-item">
+                    <h4 class="list-group-item-heading">Probando</h4>
                     <p class="list-group-item-text">Docentes.</p>
                   </a>
                 </div>
                 <div class="list-group">
                   <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Reporte 2</h4>
+                    <h4 class="list-group-item-heading">Estudiantes</h4>
                     <p class="list-group-item-text">Estudiantes</p>
                   </a>
                 </div>
                 <div class="list-group">
                   <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Reporte 3</h4>
+                    <h4 class="list-group-item-heading">Egresados</h4>
                     <p class="list-group-item-text">Egresados.</p>
                   </a>
                 </div>

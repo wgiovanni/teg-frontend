@@ -22,48 +22,6 @@
 
 
 <style>
-/* Report titles */
-.title {
-  font-size: 30px;
-  text-align: center;
-  margin: 30px;
-}
-
-/* Download Buttons */
-
-.download-buttons {
-  text-align: center;
-  width: 100%
-}
-
-.button {
-  background-color: #f2f2f2;
-  font-size: 14px;  
-  padding: 8px 20px;
-  margin: 10px;
-  border: 12px;
-  border-radius: 10px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.button:hover {
-  background-color: #edf0f8;
-}
-
-.button:active {
-  background-color: #c8d3ea;
-}
-
-.button:focus {
-  outline: 0;
-}
-
-/*Hides image*/
-.hidden {
-  display: none;
-}
 </style>
 
 
@@ -112,24 +70,42 @@ export default {
 
       var datos = []; // Saves data from JSON
       var facultades = [];
+      var nombreFacultad = [];
       var yMasculino = [];
       var yFemenino = [];
       var i;
       var size = req.data.length;
       var d = req.data;
 
+      // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",
+        fecha_nacimiento: "Fecha de Nacimiento",
+        telefono1: "Teléfono",
+        email: "Correo",
+        estado_procedencia: "Estado de Procedencia",
+        facultad: "Facultad"
+      });
+      console.log("info ", info);
+
+
+      facultades = d["facultades"];
+
       for (i = 0; i < size; i++) {
-        facultades.push(d[i]["facultad"]);
-        yMasculino.push(d[i]["masculino"]);
-        yFemenino.push(d[i]["femenino"]);
+        nombreFacultad.push(facultades[i]["facultad"]);
+        yMasculino.push(facultades[i]["masculino"]);
+        yFemenino.push(facultades[i]["femenino"]);
       }
 
-      console.log(facultades);
+      console.log(nombreFacultad);
       console.log(yMasculino);
       console.log(yFemenino);
 
       datos.push({
-        x: facultades,
+        x: nombreFacultad,
         y: yMasculino,
         //text: [],
         textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
@@ -139,7 +115,7 @@ export default {
       });
 
       datos.push({
-        x: facultades,
+        x: nombreFacultad,
         y: yFemenino,
         //text:[],
         name: "Femenino",
@@ -216,6 +192,36 @@ export default {
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);     
       doc.addImage(img, "JPG", 10, 10);
+
+      doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(7);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "email" | j == "facultad") {
+            doc.cell(2, 10, 60, 15, cell, i);          
+          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
+            doc.cell(2, 10, 35, 15, cell, i);
+          } else if (j == "cedula") {
+            doc.cell(2, 10, 20, 15, cell, i);
+          } else {
+            doc.cell(2, 10, 30, 15, cell, i);
+          }
+        });
+      });
+
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -226,7 +232,47 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+  
+
+   download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 25 },
+        { wch: 40 },
+        { wch: 25 },
+        { wch: 40 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
   }
+  
 };
 </script>

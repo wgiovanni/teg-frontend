@@ -1,11 +1,11 @@
 <template>
-  <div>     
+  <div>   
     <!--Title-->    
-    <h1 id="report" class="title"/>   
+    <h1 id="report" class="title"/>    
 
-    <!--Plotly-->    
-    <div ref="bar" class="vue-plotly"/>    
-
+    <!--Plotly-->
+    <div ref="pie" class="vue-plotly"/>
+      
     <!--Download buttons--> 
     <div class="row">  
       <div class="col-md-12 text-center">
@@ -13,15 +13,18 @@
         <button class="button" @click="download_img">Descargar JPG</button>
         <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
-    </div> 
+    </div>     
 
     <!--Saves plot as image-->
-    <img id="jpg-export" class="hidden"/>   
-</div>     
+    <img id="jpg-export" class="hidden"/>
+
+  </div>  
 </template>
+
 
 <style>
 </style>
+
 
 <script>
 import axios from "axios";
@@ -29,28 +32,20 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
-import Spinner from "@/components/Spinner";
 
-var reportName = "Proporción de Estudiantes por Facultad";
+var reportName = "Proporción de Profesores con Doctorado o PhD";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
 
 export default {
-  mounted() {
-  
-    
-  },
+  mounted() {},
+
   data() {
     return {
-      data: [],
-      loading:true
+      data: []
     };
   },
-  components: {
-    Spinner
-  },
-
 
   created() {
     this.load();
@@ -58,8 +53,7 @@ export default {
 
   methods: {
     load() {
-      const path = "http://127.0.0.1:5000/api/v1/estudiantes-facultad";
-      this.loading = true;
+      const path = "http://127.0.0.1:5000/api/v1/profesor-doctorado-proporcion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -69,14 +63,11 @@ export default {
     successful(req) {
       document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
-      //this.loading = false;
 
       var datos = []; // Saves data from JSON
-      var totalEstudiantes;
-      var studentsTotal = [];
-      var facultades = [];
-      var nombreFacultad = [];
-      var estudiantesFacultad = [];
+      var totalProfesores;
+      var totalDoctorado;
+      var total2;
       var i;
       var size = req.data.length;
       var d = req.data;
@@ -87,50 +78,25 @@ export default {
         cedula: "Cédula",
         nombre: "Nombre",
         apellido: "Apellido",
-        fecha_nacimiento: "Fecha de Nacimiento",
-        telefono1: "Teléfono",
-        telefono2: "Teléfono 2",
-        email: "Correo",
-        estado_procedencia: "Estado de Procedencia",
-        facultad: "Facultad"
+        correo: "Correo",
+        area_de_investigacion: "Área de Investigación",
+        nivel: "Nivel"
       });
+
       console.log("info ", info);
+      totalDoctorado = d["profesores-doctorado"];
+      totalProfesores = d["total-profesores"];
 
-      totalEstudiantes = d["total-estudiantes"];
-      facultades = d["facultad"];
-    
-      for (i = 0; i < 7; i++) {
-        studentsTotal[i] = totalEstudiantes;
-      }
+      console.log(totalProfesores);
+      console.log(totalDoctorado);
 
-      for (i = 0; i < 7; i++) {
-        nombreFacultad.push(facultades[i]["nombre"]);
-        estudiantesFacultad.push(facultades[i]["total"]);
-      }
-
+      total2 = totalProfesores - totalDoctorado;
 
       datos.push({
-        x: estudiantesFacultad,
-        y: nombreFacultad,
-        name: "Estudiantes por Facultad",
-        orientation: "h",
-        type: "bar",
-        marker: {
-          color: "#2C3A47",
-          width: 1
-        }
-      });
-
-      datos.push({
-        x: studentsTotal,
-        y: nombreFacultad,
-        name: "Total de Estudiantes",
-        orientation: "h",
-        type: "bar",
-        marker: {
-          color: "#BDC581",
-          width: 1
-        }
+        values: [totalDoctorado, total2],
+        labels: ["Profesores con Doctorado", "Profesores sin Doctorado"],
+        type: "pie",
+        marker: { colors: ["#ff9f43", "#54a0ff"] }
       });
 
       console.log(datos);
@@ -139,24 +105,20 @@ export default {
       // LAYOUT
 
       var layout = {
-        //title:"",
-        //titlefont:{size: 24},
-        //annotations: [{}],
         xaxis: {
           fixedrange: true
         },
         yaxis: {
           fixedrange: true
         },
-        barmode: "stack",
         editable: false,
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 200,
-          t: 50,
+          l: 100,
+          r: 130,
+          b: 100,
+          t: 100,
           pad: -1
         }
         //width: 720,
@@ -172,13 +134,12 @@ export default {
 
       // GRAPH
 
-      //Exports plot as image
+      // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
-      this.loading = false;
       // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //Saves plot as image
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+        //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
         Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
@@ -190,7 +151,6 @@ export default {
           });
         });
       }); //plotly_plot
-      
     }, //successful(req)
 
     failed() {
@@ -199,9 +159,10 @@ export default {
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
-
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 10, 10);
-      doc.save(reportName + ".pdf");
 
       doc.setProperties({
         title: reportName,
@@ -212,21 +173,19 @@ export default {
 
       //Info for verification
       doc.addPage();
-      doc.setFontSize(7);
+      doc.setFontSize(8);
 
       // Table
       doc.cellInitialize();
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad") {
-            doc.cell(2, 10, 55, 15, cell, i);          
-          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(2, 10, 30, 15, cell, i);
+          if ((j == "correo") | (j == "facultad")) {
+            doc.cell(15, 10, 60, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(2, 10, 15, 15, cell, i);
+            doc.cell(15, 10, 30, 15, cell, i);
           } else {
-            doc.cell(2, 10, 25, 15, cell, i);
+            doc.cell(15, 10, 45, 15, cell, i);
           }
         });
       });
@@ -243,9 +202,9 @@ export default {
       document.body.removeChild(a);
     }, //end_of_download()
 
-    download_excel() {
+     download_excel() {
       // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
+      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -262,18 +221,16 @@ export default {
       var wscols = [
         { wch: 10 },
         { wch: 20 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 25 },
-        { wch: 25 },
+        { wch: 20 },    
         { wch: 40 },
-        { wch: 25 },
-        { wch: 40 }
+        { wch: 30 },
+        { wch: 20 }
       ];
       ws["!cols"] = wscols;
 
       var wsrows = [{ hpt: 20 }];
       ws["!rows"] = wsrows;
+
 
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws, "Reporte");
@@ -281,6 +238,8 @@ export default {
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
     } //end_of_download
+
+
   }
 };
 </script>

@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -37,11 +38,8 @@ var img;
 var info = []; //Saves data for verification
 var date = new Date();
 
-
 export default {
-  mounted() {    
-
-  },
+  mounted() {},
 
   data() {
     return {
@@ -54,8 +52,7 @@ export default {
   },
 
   methods: {
-    
-     load() {
+    load() {
       const path = "http://127.0.0.1:5000/api/v1/profesor-doctorado-proporcion";
       axios
         .get(path)
@@ -63,8 +60,7 @@ export default {
         .catch(() => this.failed());
     },
 
-    successful(req) {   
-      
+    successful(req) {
       document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
 
@@ -76,8 +72,18 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      console.log(d);
+      // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",
+        correo: "Correo",
+        area_de_investigacion: "Área de Investigación",
+        nivel: "Nivel"
+      });
 
+      console.log("info ", info);
       totalDoctorado = d["profesores-doctorado"];
       totalProfesores = d["total-profesores"];
 
@@ -87,11 +93,10 @@ export default {
       total2 = totalProfesores - totalDoctorado;
 
       datos.push({
-        
         values: [totalDoctorado, total2],
-        labels: ['Profesores con Doctorado', 'Profesores sin Doctorado'],
+        labels: ["Profesores con Doctorado", "Profesores sin Doctorado"],
         type: "pie",
-        marker: { colors:['#ff9f43','#54a0ff']  }
+        marker: { colors: ["#ff9f43", "#54a0ff"] }
       });
 
       console.log(datos);
@@ -99,7 +104,7 @@ export default {
 
       // LAYOUT
 
-       var layout = {         
+      var layout = {
         xaxis: {
           fixedrange: true
         },
@@ -115,7 +120,7 @@ export default {
           b: 100,
           t: 100,
           pad: -1
-        },
+        }
         //width: 720,
         //height: 480,
       };
@@ -127,34 +132,30 @@ export default {
         responsive: true
       };
 
-    // GRAPH
+      // GRAPH
 
-     // Exports plot as image
+      // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
-     // Displays graph
+      // Displays graph
       Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
-      //  Saves plot as image
+        //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
-            format: "jpeg",       
+            format: "jpeg",
             height: 768,
-            width: 1024,
-          })
+            width: 1024
+          });
         });
-      });//plotly_plot
-
-
+      }); //plotly_plot
     }, //successful(req)
 
     failed() {
       this.error = "User failed!";
     },
-
-   
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
@@ -162,6 +163,33 @@ export default {
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 10, 10);
+
+      doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(8);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if ((j == "correo") | (j == "facultad")) {
+            doc.cell(15, 10, 60, 15, cell, i);
+          } else if (j == "cedula") {
+            doc.cell(15, 10, 30, 15, cell, i);
+          } else {
+            doc.cell(15, 10, 45, 15, cell, i);
+          }
+        });
+      });
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -172,7 +200,46 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+
+     download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 20 },    
+        { wch: 40 },
+        { wch: 30 },
+        { wch: 20 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
+
+
   }
 };
 </script>
