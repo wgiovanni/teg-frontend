@@ -80,7 +80,7 @@ export default {
         cedula: "Cédula",
         nombre: "Nombre",
         apellido: "Apellido",
-        fecha_nacimiento: "Fecha de Nacimiento",        
+        fecha_nacimiento: "Fecha de Nacimiento",   
         email: "Correo",
         discapacidad: "Discapacidad",
         facultad: "Facultad"

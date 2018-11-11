@@ -1,120 +1,93 @@
 <template>
 
-<body >
+<body class="container-fluid" >
 
-<div class="container" id="funcion"  v-on:load="miFuncion();" >
+<div class="container-fluid" id="funcion"  v-on:load="miFuncion();" >
     
       <blockquote>
         <header>
           <br>
-        <h2 class="text-center menu ">Pre-grado</h2>
+        <h2 id="titulo" class="text-center menu ">Pre-grado</h2>
         </header>
       </blockquote>
 
-    <div class="row ">
-
-       <!-- <nav class="col-lg-2 nav flex-column nav-pills"  >-->
-
-<nav class="col-lg-2  navbar navbar-default selec ">
-  <div class="container-fluid selec ">
-    <div class="navbar-header selec">
-      <a class="navbar-brand selec" href="#">RANKING QS</a>
-    </div>
-    <div class="btn-group-vertical btn-group-toggle  ">
-
-<div class="form-check selec ">
-  <input type="radio" class="custom-control-input" id="Pre-grado" v-on:change="cambia_titulo();" name="groupOfMaterialRadios" checked>
-  <label class="custom-control-label" for="Pre-grado"><br>Pre-grado</label>
-</div>
-
-
-<div class="form-check selec ">
-  <input type="radio" class="custom-control-input " id="Post-grado" v-on:change="cambia_titulo();" name="groupOfMaterialRadios">
-  <label class="custom-control-label" for="Post-grado"><br>Post-grado</label>
-</div>
-
-</div>
-
-
-  <div class="btn-group-vertical btn-group-toggle text-center">
-  
-<div class="custom-control custom-radio selec">
-  <input type="radio" class="custom-control-input" id="Informacion-estudiante"  v-on:change="cambia_titulo();" name="groupOfDefaultRadios" checked>
-  <label class="custom-control-label " for="Informacion-estudiante"><br>Informacion estudiante</label>
-</div>
-
-
-<div class="custom-control custom-radio selec">
-  <input type="radio" class="custom-control-input" id="Asignatura-inscrita" name="groupOfDefaultRadios" >
-  <label class="custom-control-label" for="Asignatura-inscrita"><br>Asignatura inscrita</label>
-</div>
-
-
-<div class="custom-control custom-radio selec">
-  <input type="radio" class="custom-control-input" id="Asignatura aprobada" name="groupOfDefaultRadios">
-  <label class="custom-control-label" for="Asignatura aprobada"><br>Asignatura aprobada<br></label>
-</div>
-</div>
-
-</div>
-
-
-
-
-</nav>
-
-
-        <section class="col-lg-6 text-center panel-body">
-
-          <div class="row col-lg-12  fondo2 selec" >
-            <div id= "i" class="alert text-center alert-success col-lg-11" role="alert">
-              Selecione un archivo
-             
-            </div>
-             
-            <div class="btn-group text-center">
-
-
-		              <input type="file" class="btn btn-primary" id="file" ref="file" v-on:change="handleFileUpload()"/> 
-                  <button v-on:click="submitFile()" class=" btn btn-primary color">Enviar</button>  
-            </div>
-            
-          </div>
-
-        </section>
-
-        <section class="col-lg-4 panel-body">
-          <div class="row ">       
-
-             <!-- <div class="input-group">
-                <div id= "i" class="alert  alert-success " role="alert">
-                  Archivo actual:
+<div class="row">
+          
+       
+  <div class="col-sm-3">
+    <nav class="navbar navbar-default selec ">
+            <div class="container-fluid btn-group-vertical ">
+                <div class="navbar-header ">
+                  <h5>RANKING</h5>
+                 
                 </div>
-                <button  class="btn btn-primary btn-block">Eliminar</button>
-             </div>  
-              -->
-            
-            <div class="input-group center">             
-              <div  class="alert  alert-success " role="alert">
-                Fecha tope de subida:
-                <input type="date" disabled=true value="2018-10-29"/>    
-              </div>  
+
+                <div class="btn-group-vertical btn-group-toggle  " id="prueb">
+
+
+                  <div class="form-check selec ">
+                    <input type="radio" class="custom-control-input " id="Pre-grado" value="0"  v-on:change="cambia_titulo(0);" v-model= "pre_post" name="groupOfMaterialRadios"  checked>
+                    <label class="custom-control-label"  for="Pre-grado"><br>Pre-grado</label>
+                  </div>
+
+
+                  <div class="form-check selec ">
+                    <input type="radio" class="custom-control-input "  id="Post-grado" value="1"  v-on:change="cambia_titulo(1);" v-model= "pre_post" name="groupOfMaterialRadios" >
+                    <label class="custom-control-label"  for="Post-grado"><br>Post-grado</label>
+                  </div>
+
+
+
+                </div>
+
+            </div>
+    </nav>
+  </div>
+  
+  <div class="col-sm-6">
+    
+            <ul class="" id="resul">	
+        
+            </ul>
+
+            <div id="columna_principal" class=" fondo2 selec" >
+                <div id="alert" class="alert  alert-success " role="alert">
+                  
+                <h6 id= "i" >Selecione un archivo</h6>
+                </div>         
+              
             </div>
 
+            <div class="btn-group text-center ">
+                    <input type="file" class="btn btn-primary" id="file" ref="file" v-on:change="handleFileUpload()"/> 
+                    <button @click="submitFile({pre_post})" class=" btn btn-primary color">Enviar</button>  
+            </div>
+      
+  </div>
+  
+  <div class="col-md-1">
+    
+          <div class="input-group center">             
+                <div  class="alert  alert-success " role="alert">
+                  Fecha tope de subida:
+                  <input type="date" disabled=true value="2018-10-29"/>    
+                </div>  
           </div>
-        </section>
 
-    </div>
-
+        
+      
+  </div>
+  
+  
 </div>
 
-<div class="pie">
-
+  
 </div>
- 
+
+
+
+
 </body>
-
-
 
 </template>
 
@@ -123,27 +96,33 @@
 <script>
 
 
-import axios from 'axios';
 
-  export default {
+import Vue from 'vue';
+import axios from 'axios';
+import {mapState,mapGetters} from "vuex"
+  export default{
     /*
       Defines the data used by the component
     */
+   
     data(){
       return {
-        file: ''
+        file: '',
+        pre_post: '0',
+       
+        
       }
     },
-
     methods: {
       /*
         Submits the file to the server
       */
 
-      submitFile(){
+      submitFile(pre_post){
         /*
                 Initialize the form data
             */
+           console.log("entrooo");
             let formData = new FormData();
 
             /*
@@ -154,9 +133,19 @@ import axios from 'axios';
         /*
           Make the request to the POST /single-file URL
         */
-            const path = 'http://localhost:8082/upload';
-          
-
+        var path = '';
+            
+            if(pre_post.pre_post==0){
+              
+                        path = 'http://localhost:8082/upload/11/'+ this.user.username;
+                          // path = 'http://localhost:8082/api/v1/estudiantes';
+                    
+            }else{
+              
+                     path = 'http://localhost:8082/upload/21'+ this.user.username;
+;   
+            }
+            console.log(path);
             axios.post(path,
                 formData,
                 {
@@ -166,10 +155,59 @@ import axios from 'axios';
                 
               }
             ).then(function(res){
-            var div = document.getElementById("i");
-           div.textContent  = res.data["exitosa"];  
-          console.log(res.data); 
+              
 
+              if(!(res.data['exitosa']=="error")){
+                    
+                   if(document.getElementById("resul")){
+                     document.getElementById("resul").innerHTML = "";
+                   }
+                    console.log(localStorage.getItem('user'))
+                    for(var i=0;i<res.data["exitosa"].length;i++){
+                    
+                    var li=document.createElement('LI');
+                    li.innerHTML=res.data["exitosa"][i];
+                    li.setAttribute('class','alert text-center alert-danger');
+                    document.getElementById('resul').appendChild(li);
+
+                    }
+
+                     if(res.data["exitosa"].length>0){
+                        if(document.getElementById("alert")){
+                         document.getElementById("alert").remove();
+                        }
+                        // document.getElementById("resul").innerHTML = "";
+                        // console.log("entroo1")
+
+                    }else{
+                           if(document.getElementById("alert")!=null){
+                            var div = document.getElementById("alert");
+                            div.setAttribute('class','alert text-center alert-success');
+                            div.textContent= "Se han guardado los cambios";
+                            //  console.log("entroo2")
+                           }else{
+                    
+                            document.getElementById("columna_principal").innerHTML = " <div id='alert' class='alert text-center alert-success col-lg-11' role='alert'><h6 id= 'i'>Se han guardado los cambios</h6> </div>  ";
+                            document.getElementById("resul").innerHTML = "";
+                            //  console.log("entroo3")
+                          }
+                      
+                    }
+
+              }else{
+                
+                     if(document.getElementById("alert")!=null){
+                          var div = document.getElementById("alert");
+                          div.setAttribute('class','alert text-center alert-danger');
+                          div.textContent= "Error al cargar el archivo";
+                    }else{
+                   
+                           document.getElementById("columna_principal").innerHTML = " <div id='alert' class='alert text-center alert-danger col-lg-11' role='alert'><h6 id= 'i'>Error al cargar el archivo</h6> </div>  ";
+                          document.getElementById("resul").innerHTML = "";
+                    }
+              }
+             
+// <div class='btn-group text-center'> <input type='file' class='btn btn-primary' id='file' ref='file' v-on:change='handleFileUpload()'/> <button v-on:click='+submitFile({pre_post},{tipo_archiv})+' class=' btn btn-primary color'>Enviar</button>
           console.log('SUCCESS!!');
         })
         .catch(res=> {
@@ -184,29 +222,40 @@ import axios from 'axios';
       */
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
-        console.log(this.$refs.file.files[0].name);
+       
         if(this.$refs.file.files[0].name){
-            var div = document.getElementById("i");
-           div.textContent  = "Archivo: " +this.$refs.file.files[0].name ; 
+          if(document.getElementById("alert")){
+                  var div = document.getElementById("alert");
+                    div.setAttribute('class','alert text-center alert-success');
+                    div.textContent= "Archivo: " + this.$refs.file.files[0].name ;
+            }
+            // var div = document.getElementById("i");
+            // div.textContent  = "Archivo: " + this.$refs.file.files[0].name ; 
         }
         
       },
-      cambia_titulo(){
-         var pre= document.getElementById('Informacion-estudiante');
-         var post= document.getElementById('Asignatura-inscrita');
-          var post2= document.getElementById('Asignatura aprobada');
+      cambia_titulo(instancia){
+        if(instancia==0){
+          document.getElementById("titulo").innerHTML = "Pre-grado";
          
-        console.log(pre.value);
-        console.log(post.value);
-        console.log(post2.value);
-      }
-    }
+        }else{
+          document.getElementById("titulo").innerHTML = "Post-grado";
+        
+        }
+      
+       }, 
+
+       
+       
+    
+    },
+    computed:{
+         ...mapGetters(["user"])
+       }
+
   }
 
  
-
-
-
 </script>
 
  <style>

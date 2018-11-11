@@ -11,7 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
-        <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -161,12 +161,12 @@ export default {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
+        Plotly.toImage(gd, { height: 576, width: 780 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 768,
-            width: 1024
+            height: 576,
+            width: 780
           });
         });
       }); //plotly_plot

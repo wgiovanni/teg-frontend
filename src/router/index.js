@@ -29,10 +29,9 @@ import StudentsDisabilityPerFaculty from '@/components/reports/students/Students
 import StudentsEthnicGroupsPerFaculty from '@/components/reports/students/StudentsEthnicGroupsPerFaculty'
 import StudentsSexFaculty from '@/components/reports/students/StudentsSexFaculty'
 
-/*
-import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
+//import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
 
-import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'*/
+//import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'
 
 
 //Teachers
@@ -76,7 +75,7 @@ export const router = new Router({
           component: Students,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
-            if (store.state.user.name != "facultad" && store.state.user.name != "administrador") {
+            if (store.state.user.name != "facultad_estudiante" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -91,7 +90,7 @@ export const router = new Router({
           component: Teachers,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
-            if (store.state.user.name != "facultad" && store.state.user.name != "administrador") {
+            if (store.state.user.name != "facultad_docente" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -283,8 +282,8 @@ export const router = new Router({
             }
           }
         },
-        /*
-         {
+        
+        /* {
           path: '/report/UndergraduteStudentsNationality',
           name: 'UndergraduteStudentsNationality',
           component: UndergraduteStudentsNationality,
@@ -317,8 +316,7 @@ export const router = new Router({
               next()
             }
           }
-        },
-        */
+        },*/
         {
           path: '/report/ProportionOfTeachersByRank',
           name: 'ProportionOfTeachersByRank',
@@ -334,11 +332,8 @@ export const router = new Router({
               next()
             }
           }
-      },
-
-    
-
-         {
+        },
+        {
           path: '/report/PublicationsPerFaculty',
           name: 'PublicationsPerFaculty',
           component: PublicationsPerFaculty,
@@ -424,13 +419,19 @@ export const router = new Router({
         {
           path: '/integration/edit/:id',
           name: 'SystemParameterEdit',
-          component: SystemParameterEdit
+          component: SystemParameterEdit,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
         },
-        {
-          path: '/register',
-          name: 'Register',
-          component: Register
-        }, 
         {
           path: '/admin',
           name: 'Admin',
@@ -494,7 +495,7 @@ export const router = new Router({
         {
           path: '/audit',
           name: 'AuditList',
-          component: AuditList/*,
+          component: AuditList,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
             if (store.state.user.name != "administrador") {
@@ -503,8 +504,9 @@ export const router = new Router({
             } else {
               console.log("vamos a integracion");
               next()
-            }*/
+            }
         }
+      }
       ]
     }
   ],

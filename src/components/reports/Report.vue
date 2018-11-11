@@ -24,7 +24,7 @@
                   
                   <a href="/report/ProportionOfStudentsPerFaculty" class="list-group-item">Proporción de Estudiantes por Facultad</a>
                   <a href="/report/StaffWithAPhD" class="list-group-item">Profesores con Doctorado o PhD</a>
-                  <a href="/report/FacultyStudentRatio" class="list-group-item">Relación entre Docentes Empleados y Alumnos Matriculados</a>
+                 
                   
                 </div>
               </div>
@@ -63,18 +63,7 @@
                     <p class="list-group-item-text">Estudiantes</p>
                   </a>
                 </div>
-                 <div class="list-group">
-                  <a href="/report/UndergraduateStudentsNationality" class="list-group-item">
-                    Proporción de Estudiantes de Pregrado Extranjeros
-                    <p class="list-group-item-text">Estudiantes</p>
-                  </a>
-                </div>
-                <div class="list-group">
-                  <a href="/report/UndergraduateStudentsSex" class="list-group-item">
-                    Proporción de Estudiantes de Pregrado por Sexo
-                    <p class="list-group-item-text">Estudiantes</p>
-                  </a>
-                </div>
+            
                 <!---->
 
                 <!--Docentes-->

@@ -1,30 +1,49 @@
 <template>
 	<div class="container">
 		<div class="large-12 medium-12 small-12 cell">
-            <div id= "i" class="alert alert-secondary" role="alert">
-                Por favor ingrese un archivo .csv
-            </div>
-            <div class="archivo normal row" id="archi">
-                <label>Archivo
-                    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-                </label>
-                <button class="btn btn-outline-secondary" id="enviar" v-on:click="submitFile()">Enviar</button>
-            </div>
+      <div id= "i" class="alert alert-secondary" role="alert">
+      Seleccione un archivo csv
+    </div>
+    <p >Fecha tope de subida: 2-11-2018</p>
+    <div v-if="loading==true">
+      <Spinner style="display:block; margin:auto;"></Spinner>
+    </div>
+    <div class="archivo normal rounded" id="archi">
+		  <label>Archivo
+		    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+		  </label>
+		  <button class="btn btn-light" id="enviar" v-on:click="submitFile()">Enviar</button>
+      
+      </div>
+      <div class="intru">
+       <h4 >Pasos a seguir</h4>
+        <p >1-haga click en el boton seleccionar archivo.</p>
+        <p >2-seleccione el archivo csv que desea ingresar en el sistema.</p>
+        <p >3-Presione el boton de enviar.</p>
+        <p >4-En caso que ocurra  un error , modifique el archivo y vuelva a intentarlo.</p>
+        
+      </div>
 		</div>
 	</div>
+
 </template>
 
 <script>
 import axios from 'axios';
-
+import { mapState, mapGetters } from "vuex";
+import Spinner from '@/components/Spinner'
   export default {
     /*
       Defines the data used by the component
     */
     data(){
       return {
-        file: ''
+        file: '',
+        loading: false
       }
+    },
+    components:{
+      Spinner
     },
 
     methods: {
@@ -45,7 +64,8 @@ import axios from 'axios';
         /*
           Make the request to the POST /single-file URL
         */
-            const path = 'http://localhost:8083/upload';
+            const path = 'http://localhost:8083/upload/'+ this.user.username;
+            this.loading=true;
           
 
             axios.post(path,
@@ -56,8 +76,16 @@ import axios from 'axios';
                 }
                 
               }
-            ).then(function(res){
+            ).then(res => this.success(res))
+        .catch(res=> {
+        console.log(res);
+        console.log('FAILURE!!');
+        this.loading= false;
+        });
+      },
+      success(res){
             var div = document.getElementById("i");
+            this.loading= false;
 
            div.textContent  = res.data["exitosa"];
            if(res.data["exitosa"]== "El Archivo csv ha sido procesado con exito!!!"){
@@ -76,12 +104,7 @@ import axios from 'axios';
          
           console.log(res.data); 
           console.log('SUCCESS!!');
-        })
-        .catch(res=> {
-        console.log(res);
-        console.log('FAILURE!!');
-        });
-      },
+        },
 
       /*
         Handles a change on the file upload
@@ -89,6 +112,9 @@ import axios from 'axios';
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
       }
+    },
+    computed: {
+      ...mapGetters(["user"])
     }
   }
 </script>
@@ -96,23 +122,24 @@ import axios from 'axios';
 <style type="text/css">
   .archivo{
           
-        
-          padding: 30px 30px;
-          width: 60%;
+          background: rgba(155,155,155,0.3);
+          padding: 50px 40px;
+          width: 70%;
           min-width: 500px;
-          
+          float:left;
           margin:auto;
-          margin-top:11%;
+          margin-top:12%;
+          margin-bottom:8%;
         }
     #i{
         margin-top:10px;
          
         }
     .rojo{
-         border: 1px solid rgba(255,0,0,0.2);
+         background: rgba(255,0,0,0.19);
         }
     .verde{
-         border: 1px solid rgba(0,128,0,0.2);
+           background: rgba(0,128,0,0.2);
         }
     .normal{
            border: 1px solid rgba(155,155,155,0.1);
@@ -122,6 +149,38 @@ import axios from 'axios';
           
           width: 20%;
         }
-    
+      .copyright{
+          
+          display:none;
+        }
+        .intru{
+          
+             padding: 10px 40px;
+           
+        }
+   .intru h4, .intru p{
+          
+
+         text-align: center;
+        }
+@media (max-width: 1000px) { 
+
+
+   .intru {
+          
+
+         display:none;
+        }
+  .archivo{
+          
+        
+          padding: 50px 40px;
+          width: 90%;
+          min-width: 500px;
+          float:none;
+         
+        }
+
+ }
 </style">
 

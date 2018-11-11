@@ -73,25 +73,18 @@ export default {
       var d = req.data;
 
        // Saves data for verification
-      infoDocentes = d["items-docentes"];
+      infoDocentes = d["items"];
       infoDocentes.unshift({
         cedula: "Cédula",
         nombre: "Nombre",
         apellido: "Apellido",        
         correo: "Correo",
-        facultad: "Facultad"
+        facultad: "Facultad",
+        cargo: "Cargo"
       });
       console.log("infoDocentes ", infoDocentes);
 
-      infoEstudiantes = d["items-estudiantes"];
-      infoEstudiantes.unshift({
-        cedula: "Cédula",
-        nombre: "Nombre",
-        apellido: "Apellido",             
-        email: "Correo",        
-        facultad: "Facultad"
-      });
-      console.log("infoEstudiantes ", infoEstudiantes);
+     
 
       totalEmpleados = d["total-empleado"];
       totalEstudiantes = d["total-estudiantes"];
@@ -232,7 +225,7 @@ export default {
     download_excel() {
       // Data from JSON
       var ws1 = XLSX.utils.json_to_sheet(infoDocentes, { skipHeader: true });
-      var ws2 = XLSX.utils.json_to_sheet(infoEstudiantes, { skipHeader: true });
+      
      
      // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -251,19 +244,20 @@ export default {
         { wch: 20 },
         { wch: 20 },
         { wch: 40 },
-        { wch: 40 }      
+        { wch: 40 },
+        { wch: 40 }
+
       ];
       ws1["!cols"] = wscols;
-      ws2["!cols"] = wscols;
+     
 
       var wsrows = [{ hpt: 20 }];
       ws1["!rows"] = wsrows;
-      ws2["!rows"] = wsrows;
+     
 
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws1, "Reporte Docentes");
-      XLSX.utils.book_append_sheet(wb, ws2, "Reporte Estudiantes");
-
+    
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
     } //end_of_download

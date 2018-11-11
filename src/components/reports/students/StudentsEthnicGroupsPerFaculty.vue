@@ -11,7 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
-        <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -81,8 +81,7 @@ export default {
         cedula: "Cédula",
         nombre: "Nombre",
         apellido: "Apellido",        
-        email: "Correo",
-        estado_procedencia: "Estado de Procedencia",
+        email: "Correo",        
         etnia: "Grupo Étnico",
         facultad: "Facultad"
       });
@@ -234,8 +233,7 @@ export default {
         { wch: 12 },
         { wch: 20 },
         { wch: 20 },
-        { wch: 40 },
-        { wch: 20 },
+        { wch: 40 },        
         { wch: 45 },
         { wch: 40 }
       ];

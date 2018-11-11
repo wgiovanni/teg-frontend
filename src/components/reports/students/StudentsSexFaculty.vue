@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+         <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -87,6 +88,7 @@ export default {
         telefono1: "Teléfono",
         email: "Correo",
         estado_procedencia: "Estado de Procedencia",
+        sexo: "Sexo",
         facultad: "Facultad"
       });
       console.log("info ", info);
@@ -94,7 +96,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < size; i++) {
+      for (i = 0; i < facultades.length-1; i++) {
         nombreFacultad.push(facultades[i]["facultad"]);
         yMasculino.push(facultades[i]["masculino"]);
         yFemenino.push(facultades[i]["femenino"]);
@@ -202,7 +204,7 @@ export default {
 
       //Info for verification
       doc.addPage();
-      doc.setFontSize(7);
+      doc.setFontSize(6);
 
       // Table
       doc.cellInitialize();
@@ -210,13 +212,13 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "email" | j == "facultad") {
-            doc.cell(2, 10, 60, 15, cell, i);          
+            doc.cell(2, 10, 50, 15, cell, i);          
           }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(2, 10, 35, 15, cell, i);
-          } else if (j == "cedula") {
-            doc.cell(2, 10, 20, 15, cell, i);
-          } else {
             doc.cell(2, 10, 30, 15, cell, i);
+          } else if (j == "cedula") {
+            doc.cell(2, 10, 15, 15, cell, i);
+          } else {
+            doc.cell(2, 10, 25, 15, cell, i);
           }
         });
       });
@@ -258,6 +260,7 @@ export default {
         { wch: 20 },
         { wch: 25 },
         { wch: 40 },
+        { wch: 25 },
         { wch: 25 },
         { wch: 40 }
       ];

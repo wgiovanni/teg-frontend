@@ -83,8 +83,7 @@ export default {
         nombre: "Nombre",
         apellido: "Apellido",
         fecha_nacimiento: "Fecha de Nacimiento",
-        telefono1: "Teléfono",
-        telefono2: "Teléfono 2",
+        telefono1: "Teléfono",        
         email: "Correo",
         estado_procedencia: "Estado de Procedencia",
         facultad: "Facultad"
@@ -257,8 +256,7 @@ export default {
         { wch: 20 },
         { wch: 20 },
         { wch: 20 },
-        { wch: 25 },
-        { wch: 25 },
+        { wch: 25 },      
         { wch: 40 },
         { wch: 25 },
         { wch: 40 }
