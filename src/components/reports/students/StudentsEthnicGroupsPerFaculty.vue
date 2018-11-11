@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_img">Descargar JPG</button>
       </div>
     </div>     
 
@@ -67,23 +68,39 @@ export default {
       img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
+      var nombreFacultad = [];
       var facultades = [];
       var estudiantes = [];
       var i;
       var size = req.data.length;
       var d = req.data;
 
-      for (i = 0; i < size; i++) {
-        facultades.push(d[i]["facultad"]);
-        estudiantes.push(d[i]["total-estudiantes-etnia"]);
+      // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",        
+        email: "Correo",
+        estado_procedencia: "Estado de Procedencia",
+        etnia: "Grupo Étnico",
+        facultad: "Facultad"
+      });
+      console.log("info ", info);
+
+      facultades = d["facultades"];
+ 
+      for (i = 0; i < facultades.length; i++) {
+        nombreFacultad.push(facultades[i]["facultad"]);
+        estudiantes.push(facultades[i]["total-estudiantes-etnia"]);
       }
   
-      console.log(facultades);
+      console.log(nombreFacultad);
       console.log(estudiantes);
 
       datos.push({
         x: estudiantes,
-        y: facultades,
+        y: nombreFacultad,
         name: "Estudiantes Pertenecientes a Grupos Étnicos",
         orientation: 'h',
         type: "bar",
@@ -133,12 +150,12 @@ export default {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
+        Plotly.toImage(gd, { height: 576, width: 720 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 768,
-            width: 1024
+            height: 576,
+            width: 720
           });
         });
       }); //plotly_plot
@@ -153,7 +170,38 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 10, 10);
+      doc.addImage(img, "JPG", 20, 20);
+
+       doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(7);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "email" | j == "facultad") {
+            doc.cell(2, 10, 55, 15, cell, i);          
+          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
+            doc.cell(2, 10, 30, 15, cell, i);
+          } else if (j == "cedula") {
+            doc.cell(2, 10, 15, 15, cell, i);
+         } else if (j == "etnia") {
+            doc.cell(2, 10, 60, 15, cell, i);
+          } else {
+            doc.cell(2, 10, 25, 15, cell, i);
+          }
+        });
+      });
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -164,7 +212,44 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+
+     download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 12 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 40 },
+        { wch: 20 },
+        { wch: 45 },
+        { wch: 40 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
   }
 };
 </script>

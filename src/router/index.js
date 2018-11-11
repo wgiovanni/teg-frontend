@@ -11,7 +11,7 @@ import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
 import AuditList from '@/components/audit/AuditList'
 // Reports
-import Report from '@/components/reports/Reports'
+import Report from '@/components/reports/Report'
 
 //QS Ranking
 import CitationsPerFaculty from '@/components/reports/qs/CitationsPerFaculty'
@@ -23,22 +23,25 @@ import StaffWithAPhD from '@/components/reports/qs/StaffWithAPhD'
 
 
 //Students
+
 import ForeignStudentsPerFaculty from '@/components/reports/students/ForeignStudentsPerFaculty'
-/*
 import StudentsDisabilityPerFaculty from '@/components/reports/students/StudentsDisabilityPerFaculty'
 import StudentsEthnicGroupsPerFaculty from '@/components/reports/students/StudentsEthnicGroupsPerFaculty'
 import StudentsSexFaculty from '@/components/reports/students/StudentsSexFaculty'
-import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
-import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'
-*/
+
 /*
+import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
+
+import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'*/
+
+
 //Teachers
 import ProportionOfTeachersByRank from '@/components/reports/teachers/ProportionOfTeachersByRank'
 import PublicationsPerFaculty from '@/components/reports/teachers/PublicationsPerFaculty'
 import TeachersNationalityFaculty from '@/components/reports/teachers/TeachersNationalityFaculty'
 import TeachersSexFaculty from '@/components/reports/teachers/TeachersSexFaculty'
 import TeachersWithAPhDPerFaculty from '@/components/reports/teachers/TeachersWithAPhDPerFaculty'
-*/
+
 
 //import Integration from '@/components/integration/Integration'
 import SystemParameterList from '@/components/integration/SystemParameterList'
@@ -214,8 +217,6 @@ export const router = new Router({
             }
           }
         },
-
-     
         {
           path: '/report/ForeignStudentsPerFaculty',
           name: 'ForeignStudentsPerFaculty',
@@ -231,8 +232,9 @@ export const router = new Router({
               next()
             }
           }
-        },
-        /*
+        },         
+     
+        
         {
           path: '/report/StudentsDisabilityPerFaculty',
           name: 'StudentsDisabilityPerFaculty',
@@ -281,6 +283,7 @@ export const router = new Router({
             }
           }
         },
+        
          {
           path: '/report/UndergraduteStudentsNationality',
           name: 'UndergraduteStudentsNationality',
@@ -297,6 +300,8 @@ export const router = new Router({
             }
           }
         },
+
+        /*
          {
           path: '/report/UndergraduteStudentsSex',
           name: 'UndergraduteStudentsSex',
@@ -313,6 +318,7 @@ export const router = new Router({
             }
           }
         },
+        */
         {
           path: '/report/ProportionOfTeachersByRank',
           name: 'ProportionOfTeachersByRank',
@@ -414,7 +420,7 @@ export const router = new Router({
             }
           }
         },
-*/
+
         {
           path: '/integration/edit/:id',
           name: 'SystemParameterEdit',

@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -22,48 +23,6 @@
 
 
 <style>
-/* Report titles */
-.title {
-  font-size: 30px;
-  text-align: center;
-  margin: 30px;
-}
-
-/* Download Buttons */
-
-.download-buttons {
-  text-align: center;
-  width: 100%
-}
-
-.button {
-  background-color: #f2f2f2;
-  font-size: 14px;  
-  padding: 8px 20px;
-  margin: 10px;
-  border: 12px;
-  border-radius: 10px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.button:hover {
-  background-color: #edf0f8;
-}
-
-.button:active {
-  background-color: #c8d3ea;
-}
-
-.button:focus {
-  outline: 0;
-}
-
-/*Hides image*/
-.hidden {
-  display: none;
-}
 </style>
 
 
@@ -112,6 +71,7 @@ export default {
       img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
+      var nombreFacultad = [];; 
       var facultades = [];
       var yMasculino = [];
       var yFemenino = [];
@@ -119,18 +79,32 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      for (i = 0; i < size; i++) {
-        facultades.push(d[i]["facultad"]);
-        yMasculino.push(d[i]["masculino"]);
-        yFemenino.push(d[i]["femenino"]);
+       // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",        
+        correo: "Correo",
+        sexo: "Sexo",
+        facultad: "Facultad"
+      });
+      console.log("info ", info);
+
+      facultades = d["facultades"];
+
+      for (i = 0; i < facultades.length; i++) {
+        nombreFacultad.push(facultades[i]["facultad"]);
+        yMasculino.push(facultades[i]["masculino"]);
+        yFemenino.push(facultades[i]["femenino"]);
       }
 
-      console.log(facultades);
+      console.log(nombreFacultad);
       console.log(yMasculino);
       console.log(yFemenino);
 
       datos.push({
-        x: facultades,
+        x: nombreFacultad,
         y: yMasculino,
         //text: [],
         textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
@@ -195,12 +169,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}, {title: "hola"}).then(function(url) {
+        Plotly.toImage(gd, {height: 576, width: 720}, {title: "hola"}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",       
-            height: 768,
-            width: 1024,
+            height: 576,
+            width: 720,
           })
         });
       });//plotly_plot
@@ -216,7 +190,35 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);     
-      doc.addImage(img, "JPG", 10, 10);
+      doc.addImage(img, "JPG", 20, 20);
+
+       doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(8);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "correo" | j =="facultad") {
+            doc.cell(15, 10, 60, 15, cell, i);       
+          
+          } else if (j == "cedula") {
+            doc.cell(15, 10, 30, 15, cell, i);
+          } else {
+            doc.cell(15, 10, 40, 15, cell, i);
+          }
+        });
+      });
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -227,7 +229,44 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+
+    download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 20 },    
+        { wch: 40 },
+        { wch: 20 },
+        { wch: 40 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download    
   }
 };
 </script>

@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -71,7 +72,17 @@ export default {
       var totalEstudiantes;  
       var d = req.data;
 
-      console.log(d);
+      // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        nacionalidad: "Nacionalidad",
+        nombre: "Nombre",
+        apellido: "Apellido",        
+        email: "Correo",     
+        tipo: "Tipo"
+      });
+      console.log("info ", info);
 
       estudiantesV = d["Venezolano"];
       estudiantesE = d["Extranjero"];
@@ -153,7 +164,36 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 10, 10);
+      doc.addImage(img, "JPG", 20, 20);
+      
+       doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(8);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if (j == "email") {
+            doc.cell(10, 10, 55, 15, cell, i);        
+          } else if (j == "cedula") {
+            doc.cell(10, 10, 15, 15, cell, i);
+         } else if (j == "nacionalidad") {
+            doc.cell(10, 10, 60, 35, cell, i);
+          } else {
+            doc.cell(10, 10, 25, 15, cell, i);
+          }
+        });
+      });
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -164,7 +204,44 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+
+     download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 12 },
+        { wch: 35 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 10 },
+        { wch: 30 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
+
   }
 };
 </script>

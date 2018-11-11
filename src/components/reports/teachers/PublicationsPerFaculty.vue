@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -71,22 +72,41 @@ export default {
       var datos = []; // Saves data from JSON
       var facultades = [];
       var numPublicaciones = [];
+      var nombreFacultad = [];
       var i;
       var size = req.data.length;
       var d = req.data;
 
-      for (i = 0; i < size; i++) {
-        facultades.push(d[i]["facultad"]);
-        numPublicaciones.push(d[i]["cantidad_publicaciones"]);
+       // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",
+        nombre: "Nombre",
+        apellido: "Apellido",
+        correo: "Correo",
+        area_de_investigacion: "Área de Investigación",
+        publicacion: "Publicación",
+        url_citacion: "Link a Citación",
+        url_publicacion: "Link a Publicación",
+        numero_citas: "Número de Citas",
+        facultad: "Facultad"
+      });
+      console.log("info ", info);
+
+
+      facultades = d["facultades"];
+
+      for (i = 0; i < facultades.length; i++) {
+        nombreFacultad.push(facultades[i]["facultad"]);
+        numPublicaciones.push(facultades[i]["cantidad_publicaciones"]);
       }
 
     
-
-      console.log(facultades);
+      console.log(nombreFacultad);
       console.log(numPublicaciones);
 
       datos.push({
-        x: facultades,
+        x: nombreFacultad,
         y: numPublicaciones,
         name: "Cantidad de Publicaciones",
         type: "bar",
@@ -141,12 +161,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+        Plotly.toImage(gd, {height: 576, width: 720}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",       
-            height: 768,
-            width: 1024,
+            height: 576,
+            width: 720,
           })
         });
       });//plotly_plot
@@ -164,7 +184,50 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);     
-      doc.addImage(img, "JPG", 10, 10);
+      doc.addImage(img, "JPG", 20, 20);
+
+      
+      doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(7);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+       
+          $.each(row, function(j, cell) {
+            if (cell != "Publicación" & cell!="Link a Citación" & cell!="Link a Publicación") {
+              if(j!="publicacion" & j!="url_citacion" & j!="url_publicacion"){
+                if (j == "facultad" | j =="correo") {
+                  doc.cell(10, 10, 50, 15, cell, i);
+                } else if (j == "area_de_investigacion") {
+                  doc.cell(10, 10, 40, 15, cell, i);
+                } else if (j == "cedula" | j == "numero_citas") {
+                  doc.cell(10, 10, 25, 15, cell, i);
+                } else{
+                  doc.cell(10, 10, 35, 15, cell, i);
+                }
+              }
+            }
+          });
+      
+      });
+
+      doc.addPage();
+      doc.setFont("helvetica");
+      doc.setFontSize(8);
+      doc.setFontType("bold");
+      doc.text("* Para ver más información sobre las publicaciones que fueron citadas por favor descargar archivo en formato Excel (.xlsx)", 15, 15);
+
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -175,7 +238,48 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+
+    download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 40 },
+        { wch: 30 },
+        { wch: 50 },
+        { wch: 50 },
+        { wch: 50 },
+        { wch: 20 },
+        { wch: 40 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
+
   }
 };
 </script>

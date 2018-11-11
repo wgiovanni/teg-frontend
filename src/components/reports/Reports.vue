@@ -33,7 +33,8 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Proporción de Profesores con Doctorado o PhD";
+var reportName =
+  "Proporción de Estudiantes Internacionales en Relación con el Total de Estudiantes de la Universidad";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
@@ -53,7 +54,8 @@ export default {
 
   methods: {
     load() {
-      const path = "http://127.0.0.1:5000/api/v1/profesor-doctorado-proporcion";
+      const path =
+        "http://127.0.0.1:5000/api/v1/estudiantes-internacionales-proporcion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -65,44 +67,42 @@ export default {
       img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
-      var totalProfesores;
-      var totalDoctorado;
-      var total2;
-      var i;
-      var size = req.data.length;
+      var totalEstudiantes;
+      var totalInternacional;
+      var totalNacional;
       var d = req.data;
 
       // Saves data for verification
       info = d["items"];
       info.unshift({
         cedula: "Cédula",
+        nacionalidad: "Nacionalidad",
         nombre: "Nombre",
         apellido: "Apellido",
-        correo: "Correo",
-        area_de_investigacion: "Área de Investigación",
-        nivel: "Nivel"
+        email: "Correo",
+        facultad: "Facultad"
       });
-
       console.log("info ", info);
-      totalDoctorado = d["profesores-doctorado"];
-      totalProfesores = d["total-profesores"];
 
-      console.log(totalProfesores);
-      console.log(totalDoctorado);
+      totalInternacional = d["estudiantes-internacionales"];
+      totalEstudiantes = d["total-estudiantes"];
 
-      total2 = totalProfesores - totalDoctorado;
+      totalNacional = totalEstudiantes - totalInternacional;
+
+      console.log(totalEstudiantes);
+      console.log(totalInternacional);
 
       datos.push({
-        values: [totalDoctorado, total2],
-        labels: ["Profesores con Doctorado", "Profesores sin Doctorado"],
+        values: [totalInternacional, totalNacional],
+        labels: ["Estudiantes Internacionales", "Estudiantes Nacionales"],
         type: "pie",
-        marker: { colors: ["#ff9f43", "#54a0ff"] }
+        marker: { colors: ["#FF4036", "#2AC63D"] }
       });
 
       console.log(datos);
       this.data = datos;
 
-      // LAYOUT
+      //LAYOUT
 
       var layout = {
         xaxis: {
@@ -162,7 +162,7 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 10, 10);
+      doc.addImage(img, "JPG", 20, 20);
 
       doc.setProperties({
         title: reportName,
@@ -180,12 +180,14 @@ export default {
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if ((j == "correo") | (j == "facultad")) {
-            doc.cell(15, 10, 60, 15, cell, i);
+          if ((j == "email") | (j == "facultad")) {
+            doc.cell(10, 10, 60, 15, cell, i);
+          } else if (j == "nacionalidad") {
+            doc.cell(10, 10, 35, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(15, 10, 30, 15, cell, i);
+            doc.cell(10, 10, 20, 15, cell, i);
           } else {
-            doc.cell(15, 10, 45, 15, cell, i);
+            doc.cell(10, 10, 30, 15, cell, i);
           }
         });
       });
@@ -202,9 +204,9 @@ export default {
       document.body.removeChild(a);
     }, //end_of_download()
 
-     download_excel() {
+    download_excel() {
       // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -220,17 +222,16 @@ export default {
       // Column Properties
       var wscols = [
         { wch: 10 },
+        { wch: 25 },
         { wch: 20 },
-        { wch: 20 },    
+        { wch: 20 },  
         { wch: 40 },
-        { wch: 30 },
-        { wch: 20 }
+        { wch: 40 }
       ];
       ws["!cols"] = wscols;
 
       var wsrows = [{ hpt: 20 }];
       ws["!rows"] = wsrows;
-
 
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws, "Reporte");
@@ -238,8 +239,6 @@ export default {
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
     } //end_of_download
-
-
   }
 };
 </script>

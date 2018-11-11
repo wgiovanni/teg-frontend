@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_img">Descargar JPG</button>
       </div>
     </div>     
 
@@ -66,6 +67,7 @@ export default {
       img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
+      var nombreFacultad = [];
       var facultades = [];
       var estudiantesV = [];
       var estudiantesE = [];
@@ -73,18 +75,35 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      for (i = 0; i < size; i++) {
-        facultades.push(d[i]["facultad"]);
-        estudiantesV.push(d[i]["venezolano"]);
-        estudiantesE.push(d[i]["extranjero"]);
+       // Saves data for verification
+      info = d["items"];
+      info.unshift({
+        cedula: "Cédula",        
+        nombre: "Nombre",
+        apellido: "Apellido",
+        email: "Correo",
+        nacionalidad: "Nacionalidad",
+        facultad: "Facultad"
+      });
+      console.log("info ", info);
+
+
+
+      facultades = d["facultades"];
+
+      for (i = 0; i < facultades.length; i++) {
+
+        nombreFacultad.push(facultades[i]["facultad"]);
+        estudiantesV.push(facultades[i]["venezolano"]);
+        estudiantesE.push(facultades[i]["extranjero"]);
       }
 
-      console.log(facultades);
+      console.log(nombreFacultad);
       console.log(estudiantesV);
       console.log(estudiantesE);
 
       datos.push({
-        x: facultades,
+        x: nombreFacultad,
         y: estudiantesV,        
         name: "Estudiantes Venezolanos",
         type: "bar",
@@ -162,7 +181,37 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 10, 10);
+      doc.addImage(img, "JPG", 20, 20);
+
+      doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "Sistema Ranking",
+        date: date
+      });
+
+      //Info for verification
+      doc.addPage();
+      doc.setFontSize(8);
+
+      // Table
+      doc.cellInitialize();
+
+      $.each(info, function(i, row) {
+        $.each(row, function(j, cell) {
+          if ((j == "email") | (j == "facultad")) {
+            doc.cell(10, 10, 60, 15, cell, i);
+          } else if (j == "nacionalidad") {
+            doc.cell(10, 10, 35, 15, cell, i);
+          } else if (j == "cedula") {
+            doc.cell(10, 10, 20, 15, cell, i);
+          } else {
+            doc.cell(10, 10, 30, 15, cell, i);
+          }
+        });
+      });
+
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -173,7 +222,44 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } //end_of_download()
+    }, //end_of_download()
+    
+    download_excel() {
+      // Data from JSON
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
+
+      // A workbook is the name given to an Excel file
+      var wb = XLSX.utils.book_new(); // make Workbook of Excel
+
+      // Workbook Properties
+      wb.Props = {
+        Title: reportName,
+        Subject: "Reporte",
+        Author: "Sistema Ranking",
+        CreatedDate: date
+      };
+
+      // Column Properties
+      var wscols = [
+        { wch: 12 },        
+        { wch: 20 },
+        { wch: 20 },  
+        { wch: 40 },
+        { wch: 25 },
+        { wch: 40 }
+      ];
+      ws["!cols"] = wscols;
+
+      var wsrows = [{ hpt: 20 }];
+      ws["!rows"] = wsrows;
+
+      // add Worksheet to Workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+      // export Excel file
+      XLSX.writeFile(wb, reportName + ".xlsx");
+    } //end_of_download
+
   }
 };
 </script>

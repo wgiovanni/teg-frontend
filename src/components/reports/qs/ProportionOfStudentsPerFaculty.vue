@@ -175,12 +175,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
+        Plotly.toImage(gd, { height: 576, width: 720 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 768,
-            width: 1024
+            height: 576,
+            width: 720
           });
         });
       }); //plotly_plot
@@ -192,8 +192,8 @@ export default {
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
-
-      doc.addImage(img, "JPG", 10, 10);
+      doc.text(reportName, 15, 15);
+      doc.addImage(img, "JPG", 20, 20);
       doc.save(reportName + ".pdf");
 
       doc.setProperties({
