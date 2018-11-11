@@ -283,7 +283,7 @@ export const router = new Router({
             }
           }
         },
-        
+        /*
          {
           path: '/report/UndergraduteStudentsNationality',
           name: 'UndergraduteStudentsNationality',
@@ -301,7 +301,7 @@ export const router = new Router({
           }
         },
 
-        /*
+        
          {
           path: '/report/UndergraduteStudentsSex',
           name: 'UndergraduteStudentsSex',

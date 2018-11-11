@@ -96,7 +96,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length; i++) {
+      for (i = 0; i < facultades.length-1; i++) {
         nombreFacultad.push(facultades[i]["facultad"]);
         numPublicaciones.push(facultades[i]["cantidad_publicaciones"]);
       }

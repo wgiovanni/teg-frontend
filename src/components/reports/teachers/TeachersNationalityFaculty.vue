@@ -91,7 +91,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length; i++) {
+      for (i = 0; i < facultades.length-1; i++) {
         facultad.push(facultades[i]["facultad"]);
         profesoresV.push(facultades[i]["venezolano"]);
         profesoresE.push(facultades[i]["extranjero"]);
