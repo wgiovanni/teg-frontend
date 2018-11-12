@@ -28,10 +28,8 @@ import ForeignStudentsPerFaculty from '@/components/reports/students/ForeignStud
 import StudentsDisabilityPerFaculty from '@/components/reports/students/StudentsDisabilityPerFaculty'
 import StudentsEthnicGroupsPerFaculty from '@/components/reports/students/StudentsEthnicGroupsPerFaculty'
 import StudentsSexFaculty from '@/components/reports/students/StudentsSexFaculty'
-
-//import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
-
-//import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'
+import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
+import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'
 
 
 //Teachers
@@ -282,11 +280,10 @@ export const router = new Router({
             }
           }
         },
-        
-        /* {
-          path: '/report/UndergraduteStudentsNationality',
-          name: 'UndergraduteStudentsNationality',
-          component: UndergraduteStudentsNationality,
+        {
+          path: '/report/UndergraduateStudentsNationality',
+          name: 'UndergraduateStudentsNationality',
+          component: UndergraduateStudentsNationality,
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
@@ -299,12 +296,10 @@ export const router = new Router({
             }
           }
         },
-
-        
-         {
-          path: '/report/UndergraduteStudentsSex',
-          name: 'UndergraduteStudentsSex',
-          component: UndergraduteStudentsSex,
+        {
+          path: '/report/UndergraduateStudentsSex',
+          name: 'UndergraduateStudentsSex',
+          component: UndergraduateStudentsSex,
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
@@ -316,7 +311,9 @@ export const router = new Router({
               next()
             }
           }
-        },*/
+        },
+        
+     
         {
           path: '/report/ProportionOfTeachersByRank',
           name: 'ProportionOfTeachersByRank',

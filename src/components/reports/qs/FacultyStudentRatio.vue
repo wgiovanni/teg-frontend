@@ -74,6 +74,7 @@ export default {
 
        // Saves data for verification
       infoDocentes = d["items"];
+      
       infoDocentes.unshift({
         cedula: "Cédula",
         nombre: "Nombre",

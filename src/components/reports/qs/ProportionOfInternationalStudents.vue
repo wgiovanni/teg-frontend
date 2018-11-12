@@ -94,9 +94,13 @@ export default {
 
       datos.push({
         values: [totalInternacional, totalNacional],
-        labels: ["Estudiantes Internacionales", "Estudiantes Nacionales"],
+        labels: ["Estudiantes Internacionales", "Estudiantes Venezolanos"],
         type: "pie",
-        marker: { colors: ["#FF4036", "#2AC63D"] }
+        marker: { colors: ["#c44569", "#f8c291"] },        
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
       });
 
       console.log(datos);
@@ -181,13 +185,13 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if ((j == "email") | (j == "facultad")) {
-            doc.cell(10, 10, 60, 15, cell, i);
+            doc.cell(15, 10, 70, 15, cell, i);
           } else if (j == "nacionalidad") {
-            doc.cell(10, 10, 35, 15, cell, i);
+            doc.cell(15, 10, 40, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
+            doc.cell(15, 10, 20, 15, cell, i);
           } else {
-            doc.cell(10, 10, 30, 15, cell, i);
+            doc.cell(15, 10, 35, 15, cell, i);
           }
         });
       });

@@ -96,9 +96,12 @@ export default {
         values: [estudiantesV, estudiantesE],
         labels: ['Estudiantes Venezolanos', 'Estudiantes Extranjeros'],
         type: "pie",
-        marker: { colors:['#f8c291','#079992'],
+        marker: { colors:['#cf6a87','#2d98da'],
                   line: {color: "#FFFFFF"}  },
-        insidetextfont: {color: "#FFFFFF"}
+        insidetextfont: {color: "#FFFFFF",
+                         size: 16},
+        hoverlabel: { font:{size:18}},
+       
       });
 
       console.log(datos);
@@ -183,13 +186,13 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "email") {
-            doc.cell(10, 10, 55, 15, cell, i);        
+            doc.cell(15, 10, 65, 15, cell, i);        
           } else if (j == "cedula") {
-            doc.cell(10, 10, 15, 15, cell, i);
+            doc.cell(15, 10, 25, 15, cell, i);
          } else if (j == "nacionalidad") {
-            doc.cell(10, 10, 60, 35, cell, i);
+            doc.cell(15, 10, 45, 35, cell, i);
           } else {
-            doc.cell(10, 10, 25, 15, cell, i);
+            doc.cell(15, 10, 35, 15, cell, i);
           }
         });
       });
@@ -227,8 +230,8 @@ export default {
         { wch: 35 },
         { wch: 20 },
         { wch: 20 },
-        { wch: 10 },
-        { wch: 30 }
+        { wch: 40 },
+        { wch: 20 }
       ];
       ws["!cols"] = wscols;
 

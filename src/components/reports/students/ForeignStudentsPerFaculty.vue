@@ -91,7 +91,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length; i++) {
+      for (i = 0; i < 7; i++) {
 
         nombreFacultad.push(facultades[i]["facultad"]);
         estudiantesV.push(facultades[i]["venezolano"]);
@@ -107,7 +107,7 @@ export default {
         y: estudiantesV,        
         name: "Estudiantes Venezolanos",
         type: "bar",
-        marker: { color: "#747d8c" }
+        marker: { color: "#006266" }
       });
 
       datos.push({
@@ -115,7 +115,7 @@ export default {
         y: estudiantesE,        
         name: "Estudiantes Extranjeros",
         type: "bar",
-        marker: { color: "#ff6348" }
+        marker: { color: "#8854d0" }
       });
 
       console.log(datos);
@@ -200,13 +200,13 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if ((j == "email") | (j == "facultad")) {
-            doc.cell(10, 10, 60, 15, cell, i);
+            doc.cell(15, 10, 65, 15, cell, i);
           } else if (j == "nacionalidad") {
-            doc.cell(10, 10, 35, 15, cell, i);
+            doc.cell(15, 10, 35, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
+            doc.cell(15, 10, 25, 15, cell, i);
           } else {
-            doc.cell(10, 10, 30, 15, cell, i);
+            doc.cell(15, 10, 30, 15, cell, i);
           }
         });
       });

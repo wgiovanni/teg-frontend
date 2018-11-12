@@ -96,7 +96,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length-1; i++) {
+      for (i = 0; i < 7; i++) {
         nombreFacultad.push(facultades[i]["facultad"]);
         numPublicaciones.push(facultades[i]["cantidad_publicaciones"]);
       }
@@ -161,12 +161,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 576, width: 720}).then(function(url) {
+        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",       
-            height: 576,
-            width: 720,
+            height: 768,
+            width: 1024,
           })
         });
       });//plotly_plot
@@ -207,7 +207,7 @@ export default {
             if (cell != "Publicación" & cell!="Link a Citación" & cell!="Link a Publicación") {
               if(j!="publicacion" & j!="url_citacion" & j!="url_publicacion"){
                 if (j == "facultad" | j =="correo") {
-                  doc.cell(10, 10, 50, 15, cell, i);
+                  doc.cell(10, 10, 60, 15, cell, i);
                 } else if (j == "area_de_investigacion") {
                   doc.cell(10, 10, 40, 15, cell, i);
                 } else if (j == "cedula" | j == "numero_citas") {

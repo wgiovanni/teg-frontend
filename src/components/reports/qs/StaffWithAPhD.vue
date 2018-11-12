@@ -96,7 +96,11 @@ export default {
         values: [totalDoctorado, total2],
         labels: ["Profesores con Doctorado", "Profesores sin Doctorado"],
         type: "pie",
-        marker: { colors: ["#ff9f43", "#54a0ff"] }
+        marker: { colors: ["#f6e58d", "#778beb"] },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#000000", 
+                         size: 16,                                         
+                         }
       });
 
       console.log(datos);

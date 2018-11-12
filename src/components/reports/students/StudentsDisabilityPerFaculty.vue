@@ -79,8 +79,7 @@ export default {
       info.unshift({
         cedula: "Cédula",
         nombre: "Nombre",
-        apellido: "Apellido",
-        fecha_nacimiento: "Fecha de Nacimiento",   
+        apellido: "Apellido",      
         email: "Correo",
         discapacidad: "Discapacidad",
         facultad: "Facultad"
@@ -189,16 +188,14 @@ export default {
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad") {
-            doc.cell(5, 10, 55, 15, cell, i);          
+          if (j == "email" | j == "facultad" | j == "discapacidad") {
+            doc.cell(15, 10, 60, 15, cell, i);          
           }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(5, 10, 30, 15, cell, i);
+            doc.cell(15, 10, 30, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(5, 10, 15, 15, cell, i);
-         } else if (j == "discapacidad") {
-            doc.cell(5, 10, 60, 15, cell, i);
+            doc.cell(15, 10, 20, 15, cell, i);         
           } else {
-            doc.cell(5, 10, 25, 15, cell, i);
+            doc.cell(15, 10, 25, 15, cell, i);
           }
         });
       });
@@ -234,7 +231,6 @@ export default {
       // Column Properties
       var wscols = [
         { wch: 12 },
-        { wch: 20 },
         { wch: 20 },
         { wch: 20 },
         { wch: 40 },

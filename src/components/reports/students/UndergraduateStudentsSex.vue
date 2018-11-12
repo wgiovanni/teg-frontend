@@ -11,6 +11,7 @@
       <div class="col-md-12 text-center">
         <button class="button" @click="download_pdf">Descargar PDF</button>
         <button class="button" @click="download_img">Descargar JPG</button>
+        <button class="button" @click="download_excel">Descargar Excel</button>
       </div>
     </div>     
 
@@ -100,9 +101,11 @@ export default {
         values: [masculino, femenino],
         labels: ['Masculino', 'Femenino'],
         type: "pie",
-        marker: { colors:['#57606f','#b71540'],
+        marker: { colors:['#3B3B98','#A3CB38'],
                   line: {color: "#FFFFFF"}  },
-        insidetextfont: {color: "#FFFFFF"}
+        insidetextfont: {color: "#FFFFFF",
+                         size: 16},
+        hoverlabel: { font:{size:18}},
       });
 
       console.log(datos);
@@ -176,7 +179,7 @@ export default {
 
       //Info for verification
       doc.addPage();
-      doc.setFontSize(7);
+      doc.setFontSize(8);
 
       // Table
       doc.cellInitialize();
@@ -184,11 +187,11 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "email") {
-            doc.cell(10, 10, 55, 15, cell, i);        
+            doc.cell(15, 10, 65, 15, cell, i);        
           }else if (j == "cedula") {
-            doc.cell(10, 10, 15, 15, cell, i);         
+            doc.cell(15, 10, 25, 15, cell, i);         
           } else {
-            doc.cell(10, 10, 25, 15, cell, i);
+            doc.cell(15, 10, 35, 15, cell, i);
           }
         });
       });

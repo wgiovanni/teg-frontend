@@ -96,7 +96,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length-1; i++) {
+      for (i = 0; i < 7; i++) {
         nombreFacultad.push(facultades[i]["facultad"]);
         yMasculino.push(facultades[i]["masculino"]);
         yFemenino.push(facultades[i]["femenino"]);
@@ -172,12 +172,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 576, width: 720}, {title: "hola"}).then(function(url) {
+        Plotly.toImage(gd, {height: 768, width: 1024}, {title: "hola"}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",       
-            height: 576,
-            width: 720,
+            height: 768,
+            width: 1024,
           })
         });
       });//plotly_plot
@@ -212,13 +212,13 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "email" | j == "facultad") {
-            doc.cell(2, 10, 50, 15, cell, i);          
+            doc.cell(5, 10, 55, 15, cell, i);          
           }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(2, 10, 30, 15, cell, i);
+            doc.cell(5, 10, 30, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(2, 10, 15, 15, cell, i);
+            doc.cell(5, 10, 15, 15, cell, i);
           } else {
-            doc.cell(2, 10, 25, 15, cell, i);
+            doc.cell(5, 10, 25, 15, cell, i);
           }
         });
       });

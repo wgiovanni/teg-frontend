@@ -149,12 +149,12 @@ export default {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 576, width: 720 }).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 576,
-            width: 720
+            height: 768,
+            width: 1024
           });
         });
       }); //plotly_plot
@@ -187,16 +187,14 @@ export default {
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad") {
-            doc.cell(2, 10, 55, 15, cell, i);          
+          if (j == "email" | j == "facultad" | j == "etnia") {
+            doc.cell(15, 10, 60, 15, cell, i);          
           }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(2, 10, 30, 15, cell, i);
+            doc.cell(15, 10, 30, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(2, 10, 15, 15, cell, i);
-         } else if (j == "etnia") {
-            doc.cell(2, 10, 60, 15, cell, i);
+            doc.cell(15, 10, 20, 15, cell, i);        
           } else {
-            doc.cell(2, 10, 25, 15, cell, i);
+            doc.cell(15, 10, 25, 15, cell, i);
           }
         });
       });

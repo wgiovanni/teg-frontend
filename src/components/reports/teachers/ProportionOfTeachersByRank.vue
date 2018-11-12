@@ -115,7 +115,7 @@ export default {
         name: "Cantidad de Profesores en el Escalafón",
         orientation: 'h',
         type: "bar",
-        marker: { color: "#ff4757",
+        marker: { color: "#F97F51",
                   width: 1 }
       });
 /*
@@ -173,12 +173,12 @@ export default {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 576, width: 720 }).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 576,
-            width: 720
+            height: 768,
+            width: 1024
           });
         });
       }); //plotly_plot

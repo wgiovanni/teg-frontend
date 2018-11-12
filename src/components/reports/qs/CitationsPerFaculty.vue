@@ -90,7 +90,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length; i++) {
+      for (i = 0; i < 7; i++) {
         nombreFacultad.push(facultades[i]["facultad"]);
         numCitaciones.push(facultades[i]["citaciones"]);
       }
@@ -103,7 +103,12 @@ export default {
         y: numCitaciones,
         name: "Citaciones",
         type: "bar",
-        marker: { color: "#00cec9" }
+        marker: { color: "#00cec9"},
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
+        
       });
 
       console.log(datos);
@@ -192,18 +197,20 @@ export default {
        
           $.each(row, function(j, cell) {
             if (cell != "Publicación" & cell!="Link a Citación" & cell!="Link a Publicación") {
-              if(j!="publicacion" & j!="url_citacion" & j!="url_publicacion"){
-                if (j == "facultad" | j =="correo") {
+              if(j!="publicacion" & j!="url_citacion"){
+                if (j == "facultad") {
+                  doc.cell(10, 10, 60, 15, cell, i);
+                } else if (j == "correo") {
                   doc.cell(10, 10, 50, 15, cell, i);
                 } else if (j == "area_de_investigacion") {
                   doc.cell(10, 10, 40, 15, cell, i);
-                } else if (j == "cedula" | j == "numero_citas") {
+                } else if (j == "cedula") {
                   doc.cell(10, 10, 25, 15, cell, i);
                 } else{
                   doc.cell(10, 10, 35, 15, cell, i);
                 }
               }
-            }
+           }
           });
       
       });

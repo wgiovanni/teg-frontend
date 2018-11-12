@@ -110,7 +110,7 @@ export default {
         orientation: "h",
         type: "bar",
         marker: {
-          color: "#2C3A47",
+          color: "#ffb8b8",
           width: 1
         }
       });
@@ -122,7 +122,7 @@ export default {
         orientation: "h",
         type: "bar",
         marker: {
-          color: "#BDC581",
+          color: "#82ccdd",
           width: 1
         }
       });
@@ -212,13 +212,13 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "email" | j == "facultad") {
-            doc.cell(2, 10, 55, 15, cell, i);          
+            doc.cell(10, 10, 60, 15, cell, i);          
           }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(2, 10, 30, 15, cell, i);
+            doc.cell(10, 10, 30, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(2, 10, 15, 15, cell, i);
+            doc.cell(10, 10, 20, 15, cell, i);
           } else {
-            doc.cell(2, 10, 25, 15, cell, i);
+            doc.cell(10, 10, 25, 15, cell, i);
           }
         });
       });

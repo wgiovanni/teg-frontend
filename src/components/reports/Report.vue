@@ -18,9 +18,7 @@
                       Proporción de Profesores Internacionales
                     </a>
                     <a href="/report/ProportionOfInternationalStudents" class="list-group-item">Proporción de Estudiantes Internacionales</a>
-                    <a href="/report/CitationsPerFaculty" class="list-group-item">
-                    Citaciones por Facultad
-                  </a>
+                    <a href="/report/CitationsPerFaculty" class="list-group-item">Citaciones por Facultad  </a>
                   
                   <a href="/report/ProportionOfStudentsPerFaculty" class="list-group-item">Proporción de Estudiantes por Facultad</a>
                   <a href="/report/StaffWithAPhD" class="list-group-item">Profesores con Doctorado o PhD</a>
@@ -60,6 +58,18 @@
                 <div class="list-group">
                   <a href="/report/StudentsSexFaculty" class="list-group-item">
                     Proporción de Estudiantes por Sexo por Facultad
+                    <p class="list-group-item-text">Estudiantes</p>
+                  </a>
+                </div>
+                 <div class="list-group">
+                  <a href="/report/UndergraduateStudentsNationality" class="list-group-item">
+                    Proporción de Estudiantes de Pregrado Extranjeros
+                    <p class="list-group-item-text">Estudiantes</p>
+                  </a>
+                </div>
+                <div class="list-group">
+                  <a href="/report/UndergraduateStudentsSex" class="list-group-item">
+                    Proporción de Estudiantes de Pregrado por Sexo
                     <p class="list-group-item-text">Estudiantes</p>
                   </a>
                 </div>

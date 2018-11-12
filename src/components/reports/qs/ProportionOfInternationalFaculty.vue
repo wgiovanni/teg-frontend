@@ -94,11 +94,17 @@ export default {
       datos.push({
         
         values: [totalInternacional, totalNacional],
-        labels: ['Profesores Internacionales', 'Profesores Nacionales'],
+        labels: ['Profesores Internacionales', 'Profesores Venezolanos'],
         type: "pie",
-        marker: { colors:['#182C61','#6D214F'],
-                  line: {color: "#FFFFFF"}  },
-        insidetextfont: {color: "#FFFFFF"}
+        marker: { colors:['#e66767','#786fa6'],
+                  line: {color: "#000000"}  },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         },
+        outsidetextfont: {color: "#FFFFFF", 
+                          size: 35}
+       
       });
 
       console.log(datos);
@@ -177,7 +183,7 @@ export default {
 
       //Info for verification
       doc.addPage();
-      doc.setFontSize(8);
+      doc.setFontSize(7);
 
       // Table
       doc.cellInitialize();
@@ -185,12 +191,12 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "correo" | j =="facultad") {
-            doc.cell(15, 10, 60, 15, cell, i);       
+            doc.cell(10, 10, 60, 15, cell, i);       
           
           } else if (j == "cedula") {
-            doc.cell(15, 10, 30, 15, cell, i);
+            doc.cell(10, 10, 30, 15, cell, i);
           } else {
-            doc.cell(15, 10, 40, 15, cell, i);
+            doc.cell(10, 10, 40, 15, cell, i);
           }
         });
       });
