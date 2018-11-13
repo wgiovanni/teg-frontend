@@ -116,7 +116,11 @@ export default {
         orientation: 'h',
         type: "bar",
         marker: { color: "#F97F51",
-                  width: 1 }
+                  width: 1 },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
       });
 /*
       datos.push({
@@ -198,7 +202,7 @@ export default {
       doc.setProperties({
         title: reportName,
         subject: "Reporte",
-        author: "Sistema Ranking",
+        author: "UC Ranking",
         date: date
       });
 
@@ -243,7 +247,7 @@ export default {
       wb.Props = {
         Title: reportName,
         Subject: "Reporte",
-        Author: "Sistema Ranking",
+        Author: "UC Ranking",
         CreatedDate: date
       };
 

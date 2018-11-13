@@ -110,7 +110,11 @@ export default {
         y: numPublicaciones,
         name: "Cantidad de Publicaciones",
         type: "bar",
-        marker: { color: "#badc58" }
+        marker: { color: "#badc58" },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
       });
 
 
@@ -190,7 +194,7 @@ export default {
       doc.setProperties({
         title: reportName,
         subject: "Reporte",
-        author: "Sistema Ranking",
+        author: "UC Ranking",
         date: date
       });
 
@@ -251,7 +255,7 @@ export default {
       wb.Props = {
         Title: reportName,
         Subject: "Reporte",
-        Author: "Sistema Ranking",
+        Author: "UC Ranking",
         CreatedDate: date
       };
 

@@ -172,7 +172,7 @@ export default {
        doc.setProperties({
         title: reportName,
         subject: "Reporte",
-        author: "Sistema Ranking",
+        author: "UC Ranking",
         date: date
       });
 
@@ -220,7 +220,7 @@ export default {
       wb.Props = {
         Title: reportName,
         Subject: "Reporte",
-        Author: "Sistema Ranking",
+        Author: "UC Ranking",
         CreatedDate: date
       };
 

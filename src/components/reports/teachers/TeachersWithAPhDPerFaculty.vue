@@ -1,8 +1,5 @@
 <template>
-  <div>    
-    <div v-if="loading==true" class="d-flex justify-content-center">
-          <Spinner></Spinner>
-      </div>    
+  <div>       
     
   <!--Title-->    
   <h1 id="report" class="title"/>   
@@ -91,10 +88,11 @@ export default {
       info = d["items"];
       info.unshift({
         cedula: "Cédula",
-        primer_nombre: "Primer Nombre",
-        segundo_nombre: "Segundo Nombre",
-        primer_apellido: "Primer Apellido",
-        segundo_apellido: "Segundo Apellido",
+        primer_nombre: "Primer Nombre", 
+        segundo_nombre: "Segundo Nombre",      
+        primer_apellido: "Primer Apellido",     
+        primer_apellido: "Primer Apellido",  
+        segundo_apellido: "Segundo Apellido",   
         correo: "Correo",
         area_de_investigacion: "Área de Investigación",
         facultad: "Facultad"
@@ -108,7 +106,7 @@ export default {
       console.log(facultades);
       console.log(items);
 
-      for (i = 0; i < facultades.length; i++) {
+      for (i = 0; i < 7; i++) {
         nombreFacultad.push(facultades[i]["facultad"]);
         totalFacultad.push(facultades[i]["cantidad"]);
       }
@@ -118,7 +116,12 @@ export default {
         y: totalFacultad,
         name: "Profesores con PhD",
         type: "bar",
-        marker: { color: "#ff5e57" }
+        marker: { color: "#ff5e57" },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
+
       });
 
       console.log(datos);
@@ -167,12 +170,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 576, width: 720 }).then(function(url) {
+        Plotly.toImage(gd, { height: 728, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 576,
-            width: 720
+            height: 728,
+            width: 1024
           });
         });
       }); //plotly_plot
@@ -191,7 +194,7 @@ export default {
       doc.setProperties({
         title: reportName,
         subject: "Reporte",
-        author: "Sistema Ranking",
+        author: "UC Ranking",
         date: date
       });
 
@@ -204,16 +207,18 @@ export default {
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "correo") {
-            doc.cell(10, 10, 50, 15, cell, i);
-          } else if ( (j == "facultad")) {
-            doc.cell(10, 10, 60, 15, cell, i);
-          } else if ((j == "area_de_investigacion")) {
-            doc.cell(10, 10, 40, 15, cell, i);
-          } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
-          } else {
-            doc.cell(10, 10, 30, 15, cell, i);
+          if(cell != "Segundo Nombre" & cell != "Segundo Apellido"){
+            if(j != "segundo_nombre" & j != "segundo_apellido"){
+              if (j == "correo" | j == "facultad") {
+                doc.cell(15, 10, 65, 15, cell, i);
+              } else if ((j == "area_de_investigacion")) {
+                doc.cell(15, 10, 40, 15, cell, i);
+              } else if (j == "cedula") {
+                doc.cell(15, 10, 20, 15, cell, i);
+              } else {
+                doc.cell(15, 10, 30, 15, cell, i);
+              }
+            }
           }
         });
       });
@@ -241,7 +246,7 @@ export default {
       wb.Props = {
         Title: reportName,
         Subject: "Reporte",
-        Author: "Sistema Ranking",
+        Author: "UC Ranking",
         CreatedDate: date
       };
 

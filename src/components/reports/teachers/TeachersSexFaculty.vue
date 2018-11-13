@@ -93,7 +93,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length-2; i++) {
+      for (i = 0; i < 7; i++) {
         nombreFacultad.push(facultades[i]["facultad"]);
         yMasculino.push(facultades[i]["masculino"]);
         yFemenino.push(facultades[i]["femenino"]);
@@ -110,16 +110,25 @@ export default {
         textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
         name: "Masculino",
         type: "bar",
-        marker: { color: "#00b894" }
+        marker: { color: "#00b894" },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
+
       });
 
       datos.push({
-        x: facultades,
+        x: nombreFacultad,
         y: yFemenino,
         //text:[],
         name: "Femenino",
         type: "bar",
-        marker: { color: "#fdcb6e" }
+        marker: { color: "#fdcb6e" },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
       });
 
       console.log(datos);
@@ -169,12 +178,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 576, width: 720}, {title: "hola"}).then(function(url) {
+        Plotly.toImage(gd, {height: 728, width: 1024}, {title: "hola"}).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",       
-            height: 576,
-            width: 720,
+            height: 728,
+            width: 1024,
           })
         });
       });//plotly_plot
@@ -195,7 +204,7 @@ export default {
        doc.setProperties({
         title: reportName,
         subject: "Reporte",
-        author: "Sistema Ranking",
+        author: "UC Ranking",
         date: date
       });
 
@@ -242,13 +251,13 @@ export default {
       wb.Props = {
         Title: reportName,
         Subject: "Reporte",
-        Author: "Sistema Ranking",
+        Author: "UC Ranking",
         CreatedDate: date
       };
 
       // Column Properties
       var wscols = [
-        { wch: 10 },
+        { wch: 12 },
         { wch: 20 },
         { wch: 20 },    
         { wch: 40 },

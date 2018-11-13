@@ -91,7 +91,7 @@ export default {
 
       facultades = d["facultades"];
 
-      for (i = 0; i < facultades.length-1; i++) {
+      for (i = 0; i < 7; i++) {
         facultad.push(facultades[i]["facultad"]);
         profesoresV.push(facultades[i]["venezolano"]);
         profesoresE.push(facultades[i]["extranjero"]);
@@ -105,7 +105,11 @@ export default {
         y: profesoresV,        
         name: "Profesores Venezolanos",
         type: "bar",
-        marker: { color: "#FC427B" }
+        marker: { color: "#FC427B" },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
       });
 
       datos.push({
@@ -113,7 +117,11 @@ export default {
         y: profesoresE,        
         name: "Profesores Extranjeros",
         type: "bar",
-        marker: { color: "#1B9CFC" }
+        marker: { color: "#1B9CFC" },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
       });
 
       console.log(datos);
@@ -159,12 +167,12 @@ export default {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 576, width: 720 }).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 576,
-            width: 720
+            height: 768,
+            width: 1024
           });
         });
       }); //plotly_plot
@@ -184,7 +192,7 @@ export default {
        doc.setProperties({
         title: reportName,
         subject: "Reporte",
-        author: "Sistema Ranking",
+        author: "UC Ranking",
         date: date
       });
 
@@ -231,7 +239,7 @@ export default {
       wb.Props = {
         Title: reportName,
         Subject: "Reporte",
-        Author: "Sistema Ranking",
+        Author: "UC Ranking",
         CreatedDate: date
       };
 
