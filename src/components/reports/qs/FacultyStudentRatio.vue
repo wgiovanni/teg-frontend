@@ -97,7 +97,11 @@ export default {
         values: [totalEmpleados, totalEstudiantes],
         labels: ['Docentes Empleados', 'Estudiantes Matriculados'],
         type: "pie",
-        marker: { colors:['#f0932b','#be2edd']  }
+        marker: { colors:['#ff9478','#8e44ad']  },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         },
       });
 
       console.log(datos);
@@ -175,7 +179,7 @@ export default {
 
       //Info for verification
       doc.addPage();
-      doc.setFontSize(7);
+      doc.setFontSize(8);
 
       // Table
       doc.cellInitialize();
@@ -183,33 +187,14 @@ export default {
       $.each(infoDocentes, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "correo" | j == "facultad") {
-            doc.cell(10, 10, 45, 15, cell, i);       
+            doc.cell(10, 10, 60, 15, cell, i);       
           } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
+            doc.cell(10, 10, 25, 15, cell, i);
           } else {
-            doc.cell(10, 10, 30, 15, cell, i);
+            doc.cell(10, 10, 40, 15, cell, i);
           }
         });
       });
-
-      doc.addPage();
-      doc.setFontSize(7);
-
-      // Table
-      doc.cellInitialize();
-
-      $.each(infoEstudiantes, function(i, row) {
-        $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad") {
-            doc.cell(10, 10, 45, 15, cell, i);       
-          } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
-          } else {
-            doc.cell(10, 10, 30, 15, cell, i);
-          }
-        });
-      });
-
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()

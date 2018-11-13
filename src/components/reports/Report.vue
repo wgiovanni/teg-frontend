@@ -14,15 +14,15 @@
               <div id="collapseFour" class="panel-collapse collapse" align="center"> 
                 
                   <div class="list-group">
-                    <a href="/report/ProportionOfInternationalFaculty" class="list-group-item">
+                    <router-link to="/report/ProportionOfInternationalFaculty"> <a class="list-group-item">
                       Proporción de Profesores Internacionales
-                    </a>
-                    <a href="/report/ProportionOfInternationalStudents" class="list-group-item">Proporción de Estudiantes Internacionales</a>
-                    <a href="/report/CitationsPerFaculty" class="list-group-item">Citaciones por Facultad  </a>
+                    </a></router-link>
+                    <router-link to="/report/ProportionOfInternationalStudents"> <a class="list-group-item">Proporción de Estudiantes Internacionales</a></router-link>
+                    <router-link to="/report/CitationsPerFaculty"> <a class="list-group-item">Citaciones por Facultad  </a></router-link>
                   
-                  <a href="/report/ProportionOfStudentsPerFaculty" class="list-group-item">Proporción de Estudiantes por Facultad</a>
-                  <a href="/report/StaffWithAPhD" class="list-group-item">Profesores con Doctorado o PhD</a>
-                 
+                  <router-link to="/report/ProportionOfStudentsPerFaculty"> <a class="list-group-item">Proporción de Estudiantes por Facultad</a></router-link>
+                  <router-link to="/report/StaffWithAPhD"> <a class="list-group-item">Profesores con Doctorado o PhD</a></router-link>
+                  <router-link to="/report/FacultyStudentRatio"> <a class="list-group-item">Relación entre Docentes Empleados y Alumnos Matriculados</a></router-link>
                   
                 </div>
               </div>
@@ -38,74 +38,74 @@
 
                 <!--Estudiantes-->
                 <div class="list-group">
-                  <a href="/report/ForeignStudentsPerFaculty" class="list-group-item">
+                  <router-link to="/report/ForeignStudentsPerFaculty"> <a class="list-group-item">
                     Cantidad de Estudiantes Extranjeros por Facultad
-                    <p class="list-group-item-text">Estudiantes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/StudentsDisabilityPerFaculty" class="list-group-item">
+                  <router-link to="/report/StudentsDisabilityPerFaculty"> <a class="list-group-item">
                     Cantidad de Estudiantes con Discapacidad por Facultad
-                    <p class="list-group-item-text">Estudiantes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/StudentsEthnicGroupsPerFaculty" class="list-group-item">
+                  <router-link to="/report/StudentsEthnicGroupsPerFaculty"> <a class="list-group-item">
                     Estudiantes Pertenecientes a Grupos Étnicos por Facultad
-                    <p class="list-group-item-text">Estudiantes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/StudentsSexFaculty" class="list-group-item">
+                  <router-link to="/report/StudentsSexFaculty"> <a class="list-group-item">
                     Proporción de Estudiantes por Sexo por Facultad
                     <p class="list-group-item-text">Estudiantes</p>
-                  </a>
+                  </a></router-link>
                 </div>
                  <div class="list-group">
-                  <a href="/report/UndergraduateStudentsNationality" class="list-group-item">
+                  <router-link to="/report/UndergraduateStudentsNationality"> <a class="list-group-item">
                     Proporción de Estudiantes de Pregrado Extranjeros
-                    <p class="list-group-item-text">Estudiantes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/UndergraduateStudentsSex" class="list-group-item">
+                  <router-link to="/report/UndergraduateStudentsSex"> <a class="list-group-item">
                     Proporción de Estudiantes de Pregrado por Sexo
-                    <p class="list-group-item-text">Estudiantes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
             
                 <!---->
 
                 <!--Docentes-->
                 <div class="list-group">
-                  <a href="/report/ProportionOfTeachersByRank" class="list-group-item">
+                  <router-link to="/report/ProportionOfTeachersByRank"> <a class="list-group-item">
                    Cantidad de Profesores por Escalafón
-                    <p class="list-group-item-text">Docentes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/PublicationsPerFaculty" class="list-group-item">
+                  <router-link to="/report/PublicationsPerFaculty"> <a class="list-group-item">
                    Cantidad de Publicaciones por Facultad
-                    <p class="list-group-item-text">Docentes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/TeachersNationalityFaculty" class="list-group-item">
+                  <router-link to="/report/TeachersNationalityFaculty"> <a class="list-group-item">
                    Cantidad de Profesores Extranjeros por Facultad
-                    <p class="list-group-item-text">Docentes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/TeachersSexFaculty" class="list-group-item">
+                  <router-link to="/report/TeachersSexFaculty"> <a class="list-group-item">
                    Proporción de Profesores por Sexo por Facultad
-                    <p class="list-group-item-text">Docentes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <div class="list-group">
-                  <a href="/report/TeachersWithAPhDPerFaculty" class="list-group-item">
+                  <router-link to="/report/TeachersWithAPhDPerFaculty"> <a class="list-group-item">
                    Cantidad de Profesores con Doctorado o PhD por Facultad
-                    <p class="list-group-item-text">Docentes</p>
-                  </a>
+                    
+                  </a></router-link>
                 </div>
                 <!---->               
                 

@@ -111,7 +111,7 @@ export default {
       });
 
       datos.push({
-        x: facultades,
+        x: nombreFacultad,
         y: estudiantesE,        
         name: "Estudiantes Extranjeros",
         type: "bar",
