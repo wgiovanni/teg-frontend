@@ -73,7 +73,7 @@ export const router = new Router({
           component: Students,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
-            if (store.state.user.name != "facultad_estudiante" && store.state.user.name != "administrador") {
+            if (store.state.user.name != "facultad_estudiante" && store.state.user.name != "administrador" && store.state.user.name != "vicerrector") {
               console.log("No entro");
               next('/home')
             } else {
@@ -88,7 +88,7 @@ export const router = new Router({
           component: Teachers,
           beforeEnter (to, from, next) {
             console.log(store.state.user.name);
-            if (store.state.user.name != "facultad_docente" && store.state.user.name != "administrador") {
+            if (store.state.user.name != "facultad_docente" && store.state.user.name != "administrador"  && store.state.user.name != "vicerrector") {
               console.log("No entro");
               next('/home')
             } else {

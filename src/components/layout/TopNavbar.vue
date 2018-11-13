@@ -7,15 +7,134 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <!--Estudiantes-->
+        <div  v-if="this.user.name=='facultad_estudiante'" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Parte central del Narbar -->
+            <ul class="navbar-nav ml-auto">
+                <router-link tag="li" class="nav-item" 
+                v-bind:key="links[0].id" 
+                :to="`${links[0].path}`"><a class="nav-link">{{links[0].name}}</a></router-link> 
+            </ul>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!--Parte izquierdo del Narbar-->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">person</i>{{this.user.username}}
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <div v-if="this.user.name=='vicerrector'">
+                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
+                        </div>
+                        <div v-if="this.user.name=='verificador'">
+                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
+                        </div>
+                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                    </div>
+                </li>   
+            </ul>          
+        </div>
+        <!--Docentes-->
+        <div  v-if="this.user.name=='facultad_docente'" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Parte central del Narbar -->
+            <ul class="navbar-nav ml-auto">
+                <router-link tag="li" class="nav-item" 
+                v-bind:key="links[1].id" 
+                :to="`${links[1].path}`"><a class="nav-link">{{links[1].name}}</a></router-link> 
+            </ul>
+
+            <!--Parte izquierdo del Narbar-->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">person</i>{{this.user.username}}
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <div v-if="this.user.name=='vicerrector'">
+                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
+                        </div>
+                        <div v-if="this.user.name=='verificador'">
+                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
+                        </div>
+                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                    </div>
+                </li>   
+            </ul>          
+        </div>
+        <!--Vicerrector-->
+        <div v-if="this.user.name=='vicerrector'" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Parte central del Narbar -->
+             <ul class="navbar-nav ml-auto">
+                <router-link tag="li" class="nav-item" 
+                v-bind:key="links[0].id" 
+                :to="`${links[0].path}`"><a class="nav-link">{{links[0].name}}</a></router-link> 
+                <router-link tag="li" class="nav-item" 
+                v-bind:key="links[1].id" 
+                :to="`${links[1].path}`"><a class="nav-link">{{links[1].name}}</a></router-link>
+                <router-link tag="li" class="nav-item" 
+                v-bind:key="links[3].id" 
+                :to="`${links[3].path}`"><a class="nav-link">{{links[3].name}}</a></router-link>  
+            </ul>
+
+            <!--Parte izquierdo del Narbar-->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">person</i>{{this.user.username}}
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <div v-if="this.user.name=='vicerrector'">
+                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
+                        </div>
+                        <div v-if="this.user.name=='verificador'">
+                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
+                        </div>
+                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                    </div>
+                </li>   
+            </ul>          
+        </div>
+        <!--Verificador-->
+        <div v-if="this.user.name=='verificador'" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Parte central del Narbar -->
+             <ul class="navbar-nav ml-auto">
+                <router-link tag="li" class="nav-item" 
+                v-bind:key="links[3].id" 
+                :to="`${links[3].path}`"><a class="nav-link">{{links[3].name}}</a></router-link>  
+            </ul>
+            
+            <!--Parte izquierdo del Narbar-->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">person</i>{{this.user.username}}
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <div v-if="this.user.name=='vicerrector'">
+                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
+                        </div>
+                        <div v-if="this.user.name=='verificador'">
+                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
+                        </div>
+                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                    </div>
+                </li>   
+            </ul>          
+        </div>
+        <!--Administrador-->
+        <div v-if="this.user.name=='administrador'" class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Parte central del Narbar -->
             <ul class="navbar-nav mx-auto">
                 <!-- Enlaces para navegacion -->
                 <router-link tag="li" class="nav-item" 
-                v-for="link in links" 
-                v-bind:key="link.id" 
-                :to="`${link.path}`"><a class="nav-link">{{link.name}}</a></router-link> 
+                    v-for="link in links" 
+                    v-bind:key="link.id" 
+                    :to="`${link.path}`"><a class="nav-link">{{link.name}}</a>
+                </router-link> 
             </ul>
             <!--Parte izquierdo del Narbar-->
             <ul class="navbar-nav ml-auto">
