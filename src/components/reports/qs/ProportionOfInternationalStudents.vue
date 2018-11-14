@@ -33,8 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName =
-  "Proporción de Estudiantes Internacionales en Relación con el Total de Estudiantes de la Universidad";
+var reportName = "Estudiantes Extranjeros";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
@@ -94,7 +93,7 @@ export default {
 
       datos.push({
         values: [totalInternacional, totalNacional],
-        labels: ["Estudiantes Internacionales", "Estudiantes Venezolanos"],
+        labels: ["Estudiantes Extranjeros", "Estudiantes Venezolanos"],
         type: "pie",
         marker: { colors: ["#c44569", "#f8c291"] },        
         hoverlabel: { font:{size:18}},

@@ -33,7 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Relación entre Docentes Empleados y Alumnos Matriculados";
+var reportName = "Docentes Empleados / Estudiantes Matriculados";
 var img;
 var infoDocentes = []; //Saves data for verification
 var infoEstudiantes = []; //Saves data for verification

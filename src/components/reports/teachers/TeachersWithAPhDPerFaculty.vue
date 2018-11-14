@@ -34,7 +34,7 @@ import Plotly from "plotly.js";
 import XLSX from "xlsx";
 import Spinner from "@/components/Spinner";
 
-var reportName = "Cantidad de Profesores con Doctorado o PhD por Facultad";
+var reportName = "Docentes con Doctorado por Facultad";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();

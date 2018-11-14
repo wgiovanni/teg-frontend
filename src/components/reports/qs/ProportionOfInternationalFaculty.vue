@@ -33,7 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Proporción de Profesores Internacionales";
+var reportName = "Docentes Extranjeros";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
@@ -94,7 +94,7 @@ export default {
       datos.push({
         
         values: [totalInternacional, totalNacional],
-        labels: ['Profesores Internacionales', 'Profesores Venezolanos'],
+        labels: ['Docentes Extranjeros', 'Docentes Venezolanos'],
         type: "pie",
         marker: { colors:['#e66767','#786fa6'],
                   line: {color: "#000000"}  },

@@ -34,7 +34,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Proporción de Estudiantes por Sexo por Facultad";
+var reportName = "Estudiantes por Sexo";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();

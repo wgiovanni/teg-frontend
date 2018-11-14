@@ -10,8 +10,11 @@ import Dashboard from '@/components/layout/Dashboard'
 import Teachers from '@/components/teachers/Teachers'
 import Graduates from '@/components/graduates/Graduates'
 import AuditList from '@/components/audit/AuditList'
+
 // Reports
-import Report from '@/components/reports/Report'
+//import Report from '@/components/reports/Report'
+import ReportsHome from '@/components/reports/ReportsHome'
+import ReportsStudents from '@/components/reports/ReportsStudents'
 
 //QS Ranking
 import CitationsPerFaculty from '@/components/reports/qs/CitationsPerFaculty'
@@ -102,10 +105,44 @@ export const router = new Router({
           name: 'Graduates',
           component: Graduates
         },*/
+      /*
         {
           path: '/reports',
           name: 'Report',
           component: Report,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        */
+        {
+          path: '/reports',
+          name: 'ReportsHome',
+          component: ReportsHome,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/reports',
+          name: 'ReportsStudents',
+          component: ReportsStudents,
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);

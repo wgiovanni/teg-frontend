@@ -33,7 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Estudiantes Pertenecientes a Grupos Étnicos por Facultad";
+var reportName = "Estudiantes Pertenecientes a Grupos Étnicos";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();

@@ -33,7 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Proporción de Profesores con Doctorado o PhD";
+var reportName = "Docentes con Doctorado";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
@@ -94,7 +94,7 @@ export default {
 
       datos.push({
         values: [totalDoctorado, total2],
-        labels: ["Profesores con Doctorado", "Profesores sin Doctorado"],
+        labels: ["Docentes con Doctorado", "Docentes sin Doctorado"],
         type: "pie",
         marker: { colors: ["#f6e58d", "#778beb"] },
         hoverlabel: { font:{size:18}},

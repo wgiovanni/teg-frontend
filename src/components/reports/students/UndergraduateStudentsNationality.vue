@@ -33,7 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Proporción de Estudiantes de Pregrado Extranjeros";
+var reportName = "Estudiantes de Pregrado Extranjeros";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();

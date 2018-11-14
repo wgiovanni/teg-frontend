@@ -34,7 +34,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Cantidad de Profesores por Escalafón";
+var reportName = "Docentes por Escalafón";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();

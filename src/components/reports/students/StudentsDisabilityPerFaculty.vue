@@ -33,7 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Cantidad de Estudiantes con Discapacidad por Facultad";
+var reportName = "Estudiantes con Discapacidad";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();

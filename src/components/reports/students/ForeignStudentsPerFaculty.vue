@@ -33,7 +33,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Cantidad de Estudiantes Extranjeros por Facultad";
+var reportName = "Estudiantes Extranjeros";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();

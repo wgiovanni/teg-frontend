@@ -202,7 +202,7 @@ export default {
                   doc.cell(5, 10, 60, 15, cell, i);                
                 } else if (j == "area_de_investigacion") {
                   doc.cell(5, 10, 40, 15, cell, i);
-                } else if (j == "cedula") {
+                } else if (j == "cedula" | j == "numero_citas") {
                   doc.cell(5, 10, 25, 15, cell, i);
                 } else{
                   doc.cell(5, 10, 35, 15, cell, i);
