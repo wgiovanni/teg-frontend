@@ -1,8 +1,9 @@
 
 <template>
-<!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">-->
 
 <div class="container text-center">
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">-
+
   <div class="row align-items-center">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="service-heading-block">          
@@ -15,23 +16,23 @@
     <div class="col-lg-4 col-md-4 col-sm-4">
       <div class="text-center feature-block">
         <span class="fb-icon color-students">
-          <i class="fas fa-chart-bar" aria-hidden="true"></i>
+          <i class="fa fa-chart-bar" aria-hidden="true"></i>        
         </span>
       
         <h4 class="color-students">Estudiantes</h4>
         <p class="">Estudiantes de Pre-grado y Post-grado de la Universidad de Carabobo</p>
-        <a href="open.html" class="btn btn-students btn-custom">Ver</a>
+        <router-link to="/report/ProportionOfStudentsPerFaculty" class="btn btn-students btn-custom"><a>Ver</a></router-link>
       </div>
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="text-center feature-block">
           <span class="fb-icon color-teachers">
-            <i class="fas fa-chart-pie" aria-hidden="true"></i>
+            <i class="fa fa-chart-pie" aria-hidden="true"></i>
           </span>
           <h4 class="color-teachers">Docentes</h4>
           <p class="">Reportes de Docentes de la Universidad de Carabobo 12235556546456</p>
-          <a href="javascript:void(0)" class="btn btn-teachers btn-custom">Ver</a>
+          <router-link to="/report/ProportionOfTeachersByRank" class="btn btn-teachers btn-custom"><a>Ver</a></router-link>
         </div>
       </div>
 
@@ -43,7 +44,7 @@
         </span>
         <h4 class="color-graduates">Egresados</h4>
         <p class="">Reportes de Egresados de la Universidad de Carabobo</p>
-        <a href="javascript:void(0)" class="btn btn-graduates btn-custom">Ver</a>
+        <router-link to="javascript:void(0)" class="btn btn-graduates btn-custom"><a>Ver</a></router-link>
       </div>
     </div>
   </div>
@@ -97,7 +98,7 @@
     border-radius: 120%;
     height: 140px;
     width: 140px;
-    margin: 12rem auto;
+    margin: 10rem auto;
     transition: all 0.5s ease 0s;    
     display: grid;
     font-size: 44px;
@@ -144,12 +145,29 @@
 
   .btn-students {
     background-color: #A17700;
-    color: #fff
+    color: #fff;
+    text-align: center;
+    align-content: center;
+    width: 100px;  
+    height: 40px;
     
   }
 
   .btn-students:hover {
     background-color:#CCAA4C;
+    color: #ffff;
+     outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  }
+
+  .vue-students:hover{
+    background-color:#CCAA4C;
+    color: #ffff;
+     outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+
   }
 
   .color-teachers {
@@ -161,11 +179,19 @@
 
   .btn-teachers {
     background-color: #006D55;
-    color: #fff
+    color: #fff;   
+    text-align: center;
+    align-content: center;
+    width: 100px;  
+    height: 40px;
   }
 
   .btn-teachers:hover {
     background-color:#337F6E;
+      color: #ffff;
+     outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   }
 
   .color-graduates {
@@ -177,11 +203,19 @@
 
   .btn-graduates {
     background-color: #981E32;
-    color: #fff
+    color: #fff;
+    text-align: center;
+    align-content: center;
+    width: 100px;  
+    height: 40px;
   }
 
   .btn-graduates:hover {
     background-color:#993343;
+      color: #ffff;
+     outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   }
 
  
@@ -200,3 +234,12 @@
     text-transform: uppercase;
   }
 </style>
+
+<script>
+
+
+export default {
+   
+}
+</script>
+
