@@ -89,11 +89,3 @@ export default {
 }
 </script>
 
-<style>
-.container-login-register {
-  padding-top: 10%;
-}
-.button-iniciar-sesion {
-      margin-left: 35.5%;
-}
-</style>

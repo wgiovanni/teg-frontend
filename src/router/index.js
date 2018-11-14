@@ -130,7 +130,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -146,7 +146,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -162,7 +162,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -178,7 +178,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -194,7 +194,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -210,7 +210,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -226,7 +226,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -242,7 +242,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -258,7 +258,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -276,7 +276,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -292,7 +292,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -308,7 +308,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -324,7 +324,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -340,7 +340,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -358,7 +358,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -374,7 +374,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -390,7 +390,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -406,7 +406,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {
@@ -422,7 +422,7 @@ export const router = new Router({
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
               console.log("No entro");
               next('/home')
             } else {

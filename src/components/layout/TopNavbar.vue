@@ -1,8 +1,8 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 4px solid #981E32">
         <a class="navbar-brand mr-auto" href="/">
-            <img src="../../assets/rankings_logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            RANKING QS 
+            <img src="../../assets/escudo.png" width="52" height="58" class="d-inline-block align-top" alt="">
+            UC RANKING 
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
