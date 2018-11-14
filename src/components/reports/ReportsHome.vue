@@ -2,7 +2,7 @@
 <template>
 
 <div class="container text-center">
- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">-
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
   <div class="row align-items-center">
     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -101,7 +101,7 @@
     margin: 10rem auto;
     transition: all 0.5s ease 0s;    
     display: grid;
-    font-size: 44px;
+    font-size: 54px;
     line-height: 10px;
     text-align: center;      
   }
@@ -138,7 +138,7 @@
 
   .color-students {
     color: #A17700;
-    font-size: 50px;
+    font-size: 70px;
     text-align: center;
     align-content: center;
   }
@@ -161,18 +161,9 @@
           box-shadow: none;
   }
 
-  .vue-students:hover{
-    background-color:#CCAA4C;
-    color: #ffff;
-     outline: 0;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-
-  }
-
   .color-teachers {
     color: #006D55;
-    font-size: 50px;
+    font-size: 70px;
     text-align: center;
     align-content: center;
   }
@@ -196,7 +187,7 @@
 
   .color-graduates {
     color: #981E32;
-    font-size: 50px;
+    font-size: 70px;
     text-align: center;
     align-content: center;
   }

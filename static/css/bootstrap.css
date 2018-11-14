@@ -9052,7 +9052,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .button {
   background-color: #f2f2f2;
-  font-size: 14px;
+  font-size: 18px;
   padding: 8px 20px;
   margin: 10px;
   border: 12px;
@@ -9063,7 +9063,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .button:hover {
-  background-color: #edf0f8;
+  background-color: #989898;
 }
 
 .button:active {

@@ -1,28 +1,137 @@
 <template>
-  <div>   
-    <!--Title-->    
+  <div class="row row-students">
+       
+    <!--Title-->  
+    <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
     <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
+    <div ref="bar" class="vue-plotly "/>
       
     <!--Download buttons--> 
-    <div class="row">  
+
       <div class="col-md-12 text-center">
-        <button class="button" @click="download_pdf">Descargar PDF</button>
-        <button class="button" @click="download_img">Descargar JPG</button>
-        <button class="button" @click="download_excel">Descargar Excel</button>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+        <button class="button" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
+        <button class="button" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
+        <button class="button" @click="download_excel"><i class="fa fa-file-excel fa-lg"></i>   Descargar Excel</button>
+        
       </div>
-    </div>     
+       <div class="col-md-16 text-center">
+        <router-link to="/reports"><button class="button">Regresar</button></router-link>        
+        
+      </div>
 
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
+    </div>
+
+     <!--REPORT LIST-->
+      <div class="card border-students mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
+        <div class="card-header">        
+            <h5 class="card-tile text-dark">Estudiantes</h5>         
+        </div>
+        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
+          <div class="card-body text-center">
+            <table class="table table-hover group">
+              <tbody>
+                <tr>
+                  <td>Estudiantes Extranjeros por Facultad</td>
+                </tr>
+                <tr>
+                  <td>Estudiantes con Discapacidad</td>
+                </tr>
+                <tr>
+                  <td>Estudiantes Pertenecientes a Grupos Étnicos</td>
+                </tr>
+                <tr>
+                  <td>Estudiantes por Sexo</td>
+                </tr>
+                <tr>
+                  <td>Estudiantes de Pregrado Extranjeros</td>
+                </tr>
+                <tr>
+                  <td>Estudiantes de Pregrado por Sexo</td>
+                </tr>
+              </tbody>
+            </table>
+            <!--Ranking Reports-->
+            <div class="card-footer text-dark">
+              <h6>Indicadores para el Ranking QS</h6>
+
+            </div>
+            <table class="table table-hover group">
+              <tbody>
+                <tr>
+                  <td class="card-footer">Estudiantes Extranjeros</td>
+                </tr>
+                <tr>
+                  <td class="card-footer hola">Estudiantes por Facultad</td>
+                </tr>
+                <tr>
+                  <td class="card-footer">Docentes Empleados / Estudiantes Matriculados</td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--REPORT LIST-->
+
 
   </div>  
 </template>
 
 
 <style>
+
+.hola {
+  color: #fff;
+  background-color: #d8bd74;
+}
+
+.button-pdf {
+  background-color: #bf4040;
+}
+
+.button-img{
+  background-color: #85c2e0;
+}
+
+.button-excel{
+  background-color: #3db814;
+}
+
+.row-students {
+  min-height: 90vh;
+}
+
+.border-students{
+ border-color: #CCAA4C;
+ min-height: 100%;
+}
+
+.button-back {
+  margin-bottom: 2rem;
+}
+ 
+ .card-title {
+
+    font-size: 18px;
+  }
+
+  .td {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  #accordion {
+    width: 30%;
+    margin-top: 8rem;
+   /* margin-bottom: 0rem; */
+  }
 </style>
 
 
@@ -112,7 +221,11 @@ export default {
         marker: {
           color: "#ffb8b8",
           width: 1
-        }
+        },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         }
       });
 
       datos.push({
@@ -124,7 +237,12 @@ export default {
         marker: {
           color: "#82ccdd",
           width: 1
-        }
+        },
+        hoverlabel: { font:{size:18}},
+        insidetextfont: {color: "#FFFFFF", 
+                         size: 16,                                         
+                         },
+      
       });
 
       console.log(datos);
@@ -149,7 +267,7 @@ export default {
         margin: {
           l: 200,
           r: 200,
-          b: 200,
+          b: 80,
           t: 50,
           pad: -1
         }
