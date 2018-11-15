@@ -16,6 +16,8 @@
                     <th scope="col">Apellido</th>
                     <th scope="col">Usuario</th>
                     <th scope="col">Correo</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Dirección</th>
                     <th scope="col">Role</th>
                     <th scope="col">Acciones</th>
                     <th></th>
@@ -27,6 +29,8 @@
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.address }}</td>
                     <td>{{ user.name }}</td> <!--El nombre del role-->
                     <td>
                       <router-link :to="`/admin/edit/${user.id}`" tag="button" class="btn btn-warning">

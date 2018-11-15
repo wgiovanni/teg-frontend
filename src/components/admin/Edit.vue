@@ -22,13 +22,21 @@
                 <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required autofocus>
               </div>
               <div class="form-group">
+                <label for="inputPhone">Teléfono</label>
+                <input v-model="phone" type="text" id="inputPhone" class="form-control" placeholder="Teléfono" required>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Dirección</label>
+                <textarea v-model="address" class="form-control" id="inputAddress" rows="3" required></textarea>
+              </div>
+              <div class="form-group">
                 <label for="inputPassword">Contraseña</label>
                 <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
               </div>
               <div class="form-group">
                 <label for="inputRole">Role</label>
                 <select class="form-control" :required="true" v-model="id_role">
-                  <!--option disabled value=""></option-->
+                  <!--option :selected="true"></option-->
                   <option v-for="role in roles" :key="role.id" v-bind:value="role.id">{{ role.name }}</option>
                 </select>
               </div>
@@ -62,8 +70,11 @@ export default {
         last_name: '',
         username: '',
         email: '',
+        phone: '',
+        address: '',
         password: '',
         id_role: '',
+        name: '',
         error: false,
         roles: []
     }
@@ -76,7 +87,9 @@ export default {
       first_name: this.first_name, 
       last_name: this.last_name, 
       username: this.username, 
-      email: this.email, 
+      email: this.email,
+      phone: this.phone,
+      address: this.address,  
       password: this.password, 
       id_role: this.id_role,
       user: this.user.username
@@ -101,13 +114,19 @@ export default {
         .catch(() => console.log("Error Login"))
     },
     findByIdSuccess(request) {
+        console.log(request);
         this.id = request.data.id;
         this.first_name = request.data.first_name;
         this.last_name = request.data.last_name;
         this.username = request.data.username;
         this.email = request.data.email;
+        this.phone = request.data.phone;
+        this.address = request.data.address;
         this.password = request.data.password;
         this.id_role = request.data.id_role;
+        this.name = request.data.name;
+        console.log(this.phone);
+        console.log(this.address);
         
     },
     roleAll () {

@@ -21,6 +21,14 @@
                 <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required autofocus>
               </div>
               <div class="form-group">
+                <label for="inputPhone">Teléfono</label>
+                <input v-model="phone" type="text" id="inputPhone" class="form-control" placeholder="Teléfono" required>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Dirección</label>
+                <textarea v-model="address" class="form-control" id="address" rows="3" required></textarea>
+              </div>
+              <div class="form-group">
                 <label for="inputPassword">Contraseña</label>
                 <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
               </div>
@@ -64,6 +72,8 @@ export default {
         last_name: '',
         username: '',
         email: '',
+        phone: '',
+        address: '',
         password: '',
         id_role: '',
 		    error: false, 
@@ -79,7 +89,9 @@ export default {
       first_name: this.first_name, 
       last_name: this.last_name, 
       username: this.username, 
-      email: this.email, 
+      email: this.email,
+      phone: this.phone,
+      address: this.address, 
       password: this.password, 
       id_role: this.id_role,
       user: this.user.username
