@@ -3880,11 +3880,26 @@ input[type="button"].btn-block {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
+  font-size: 22px;
+  background-color: #fafafa;
+
+}
+
+.nav-link:visited{
+  border-style: hidden;
+    border-width: 1px;
+    border-radius: 8px; 
+    background-color: #fafafa;
 }
 
 .nav-link:hover, .nav-link:focus {
-  text-decoration: none;
-}
+  text-decoration: none; 
+    /*border:1px solid gray;  */
+    border-style: hidden;
+    border-width: 1px;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+   }
 
 .nav-link.disabled {
   color: #6c757d;
@@ -9083,7 +9098,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .service-heading-block {
   display: block;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .feature-block {
@@ -9093,6 +9108,7 @@ a.text-dark:hover, a.text-dark:focus {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
   margin-bottom: 10px;
+
   /* margin-right: 15px;*/
   transition: all ease 0.5s;
 }
@@ -9108,7 +9124,7 @@ a.text-dark:hover, a.text-dark:focus {
   border-radius: 120%;
   height: 140px;
   width: 140px;
-  margin: 6rem auto;
+  margin: 7rem auto;
   transition: all 0.5s ease 0s;
   display: grid;
   font-size: 54px;
@@ -9146,8 +9162,9 @@ a.text-dark:hover, a.text-dark:focus {
 .color-students {
   color: #a17700;
   font-size: 70px;
-  text-align: center;
   align-content: center;
+  text-align: center;  
+
 }
 
 .btn-students {
@@ -9270,7 +9287,8 @@ a.text-dark:hover, a.text-dark:focus {
 /* Sidebar list */
 
 .row-view {
-  min-height: 80vh;
+  min-height: 70vh;
+  margin-top: 0.6rem;
 }
 .card-title {
   font-size: 18px;
@@ -9287,34 +9305,42 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 
-=======
 .container-login-register {
   padding-top: 10%;
 }
 .button-iniciar-sesion {
-      margin-left: 35.5%;
+  margin-left: 35.5%;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 14px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
-  border-radius: 5px;
+  box-shadow: inset 0 0 4px #d6d9dc; 
+  border-radius: 7px;
+  width: 14px;
 }
 
+
 /* Handle */
+
 ::-webkit-scrollbar-thumb {
-  background: rgb(152, 30, 50); 
+  background: #d6d9dc; 
   border-radius: 7px;
+  width: 14px;
 }
 
 /* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(152, 30, 50); 
+  background: grey; 
+  width:14px;
 }
 
->>>>>>> ca3a05ea80fe5d828fb52e3cbd79055982930460
+
+
+/** Header **/
+

@@ -1,6 +1,8 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 4px solid #981E32">
-        <a class="navbar-brand mr-auto" href="/">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light header-border">
+       
+       
+        <a class="navbar-brand mr-auto uc-header text-center" href="/">
             <img src="../../assets/escudo.png" width="52" height="58" class="d-inline-block align-top" alt="">
             UC RANKING 
         </a>
@@ -155,80 +157,118 @@
                 </li>   
             </ul>          
         </div>
+        
     </nav>
+     
 </template>
+
+<style>
+.uc-header {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 50px;
+}
+
+.header-border {
+  border-bottom: 5px solid #981e32;
+  box-shadow: 
+    0 0 0 5px #006d55,
+    0 0 0 10px #A17700;
+}
+
+/*
+.header-border:after {
+         
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: -15px;
+  bottom: -15px;
+  background: black;
+  z-index: -1;
+}
+*/
+
+</style>
+
 <script>
-import axios from 'axios';
+import axios from "axios";
 import { mapState, mapGetters } from "vuex";
-import { logout } from '@/store'
+import { logout } from "@/store";
 export default {
   name: "TopNavbar",
-  data () {
+  data() {
     return {
-        links: [
-            {
-                id: 0,
-                name: "Estudiantes",
-                path: "/students"
-            },
-            {
-                id: 1,
-                name: "Profesores",
-                path: "/teachers"
-            },
-            /*{
+      links: [
+        {
+          id: 0,
+          name: "Estudiantes",
+          path: "/students"
+        },
+        {
+          id: 1,
+          name: "Profesores",
+          path: "/teachers"
+        },
+        /*{
                 id: 2,
                 name: "Egresados",
                 path: "/graduates"
             },*/
-            {
-                id: 2,
-                name: "Integración",
-                path: "/integration"
-            },
-            {
-                id: 3,
-                name: "Reportes",
-                path: "/reports"
-            },
-            {
-                id: 4,
-                name: "Administración",
-                path: "/admin"
-            },
-            {
-                id: 5,
-                name: "Auditoría",
-                path: "/audit"
-            }
-        ]
-    }
+        {
+          id: 2,
+          name: "Integración",
+          path: "/integration"
+        },
+        {
+          id: 3,
+          name: "Reportes",
+          path: "/reports"
+        },
+        {
+          id: 4,
+          name: "Administración",
+          path: "/admin"
+        },
+        {
+          id: 5,
+          name: "Auditoría",
+          path: "/audit"
+        }
+      ]
+    };
   },
-  methods:{
-      changeRoleVerify: function(){
-        const path = 'http://localhost:8084/api/v1/userVerify' + '/' + this.user.id;
-        axios.get(path)
-            .then(request => {
-                this.user.name = request.data.name;
-                this.id_role = request.data.id;
-                localStorage.setItem('user', JSON.stringify(this.user));
-            })
-            .catch(() => {
-                console.log("FALLO")
-            })
-      },
-      changeRoleVicerector:function(){
-        const path = 'http://localhost:8084/api/v1/userVicerector' + '/' + this.user.id;
-        axios.get(path)
-            .then(request => {
-                this.user.name = request.data.name;
-                this.id_role = request.data.id;
-                localStorage.setItem('user', JSON.stringify(this.user));
-            })
-            .catch(() => {
-                console.log("FALLO")
-            })
-      }
+  methods: {
+    changeRoleVerify: function() {
+      const path =
+        "http://localhost:8084/api/v1/userVerify" + "/" + this.user.id;
+      axios
+        .get(path)
+        .then(request => {
+          this.user.name = request.data.name;
+          this.id_role = request.data.id;
+          localStorage.setItem("user", JSON.stringify(this.user));
+        })
+        .catch(() => {
+          console.log("FALLO");
+        });
+    },
+    changeRoleVicerector: function() {
+      const path =
+        "http://localhost:8084/api/v1/userVicerector" + "/" + this.user.id;
+      axios
+        .get(path)
+        .then(request => {
+          this.user.name = request.data.name;
+          this.id_role = request.data.id;
+          localStorage.setItem("user", JSON.stringify(this.user));
+        })
+        .catch(() => {
+          console.log("FALLO");
+        });
+    }
   },
   mounted() {
     console.log("Usuario desde el Store: ", this.user);
