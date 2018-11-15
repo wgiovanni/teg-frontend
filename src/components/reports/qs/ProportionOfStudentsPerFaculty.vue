@@ -35,40 +35,41 @@
             <table class="table table-hover group">
               <tbody>
                 <tr>
-                  <router-link to="/report/UndergraduateStudentsNationality"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
+                  <router-link to="/report/UndergraduateStudentsNationality" class="text-dark"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
                 </tr>
                 <tr>
-                  <router-link to="/report/UndergraduateStudentsSex"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
+                  <router-link to="/report/UndergraduateStudentsSex" class="text-dark"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
                 </tr>
                  <tr>
-                  <router-link to="/report/StudentsDisabilityPerFaculty"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
+                  <router-link to="/report/StudentsDisabilityPerFaculty" class="text-dark"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
                 </tr>
                 <tr>
-                  <router-link to="/report/ForeignStudentsPerFaculty"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
+                  <router-link to="/report/ForeignStudentsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
                 </tr>               
                 <tr>
-                  <router-link to="/report/StudentsEthnicGroupsPerFaculty"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
+                  <router-link to="/report/StudentsEthnicGroupsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
                 </tr>
                 <tr>
-                  <router-link to="/report/StudentsSexFaculty"><td class="td-table">Estudiantes por Sexo</td></router-link>    
+                  <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
                 </tr>
                 
               </tbody>
             </table>
             <!--Ranking Reports-->
-            <div class="card-footer text-dark">
+            <div class="card-header text-dark">
               <h6>Indicadores para el Ranking QS</h6>
             </div>
-            <table class="table table-hover group">
+            <table class="table table-hover bg-light group">
               <tbody>
+        
                 <tr>
-                  <router-link to="/report/ProportionOfInternationalStudents"><td class="card-footer">Estudiantes Extranjeros</td></router-link>    
-                </tr>
+                  <router-link to="/report/ProportionOfInternationalStudents" class="text-dark"><td>Estudiantes Extranjeros</td></router-link>    
+                </tr>               
                 <tr>
                   <td class="card-footer students-color">Estudiantes por Facultad</td>
                 </tr>
                 <tr>
-                  <router-link to="/report/FacultyStudentRatio"><td class="card-footer">Docentes Empleados / Estudiantes Matriculados</td></router-link>    
+                  <router-link to="/report/FacultyStudentRatio" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
                 </tr>
               </tbody>
             </table>
@@ -81,6 +82,21 @@
 
 
 <style>
+.students-color {
+  color: #fff;
+  background-color: #d8bd74;
+  font-weight: bold;
+}
+
+.students-color:hover{
+   background-color: #ccaa4c;
+}
+
+.border-students {
+  border-left-color: #ccaa4c;
+  min-height: 100%;
+  border-width:2px !important;
+}
 </style>
 
 
@@ -155,9 +171,9 @@ export default {
         nombreFacultad.push(facultades[i]["nombre"]);
         estudiantesFacultad.push(facultades[i]["total"]);
       }
-
+/*
       datos.push({
-        x: estudiantesFacultad,
+        x: studentsTotal,
         y: nombreFacultad,
         name: "Estudiantes por Facultad",
         orientation: "h",
@@ -172,9 +188,9 @@ export default {
           size: 16
         }
       });
-
+*/
       datos.push({
-        x: studentsTotal,
+        x: estudiantesFacultad,
         y: nombreFacultad,
         name: "Total de Estudiantes",
         orientation: "h",
@@ -210,10 +226,10 @@ export default {
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 80,
-          t: 50,
+          l: 250,
+          r: 100,
+          b: 100,
+          t: 100,
           pad: -1
         }
         //width: 720,

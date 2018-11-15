@@ -3,12 +3,12 @@
     <!--GRAPH-->
     <!--Title-->  
     <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
-    <h1 id="report" class="title"/>   
+    <h1 id="report" class="title"/>       
 
     <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
+    <div ref="pie" class="vue-plotly"/>
       
-   <!--Download buttons--> 
+     <!--Download buttons--> 
       <div class="col-md-12 text-center">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
@@ -19,13 +19,14 @@
     <!--Return button-->
        <div class="col-md-16 text-center">
         <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>      
+      </div> 
 
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
 
-
+  
+  
      <!--REPORTS LIST-->
       <div class="card border-teachers mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
         <div class="card-header">        
@@ -41,11 +42,11 @@
                 <tr>
                   <router-link to="/report/TeachersNationalityFaculty" class="text-dark"><td class="td-table">Docentes Extranjeros por Facultad</td></router-link>    
                 </tr>
-                    <tr>
+                 <tr>
                   <router-link to="/report/ProportionOfTeachersByRank" class="text-dark"><td class="td-table">Docentes por Escalafón</td></router-link>    
                 </tr>
                 <tr>
-                  <td class="td-table teachers-color">Docentes por Sexo</td>
+                  <router-link to="/report/TeachersSexFaculty" class="text-dark"><td class="td-table">Docentes por Sexo</td></router-link>    
                 </tr>               
                 <tr>
                   <router-link to="/report/PublicationsPerFaculty" class="text-dark"><td class="td-table">Publicaciones por Facultad</td></router-link>    
@@ -58,7 +59,7 @@
             </div>
             <table class="table table-hover bg-light group">
               <tbody>        
-               <tr>
+                 <tr>
                   <router-link to="/report/CitationsPerFaculty" class="text-dark"><td>Citaciones por Facultad</td></router-link>     
                 </tr>
                 <tr>
@@ -68,7 +69,7 @@
                   <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark"><td>Docentes Extranjeros</td></router-link>    
                 </tr>         
                 <tr>
-                  <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
+                 <td class="card-footer teachers-color">Docentes Empleados / Estudiantes Matriculados</td>
                 </tr>
               </tbody>
             </table>
@@ -99,25 +100,20 @@
 </style>
 
 <script>
-
 import axios from "axios";
 import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Docentes por Sexo";
+var reportName = "Docentes Empleados / Estudiantes Matriculados";
 var img;
-var info = []; //Saves data for verification
+var infoDocentes = []; //Saves data for verification
+var infoEstudiantes = []; //Saves data for verification
 var date = new Date();
-
 
 export default {
   mounted() {
-    
-   },
-
-  data() {
     return {
       data: []
     };
@@ -128,90 +124,61 @@ export default {
   },
 
   methods: {
+    load() {
+      const path =
+        "http://127.0.0.1:5000/api/v1/profesor-estudiante-proporcion";
 
-     load() {
-      const path = "http://127.0.0.1:5000/api/v1/profesores-sexo-facultad";
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
-    successful(req) {  
-      
+    successful(req) {
       document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
-      var nombreFacultad = [];; 
-      var facultades = [];
-      var yMasculino = [];
-      var yFemenino = [];
-      var i;
-      var size = req.data.length;
+      var totalEstudiantes;
+      var totalEmpleados;
       var d = req.data;
 
-       // Saves data for verification
-      info = d["items"];
-      info.unshift({
+      // Saves data for verification
+      infoDocentes = d["items"];
+
+      infoDocentes.unshift({
         cedula: "Cédula",
         nombre: "Nombre",
-        apellido: "Apellido",        
+        apellido: "Apellido",
         correo: "Correo",
-        sexo: "Sexo",
-        facultad: "Facultad"
+        facultad: "Facultad",
+        cargo: "Cargo"
       });
-      console.log("info ", info);
+      console.log("infoDocentes ", infoDocentes);
 
-      facultades = d["facultades"];
+      totalEmpleados = d["total-empleado"];
+      totalEstudiantes = d["total-estudiantes"];
 
-      for (i = 0; i < 7; i++) {
-        nombreFacultad.push(facultades[i]["facultad"]);
-        yMasculino.push(facultades[i]["masculino"]);
-        yFemenino.push(facultades[i]["femenino"]);
-      }
-
-      console.log(nombreFacultad);
-      console.log(yMasculino);
-      console.log(yFemenino);
+      console.log("Total Empleados: ", totalEmpleados);
 
       datos.push({
-        x: nombreFacultad,
-        y: yMasculino,
-        //text: [],
-        textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
-        name: "Masculino",
-        type: "bar",
-        marker: { color: "#00b894" },
-        hoverlabel: { font:{size:18}},
-        insidetextfont: {color: "#FFFFFF", 
-                         size: 16,                                         
-                         }
-
-      });
-
-      datos.push({
-        x: nombreFacultad,
-        y: yFemenino,
-        //text:[],
-        name: "Femenino",
-        type: "bar",
-        marker: { color: "#fdcb6e" },
-        hoverlabel: { font:{size:18}},
-        insidetextfont: {color: "#FFFFFF", 
-                         size: 16,                                         
-                         }
+        values: [totalEmpleados, totalEstudiantes],
+        labels: ["Docentes Empleados", "Estudiantes Matriculados"],
+        type: "pie",
+        marker: { colors: ["#ff9478", "#8e44ad"] },
+        hoverlabel: { font: { size: 18 } },
+        insidetextfont: {
+          color: "#FFFFFF",
+          size: 16
+        }
       });
 
       console.log(datos);
       this.data = datos;
 
-      /*** LAYOUT ***/
+      // LAYOUT
 
       var layout = {
-        //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
         xaxis: {
           fixedrange: true
         },
@@ -222,12 +189,12 @@ export default {
         autosize: true,
         responsive: true,
         margin: {
-          l: 200,
-          r: 200,
-          b: 150,
+          l: 100,
+          r: 130,
+          b: 100,
           t: 100,
           pad: -1
-        },
+        }
         //width: 720,
         //height: 480,
       };
@@ -239,27 +206,25 @@ export default {
         responsive: true
       };
 
+      // GRAPH
 
-      /*** GRAPH ***/
-
-      //Exports plot as image
+      // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //Saves plot as image
+      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+        //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 728, width: 1024}, {title: "hola"}).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
-            format: "jpeg",       
-            height: 728,
-            width: 1024,
-          })
+            format: "jpeg",
+            height: 768,
+            width: 1024
+          });
         });
-      });//plotly_plot
-
+      }); //plotly_plot
     }, //successful(req)
 
     failed() {
@@ -270,10 +235,10 @@ export default {
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");
       doc.setFontType("bold");
-      doc.text(reportName, 15, 15);     
+      doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
 
-       doc.setProperties({
+      doc.setProperties({
         title: reportName,
         subject: "Reporte",
         author: "UC Ranking",
@@ -287,15 +252,14 @@ export default {
       // Table
       doc.cellInitialize();
 
-      $.each(info, function(i, row) {
+      $.each(infoDocentes, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "correo" | j =="facultad") {
-            doc.cell(15, 10, 60, 15, cell, i);       
-          
+          if ((j == "correo") | (j == "facultad")) {
+            doc.cell(10, 10, 60, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(15, 10, 30, 15, cell, i);
+            doc.cell(10, 10, 25, 15, cell, i);
           } else {
-            doc.cell(15, 10, 40, 15, cell, i);
+            doc.cell(10, 10, 40, 15, cell, i);
           }
         });
       });
@@ -314,7 +278,7 @@ export default {
 
     download_excel() {
       // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
+      var ws1 = XLSX.utils.json_to_sheet(infoDocentes, { skipHeader: true });
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -329,25 +293,24 @@ export default {
 
       // Column Properties
       var wscols = [
-        { wch: 12 },
+        { wch: 10 },
         { wch: 20 },
-        { wch: 20 },    
+        { wch: 20 },
         { wch: 40 },
-        { wch: 20 },
+        { wch: 40 },
         { wch: 40 }
       ];
-      ws["!cols"] = wscols;
+      ws1["!cols"] = wscols;
 
       var wsrows = [{ hpt: 20 }];
-      ws["!rows"] = wsrows;
-
+      ws1["!rows"] = wsrows;
 
       // add Worksheet to Workbook
-      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+      XLSX.utils.book_append_sheet(wb, ws1, "Reporte Docentes");
 
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
-    } //end_of_download    
+    } //end_of_download
   }
 };
 </script>

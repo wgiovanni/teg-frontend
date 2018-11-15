@@ -1,30 +1,104 @@
 <template>
-  <div>   
-    <!--Title-->    
-    <h1 id="report" class="title"/>    
+  <div class="row row-view">
+    <!--GRAPH-->
+    <!--Title-->  
+    <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
+    <h1 id="report" class="title"/>     
 
     <!--Plotly-->
     <div ref="pie" class="vue-plotly"/>
       
-    <!--Download buttons--> 
-    <div class="row">  
+   <!--Download buttons--> 
       <div class="col-md-12 text-center">
-        <button class="button" @click="download_pdf">Descargar PDF</button>
-        <button class="button" @click="download_img">Descargar JPG</button>
-        <button class="button" @click="download_excel">Descargar Excel</button>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        
+        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
+        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
+        <button class="button button-excel" @click="download_excel"><i class="fa fa-file-excel fa-lg"></i>   Descargar Excel</button>        
       </div>
-    </div>     
+    <!--Return button-->
+       <div class="col-md-16 text-center">
+        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
+      </div>   
 
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
+    </div>
 
+    <!--REPORTS LIST-->
+      <div class="card border-students mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
+        <div class="card-header">        
+            <h5 class="card-tile text-dark">Estudiantes</h5>         
+        </div>
+        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
+          <div class="card-body text-center">
+            <table class="table table-hover group">
+              <tbody>
+                <tr>
+                  <router-link to="/report/UndergraduateStudentsNationality" class="text-dark"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
+                </tr>
+                <tr>
+                  <router-link to="/report/UndergraduateStudentsSex" class="text-dark"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
+                </tr>
+                 <tr>
+                  <router-link to="/report/StudentsDisabilityPerFaculty" class="text-dark"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
+                </tr>
+                <tr>
+                  <router-link to="/report/ForeignStudentsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
+                </tr>               
+                <tr>
+                  <router-link to="/report/StudentsEthnicGroupsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
+                </tr>
+                <tr>
+                  <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
+                </tr>
+                
+              </tbody>
+            </table>
+            <!--Ranking Reports-->
+            <div class="card-header text-dark">
+              <h6>Indicadores para el Ranking QS</h6>
+            </div>
+            <table class="table table-hover bg-light group">
+              <tbody>
+        
+                <tr>
+                  <td class="students-color">Estudiantes Extranjeros</td>   
+                </tr>               
+                <tr>
+                  <router-link to="/report/ProportionOfStudentsPerFaculty" class="text-dark"><td>Estudiantes por Facultad</td></router-link> 
+                </tr>
+                <tr>
+                  <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--END OF REPORT LIST-->
   </div>  
 </template>
 
 
 <style>
-</style>
+.students-color {
+  color: #fff;
+  background-color: #d8bd74;
+  font-weight: bold;
+}
 
+.students-color:hover{
+   background-color: #ccaa4c;
+}
+
+.border-students {
+  border-left-color: #ccaa4c;
+  min-height: 100%;
+  border-width:2px !important;
+}
+</style> 
+ 
 
 <script>
 import axios from "axios";

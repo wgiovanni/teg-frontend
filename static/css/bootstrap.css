@@ -9079,9 +9079,158 @@ a.text-dark:hover, a.text-dark:focus {
   display: none;
 }
 
-<<<<<<< HEAD
 /*** REPORTS ***/
 
+.service-heading-block {
+  display: block;
+  margin-bottom: 30px;
+}
+
+.feature-block {
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 15px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  /* margin-right: 15px;*/
+  transition: all ease 0.5s;
+}
+
+.ms-feature:hover,
+.ms-feature:focus {
+  background-color: #fafafa;
+  box-shadow: 0 3px 4px 3px rgba(0, 0, 0, 0.14),
+    0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 1px 8px 3px rgba(0, 0, 0, 0.12);
+}
+
+.fb-icon {
+  border-radius: 120%;
+  height: 140px;
+  width: 140px;
+  margin: 6rem auto;
+  transition: all 0.5s ease 0s;
+  display: grid;
+  font-size: 54px;
+  line-height: 10px;
+  text-align: center;
+}
+
+.feature-block:hover .fb-icon,
+.feature-block:focus .fb-icon {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  transform: rotate(360deg);
+}
+
+.fb-icon.color-students {
+  background-color: #a17700;
+  color: #fff;
+}
+
+.fb-icon.color-teachers {
+  background-color: #006d55;
+  color: #fff;
+}
+
+.fb-icon.color-graduates {
+  background-color: #981e32;
+  color: #fff;
+}
+
+.feature-block h4 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.color-students {
+  color: #a17700;
+  font-size: 70px;
+  text-align: center;
+  align-content: center;
+}
+
+.btn-students {
+  background-color: #a17700;
+  color: #fff;
+  text-align: center;
+  align-content: center;
+  width: 100px;
+  height: 40px;
+}
+
+.btn-students:hover {
+  background-color: #ccaa4c;
+  color: #ffff;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.color-teachers {
+  color: #006d55;
+  font-size: 70px;
+  text-align: center;
+  align-content: center;
+}
+
+.btn-teachers {
+  background-color: #006d55;
+  color: #fff;
+  text-align: center;
+  align-content: center;
+  width: 100px;
+  height: 40px;
+}
+
+.btn-teachers:hover {
+  background-color: #337f6e;
+  color: #ffff;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.color-graduates {
+  color: #981e32;
+  font-size: 70px;
+  text-align: center;
+  align-content: center;
+}
+
+.btn-graduates {
+  background-color: #981e32;
+  color: #fff;
+  text-align: center;
+  align-content: center;
+  width: 100px;
+  height: 40px;
+}
+
+.btn-graduates:hover {
+  background-color: #993343;
+  color: #ffff;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-custom {
+  border: medium none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin: 10px 1px;
+  outline: 0 none;
+  padding: 8px 30px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Download buttons */
 .button-pdf:hover {
   background-color: #bf4040;
 }
@@ -9093,7 +9242,6 @@ a.text-dark:hover, a.text-dark:focus {
 .button-pdf:focus {
   outline: 0;
 }
-
 
 .button-img:hover {
   background-color: #8ba4ee;
@@ -9122,7 +9270,7 @@ a.text-dark:hover, a.text-dark:focus {
 /* Sidebar list */
 
 .row-view {
-  min-height: 90vh;
+  min-height: 80vh;
 }
 .card-title {
   font-size: 18px;
@@ -9137,20 +9285,6 @@ a.text-dark:hover, a.text-dark:focus {
   width: 30%;
   margin-top: 8rem;
 }
-
-/* Students */
-.students-color {
-  color: #fff;
-  background-color: #d8bd74;
-}
-
-.border-students {
-  border-color: #ccaa4c;
-  min-height: 100%;
-}
-
-
-
 
 
 =======

@@ -14,11 +14,11 @@ import AuditList from '@/components/audit/AuditList'
 // Reports
 //import Report from '@/components/reports/Reports'
 import ReportsHome from '@/components/reports/ReportsHome'
-import ReportsStudents from '@/components/reports/ReportsStudents'
 
 //QS Ranking
 import CitationsPerFaculty from '@/components/reports/qs/CitationsPerFaculty'
-import FacultyStudentRatio from '@/components/reports/qs/FacultyStudentRatio'
+import FacultyStudentRatioStudent from '@/components/reports/qs/FacultyStudentRatioStudent'
+import FacultyStudentRatioTeacher from '@/components/reports/qs/FacultyStudentRatioTeacher'
 import ProportionOfInternationalFaculty from '@/components/reports/qs/ProportionOfInternationalFaculty'
 import ProportionOfInternationalStudents from '@/components/reports/qs/ProportionOfInternationalStudents'
 import ProportionOfStudentsPerFaculty from '@/components/reports/qs/ProportionOfStudentsPerFaculty'
@@ -138,23 +138,7 @@ export const router = new Router({
               next()
             }
           }
-        },
-        {
-          path: '/reports',
-          name: 'ReportsStudents',
-          component: ReportsStudents,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
+        },        
         {
           path: '/report/ProportionOfInternationalFaculty',
           name: 'ProportionOfInternationalFaculty',
@@ -236,9 +220,25 @@ export const router = new Router({
           }
         },
         {
-          path: '/report/FacultyStudentRatio',
-          name: 'FacultyStudentRatio',
-          component: FacultyStudentRatio,
+          path: '/report/FacultyStudentRatioStudent',
+          name: 'FacultyStudentRatioStudent',
+          component: FacultyStudentRatioStudent,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/FacultyStudentRatioTeacher',
+          name: 'FacultyStudentRatioTeacher',
+          component: FacultyStudentRatioTeacher,
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);
