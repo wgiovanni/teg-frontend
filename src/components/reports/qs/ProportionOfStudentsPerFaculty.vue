@@ -1,33 +1,31 @@
 <template>
-  <div class="row row-students">
-       
+  <div class="row row-view">
+    <!--GRAPH-->
     <!--Title-->  
     <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
-    <h1 id="report" class="title"/>    
+    <h1 id="report" class="title"/>  
 
     <!--Plotly-->
     <div ref="bar" class="vue-plotly "/>
       
     <!--Download buttons--> 
-
       <div class="col-md-12 text-center">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
-        <button class="button" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
-        <button class="button" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
-        <button class="button" @click="download_excel"><i class="fa fa-file-excel fa-lg"></i>   Descargar Excel</button>
         
+        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
+        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
+        <button class="button button-excel" @click="download_excel"><i class="fa fa-file-excel fa-lg"></i>   Descargar Excel</button>        
       </div>
+    <!--Return button-->
        <div class="col-md-16 text-center">
-        <router-link to="/reports"><button class="button">Regresar</button></router-link>        
-        
+        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
       </div>
 
-    <!--Saves plot as image-->
+    <!--Save graph as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
 
-     <!--REPORT LIST-->
+     <!--REPORTS LIST-->
       <div class="card border-students mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
         <div class="card-header">        
             <h5 class="card-tile text-dark">Estudiantes</h5>         
@@ -37,101 +35,52 @@
             <table class="table table-hover group">
               <tbody>
                 <tr>
-                  <td>Estudiantes Extranjeros por Facultad</td>
+                  <router-link to="/report/UndergraduateStudentsNationality"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
                 </tr>
                 <tr>
-                  <td>Estudiantes con Discapacidad</td>
+                  <router-link to="/report/UndergraduateStudentsSex"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
+                </tr>
+                 <tr>
+                  <router-link to="/report/StudentsDisabilityPerFaculty"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
                 </tr>
                 <tr>
-                  <td>Estudiantes Pertenecientes a Grupos Étnicos</td>
+                  <router-link to="/report/ForeignStudentsPerFaculty"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
+                </tr>               
+                <tr>
+                  <router-link to="/report/StudentsEthnicGroupsPerFaculty"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
                 </tr>
                 <tr>
-                  <td>Estudiantes por Sexo</td>
+                  <router-link to="/report/StudentsSexFaculty"><td class="td-table">Estudiantes por Sexo</td></router-link>    
                 </tr>
-                <tr>
-                  <td>Estudiantes de Pregrado Extranjeros</td>
-                </tr>
-                <tr>
-                  <td>Estudiantes de Pregrado por Sexo</td>
-                </tr>
+                
               </tbody>
             </table>
             <!--Ranking Reports-->
             <div class="card-footer text-dark">
               <h6>Indicadores para el Ranking QS</h6>
-
             </div>
             <table class="table table-hover group">
               <tbody>
                 <tr>
-                  <td class="card-footer">Estudiantes Extranjeros</td>
+                  <router-link to="/report/ProportionOfInternationalStudents"><td class="card-footer">Estudiantes Extranjeros</td></router-link>    
                 </tr>
                 <tr>
-                  <td class="card-footer hola">Estudiantes por Facultad</td>
+                  <td class="card-footer students-color">Estudiantes por Facultad</td>
                 </tr>
                 <tr>
-                  <td class="card-footer">Docentes Empleados / Estudiantes Matriculados</td>
+                  <router-link to="/report/FacultyStudentRatio"><td class="card-footer">Docentes Empleados / Estudiantes Matriculados</td></router-link>    
                 </tr>
               </tbody>
-
             </table>
           </div>
         </div>
       </div>
-      <!--REPORT LIST-->
-
-
+      <!--END OF REPORT LIST-->
   </div>  
 </template>
 
 
 <style>
-
-.hola {
-  color: #fff;
-  background-color: #d8bd74;
-}
-
-.button-pdf {
-  background-color: #bf4040;
-}
-
-.button-img{
-  background-color: #85c2e0;
-}
-
-.button-excel{
-  background-color: #3db814;
-}
-
-.row-students {
-  min-height: 90vh;
-}
-
-.border-students{
- border-color: #CCAA4C;
- min-height: 100%;
-}
-
-.button-back {
-  margin-bottom: 2rem;
-}
- 
- .card-title {
-
-    font-size: 18px;
-  }
-
-  .td {
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  #accordion {
-    width: 30%;
-    margin-top: 8rem;
-   /* margin-bottom: 0rem; */
-  }
 </style>
 
 
@@ -149,8 +98,6 @@ var date = new Date();
 
 export default {
   mounted() {
-   
-
     return {
       data: []
     };
@@ -170,10 +117,8 @@ export default {
     },
 
     successful(req) {
-
       document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
-
 
       var datos = []; // Saves data from JSON
       var totalEstudiantes;
@@ -192,7 +137,7 @@ export default {
         nombre: "Nombre",
         apellido: "Apellido",
         fecha_nacimiento: "Fecha de Nacimiento",
-        telefono1: "Teléfono",        
+        telefono1: "Teléfono",
         email: "Correo",
         estado_procedencia: "Estado de Procedencia",
         facultad: "Facultad"
@@ -201,7 +146,7 @@ export default {
 
       totalEstudiantes = d["total-estudiantes"];
       facultades = d["facultad"];
-    
+
       for (i = 0; i < 7; i++) {
         studentsTotal[i] = totalEstudiantes;
       }
@@ -210,7 +155,6 @@ export default {
         nombreFacultad.push(facultades[i]["nombre"]);
         estudiantesFacultad.push(facultades[i]["total"]);
       }
-
 
       datos.push({
         x: estudiantesFacultad,
@@ -222,10 +166,11 @@ export default {
           color: "#ffb8b8",
           width: 1
         },
-        hoverlabel: { font:{size:18}},
-        insidetextfont: {color: "#FFFFFF", 
-                         size: 16,                                         
-                         }
+        hoverlabel: { font: { size: 18 } },
+        insidetextfont: {
+          color: "#FFFFFF",
+          size: 16
+        }
       });
 
       datos.push({
@@ -238,11 +183,11 @@ export default {
           color: "#82ccdd",
           width: 1
         },
-        hoverlabel: { font:{size:18}},
-        insidetextfont: {color: "#FFFFFF", 
-                         size: 16,                                         
-                         },
-      
+        hoverlabel: { font: { size: 18 } },
+        insidetextfont: {
+          color: "#FFFFFF",
+          size: 16
+        }
       });
 
       console.log(datos);
@@ -329,9 +274,9 @@ export default {
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad") {
-            doc.cell(10, 10, 60, 15, cell, i);          
-          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
+          if ((j == "email") | (j == "facultad")) {
+            doc.cell(10, 10, 60, 15, cell, i);
+          } else if ((j == "fecha_nacimiento") | (j == "estado_procedencia")) {
             doc.cell(10, 10, 30, 15, cell, i);
           } else if (j == "cedula") {
             doc.cell(10, 10, 20, 15, cell, i);
@@ -374,7 +319,7 @@ export default {
         { wch: 20 },
         { wch: 20 },
         { wch: 20 },
-        { wch: 25 },      
+        { wch: 25 },
         { wch: 40 },
         { wch: 25 },
         { wch: 40 }

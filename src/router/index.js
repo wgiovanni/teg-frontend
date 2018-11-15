@@ -12,7 +12,7 @@ import Graduates from '@/components/graduates/Graduates'
 import AuditList from '@/components/audit/AuditList'
 
 // Reports
-//import Report from '@/components/reports/Report'
+//import Report from '@/components/reports/Reports'
 import ReportsHome from '@/components/reports/ReportsHome'
 import ReportsStudents from '@/components/reports/ReportsStudents'
 

@@ -9062,15 +9062,15 @@ a.text-dark:hover, a.text-dark:focus {
   display: inline-block;
 }
 
-.button:hover {
+.button-back:hover {
   background-color: #989898;
 }
 
-.button:active {
+.button-back:active {
   background-color: #c8d3ea;
 }
 
-.button:focus {
+.button-back:focus {
   outline: 0;
 }
 
@@ -9078,4 +9078,77 @@ a.text-dark:hover, a.text-dark:focus {
 .hidden {
   display: none;
 }
+
+/*** REPORTS ***/
+
+.button-pdf:hover {
+  background-color: #bf4040;
+}
+
+.button-pdf:active {
+  background-color: #c8d3ea;
+}
+
+.button-pdf:focus {
+  outline: 0;
+}
+
+
+.button-img:hover {
+  background-color: #8ba4ee;
+}
+
+.button-img:active {
+  background-color: #c8d3ea;
+}
+
+.button-img:focus {
+  outline: 0;
+}
+
+.button-excel:hover {
+  background-color: #12a136;
+}
+
+.button-excel:active {
+  background-color: #c8d3ea;
+}
+
+.button-excel:focus {
+  outline: 0;
+}
+
+/* Sidebar list */
+
+.row-view {
+  min-height: 90vh;
+}
+.card-title {
+  font-size: 18px;
+}
+
+.td-table {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#accordion {
+  width: 30%;
+  margin-top: 8rem;
+}
+
+/* Students */
+.students-color {
+  color: #fff;
+  background-color: #d8bd74;
+}
+
+.border-students {
+  border-color: #ccaa4c;
+  min-height: 100%;
+}
+
+
+
+
 
