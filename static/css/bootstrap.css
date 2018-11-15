@@ -9286,8 +9286,6 @@ a.text-dark:hover, a.text-dark:focus {
   margin-top: 8rem;
 }
 
-
-=======
 .container-login-register {
   padding-top: 10%;
 }
@@ -9316,5 +9314,3 @@ a.text-dark:hover, a.text-dark:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(152, 30, 50); 
 }
-
->>>>>>> ca3a05ea80fe5d828fb52e3cbd79055982930460

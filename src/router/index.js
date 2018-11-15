@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 import Login from '@/components/Login'
 import Students from '@/components/students/Students'
-import Register from '@/components/Register'
 import Home from '@/components/Home'
 import Users from '@/components/admin/Users'
 import Dashboard from '@/components/layout/Dashboard'
@@ -31,6 +30,8 @@ import ForeignStudentsPerFaculty from '@/components/reports/students/ForeignStud
 import StudentsDisabilityPerFaculty from '@/components/reports/students/StudentsDisabilityPerFaculty'
 import StudentsEthnicGroupsPerFaculty from '@/components/reports/students/StudentsEthnicGroupsPerFaculty'
 import StudentsSexFaculty from '@/components/reports/students/StudentsSexFaculty'
+import StudentsPerYear from '@/components/reports/students/StudentsPerYear'
+import StudentsYearFaculty from '@/components/reports/students/StudentsYearFaculty'
 import UndergraduateStudentsNationality from '@/components/reports/students/UndergraduateStudentsNationality'
 import UndergraduateStudentsSex from '@/components/reports/students/UndergraduateStudentsSex'
 
@@ -313,6 +314,30 @@ export const router = new Router({
               next('/home')
             } else {
               console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/StudentsPerYear',
+          name: 'StudentsPerYear',
+          component: StudentsPerYear,
+          beforeEnter (to, from, next) {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+              next('/home')
+            } else {
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/StudentsYearFaculty',
+          name: 'StudentsYearFaculty',
+          component: StudentsYearFaculty,
+          beforeEnter (to, from, next) {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+              next('/home')
+            } else {
               next()
             }
           }
