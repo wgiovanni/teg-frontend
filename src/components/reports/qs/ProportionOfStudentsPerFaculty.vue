@@ -75,7 +75,7 @@
                   <td class="card-footer students-color">Estudiantes por Facultad</td>
                 </tr>
                 <tr>
-                  <router-link to="/report/FacultyStudentRatio" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
+                  <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
                 </tr>
               </tbody>
             </table>
