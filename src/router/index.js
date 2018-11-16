@@ -43,6 +43,9 @@ import TeachersNationalityFaculty from '@/components/reports/teachers/TeachersNa
 import TeachersSexFaculty from '@/components/reports/teachers/TeachersSexFaculty'
 import TeachersWithAPhDPerFaculty from '@/components/reports/teachers/TeachersWithAPhDPerFaculty'
 
+//Graduates
+import GraduatesPerYear from '@/components/reports/graduates/GraduatesPerYear'
+import GraduatesYearFaculty from '@/components/reports/graduates/GraduatesYearFaculty'
 
 //import Integration from '@/components/integration/Integration'
 import SystemParameterList from '@/components/integration/SystemParameterList'
@@ -456,8 +459,30 @@ export const router = new Router({
             }
           }
         },
-        
-    
+        {
+          path: '/report/GraduatesPerYear',
+          name: 'GraduatesPerYear',
+          component: GraduatesPerYear,
+          beforeEnter (to, from, next) {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+              next('/home')
+            } else {
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/GraduatesYearFaculty',
+          name: 'GraduatesYearFaculty',
+          component: GraduatesYearFaculty,
+          beforeEnter (to, from, next) {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+              next('/home')
+            } else {
+              next()
+            }
+          }
+        },
         {
           path: '/integration',
           name: 'SystemParameterList',

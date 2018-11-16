@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <form class="col s12"  @submit.prevent="getStudent">
+    <div class="container-fluid" style="margin-top:8%;">
+        <form class="col s12"  @submit.prevent="getGraduates">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <div class="form-group row">
                 <label for="inputFrom" class="col-sm-1 col-form-label">Facultad</label>
@@ -37,7 +37,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'StudentsYearFaculty',
+  name: 'GraduateYearFaculty',
   data () {
       return {
           desde: '',
@@ -50,8 +50,8 @@ export default {
       }
   },
   methods: {
-    getStudent: function () {
-        const path = 'http://localhost:5000/api/v1/estudiantes-ano-facultad';
+    getGraduates: function () {
+        const path = 'http://localhost:5000/api/v1/egresado-ano-facultad';
         console.log(this.desde);
         console.log(this.hasta);
         console.log(this.facultad)
