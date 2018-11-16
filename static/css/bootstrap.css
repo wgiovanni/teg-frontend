@@ -9104,11 +9104,12 @@ a.text-dark:hover, a.text-dark:focus {
 .feature-block {
   background-color: #fff;
   border-radius: 2px;
-  padding: 15px;
+  padding: 20px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
   margin-bottom: 10px;
-
+  margin-top: 2rem !important;
+ 
   /* margin-right: 15px;*/
   transition: all ease 0.5s;
 }
@@ -9124,7 +9125,7 @@ a.text-dark:hover, a.text-dark:focus {
   border-radius: 120%;
   height: 140px;
   width: 140px;
-  margin: 7rem auto;
+  margin: 5rem auto;
   transition: all 0.5s ease 0s;
   display: grid;
   font-size: 54px;
@@ -9313,7 +9314,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 14px;
+  width: 16px;
 }
 
 /* Track */
