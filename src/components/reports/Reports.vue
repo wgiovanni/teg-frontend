@@ -1,108 +1,148 @@
 <template>
-  <div>   
-    <!--Title-->    
-    <h1 id="report" class="title"/>    
+<div>
+   <!--FORM -->
+    <div>
+        <form class="col-md-12"  @submit.prevent="getStudent">
+            <div class="alert alert-danger" v-if="error">{{ error }}</div>
+            <div class="form-group row" style="margin-top: 12rem;">
+                <label for="inputFrom" class="col-sm-1 col-form-label text-form">Facultad</label>
+                <div class="col-sm-2">
+                    <select class="form-control" v-model="facultad" required>
+                        <option value="">Seleccionar facultad</option>
+                        <option v-for="facultad in facultades" :key="facultad.id" v-bind:value="facultad.id">{{ facultad.nombre }} ({{facultad.codigo}})</option>
+                    </select>
+                </div>
+                <label for="inputFrom" class="col-sm-1 col-form-label text-form">Desde</label>
+                <div class="col-sm-2">
+                    <select class="form-control" v-model="desde">
+                        <option value="">Seleccionar año desde</option>
+                        <option v-for="year in arrayDateFrom" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
+                    </select>
+                </div>
 
-    <!--Plotly-->
-    <div ref="pie" class="vue-plotly"/>
-      
-    <!--Download buttons--> 
-    <div class="row">  
-      <div class="col-md-12 text-center">
-        <button class="button" @click="download_pdf">Descargar PDF</button>
-        <button class="button" @click="download_img">Descargar JPG</button>
-        <button class="button" @click="download_excel">Descargar Excel</button>
+                <label for="inputTo" class="col-sm-1 col-form-label text-form">Hasta</label>
+                <div class="col-sm-2">
+                    <select class="form-control" v-model="hasta">
+                        <option value="">Seleccionar año hasta</option>
+                        <option v-for="year in arrayDateTo" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn button-back">Buscar</button>
+                </div>
+            </div>
+        </form>
       </div>
-    </div>     
 
-    <!--Saves plot as image-->
-    <img id="jpg-export" class="hidden"/>
+   <!--GRAPH-->
+    <div class="row row-view">
+    
+    <!--Title-->  
+    <div id="graph" class="col-md-1 col-xs-6 p-l-2 p-t-2">
+      <h1 id="report" class="title"/>    
 
-  </div>  
+      <!--Plotly-->
+      <div ref="bar" class="vue-plotly"/>
+
+      <!--Saves plot as image-->
+      <img id="jpg-export" class="hidden"/>
+    </div>
+  </div>
+    
+</div>
 </template>
 
-
 <style>
+.row-form {  
+  margin-top: 2rem;
+  vertical-align: top;
+}
+
+.form-control:hover {
+  border-color: gray;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px lightgray;
+
+}
+
+.form-control:active {
+  border-color: gray;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px lightgray;
+
+}
+
+.form-control:focus {
+  outline: 0;
+}
+
+
+
+.text-form{
+    font-size: 16px;
+    font-weight: bold;
+    color: #595959;
+    margin-right: 2rem;
+    margin-left: 2px;
+}
+
+
 </style>
 
-
 <script>
-import axios from "axios";
-import JQuery from "jquery";
-import jsPDF from "jsPDF";
-import Plotly from "plotly.js";
-import XLSX from "xlsx";
-
-var reportName =
-  "Proporción de Estudiantes Internacionales en Relación con el Total de Estudiantes de la Universidad";
-var img;
-var info = []; //Saves data for verification
-var date = new Date();
+import axios from 'axios';
 
 export default {
-  mounted() {},
-
-  data() {
-    return {
-      data: []
-    };
+  name: 'StudentsYearFaculty',
+  data () {
+      return {
+          desde: '',
+          hasta: '',
+          arrayDateFrom: [],
+          arrayDateTo: [], 
+          error: '',
+          facultad: '',
+          facultades: []
+      }
   },
-
-  created() {
-    this.load();
-  },
-
   methods: {
-    load() {
-      const path =
-        "http://127.0.0.1:5000/api/v1/estudiantes-internacionales-proporcion";
-      axios
-        .get(path)
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+    getStudent: function () {
+        const path = 'http://localhost:5000/api/v1/estudiantes-ano-facultad';
+        console.log(this.desde);
+        console.log(this.hasta);
+        console.log(this.facultad)
+        this.error = '';
+        if (this.desde < this.hasta || this.desde == "" || this.hasta == "") {
+            axios.post(path, { 
+                desde: this.desde, 
+                hasta: this.hasta, 
+                facultad: this.facultad
+            })
+                .then(request => this.successful(request))
+                .catch(() => this.failed())
+        } else {
+            console.log("Error no se puede hacer la consulta");
+            this.error = "Error no se puede hacer la consulta";
+        }
+    
     },
+    successful (req) {
+        //aqui haras la grafica
+        console.log(req.data)
 
-    successful(req) {
-      document.getElementById("report").innerHTML = reportName;
-      img = document.getElementById("jpg-export"); // Gets image
+         var datos = []; // Saves data from JSON
 
-      var datos = []; // Saves data from JSON
-      var totalEstudiantes;
-      var totalInternacional;
-      var totalNacional;
-      var d = req.data;
-
-      // Saves data for verification
-      info = d["items"];
-      info.unshift({
-        cedula: "Cédula",
-        nacionalidad: "Nacionalidad",
-        nombre: "Nombre",
-        apellido: "Apellido",
-        email: "Correo",
-        facultad: "Facultad"
+         datos.push({
+        x: ['1', '2', '3'],
+        y: ['a', 'b', 'c'],
+        name: "Estudiantes con Discapacidad",
+        orientation: 'h',
+        type: "bar",
+        marker: { color: "#ff6b81" }
       });
-      console.log("info ", info);
 
-      totalInternacional = d["estudiantes-internacionales"];
-      totalEstudiantes = d["total-estudiantes"];
-
-      totalNacional = totalEstudiantes - totalInternacional;
-
-      console.log(totalEstudiantes);
-      console.log(totalInternacional);
-
-      datos.push({
-        values: [totalInternacional, totalNacional],
-        labels: ["Estudiantes Internacionales", "Estudiantes Nacionales"],
-        type: "pie",
-        marker: { colors: ["#FF4036", "#2AC63D"] }
-      });
 
       console.log(datos);
       this.data = datos;
-
-      //LAYOUT
+      // LAYOUT
 
       var layout = {
         xaxis: {
@@ -115,8 +155,8 @@ export default {
         autosize: true,
         responsive: true,
         margin: {
-          l: 100,
-          r: 130,
+          l: 250,
+          r: 100,
           b: 100,
           t: 100,
           pad: -1
@@ -138,7 +178,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
@@ -151,94 +191,44 @@ export default {
           });
         });
       }); //plotly_plot
-    }, //successful(req)
 
-    failed() {
-      this.error = "User failed!";
     },
 
-    download_pdf() {
-      var doc = new jsPDF("l", "mm", "a4");
-      doc.setFont("helvetica");
-      doc.setFontType("bold");
-      doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 20, 20);
 
-      doc.setProperties({
-        title: reportName,
-        subject: "Reporte",
-        author: "Sistema Ranking",
-        date: date
-      });
-
-      //Info for verification
-      doc.addPage();
-      doc.setFontSize(8);
-
-      // Table
-      doc.cellInitialize();
-
-      $.each(info, function(i, row) {
-        $.each(row, function(j, cell) {
-          if ((j == "email") | (j == "facultad")) {
-            doc.cell(10, 10, 60, 15, cell, i);
-          } else if (j == "nacionalidad") {
-            doc.cell(10, 10, 35, 15, cell, i);
-          } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
-          } else {
-            doc.cell(10, 10, 30, 15, cell, i);
-          }
-        });
-      });
-
-      doc.save(reportName + ".pdf");
-    }, //end_of_download()
-
-    download_img() {
-      var a = document.createElement("a");
-      a.href = img.src;
-      a.download = reportName + ".jpg";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }, //end_of_download()
-
-    download_excel() {
-      // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
-
-      // A workbook is the name given to an Excel file
-      var wb = XLSX.utils.book_new(); // make Workbook of Excel
-
-      // Workbook Properties
-      wb.Props = {
-        Title: reportName,
-        Subject: "Reporte",
-        Author: "Sistema Ranking",
-        CreatedDate: date
-      };
-
-      // Column Properties
-      var wscols = [
-        { wch: 10 },
-        { wch: 25 },
-        { wch: 20 },
-        { wch: 20 },  
-        { wch: 40 },
-        { wch: 40 }
-      ];
-      ws["!cols"] = wscols;
-
-      var wsrows = [{ hpt: 20 }];
-      ws["!rows"] = wsrows;
-
-      // add Worksheet to Workbook
-      XLSX.utils.book_append_sheet(wb, ws, "Reporte");
-
-      // export Excel file
-      XLSX.writeFile(wb, reportName + ".xlsx");
-    } //end_of_download
-  }
-};
+    failed () {
+        this.error = 'Fallo estudiantes por facultad y por año!'
+    },
+    getYears() {
+        const path = 'http://localhost:5000/api/v1/year';
+        this.error = '';
+        axios.get(path)
+        .then(request => this.yearSuccess(request))
+        .catch(() => this.yearFailed())
+    },
+    yearSuccess (req) {
+        this.arrayDateFrom = req.data;
+        this.arrayDateTo = req.data;
+    },
+    yearFailed () {
+        this.error = 'Fallo busqueda en Años!'
+    },
+    getFaculty() {
+        const path = 'http://localhost:5000/api/v1/faculty';
+        this.error = '';
+        axios.get(path)
+        .then(request => this.facultySuccess(request))
+        .catch(() => this.facultyFailed())
+    },
+    facultySuccess (req) {
+        this.facultades = req.data;
+    },
+    facultyFailed () {
+        this.error = 'Fallo busqueda en facultad!'
+    }
+  },
+  created() {
+      this.getYears();
+      this.getFaculty();
+  },
+}
 </script>

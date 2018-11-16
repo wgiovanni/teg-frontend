@@ -9079,11 +9079,11 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .button-back:hover {
-  background-color: #989898;
+  background-color: #989898 !important;
 }
 
 .button-back:active {
-  background-color: #c8d3ea;
+  background-color: #c8d3ea !important;
 }
 
 .button-back:focus {
