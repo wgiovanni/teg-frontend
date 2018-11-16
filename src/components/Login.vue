@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Navbar></Navbar>
+  <Navbar class="header-border uc-ranking"></Navbar>
   <div class="container container-login-register">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -35,6 +35,28 @@
   </div>
 </div>
 </template>
+
+<style>
+.header-border {
+  /*border-bottom: 5px solid #981e32;*/
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-top-style: hidden; 
+ 
+  box-shadow: 
+    0 0 0 1px #981e32,
+    0 0 0 6px #006d55,
+    0 0 0 11px #A17700;
+}
+
+.uc-ranking {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  align-content: center;
+  line-height: 50px;
+}
+</style>
 
 <script>
 import { mapState, mapActions } from 'vuex'
