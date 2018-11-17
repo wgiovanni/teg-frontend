@@ -11,8 +11,8 @@ import Graduates from '@/components/graduates/Graduates'
 import AuditList from '@/components/audit/AuditList'
 
 // Reports
-import Report from '@/components/reports/Reports'
-//import ReportsHome from '@/components/reports/ReportsHome'
+//import Report from '@/components/reports/Reports'
+import ReportsHome from '@/components/reports/ReportsHome'
 
 //QS Ranking
 import CitationsPerFaculty from '@/components/reports/qs/CitationsPerFaculty'
@@ -109,7 +109,8 @@ export const router = new Router({
           name: 'Graduates',
           component: Graduates
         },*/
-      
+
+        /*      
         {
           path: '/reports',
           name: 'Report',
@@ -126,8 +127,8 @@ export const router = new Router({
             }
           }
         },
-        
-       /*
+        */
+       
         {
           path: '/reports',
           name: 'ReportsHome',
@@ -144,7 +145,7 @@ export const router = new Router({
             }
           }
         },        
-        */
+        
         {
           path: '/report/ProportionOfInternationalFaculty',
           name: 'ProportionOfInternationalFaculty',

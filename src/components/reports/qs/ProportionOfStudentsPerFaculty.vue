@@ -122,6 +122,7 @@ import XLSX from "xlsx";
 var reportName = "Estudiantes por Facultad";
 var img;
 var info = []; //Saves data for verification
+var saved = [];
 var date = new Date();
 
 export default {
@@ -171,6 +172,8 @@ export default {
         facultad: "Facultad"
       });
       console.log("info ", info);
+
+      saved = d["recuperado"];
 
       totalEstudiantes = d["total-estudiantes"];
       facultades = d["facultad"];
@@ -265,12 +268,12 @@ export default {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 576, width: 720 }).then(function(url) {
+        Plotly.toImage(gd, { height: 728, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 576,
-            width: 720
+            height: 728,
+            width: 1024
           });
         });
       }); //plotly_plot
@@ -282,6 +285,9 @@ export default {
 
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
       doc.save(reportName + ".pdf");
@@ -293,26 +299,75 @@ export default {
         date: date
       });
 
-      //Info for verification
+       //Info for verification
       doc.addPage();
-      doc.setFontSize(7);
-
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(16);
+      doc.text("Datos de Referencia", 15, 15);
+      
       // Table
+      doc.setFontSize(7);
       doc.cellInitialize();
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if ((j == "email") | (j == "facultad")) {
-            doc.cell(10, 10, 60, 15, cell, i);
+            doc.cell(7, 25, 60, 15, cell, i);
           } else if ((j == "fecha_nacimiento") | (j == "estado_procedencia")) {
-            doc.cell(10, 10, 30, 15, cell, i);
+            doc.cell(7, 25, 35, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(10, 10, 20, 15, cell, i);
+            doc.cell(7, 25, 20, 15, cell, i);
           } else {
-            doc.cell(10, 10, 25, 15, cell, i);
+            doc.cell(7, 25, 25, 15, cell, i);
           }
         });
       });
+
+          //Saved from
+      doc.addPage();
+      doc.setFont("helvetica");
+      doc.setFontType("bolditalic");
+      doc.setFontSize(16);
+      doc.text("Recuperado de:", 15, 15);      
+      var j = 0;
+      var aux = 15;
+
+      for(j = 0; j < 4; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 15, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 15, aux);  
+        aux = aux + 5;      
+      }
+
+        aux = 15;
+
+       for(j = 4; j < 7; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 150, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 150, aux); 
+        aux = aux + 5;         
+      }      
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()

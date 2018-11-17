@@ -108,8 +108,8 @@ import XLSX from "xlsx";
 
 var reportName = "Docentes Empleados / Estudiantes Matriculados";
 var img;
-var infoDocentes = []; //Saves data for verification
-var infoEstudiantes = []; //Saves data for verification
+var info = []; //Saves data for verification
+var saved = [];
 var date = new Date();
 
 export default {
@@ -142,11 +142,13 @@ export default {
       var totalEstudiantes;
       var totalEmpleados;
       var d = req.data;
+      
+      saved = d["recuperado"];
 
       // Saves data for verification
-      infoDocentes = d["items"];
+      info = d["items"];
 
-      infoDocentes.unshift({
+      info.unshift({
         cedula: "Cédula",
         nombre: "Nombre",
         apellido: "Apellido",
@@ -154,7 +156,7 @@ export default {
         facultad: "Facultad",
         cargo: "Cargo"
       });
-      console.log("infoDocentes ", infoDocentes);
+      console.log("info ", info);
 
       totalEmpleados = d["total-empleado"];
       totalEstudiantes = d["total-estudiantes"];
@@ -188,6 +190,10 @@ export default {
         editable: false,
         autosize: true,
         responsive: true,
+        legend: {                
+          y: 0.8,
+          font: {size: 16}
+        },
         margin: {
           l: 100,
           r: 130,
@@ -235,6 +241,7 @@ export default {
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");
       doc.setFontType("bold");
+      doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
 
@@ -245,24 +252,73 @@ export default {
         date: date
       });
 
-      //Info for verification
+       //Info for verification
       doc.addPage();
-      doc.setFontSize(8);
-
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(16);
+      doc.text("Datos de Referencia", 15, 15);
+      
       // Table
+      doc.setFontSize(8);
       doc.cellInitialize();
 
-      $.each(infoDocentes, function(i, row) {
+      $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if ((j == "correo") | (j == "facultad")) {
-            doc.cell(10, 10, 60, 15, cell, i);
+            doc.cell(10, 25, 60, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(10, 10, 25, 15, cell, i);
+            doc.cell(10, 25, 25, 15, cell, i);
           } else {
-            doc.cell(10, 10, 40, 15, cell, i);
+            doc.cell(10, 25, 40, 15, cell, i);
           }
         });
       });
+
+       //Saved from
+      doc.addPage();
+      doc.setFont("helvetica");
+      doc.setFontType("bolditalic");
+      doc.setFontSize(16);
+      doc.text("Recuperado de:", 15, 15);      
+      var j = 0;
+      var aux = 15;
+
+      for(j = 0; j < 4; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 15, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 15, aux);  
+        aux = aux + 5;      
+      }
+
+        aux = 15;
+
+       for(j = 4; j < 7; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 150, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 150, aux); 
+        aux = aux + 5;         
+      }      
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()
@@ -278,7 +334,7 @@ export default {
 
     download_excel() {
       // Data from JSON
-      var ws1 = XLSX.utils.json_to_sheet(infoDocentes, { skipHeader: true });
+      var ws1 = XLSX.utils.json_to_sheet(info, { skipHeader: true });
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel

@@ -1,10 +1,27 @@
 <template>
 <div>
+  <!--Title-->
+  <h1 id="report" class="title"/> 
+
+     <!--GRAPH-->
+    <div>    
+  
+      <div id="graph" class="col-md-1 col-xs-6 p-l-2 p-t-2 row-scatter">         
+
+        <!--Plotly-->
+        <div ref="scatter" class="vue-plotly"/> 
+
+        <!--Saves plot as image-->
+        <img id="jpg-export" class="hidden"/>
+      </div>
+      
+    </div>
+
    <!--FORM -->
     <div>
         <form class="col-md-12"  @submit.prevent="getStudent">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
-            <div class="form-group row" style="margin-top: 12rem;">
+            <div class="form-group row" style="margin-top: 30rem;">
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Facultad</label>
                 <div class="col-sm-2">
                     <select class="form-control" v-model="facultad" required>
@@ -34,26 +51,19 @@
         </form>
       </div>
 
-   <!--GRAPH-->
-    <div class="row row-view">
-    
-    <!--Title-->  
-    <div id="graph" class="col-md-1 col-xs-6 p-l-2 p-t-2">
-      <h1 id="report" class="title"/>    
-
-      <!--Plotly-->
-      <div ref="bar" class="vue-plotly"/>
-
-      <!--Saves plot as image-->
-      <img id="jpg-export" class="hidden"/>
-    </div>
-  </div>
+  
     
 </div>
 </template>
 
 <style>
-.row-form {  
+.row-scatter{
+
+  margin-left: 6px;
+}
+
+
+.row-form {
   margin-top: 2rem;
   vertical-align: top;
 }
@@ -61,103 +71,122 @@
 .form-control:hover {
   border-color: gray;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px lightgray;
-
 }
 
 .form-control:active {
   border-color: gray;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px lightgray;
-
 }
 
 .form-control:focus {
   outline: 0;
 }
 
-
-
-.text-form{
-    font-size: 16px;
-    font-weight: bold;
-    color: #595959;
-    margin-right: 2rem;
-    margin-left: 2px;
+.text-form {
+  font-size: 16px;
+  font-weight: bold;
+  color: #595959;
+  margin-right: 2rem;
+  margin-left: 2px;
 }
-
-
 </style>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import JQuery from "jquery";
+import jsPDF from "jsPDF";
+import Plotly from "plotly.js";
+import XLSX from "xlsx";
+
+var reportName = "Reporte Prueba";
+var img;
+var info = []; //Saves data for verification
+var date = new Date();
 
 export default {
-  name: 'StudentsYearFaculty',
-  data () {
-      return {
-          desde: '',
-          hasta: '',
-          arrayDateFrom: [],
-          arrayDateTo: [], 
-          error: '',
-          facultad: '',
-          facultades: []
-      }
+  name: "StudentsYearFaculty",
+  data() {
+    return {
+      desde: "",
+      hasta: "",
+      arrayDateFrom: [],
+      arrayDateTo: [],
+      error: "",
+      facultad: "",
+      facultades: []
+    };
   },
   methods: {
-    getStudent: function () {
-        const path = 'http://localhost:5000/api/v1/estudiantes-ano-facultad';
-        console.log(this.desde);
-        console.log(this.hasta);
-        console.log(this.facultad)
-        this.error = '';
-        if (this.desde < this.hasta || this.desde == "" || this.hasta == "") {
-            axios.post(path, { 
-                desde: this.desde, 
-                hasta: this.hasta, 
-                facultad: this.facultad
-            })
-                .then(request => this.successful(request))
-                .catch(() => this.failed())
-        } else {
-            console.log("Error no se puede hacer la consulta");
-            this.error = "Error no se puede hacer la consulta";
-        }
-    
+    getStudent: function() {
+      const path = "http://localhost:5000/api/v1/estudiantes-ano-facultad";
+      console.log(this.desde);
+      console.log(this.hasta);
+      console.log(this.facultad);
+      this.error = "";
+      if (this.desde < this.hasta || this.desde == "" || this.hasta == "") {
+        axios
+          .post(path, {
+            desde: this.desde,
+            hasta: this.hasta,
+            facultad: this.facultad
+          })
+          .then(request => this.successful(request))
+          .catch(() => this.failed());
+      } else {
+        console.log("Error no se puede hacer la consulta");
+        this.error = "Error no se puede hacer la consulta";
+      }
     },
-    successful (req) {
-        //aqui haras la grafica
-        console.log(req.data)
+    successful(req) {
+      document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
 
-         var datos = []; // Saves data from JSON
+      var datos = []; // Saves data from JSON
+      var d = req.data;
+      var size;
+      var allYears = [];
+      var years = [];
+      var total = [];
+      var i;
 
-         datos.push({
-        x: ['1', '2', '3'],
-        y: ['a', 'b', 'c'],
-        name: "Estudiantes con Discapacidad",
-        orientation: 'h',
-        type: "bar",
-        marker: { color: "#ff6b81" }
+      allYears = d["anos"];
+      size = allYears.length;
+      console.log(allYears);
+      console.log("size ", size);
+
+      for (i = 0; i < size; i++) {
+        years.push(allYears[i]["ano"]);
+        total.push(allYears[i]["total"]);
+      }
+
+      console.log(years);
+      console.log(total);
+
+      datos.push({
+        x: [2012, 2016, 2018],
+        y: [25, 84, 128],
+        type: 'scatter',
+        mode: 'lines+markers'
       });
 
-
-      console.log(datos);
       this.data = datos;
+
       // LAYOUT
 
-      var layout = {
+      var layout = {               
+        editable: false,
+        autosize: true,
+        responsive: true,
         xaxis: {
           fixedrange: true
         },
         yaxis: {
           fixedrange: true
         },
-        editable: false,
-        autosize: true,
-        responsive: true,
         margin: {
-          l: 250,
-          r: 100,
-          b: 100,
+          l: 500,
+          r: 200,
+          b: 150,
           t: 100,
           pad: -1
         }
@@ -174,12 +203,14 @@ export default {
 
       // GRAPH
 
-      // Exports plot as image
+      //Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
-        //  Saves plot as image
+      Plotly.plot(this.$refs.scatter, this.data, layout, config).then(function(
+        gd
+      ) {
+        //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
         Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
@@ -191,44 +222,44 @@ export default {
           });
         });
       }); //plotly_plot
-
     },
 
-
-    failed () {
-        this.error = 'Fallo estudiantes por facultad y por año!'
+    failed() {
+      this.error = "Fallo estudiantes por facultad y por año!";
     },
     getYears() {
-        const path = 'http://localhost:5000/api/v1/year';
-        this.error = '';
-        axios.get(path)
+      const path = "http://localhost:5000/api/v1/year";
+      this.error = "";
+      axios
+        .get(path)
         .then(request => this.yearSuccess(request))
-        .catch(() => this.yearFailed())
+        .catch(() => this.yearFailed());
     },
-    yearSuccess (req) {
-        this.arrayDateFrom = req.data;
-        this.arrayDateTo = req.data;
+    yearSuccess(req) {
+      this.arrayDateFrom = req.data;
+      this.arrayDateTo = req.data;
     },
-    yearFailed () {
-        this.error = 'Fallo busqueda en Años!'
+    yearFailed() {
+      this.error = "Fallo busqueda en Años!";
     },
     getFaculty() {
-        const path = 'http://localhost:5000/api/v1/faculty';
-        this.error = '';
-        axios.get(path)
+      const path = "http://localhost:5000/api/v1/faculty";
+      this.error = "";
+      axios
+        .get(path)
         .then(request => this.facultySuccess(request))
-        .catch(() => this.facultyFailed())
+        .catch(() => this.facultyFailed());
     },
-    facultySuccess (req) {
-        this.facultades = req.data;
+    facultySuccess(req) {
+      this.facultades = req.data;
     },
-    facultyFailed () {
-        this.error = 'Fallo busqueda en facultad!'
+    facultyFailed() {
+      this.error = "Fallo busqueda en facultad!";
     }
   },
   created() {
-      this.getYears();
-      this.getFaculty();
-  },
-}
+    this.getYears();
+    this.getFaculty();
+  }
+};
 </script>

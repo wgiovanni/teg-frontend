@@ -110,6 +110,7 @@ import XLSX from "xlsx";
 var reportName = "Estudiantes Extranjeros";
 var img;
 var info = []; //Saves data for verification
+var saved = [];
 var date = new Date();
 
 export default {
@@ -157,6 +158,8 @@ export default {
       });
       console.log("info ", info);
 
+      saved = d["recuperado"];
+
       totalInternacional = d["estudiantes-internacionales"];
       totalEstudiantes = d["total-estudiantes"];
 
@@ -191,6 +194,10 @@ export default {
         editable: false,
         autosize: true,
         responsive: true,
+        legend: {                
+          y: 0.8,
+          font: {size: 16}
+        },
         margin: {
           l: 100,
           r: 130,
@@ -238,6 +245,7 @@ export default {
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");
       doc.setFontType("bold");
+      doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
 
@@ -248,26 +256,75 @@ export default {
         date: date
       });
 
-      //Info for verification
+       //Info for verification
       doc.addPage();
-      doc.setFontSize(8);
-
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(16);
+      doc.text("Datos de Referencia", 15, 15);
+      
       // Table
+      doc.setFontSize(8);
       doc.cellInitialize();
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if ((j == "email") | (j == "facultad")) {
-            doc.cell(15, 10, 70, 15, cell, i);
+            doc.cell(15, 25, 70, 15, cell, i);
           } else if (j == "nacionalidad") {
-            doc.cell(15, 10, 40, 15, cell, i);
+            doc.cell(15, 25, 40, 15, cell, i);
           } else if (j == "cedula") {
-            doc.cell(15, 10, 20, 15, cell, i);
+            doc.cell(15, 25, 20, 15, cell, i);
           } else {
-            doc.cell(15, 10, 35, 15, cell, i);
+            doc.cell(15, 25, 35, 15, cell, i);
           }
         });
       });
+
+      //Saved from
+      doc.addPage();
+      doc.setFont("helvetica");
+      doc.setFontType("bolditalic");
+      doc.setFontSize(16);
+      doc.text("Recuperado de:", 15, 15);      
+      var j = 0;
+      var aux = 15;
+
+      for(j = 0; j < 4; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 15, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 15, aux);  
+        aux = aux + 5;      
+      }
+
+        aux = 15;
+
+       for(j = 4; j < 7; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 150, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 150, aux); 
+        aux = aux + 5;         
+      }      
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()

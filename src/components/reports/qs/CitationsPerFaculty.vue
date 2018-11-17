@@ -108,6 +108,7 @@ import XLSX from "xlsx";
 var reportName = "Citaciones por Facultad";
 var img;
 var info = []; //Saves data for verification
+var saved = [];
 var date = new Date();
 
 export default {
@@ -159,6 +160,8 @@ export default {
         facultad: "Facultad"
       });
       console.log("info ", info);
+
+       saved = d["recuperado"];
 
       facultades = d["facultades"];
 
@@ -258,12 +261,17 @@ export default {
         date: date
       });
 
-      //Info for verification
+        //Info for verification
       doc.addPage();
-      doc.setFontSize(7);
-
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(16);
+      doc.text("Datos de Referencia", 15, 15);
+      
       // Table
+      doc.setFontSize(7);
       doc.cellInitialize();
+
 
       $.each(info, function(i, row) {
        
@@ -271,13 +279,13 @@ export default {
             if (cell != "Publicación" & cell!="Link a Citación" & cell!="Link a Publicación") {
               if(j!="publicacion" & j!="url_citacion" & j!="url_publicacion"){
                 if (j == "facultad" | j == "correo") {
-                  doc.cell(5, 10, 60, 15, cell, i);                
+                  doc.cell(5, 25, 60, 15, cell, i);                
                 } else if (j == "area_de_investigacion") {
-                  doc.cell(5, 10, 40, 15, cell, i);
+                  doc.cell(5, 25, 40, 15, cell, i);
                 } else if (j == "cedula" | j == "numero_citas") {
-                  doc.cell(5, 10, 25, 15, cell, i);
+                  doc.cell(5, 25, 25, 15, cell, i);
                 } else{
-                  doc.cell(5, 10, 35, 15, cell, i);
+                  doc.cell(5, 25, 35, 15, cell, i);
                 }
               }
            }
@@ -290,6 +298,51 @@ export default {
       doc.setFontSize(8);
       doc.setFontType("bold");
       doc.text("* Para ver más información sobre las publicaciones que fueron citadas por favor descargar archivo en formato Excel (.xlsx)", 15, 15);
+
+      //Saved from
+      doc.addPage();
+      doc.setFont("helvetica");
+      doc.setFontType("bolditalic");
+      doc.setFontSize(16);
+      doc.text("Recuperado de:", 15, 15);
+      var j = 0;
+      var aux = 15;
+
+      for(j = 0; j < 4; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 15, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 15, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 15, aux);  
+        aux = aux + 5;      
+      }
+
+        aux = 15;
+
+       for(j = 4; j < 7; j++){
+
+        doc.setFontSize(14);
+        doc.setFontType("bold");      
+        aux = aux + 15;
+        doc.text(saved[j]["first_name"], 150, aux);
+
+        doc.setFontSize(10);         
+        aux = aux + 5;
+        doc.text(saved[j]["email"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["phone"], 150, aux);
+        aux = aux + 5;
+        doc.text(saved[j]["address"], 150, aux); 
+        aux = aux + 5;       
+      }
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()
