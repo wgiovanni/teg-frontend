@@ -221,7 +221,7 @@ export default {
     successful (req) {
         console.log(req.data);
 
-         document.getElementById("report").innerHTML = reportName;
+      document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
 
       document.getElementById("download-buttons").style.display = "block";

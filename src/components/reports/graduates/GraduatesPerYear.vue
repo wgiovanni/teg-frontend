@@ -1,9 +1,10 @@
 <template>
-    <div class="container-fluid" style="margin-top:8%;">
-        <form class="col s12"  @submit.prevent="getGraduates">
+<div>
+    <div>
+        <form class="col-md-10"  @submit.prevent="getGraduates">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <div class="form-group row">
-                <label for="inputFrom" class="col-sm-1 col-form-label">Desde</label>
+                <label for="inputFrom" class="col-sm-1 col-form-label text-form">Desde</label>
                 <div class="col-sm-2">
                     <select class="form-control" v-model="desde">
                         <option value="">Seleccionar año desde</option>
@@ -11,23 +12,151 @@
                     </select>
                 </div>
 
-                <label for="inputTo" class="col-sm-1 col-form-label">Hasta</label>
+                <label for="inputTo" class="col-sm-1 col-form-label text-form">Hasta</label>
                 <div class="col-sm-2">
                     <select class="form-control" v-model="hasta">
                         <option value="">Seleccionar año hasta</option>
                         <option v-for="year in arrayDateTo" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
                     </select>
                 </div>
-                <div class="col-sm-1">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn button-back">Buscar</button>
                 </div>
             </div>
         </form>
     </div>
+
+    <!--REPORTS LIST-->
+      <div class="card border-graduates mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
+        <div class="card-header">        
+            <h5 class="card-tile text-dark">Egresados</h5>         
+        </div>
+        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
+          <div class="card-body text-center">
+            <table class="table table-hover group">
+              <tbody>                
+                 <tr>
+                  <router-link to="/report/GraduatesPerFaculty" class="text-dark"><td class="td-table">Egresados por Facultad</td></router-link>    
+                </tr>
+                <tr>
+                  <td class="td-table graduates-color">Egresados por Año</td> 
+                </tr>
+                <tr>
+                  <router-link to="/report/GraduatesYearFaculty" class="text-dark"><td class="td-table">Egresados por Año y por Facultad</td></router-link>    
+                </tr>                 
+              </tbody>
+            </table>           
+        </div>
+        </div>
+        </div>
+      <!--END OF REPORT LIST-->
+
+         <!--GRAPH-->
+    <div> 
+      <!--Title-->
+        <h1 id="report" class="title-customized"/>    
+  
+      <div id="graph">         
+
+        <!--Plotly-->
+        <div ref="scatter" class="vue-plotly"/> 
+
+         <!--Download buttons--> 
+      <div id="download-buttons" class="col-md-10 text-center" style="display:none">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        
+        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
+        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
+      </div>
+
+      <!--Return button-->
+       <div class="col-md-8 text-center">
+        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
+      </div>  
+
+        <!--Saves plot as image-->
+        <img id="jpg-export" class="hidden"/>
+      </div>   
+      
+    </div>
+
+
+
+
+</div>
 </template>
+
+<style>
+
+.custom-list{
+    margin-left: 60rem;
+    margin-top: -10rem;
+}
+
+.title-customized{
+    margin-top: -30rem;
+    margin-left: 20rem;    
+}
+
+.vue-plotly {
+    margin-left: 10rem;
+}
+
+.form-row{
+    margin-top: 10rem;
+}
+
+.form-control:hover {
+  border-color: gray;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px lightgray;
+}
+
+.form-control:active {
+  border-color: gray;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px lightgray;
+}
+
+.form-control:focus {
+  outline: 0;
+}
+
+.text-form {
+  font-size: 16px;
+  font-weight: bold;
+  color: #595959;
+  margin-right: 2rem;
+  margin-left: 2px;
+}
+
+.graduates-color {
+  color: #fff;
+  background-color: #993343;
+  font-weight: bold;
+}
+
+.graduates-color:hover{
+   background-color: #981e32;
+}
+
+.border-graduates {
+  border-left-color: #981e32;
+  min-height: 100%;
+  border-width:2px !important;
+}
+</style>
+
 
 <script>
 import axios from 'axios';
+import JQuery from "jquery";
+import jsPDF from "jsPDF";
+import Plotly from "plotly.js";
+import XLSX from "xlsx";
+
+var reportName = "Egresados";
+var img;
+var info = []; //Saves data for verification
+var date = new Date();
 
 export default {
   name: 'GraduatePerYear',
@@ -59,10 +188,119 @@ export default {
         }
     
     },
-    successful (req) {
-        //aqui haras la grafica
-        console.log(req.data)
+    successful (req) {        
+        console.log(req.data);
+
+         document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
+
+      document.getElementById("download-buttons").style.display = "block";
+
+      var datos = []; // Saves data from JSON
+      var d = req.data;
+      var size;
+      var allYears = [];
+      var years = [];
+      var total = [];
+      var i;
+
+      allYears = d["anos"];
+      size = allYears.length;
+      console.log(allYears);
+      console.log("size ", size);
+
+      for (i = 0; i < size; i++) {
+        years.push(allYears[i]["ano"]);
+        total.push(allYears[i]["total"]);
+      }
+
+      console.log(years);
+      console.log(total);
+
+      datos.push({
+        x: years,
+        y: total,
+        type: 'scatter',
+        mode: 'lines+markers',
+        marker: { color: "#6bb9f0" },        
+        hoverlabel: { font:{size:18}},
+      });
+
+      this.data = datos;
+
+      // LAYOUT
+
+      var layout = {               
+        editable: false,
+        autosize: true,
+        responsive: true,
+        xaxis: {
+          fixedrange: true
+        },
+        yaxis: {
+          fixedrange: true
+        },       
+        width: 720,
+        //height: 480,
+      };
+
+      var config = {
+        displaylogo: false,
+        displayModeBar: false,
+        doubleClick: "reset+autosize",
+        responsive: true
+      };
+
+      // GRAPH
+
+      //Exports plot as image
+      var d3 = Plotly.d3;
+      var img_jpg = d3.select("#jpg-export");
+      // Displays graph
+      Plotly.plot(this.$refs.scatter, this.data, layout, config).then(function(
+        gd
+      ) {
+        //Saves plot as image
+        gd.on("plotly_legendclick", () => false);
+
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
+          img_jpg.attr("src", url);
+          return Plotly.toImage(gd, {
+            format: "jpeg",
+            height: 768,
+            width: 1024
+          });
+        });
+      }); //plotly_plot
+
     },
+
+     download_pdf() {      
+      var doc = new jsPDF("l", "mm", "a4");
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(20);
+      doc.text(reportName, 15, 15);
+      doc.addImage(img, "JPG", 20, 20);
+
+      doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "UC Ranking",
+        date: date
+      });
+
+      doc.save(reportName + ".pdf");
+    }, //end_of_download()
+
+    download_img() {
+      var a = document.createElement("a");
+      a.href = img.src;
+      a.download = reportName + ".jpg";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, //end_of_download()
     failed () {
         this.error = 'Fallo estudiantes por año!'
     },

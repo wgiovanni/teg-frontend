@@ -38,7 +38,13 @@
               <tbody>                
                  <tr>
                   <td class="td-table graduates-color">Egresados por Facultad</td> 
-                </tr>                 
+                </tr>  
+                <tr>
+                  <router-link to="/report/GraduatesPerYear" class="text-dark"><td class="td-table">Egresados por Año</td></router-link>    
+                </tr>
+                <tr>
+                  <router-link to="/report/GraduatesYearFaculty" class="text-dark"><td class="td-table">Egresados por Año y por Facultad</td></router-link>    
+                </tr>              
                 
               </tbody>
             </table>           
