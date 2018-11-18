@@ -61,6 +61,9 @@
                   <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
                 </tr>
                 <tr>
+                   <router-link to="/report/StudentsPerYear" class="text-dark"><td class="td-table">Estudiantes por Año</td></router-link>   
+                </tr>    
+                <tr>
                   <td class="td-table students-color">Estudiantes por Año y Facultad</td>    
                 </tr>                
               </tbody>
@@ -77,6 +80,7 @@
                 <tr>
                   <router-link to="/report/ProportionOfStudentsPerFaculty" class="text-dark"><td>Estudiantes por Facultad</td></router-link> 
                 </tr>
+                
                 <tr>
                   <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
                 </tr>
@@ -138,18 +142,10 @@
     margin-left: 10rem;
 }
 
-.row-scatter{
-  margin-left: 6px;
-}
-
 .form-row{
     margin-top: 10rem;
 }
 
-.row-form {
-  margin-top: 2rem;
-  vertical-align: top;
-}
 
 .form-control:hover {
   border-color: gray;
@@ -322,7 +318,6 @@ export default {
       
     },
 
-    
      download_pdf() {      
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");

@@ -54,6 +54,9 @@
                   <td class="td-table students-color">Estudiantes por Sexo</td>   
                 </tr>
                 <tr>
+                   <router-link to="/report/StudentsPerYear" class="text-dark"><td class="td-table">Estudiantes por Año</td></router-link>   
+                </tr> 
+                <tr>
                    <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
                 </tr>                 
               </tbody>
