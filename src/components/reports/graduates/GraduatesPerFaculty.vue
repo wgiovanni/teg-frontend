@@ -3,12 +3,12 @@
     <!--GRAPH-->
     <!--Title-->  
     <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
-    <h1 id="report" class="title"/>   
+    <h1 id="report" class="title"/>    
 
     <!--Plotly-->
-    <div ref="pie" class="vue-plotly"/>
+    <div ref="bar" class="vue-plotly"/>
       
-      <!--Download buttons--> 
+    <!--Download buttons--> 
       <div class="col-md-12 text-center">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
@@ -19,85 +19,54 @@
     <!--Return button-->
        <div class="col-md-16 text-center">
         <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>      
+      </div>    
 
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
 
- 
+
+
      <!--REPORTS LIST-->
-      <div class="card border-teachers mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
+      <div class="card border-graduates mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
         <div class="card-header">        
-            <h5 class="card-tile text-dark">Docentes</h5>         
+            <h5 class="card-tile text-dark">Egresados</h5>         
         </div>
         <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
           <div class="card-body text-center">
             <table class="table table-hover group">
-              <tbody>
-                <tr>
-                  <router-link to="/report/TeachersWithAPhDPerFaculty" class="text-dark"><td class="td-table">Docentes con Doctorado por Facultad</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/TeachersNationalityFaculty" class="text-dark"><td class="td-table">Docentes Extranjeros por Facultad</td></router-link>    
-                </tr>
+              <tbody>                
                  <tr>
-                  <router-link to="/report/ProportionOfTeachersByRank" class="text-dark"><td class="td-table">Docentes por Escalafón</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/TeachersSexFaculty" class="text-dark"><td class="td-table">Docentes por Sexo</td></router-link>    
-                </tr>               
-                <tr>
-                  <router-link to="/report/PublicationsPerFaculty" class="text-dark"><td class="td-table">Publicaciones por Facultad</td></router-link>    
-                </tr>               
+                  <td class="td-table graduates-color">Egresados por Facultad</td> 
+                </tr>                 
+                
               </tbody>
-            </table>
-            <!--Ranking Reports-->
-            <div class="card-header text-dark">
-              <h6>Indicadores para el Ranking QS</h6>
-            </div>
-            <table class="table table-hover bg-light group">
-              <tbody>        
-                <tr>
-                  <router-link to="/report/CitationsPerFaculty" class="text-dark"><td>Citaciones por Facultad</td></router-link>     
-                </tr>
-                <tr>
-                  <router-link to="/report/StaffWithAPhD" class="text-dark"><td>Docentes con Doctorado</td></router-link>    
-                </tr>  
-                <tr>
-                  <td class="card-footer teachers-color">Docentes Extranjeros</td>
-                </tr>         
-                <tr>
-                  <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            </table>           
         </div>
-      </div>
+        </div>
+        </div>
       <!--END OF REPORT LIST-->
   </div>  
 </template>
 
 
 <style>
-.teachers-color {
+.graduates-color {
   color: #fff;
-  background-color: #337f6e;
+  background-color: #993343;
   font-weight: bold;
 }
 
-.teachers-color:hover{
-   background-color: #006d55;
+.graduates-color:hover{
+   background-color: #981e32;
 }
 
-.border-teachers {
-  border-left-color: #006d55;
+.border-graduates {
+  border-left-color: #981e32;
   min-height: 100%;
   border-width:2px !important;
 }
 </style>
-
 
 <script>
 import axios from "axios";
@@ -106,19 +75,15 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Docentes Extranjeros";
+var reportName = "Egresados por Facultad";
 var img;
-var info = []; //Saves data for verification
+//var info = []; //Saves data for verification
 var saved = [];
 var date = new Date();
-
 
 export default {
   mounted() {
     
-  },
-
-  data() {
     return {
       data: []
     };
@@ -129,67 +94,66 @@ export default {
   },
 
   methods: {
-    
-     load() {
-      const path = "http://127.0.0.1:5000/api/v1/profesores-internacionales-proporcion";
+    load() {
+      const path =
+        "http://127.0.0.1:5000/api/v1/egresado-facultad";
+
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
-    successful(req) { 
-      
+    successful(req) {
+
       document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
-      var totalProfesores;
-      var totalInternacional;
-      var totalNacional;   
+      var nombreFacultad = [];
+      var facultades = [];
+      var total = [];
+      var i;
+      var size = req.data.length;
       var d = req.data;
 
-      // Saves data for verification
+       // Saves data for verification
       info = d["items"];
       info.unshift({
         cedula: "Cédula",
         nombre: "Nombre",
-        apellido: "Apellido",        
-        correo: "Correo",
-        nacionalidad: "Nacionalidad",
+        apellido: "Apellido",      
+        email: "Correo",
         facultad: "Facultad"
       });
       console.log("info ", info);
 
-      saved = d["recuperado"];
+  //    saved = d["recuperado"];
 
+      facultades = d["facultad"];
 
-      totalInternacional = d["profesores-internacionales"];
-      totalProfesores = d["total-profesores"];
-      totalNacional = totalProfesores - totalInternacional;
+      for (i = 0; i < 7; i++) {
+        nombreFacultad.push(facultades[i]["nombre"]);
+        total.push(facultades[i]["total"]);
+      }
+  
+      console.log(nombreFacultad);
+      console.log(total);
 
       datos.push({
-        
-        values: [totalInternacional, totalNacional],
-        labels: ['Docentes Extranjeros', 'Docentes Venezolanos'],
-        type: "pie",
-        marker: { colors:['#e66767','#786fa6'],
-                  line: {color: "#000000"}  },
-        hoverlabel: { font:{size:18}},
-        insidetextfont: {color: "#FFFFFF", 
-                         size: 16,                                         
-                         },
-        outsidetextfont: {color: "#FFFFFF", 
-                          size: 35}
-       
+        x: total,
+        y: nombreFacultad,      
+        orientation: 'h',
+        type: "bar",
+        marker: { color: "#4d13d1" }
       });
+
 
       console.log(datos);
       this.data = datos;
+      // LAYOUT
 
-      //LAYOUT
-
-      var layout = {         
+      var layout = {
         xaxis: {
           fixedrange: true
         },
@@ -199,17 +163,13 @@ export default {
         editable: false,
         autosize: true,
         responsive: true,
-        legend: {                
-          y: 0.8,
-          font: {size: 16}
-        },
         margin: {
-          l: 100,
-          r: 130,
+          l: 250,
+          r: 100,
           b: 100,
           t: 100,
           pad: -1
-        },
+        }
         //width: 720,
         //height: 480,
       };
@@ -223,31 +183,29 @@ export default {
 
       // GRAPH
 
-     // Exports plot as image
+      // Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
-     // Displays graph
-      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
-      //  Saves plot as image
+      // Displays graph
+      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
+        //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, {height: 768, width: 1024}).then(function(url) {
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
-            format: "jpeg",       
+            format: "jpeg",
             height: 768,
-            width: 1024,
-          })
+            width: 1024
+          });
         });
-      });//plotly_plot
-
+      }); //plotly_plot
     }, //successful(req)
 
     failed() {
       this.error = "User failed!";
     },
 
-  
     download_pdf() {
       var doc = new jsPDF("l", "mm", "a4");
       doc.setFont("helvetica");
@@ -256,14 +214,14 @@ export default {
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
 
-       doc.setProperties({
+      doc.setProperties({
         title: reportName,
         subject: "Reporte",
         author: "UC Ranking",
         date: date
       });
 
-       //Info for verification
+      //Info for verification
       doc.addPage();
       doc.setFont("helvetica");
       doc.setFontType("bold");
@@ -271,23 +229,23 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(7);
+      doc.setFontSize(8);
       doc.cellInitialize();
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "correo" | j =="facultad") {
-            doc.cell(10, 25, 60, 15, cell, i);       
-          
+          if (j == "email" | j == "facultad") {
+            doc.cell(15, 25, 65, 15, cell, i);  
           } else if (j == "cedula") {
-            doc.cell(10, 25, 30, 15, cell, i);
+            doc.cell(15, 25, 25, 15, cell, i);         
           } else {
-            doc.cell(10, 25, 40, 15, cell, i);
+            doc.cell(15, 25, 35, 15, cell, i);
           }
         });
       });
 
-           //Saved from
+/*
+      //Saved from
       doc.addPage();
       doc.setFont("helvetica");
       doc.setFontType("bolditalic");
@@ -332,6 +290,8 @@ export default {
         aux = aux + 5;         
       }      
 
+*/
+
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
@@ -346,7 +306,7 @@ export default {
 
     download_excel() {
       // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -361,11 +321,10 @@ export default {
 
       // Column Properties
       var wscols = [
-        { wch: 10 },
+        { wch: 12 },
         { wch: 20 },
-        { wch: 20 },    
+        { wch: 20 },
         { wch: 40 },
-        { wch: 25 },
         { wch: 40 }
       ];
       ws["!cols"] = wscols;
@@ -373,14 +332,12 @@ export default {
       var wsrows = [{ hpt: 20 }];
       ws["!rows"] = wsrows;
 
-
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws, "Reporte");
 
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
     } //end_of_download
-
 
   }
 };

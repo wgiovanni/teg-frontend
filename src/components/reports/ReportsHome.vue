@@ -21,7 +21,7 @@
         </span>
       
         <h4 class="color-students">Estudiantes</h4>
-        <p class="">Estudiantes de Pre-grado y Post-grado de la Universidad de Carabobo</p>
+        <p class="">Indicadores sobre estudiantes de pre-grado y post-grado de la Universidad de Carabobo</p>
         <router-link to="/report/ProportionOfStudentsPerFaculty" class="btn btn-students btn-custom"><a>Ver</a></router-link>
       </div>
     </div>
@@ -32,7 +32,7 @@
             <i class="fa fa-chart-pie" aria-hidden="true"></i>
           </span>
           <h4 class="color-teachers">Docentes</h4>
-          <p class="">Reportes de Docentes de la Universidad de Carabobo 12235556546456</p>
+          <p class="">Indicadores sobre docentes de la Universidad de Carabobo</p>
           <router-link to="/report/CitationsPerFaculty" class="btn btn-teachers btn-custom"><a>Ver</a></router-link>
         </div>
       </div>
@@ -44,8 +44,8 @@
           <i class="fa fa-chart-area" aria-hidden="true"></i>
         </span>
         <h4 class="color-graduates">Egresados</h4>
-        <p class="">Reportes de Egresados de la Universidad de Carabobo</p>
-        <router-link to="javascript:void(0)" class="btn btn-graduates btn-custom"><a>Ver</a></router-link>
+        <p class="">Indicadores sobre egresados de la Universidad de Carabobo</p>
+        <router-link to="/report/GraduatesPerFaculty" class="btn btn-graduates btn-custom"><a>Ver</a></router-link>
       </div>
     </div>
   </div>

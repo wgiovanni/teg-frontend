@@ -53,17 +53,8 @@
                   <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
                 </tr>
                 <tr>
-                  <router-link to="/report/StudentsPerYear" class="text-dark"><td class="td-table">Estudiantes por año</td></router-link>
-                </tr>
-                <tr>
-                  <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por facultad y por año</td></router-link>
-                </tr>
-                <tr>
-                  <router-link to="/report/GraduatesPerYear" class="text-dark"><td class="td-table">Egresados por año</td></router-link>
-                </tr>
-                <tr>
-                  <router-link to="/report/GraduatesYearFaculty" class="text-dark"><td class="td-table">Egresados por facultad y por año</td></router-link>
-                </tr>
+                   <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
+                </tr>                
                 
               </tbody>
             </table>

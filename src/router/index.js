@@ -44,6 +44,7 @@ import TeachersSexFaculty from '@/components/reports/teachers/TeachersSexFaculty
 import TeachersWithAPhDPerFaculty from '@/components/reports/teachers/TeachersWithAPhDPerFaculty'
 
 //Graduates
+import GraduatesPerFaculty from '@/components/reports/graduates/GraduatesPerFaculty'
 import GraduatesPerYear from '@/components/reports/graduates/GraduatesPerYear'
 import GraduatesYearFaculty from '@/components/reports/graduates/GraduatesYearFaculty'
 
@@ -109,8 +110,7 @@ export const router = new Router({
           name: 'Graduates',
           component: Graduates
         },*/
-
-        /*      
+ /*
         {
           path: '/reports',
           name: 'Report',
@@ -127,8 +127,8 @@ export const router = new Router({
             }
           }
         },
-        */
-       
+        
+       */
         {
           path: '/reports',
           name: 'ReportsHome',
@@ -458,6 +458,18 @@ export const router = new Router({
               next('/home')
             } else {
               console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/GraduatesPerFaculty',
+          name: 'GraduatesPerFaculty',
+          component: GraduatesPerFaculty,
+          beforeEnter (to, from, next) {
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+              next('/home')
+            } else {
               next()
             }
           }

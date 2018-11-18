@@ -52,7 +52,9 @@
                 <tr>
                   <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
                 </tr>
-                
+                <tr>
+                   <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
+                </tr>                 
               </tbody>
             </table>
             <!--Ranking Reports-->
@@ -180,7 +182,10 @@ export default {
         name: "Estudiantes Pertenecientes a Grupos Étnicos",
         orientation: 'h',
         type: "bar",
-        marker: { color: "#eccc68" }
+        marker: { color: "#eccc68" },
+        insidetextfont: {color: "#FFFFFF",
+                         size: 16},
+        hoverlabel: { font:{size:18}},
       });
 
 

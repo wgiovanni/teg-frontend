@@ -53,7 +53,9 @@
                 <tr>
                   <td class="td-table students-color">Estudiantes por Sexo</td>   
                 </tr>
-                
+                <tr>
+                   <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
+                </tr>                 
               </tbody>
             </table>
             <!--Ranking Reports-->
@@ -190,7 +192,10 @@ export default {
         textfont: { family: "sans serif", size: 48, color: "#ff7f0e" },
         name: "Masculino",
         type: "bar",
-        marker: { color: "#00cec9" }
+        marker: { color: "#00cec9" },
+        insidetextfont: {color: "#FFFFFF",
+                         size: 16},
+        hoverlabel: { font:{size:18}},
       });
 
       datos.push({
@@ -199,7 +204,10 @@ export default {
         //text:[],
         name: "Femenino",
         type: "bar",
-        marker: { color: "rgb(195,86,234)" }
+        marker: { color: "rgb(195,86,234)" },
+        insidetextfont: {color: "#FFFFFF",
+                         size: 16},
+        hoverlabel: { font:{size:18}},
       });
 
       console.log(datos);

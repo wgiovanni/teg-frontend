@@ -62,13 +62,13 @@
                   <td class="card-footer teachers-color">Citaciones por Facultad</td>    
                 </tr>
                 <tr>
-                  <router-link to="/report/StaffWithAPhD" class="text-dark"><td class="td-table">Docentes con Doctorado</td></router-link>    
+                  <router-link to="/report/StaffWithAPhD" class="text-dark"><td>Docentes con Doctorado</td></router-link>    
                 </tr>  
                 <tr>
-                  <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark"><td class="td-table">Docentes Extranjeros</td></router-link>    
+                  <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark"><td>Docentes Extranjeros</td></router-link>    
                 </tr>         
                 <tr>
-                  <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td class="td-table">Docentes Empleados / Estudiantes Matriculados</td></router-link>    
+                  <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
                 </tr>
               </tbody>
             </table>

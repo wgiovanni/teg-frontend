@@ -53,7 +53,9 @@
                 <tr>
                   <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
                 </tr>
-                
+                <tr>
+                   <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
+                </tr>                 
               </tbody>
             </table>
             <!--Ranking Reports-->

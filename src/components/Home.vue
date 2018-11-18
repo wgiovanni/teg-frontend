@@ -13,7 +13,7 @@
           <img class="first-slide" src="" alt="First slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block text-left">
-              <h1>Ranking QS</h1>
+              <h1>Universidad de Carabobo</h1>
               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
             </div>
           </div>
@@ -22,7 +22,7 @@
           <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block">
-              <h1>Universidad de Carabobo</h1>
+              <h1>Ranking QS</h1>
               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
               
             </div>
@@ -32,7 +32,7 @@
           <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block text-right">
-              <h1>Indicadores para Rankings</h1>
+              <h1>Rankings Universitarios</h1>
               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
               
             </div>
@@ -62,7 +62,7 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading">ESTUDIANTES<span class="text-muted">*Información de Estudiantes*</span></h2>
+          <h2 class="featurette-heading">ESTUDIANTES<span class="text-muted" style="font-size: 34px"><br>Indicadores sobre estudiantes</br></span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
@@ -74,7 +74,7 @@
 
       <div class="row featurette">
         <div class="col-md-7 push-md-5">
-          <h2 class="featurette-heading">DOCENTES<span class="text-muted">*Información de Docentes*</span></h2>
+          <h2 class="featurette-heading">DOCENTES<span class="text-muted" style="font-size: 34px"><br>Indicadores sobre docentes</br></span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5 pull-md-7">
@@ -86,7 +86,7 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading">EGRESADOS<span class="text-muted">*Información de Egresados*</span></h2>
+          <h2 class="featurette-heading">EGRESADOS<span class="text-muted" style="font-size: 34px"><br>Indicadores sobre egresados</br></span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
@@ -98,7 +98,7 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading">REPORTES<span class="text-muted">*Información de Reportes*</span></h2>
+          <h2 class="featurette-heading">REPORTES<span class="text-muted" style="font-size: 34px"><br>Rankings universitarios</br></span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
