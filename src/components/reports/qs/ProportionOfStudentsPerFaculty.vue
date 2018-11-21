@@ -283,7 +283,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 20, 20);
+      doc.addImage(img, "JPG", 16, 16);
       doc.save(reportName + ".pdf");
 
       doc.setProperties({
@@ -304,8 +304,20 @@ export default {
       doc.setFontSize(7);
       doc.cellInitialize();
 
+      var flag = true;
+
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
+
+          if(flag){            
+            doc.setFontType("bold");
+            if(cell == "Facultad")
+              flag = false;
+          }else{
+            doc.setFontType("normal");
+          }
+
+
           if ((j == "email") | (j == "facultad")) {
             doc.cell(7, 25, 60, 15, cell, i);
           } else if ((j == "fecha_nacimiento") | (j == "estado_procedencia")) {

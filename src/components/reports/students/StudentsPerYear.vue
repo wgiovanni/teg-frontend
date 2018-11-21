@@ -1,6 +1,6 @@
 <template>
-<div>
-        <div>
+<div>  
+      <div class="col-md-9 col-xs-11 p-l-2 p-t-2">
         <form class="col-md-10"  @submit.prevent="getStudent">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <div class="form-group form-row">
@@ -19,15 +19,47 @@
                         <option v-for="year in arrayDateTo" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
                     </select>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <button type="submit" class="btn button-back">Buscar</button>
                 </div>
             </div>
         </form>
         </div>
 
-        <!--REPORTS LIST-->
-      <div class="card border-students mb-6 text-center custom-list">
+      
+        <!--GRAPH-->
+    <div> 
+      <!--Title-->
+        <h1 id="report" class="col-md-12  title-customized"/>    
+  
+      <div id="graph">         
+
+        <!--Plotly-->
+        <div ref="scatter" class="vue-plotly"/> 
+
+         <!--Download buttons--> 
+      <div id="download-buttons" class="col-md-10 text-center" style="display:none">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        
+        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
+        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
+      </div>
+
+      <!--Return button-->
+       <div class="col-md-8 text-center">
+        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
+      </div>  
+
+        <!--Saves plot as image-->
+        <img id="jpg-export" class="hidden"/>
+      </div>   
+      
+    </div>
+    <!--END OF GRAPH-->
+
+         
+     <!--REPORTS LIST-->
+      <div class="card border-students mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0 custom-margin">
         <div class="card-header">        
             <h5 class="card-tile text-dark">Estudiantes</h5>         
         </div>
@@ -82,57 +114,38 @@
         </div>
       </div>
       <!--END OF REPORT LIST-->
-
-        <!--GRAPH-->
-    <div> 
-      <!--Title-->
-        <h1 id="report" class="title-customized"/>    
-  
-      <div id="graph">         
-
-        <!--Plotly-->
-        <div ref="scatter" class="vue-plotly"/> 
-
-         <!--Download buttons--> 
-      <div id="download-buttons" class="col-md-10 text-center" style="display:none">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        
-        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
-        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
-      </div>
-
-      <!--Return button-->
-       <div class="col-md-8 text-center">
-        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>  
-
-        <!--Saves plot as image-->
-        <img id="jpg-export" class="hidden"/>
-      </div>   
       
-    </div>
+
+     
 
 </div>
 </template>
 
 <style>
+.custom-margin{
+  margin-top: 2rem;
+}  
 
 .custom-list{
-    margin-left: 60rem;
-    margin-top: -10rem;
+    margin-left: 65rem;
+    margin-top: -5rem;
 }
 
+
 .title-customized{
-    margin-top: -30rem;
+    margin-top: -40rem;
     margin-left: 20rem;    
 }
 
 .vue-plotly {
-    margin-left: 10rem;
+    margin-left: 30rem;
+    margin-top: 20rem;
 }
+
 
 .form-row{
     margin-top: 10rem;
+    margin-left: 8rem;  
 }
 
 .form-control:hover {
@@ -252,7 +265,7 @@ export default {
         y: total,
         type: 'scatter',
         mode: 'lines+markers',
-        marker: { color: "#f7ca18" },        
+        marker: { color: "#6960EC" },        
         hoverlabel: { font:{size:18}},
       });
 

@@ -254,7 +254,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 20, 20);
+      doc.addImage(img, "JPG", 16, 16);
 
       doc.setProperties({
         title: reportName,
@@ -271,19 +271,32 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(7);
+      doc.setFontSize(8);
       doc.cellInitialize();
+
+      var flag = true;
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad" | j == "discapacidad") {
-            doc.cell(15, 25, 60, 15, cell, i);          
-          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(15, 25, 30, 15, cell, i);
+
+          if(flag){            
+            doc.setFontType("bold");
+            if(cell == "Facultad")
+              flag = false;
+          }else{
+            doc.setFontType("normal");
+          }
+
+          if (j == "email" | j == "discapacidad") {
+            doc.cell(8, 25, 65, 15, cell, i);          
+          }else if (j == "fecha_nacimiento" | j == "estado_procedencia" | j == "nombre"| j == "apellido" ){
+            doc.cell(8, 25, 35, 15, cell, i);
+          } else if (j == "facultad") {
+            doc.cell(8, 25, 55, 15, cell, i);  
           } else if (j == "cedula") {
-            doc.cell(15, 25, 20, 15, cell, i);         
+            doc.cell(8, 25, 25, 15, cell, i);         
           } else {
-            doc.cell(15, 25, 25, 15, cell, i);
+            doc.cell(8, 25, 30, 15, cell, i);
           }
         });
       });

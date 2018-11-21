@@ -286,7 +286,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);     
-      doc.addImage(img, "JPG", 20, 20);
+      doc.addImage(img, "JPG", 16, 16);
 
       doc.setProperties({
         title: reportName,
@@ -306,11 +306,26 @@ export default {
       doc.setFontSize(7);
       doc.cellInitialize();
 
+      var flag = true;
+
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad") {
-            doc.cell(5, 25, 55, 15, cell, i);          
-          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
+
+          if(flag){            
+            doc.setFontType("bold");
+            if(cell == "Facultad")
+              flag = false;
+          }else{
+            doc.setFontType("normal");
+          }
+
+          if (j == "email") {
+            doc.cell(5, 25, 55, 15, cell, i);    
+          }else if (j == "facultad") {
+            doc.cell(5, 25, 45, 15, cell, i);   
+          }else if (j == "estado_procedencia") {
+            doc.cell(5, 25, 35, 15, cell, i);      
+          }else if (j == "fecha_nacimiento"){
             doc.cell(5, 25, 30, 15, cell, i);
           } else if (j == "cedula") {
             doc.cell(5, 25, 17, 15, cell, i);

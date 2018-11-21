@@ -83,8 +83,8 @@ import XLSX from "xlsx";
 
 var reportName = "Egresados por Facultad";
 var img;
-//var info = []; //Saves data for verification
-var saved = [];
+var info = []; //Saves data for verification
+//var saved = [];
 var date = new Date();
 
 export default {
@@ -134,7 +134,7 @@ export default {
       });
       console.log("info ", info);
 
-  //    saved = d["recuperado"];
+ //     saved = d["recuperado"];
 
       facultades = d["facultad"];
 
@@ -151,7 +151,8 @@ export default {
         y: nombreFacultad,      
         orientation: 'h',
         type: "bar",
-        marker: { color: "#4d13d1" }
+        marker: { color: "#6e26d9" },
+        hoverlabel: { font:{size:18}},
       });
 
 
@@ -218,7 +219,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 20, 20);
+      doc.addImage(img, "JPG", 16, 16);
 
       doc.setProperties({
         title: reportName,
@@ -226,7 +227,7 @@ export default {
         author: "UC Ranking",
         date: date
       });
-
+   
       //Info for verification
       doc.addPage();
       doc.setFont("helvetica");
@@ -235,17 +236,17 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(8);
+      doc.setFontSize(9);
       doc.cellInitialize();
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "email" | j == "facultad") {
-            doc.cell(15, 25, 65, 15, cell, i);  
+            doc.cell(15, 25, 70, 15, cell, i);  
           } else if (j == "cedula") {
-            doc.cell(15, 25, 25, 15, cell, i);         
+            doc.cell(15, 25, 30, 15, cell, i);         
           } else {
-            doc.cell(15, 25, 35, 15, cell, i);
+            doc.cell(15, 25, 45, 15, cell, i);
           }
         });
       });
@@ -295,8 +296,8 @@ export default {
         doc.text(saved[j]["address"], 150, aux); 
         aux = aux + 5;         
       }      
-
 */
+
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()

@@ -255,7 +255,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 20, 20);
+      doc.addImage(img, "JPG", 16, 16);
 
        doc.setProperties({
         title: reportName,
@@ -272,19 +272,33 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(7);
+      doc.setFontSize(9);
       doc.cellInitialize();
+
+      var flag = true;
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          if (j == "email" | j == "facultad" | j == "etnia") {
-            doc.cell(15, 25, 60, 15, cell, i);          
-          }else if (j == "fecha_nacimiento" | j == "estado_procedencia"){
-            doc.cell(15, 25, 30, 15, cell, i);
+
+          if(flag){            
+            doc.setFontType("bold");
+            if(cell == "Facultad")
+              flag = false;
+          }else{
+            doc.setFontType("normal");
+          }
+
+
+          if (j == "email") {
+            doc.cell(10, 25, 65, 15, cell, i);
+          }else if(j == "etnia") { 
+            doc.cell(10, 25, 75, 15, cell, i);           
+          }else if(j == "facultad") { 
+            doc.cell(10, 25, 55, 15, cell, i);      
           } else if (j == "cedula") {
-            doc.cell(15, 25, 20, 15, cell, i);        
+            doc.cell(10, 25, 22, 15, cell, i);        
           } else {
-            doc.cell(15, 25, 25, 15, cell, i);
+            doc.cell(10, 25, 30, 15, cell, i);
           }
         });
       });
