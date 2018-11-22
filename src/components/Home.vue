@@ -10,29 +10,28 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="carousel-item active">
-          <img class="first-slide" src="" alt="First slide">
+          <img class="first-slide" src="../assets/uc.png" alt="First slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block text-left">
-              <h1>Universidad de Carabobo</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <h1 class="home-title">Universidad de Carabobo</h1>              
             </div>
           </div>
         </div>
         <div class="carousel-item">
-          <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <img class="second-slide" src="../assets/qs-banner.jpg" alt="Second slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block">
-              <h1>Ranking QS</h1>
+              <h1 class="home-title">Ranking QS</h1>
               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
               
             </div>
           </div>
         </div>
         <div class="carousel-item">
-          <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+          <img class="third-slide" src="../assets/the-2019.jpg" alt="Third slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block text-right">
-              <h1>Rankings Universitarios</h1>
+              <h1 class="home-title">Rankings Universitarios</h1>
               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
               
             </div>
@@ -126,6 +125,16 @@
 
 
 <style>
+
+.home-title{
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 3px 3px 6px #000000;
+    color: black;
+    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: black;
+}
 
 a {
     color: gray;
