@@ -22,7 +22,7 @@
           <div class="container">
             <div class="carousel-caption d-none d-md-block">
               <h1 class="home-title">Ranking QS</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p class="second-title">Considerado como el ranking global con más influencia, el Ranking QS de Universidades es una publicación anual de rankings de universidades realizado por Quacquarelli Symonds (QS)</p>
               
             </div>
           </div>
@@ -32,8 +32,7 @@
           <div class="container">
             <div class="carousel-caption d-none d-md-block text-right">
               <h1 class="home-title">Rankings Universitarios</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              
+              <p class="second-title">Los rankings globales de universidades más establecidos son los producidos por el Ranking Académico de las Universidades del Mundo (ARWU), Times Higher Education (THE), y Quacquarelli Symonds (QS)</p>
             </div>
           </div>
         </div>
@@ -65,7 +64,7 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-fluid mx-auto" src="../assets/escudo.png" alt="Generic placeholder image">
+          <img class="featurette-image img-fluid mx-auto" src="../assets/students.jpg" alt="Generic placeholder image">
         </div>
       </div>
 
@@ -77,7 +76,7 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5 pull-md-7">
-          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-fluid mx-auto" src="../assets/teachers.jpg" alt="Generic placeholder image">
         </div>
       </div>
 
@@ -89,7 +88,7 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-fluid mx-auto" src="../assets/graduates.jpg" alt="Generic placeholder image">
         </div>
       </div>
 
@@ -98,10 +97,10 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading">REPORTES<span class="text-muted" style="font-size: 34px"><br>Rankings universitarios</br></span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          <p class="lead">Los rankings globales principalmente miden el desempeño de de investigación de las universidades.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-fluid mx-auto" src="../assets/rankings.png" alt="Generic placeholder image">
         </div>
       </div>
 
@@ -125,6 +124,10 @@
 
 
 <style>
+
+.second-title{
+  text-shadow: 3px 3px 6px #000000;
+}
 
 .home-title{
     font-size: 50px;

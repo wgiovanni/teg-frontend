@@ -214,7 +214,7 @@ export default {
         },
         {
           id: 1,
-          name: "Profesores",
+          name: "Docentes",
           path: "/teachers"
         },
         /*{
