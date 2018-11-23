@@ -618,24 +618,13 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && !localStorage.getItem('user')){
-    console.log("entro1");
-    console.log("mandar al login");
-    //store.username = '';
+    
     store.user = {};
     next('/login');
 
   } else {
-    console.log(authRequired);
-    //console.log(localStorage.getItem('username'));
-    //store.state.username = localStorage.getItem('username')
     store.state.user = JSON.parse(localStorage.getItem('user'));
-    //store.user = {}
-    /*store.dispatch('getUsername', { username:  store.state.username})
-        .then((response) => {
-          store.state.user = response.data;
-          next()
-        }) 
-        .catch(() => this.error ="Fallo")*/
+
     next();
   }
  
