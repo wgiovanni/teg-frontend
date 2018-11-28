@@ -7,7 +7,7 @@
 
            <form class="col-md-10"  @submit.prevent="getGraduates">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
-            <div class="form-group row">
+            <div class="form-group form-row">
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Desde</label>
                 <div class="col-sm-2">
                     <select class="form-control" v-model="desde">
@@ -46,14 +46,14 @@
           <div ref="scatter" class="vue-plotly"/> 
 
           <!--Download buttons--> 
-          <div id="download-buttons" class="col-md-10 text-center" style="display: none">
+          <div id="download-buttons" class="col-md-12 text-center" style="display: none">
                             
               <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
               <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
           </div>
 
           <!--Return button-->
-          <div class="col-md-8 text-center">
+          <div class="col-md-12 text-center">
             <router-link to="/reports"><button class="button button-back button-margin">Regresar</button></router-link>        
           </div>  
 
@@ -65,7 +65,7 @@
     <!--END OF GRAPH-->
 
         <!--REPORTS LIST-->
-        <div class="card border-students text-center custom-margin col-xl-3 col-md-3 col-sm-12">
+        <div class="card border-graduates text-center custom-margin col-xl-3 col-md-3 col-sm-12">
          <div class="card-header">        
             <h5 class="card-tile text-dark">Egresados</h5>         
         </div>
@@ -95,23 +95,27 @@
 
 <style>
 
-.custom-list{
-    margin-left: 60rem;
-    margin-top: -10rem;
-}
+.custom-margin{
+    margin-top: -100px;
+}  
 
 .title-customized{
-    margin-top: -30rem;
-    margin-left: 20rem;    
+    margin-top: 5rem;
+    margin-left: 20rem;  
+    margin-bottom: -40rem;  
 }
 
-.vue-plotly {
-    margin-left: 10rem;
+.vue-plotly {    
+    margin-left: 0rem;
+    margin-top: 40rem;
 }
+
 
 .form-row{
     margin-top: 10rem;
+    margin-left: 8rem;  
 }
+
 
 .form-control:hover {
   border-color: gray;
@@ -160,7 +164,7 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Egresados";
+var reportName = "Egresados por Año";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
@@ -239,15 +243,15 @@ export default {
 
       var layout = {               
         editable: false,
-        autosize: true,
-        responsive: true,
+        //autosize: true,
+        //responsive: true,
         xaxis: {
           fixedrange: true
         },
         yaxis: {
           fixedrange: true
         },       
-        width: 720,
+        //width: 720,
         //height: 480,
       };
 

@@ -16,7 +16,7 @@
         <button class="button button-excel" @click="download_excel"><i class="fa fa-file-excel fa-lg"></i>   Descargar Excel</button>        
       </div>
     <!--Return button-->
-       <div class="col-md-16 text-center">
+       <div class="col-md-12 text-center">
         <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
       </div>     
 

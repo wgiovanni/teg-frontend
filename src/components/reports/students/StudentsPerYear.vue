@@ -46,14 +46,14 @@
           <div ref="scatter" class="vue-plotly"/> 
 
           <!--Download buttons--> 
-          <div id="download-buttons" class="col-md-10 text-center" style="display: none">
+          <div id="download-buttons" class="col-md-12 text-center" style="display: none">
                             
               <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
               <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
           </div>
 
           <!--Return button-->
-          <div class="col-md-8 text-center">
+          <div class="col-md-12 text-center">
             <router-link to="/reports"><button class="button button-back button-margin">Regresar</button></router-link>        
           </div>  
 
@@ -134,17 +134,15 @@
 }  
 
 .title-customized{
-    margin-top: -40rem;
-    margin-left: 20rem;    
+    margin-top: 5rem;
+    margin-left: 20rem;  
+    margin-bottom: -40rem;  
 }
 
-
-.vue-plotly {
-    
+.vue-plotly {    
     margin-left: 0rem;
-    margin-top: 60rem;
+    margin-top: 40rem;
 }
-
 
 
 .form-row{

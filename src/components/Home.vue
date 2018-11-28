@@ -17,18 +17,9 @@
             </div>
           </div>
         </div>
-        <div class="carousel-item">
-          <img class="third-slide" src="../assets/the-2019.jpg" alt="Second slide">
-          <div class="container">
-            <div class="carousel-caption d-none d-md-block text-right">
-              <h1 class="home-title">Rankings Universitarios</h1>
-              <p class="second-title">Los rankings globales de universidades más establecidos son los producidos por el Ranking Académico de las Universidades del Mundo (ARWU), Times Higher Education (THE), y Quacquarelli Symonds (QS)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-        <div class="carousel-item">
-          <img class="second-slide" src="../assets/qs-banner.jpg" alt="Third slide">
+
+         <div class="carousel-item">
+          <img class="second-slide" src="../assets/qs-banner.jpg" alt="Second slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block">
               <h1 class="home-title">Ranking QS</h1>
@@ -37,6 +28,19 @@
             </div>
           </div>
         </div>
+
+
+        <div class="carousel-item">
+          <img class="third-slide" src="../assets/the-2019.jpg" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption d-none d-md-block text-right">
+              <h1 class="home-title">Rankings Universitarios</h1>
+              <p class="second-title">Los rankings globales de universidades más establecidos son los producidos por el Ranking Académico de las Universidades del Mundo (ARWU), Times Higher Education (THE), y Quacquarelli Symonds (QS)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+       
         
       <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

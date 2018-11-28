@@ -53,14 +53,14 @@
           <div ref="scatter" class="vue-plotly"/> 
 
           <!--Download buttons--> 
-          <div id="download-buttons" class="col-md-10 text-center" style="display: none">
+          <div id="download-buttons" class="col-md-12 text-center" style="display: none">
                             
               <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
               <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
           </div>
 
           <!--Return button-->
-          <div class="col-md-8 text-center">
+          <div class="col-md-12 text-center">
             <router-link to="/reports"><button class="button button-back button-margin">Regresar</button></router-link>        
           </div>  
 
@@ -99,10 +99,10 @@
                     <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
                   </tr>
                   <tr>
-                    <td class="td-table students-color">Estudiantes por Año</td>    
+                    <router-link to="/report/StudentsPerYear" class="text-dark"><td>Estudiantes por Año</td></router-link>       
                   </tr>  
                   <tr>
-                    <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
+                    <td class="td-table students-color">Estudiantes por Año y Facultad</td>   
                   </tr>                           
                 </tbody>
               </table>
@@ -134,23 +134,25 @@
 </template>
 
 <style>
-
-.custom-list{
-    margin-left: 60rem;
-    margin-top: -10rem;
-}
+.custom-margin{
+    margin-top: -100px;
+}  
 
 .title-customized{
-    margin-top: -30rem;
-    margin-left: 20rem;    
+    margin-top: 5rem;
+    margin-left: 20rem;  
+    margin-bottom: -40rem;  
 }
 
-.vue-plotly {
-    margin-left: 10rem;
+.vue-plotly {    
+    margin-left: 0rem;
+    margin-top: 40rem;
 }
+
 
 .form-row{
     margin-top: 10rem;
+    margin-left: 8rem;  
 }
 
 
@@ -281,15 +283,15 @@ export default {
 
       var layout = {               
         editable: false,
-        autosize: true,
-        responsive: true,
+        //autosize: true,
+       // responsive: true,
         xaxis: {
           fixedrange: true
         },
         yaxis: {
           fixedrange: true
         },       
-        width: 720,
+        //width: 720,
         //height: 480,
       };
 

@@ -21,7 +21,7 @@
         </span>
       
         <h4 class="color-students">Estudiantes</h4>
-        <p class="">Indicadores sobre estudiantes de pre-grado y post-grado de la Universidad de Carabobo</p>
+        <p class="">Indicadores sobre estudiantes de la Universidad de Carabobo</p>
         <router-link to="/report/ProportionOfStudentsPerFaculty" class="btn btn-students btn-custom"><a>Ver</a></router-link>
       </div>
     </div>

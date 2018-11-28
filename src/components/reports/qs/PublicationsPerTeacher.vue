@@ -14,9 +14,7 @@
         <button class="button button-pdf" @click="download_pdf">
           <i class="fa fa-file-pdf fa-lg"></i> Descargar PDF
         </button>
-        <button class="button button-img" @click="download_img">
-          <i class="fa fa-file-image fa-lg"></i> Descargar JPG
-        </button>
+        
         <button class="button button-excel" @click="download_excel">
           <i class="fa fa-file-excel fa-lg"></i> Descargar Excel
         </button>
@@ -182,6 +180,8 @@ export default {
 
      
       var i;
+      var j;
+      var k;
       var size = req.data.length;
       var d = req.data;
 
@@ -205,8 +205,15 @@ export default {
       saved = d["recuperado"];
 */
 
+ var aux;
+ var aux2;
+ var auxPub = [];
+ var empty = [];
  var publication = [];
  var citation = [];
+ var flag = true;
+ var count = 0;
+
 
 
       for (i = 0; i < size; i++) {
@@ -215,41 +222,52 @@ export default {
         apellidos.push(d[i]["primer_apellido"]);
         areasInv.push(d[i]["area_de_investigacion"]);
         publicaciones.push(d[i]["publicaciones"]);
+
+        console.log("publicacion", publicaciones);  
+
+        auxPub = publicaciones[i];
+      //  publicaciones = empty;
         
-        for (i = 0; i < publicaciones.length; i++) {       
-          nombrePublicacion.push(publicaciones[i]["titulo_publicacion"]);
-          numCitas.push(publicaciones[i]["citas"]);            
-        }              
-            
+        for (j = 0; j < auxPub.length; j++) {       
+          nombrePublicacion.push(auxPub[j]["titulo_publicacion"]);
+          numCitas.push(auxPub[j]["citas"]);         
+        }
+        
+        auxPub.length = 0;
+
+        console.log("nombre ", nombrePublicacion);
+        
+        for (k = 0; k < nombrePublicacion.length; k++) { 
+          
+          if(flag){
+            aux = nombrePublicacion[k];
+            flag = false;
+          }else{
+            aux = aux + ", "+ nombrePublicacion[k]; 
+          }
+              
+        } 
+
+        console.log("publication ", publication); 
+
+        flag = true;          
+        publication.push(aux);
+      
+        aux = "";    
+        
+ 
       }     
-      console.log("publicacion", publicaciones);   
-      console.log("nombre ", nombrePublicacion);
+      
+     
+        
 
-/*
-       for (i = 0; i < publicaciones.length; i++) {       
-          nombrePublicacion.push(publicaciones[i]["titulo_publicacion"]);
-          numCitas.push(publicaciones[i]["citas"]);
-            publication.push(nombrePublicacion[i]["titulo_publicacion"]);
-            citation.push(numCitas[i]["citas"]);
-      }     
-
-      publication.push(nombrePublicacion[i]["titulo_publicacion"]);
-            citation.push(numCitas[i]["citas"]);
-
-
-      console.log("nombre ", nombrePublicacion);
-
-      console.log("publication ", publication);
-      console.log("citation ", citation);
-*/
       var values = [
         cedulas,
         nombres,
         apellidos,
         areasInv,
-        nombrePublicacion
+        publication
       ];
-
 
 
       datos.push({
@@ -343,8 +361,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);     
-      doc.addImage(img, "JPG", 20, 18);
-
+      
       
       doc.setProperties({
         title: reportName,
@@ -354,11 +371,11 @@ export default {
       });
 
         //Info for verification
-      doc.addPage();
+    
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.setFontSize(16);
-      doc.text("Datos de Referencia", 15, 15);
+      doc.text("Datos de Referencia", 20, 20);
       
       // Table
       doc.setFontSize(7);
@@ -439,15 +456,7 @@ export default {
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
-    download_img() {
-      var a = document.createElement("a");
-      a.href = img.src;
-      a.download = reportName + ".jpg";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }, //end_of_download()
-
+  
     download_excel() {
       // Data from JSON
       var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
