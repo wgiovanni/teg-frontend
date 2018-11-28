@@ -215,27 +215,38 @@ export default {
         apellidos.push(d[i]["primer_apellido"]);
         areasInv.push(d[i]["area_de_investigacion"]);
         publicaciones.push(d[i]["publicaciones"]);
+        
+        for (i = 0; i < publicaciones.length; i++) {       
+          nombrePublicacion.push(publicaciones[i]["titulo_publicacion"]);
+          numCitas.push(publicaciones[i]["citas"]);            
+        }              
+            
+      }     
+      console.log("publicacion", publicaciones);   
+      console.log("nombre ", nombrePublicacion);
+
+/*
+       for (i = 0; i < publicaciones.length; i++) {       
           nombrePublicacion.push(publicaciones[i]["titulo_publicacion"]);
           numCitas.push(publicaciones[i]["citas"]);
             publication.push(nombrePublicacion[i]["titulo_publicacion"]);
             citation.push(numCitas[i]["citas"]);
+      }     
 
-      }
+      publication.push(nombrePublicacion[i]["titulo_publicacion"]);
+            citation.push(numCitas[i]["citas"]);
 
-     
-      console.log("publicacion", publicaciones);   
 
       console.log("nombre ", nombrePublicacion);
 
       console.log("publication ", publication);
       console.log("citation ", citation);
-
+*/
       var values = [
         cedulas,
         nombres,
         apellidos,
         areasInv,
-        numCitas,
         nombrePublicacion
       ];
 
@@ -245,17 +256,17 @@ export default {
 
         type: 'table',
         header: {
-          values: [["Cédula"], ["Nombre"], ["Apellido"], ["Área de Investigación"], ["Número de Citas"], ["Nombre de Publicación"]],
+          values: [["Cédula"], ["Nombre"], ["Apellido"], ["Área de Investigación"], ["Nombre de Publicación"]],
           align: ["left", "center"],
-         // line: {width: 1, color: '#506784'},
+          line: {width: 1, color: '#506784'},
           fill: {color: '#119DFF'},
-          font: {family: "Arial", size: 12, color: "white"}
+          font: {size: 12, color: "white"}
         },
         cells: {
           values: values,
           align: ["left", "center"],
-         // line: {color: "#506784", width: 1},
-          fill: {color: ['#25FEFD', 'white']},
+          line: {color: "#506784", width: 1},
+          fill: {color: [/*'#25FEFD',*/ 'white']},
           font: {size: 11, color: ["#506784"]}
         }
       });
@@ -304,7 +315,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
+      Plotly.react(this.$refs.bar, this.data, layout, config).then(function(gd) {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 

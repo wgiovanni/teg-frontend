@@ -67,7 +67,7 @@
                   <td class="card-footer teachers-color">Docentes Extranjeros</td>
                 </tr>
                 <tr>
-                  <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark"><td>Publicaciones por Docente</td></router-link> 
+                  <router-link to="/report/PublicationsPerTeacher" class="text-dark"><td>Publicaciones por Docente</td></router-link> 
                 </tr>         
                 <tr>
                   <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
@@ -229,7 +229,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
      // Displays graph
-      Plotly.plot(this.$refs.pie, this.data, layout, config).then(function(gd) {
+      Plotly.react(this.$refs.pie, this.data, layout, config).then(function(gd) {
       //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 

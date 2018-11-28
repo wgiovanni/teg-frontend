@@ -1,7 +1,5 @@
 <template>
 <div>  
- 
-
       <div class="row">
         
         <div class="col-xl-8 col-md-8 col-sm-12">
@@ -45,7 +43,7 @@
         <div id="graph">         
 
           <!--Plotly-->
-          <div ref="bar" class="vue-plotly"/> 
+          <div ref="scatter" class="vue-plotly"/> 
 
           <!--Download buttons--> 
           <div id="download-buttons" class="col-md-10 text-center" style="display: none">
@@ -125,7 +123,6 @@
     </div>
 
       
-  
 
 </div>
 </template>
@@ -312,7 +309,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(
+      Plotly.react(this.$refs.scatter, this.data, layout, config).then(function(
         gd
       ) {
         //Saves plot as image

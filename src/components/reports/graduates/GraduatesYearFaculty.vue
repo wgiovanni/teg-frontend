@@ -1,7 +1,12 @@
 <template>
 <div>
-    <div>
-        <form class="col-md-10"  @submit.prevent="getGraduates">
+
+  
+       <div class="row">
+        
+        <div class="col-xl-8 col-md-8 col-sm-12">
+
+           <form class="col-md-10"  @submit.prevent="getGraduates">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <div class="form-group row">
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Facultad</label>
@@ -31,11 +36,45 @@
                 </div>
             </div>
         </form>
-    </div>
+        </div>
+    </div> 
 
-      <!--REPORTS LIST-->
-      <div class="card border-graduates mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
-        <div class="card-header">        
+
+    <div class="row">
+    
+    <!--GRAPH-->
+    <div class="col-md-9 col-xl-9"> 
+        
+        <!--Title-->
+        <h1 id="report" class="col-md-12  title-customized"/>    
+  
+        <div id="graph">         
+
+          <!--Plotly-->
+          <div ref="scatter" class="vue-plotly"/> 
+
+          <!--Download buttons--> 
+          <div id="download-buttons" class="col-md-10 text-center" style="display: none">
+                            
+              <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
+              <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
+          </div>
+
+          <!--Return button-->
+          <div class="col-md-8 text-center">
+            <router-link to="/reports"><button class="button button-back button-margin">Regresar</button></router-link>        
+          </div>  
+
+          <!--Saves plot as image-->
+          <img id="jpg-export" class="hidden"/>
+      </div><!--div id=graph-->  
+      
+    </div>
+    <!--END OF GRAPH-->
+
+        <!--REPORTS LIST-->
+        <div class="card border-students text-center custom-margin col-xl-3 col-md-3 col-sm-12">
+         <div class="card-header">        
             <h5 class="card-tile text-dark">Egresados</h5>         
         </div>
         <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
@@ -56,36 +95,8 @@
         </div>
         </div>
         </div>
-      <!--END OF REPORT LIST-->
-
-        <!--GRAPH-->
-    <div> 
-      <!--Title-->
-        <h1 id="report" class="title-customized"/>    
-  
-      <div id="graph">         
-
-        <!--Plotly-->
-        <div ref="scatter" class="vue-plotly"/> 
-
-         <!--Download buttons--> 
-      <div id="download-buttons" class="col-md-10 text-center" style="display:none">
-               
-        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
-        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
-      </div>
-
-      <!--Return button-->
-       <div class="col-md-8 text-center">
-        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>  
-
-        <!--Saves plot as image-->
-        <img id="jpg-export" class="hidden"/>
-      </div>    
-      
+        <!--END OF REPORT LIST-->
     </div>
-
 
 
 </div>
@@ -264,7 +275,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.scatter, this.data, layout, config).then(function(
+      Plotly.react(this.$refs.scatter, this.data, layout, config).then(function(
         gd
       ) {
         //Saves plot as image

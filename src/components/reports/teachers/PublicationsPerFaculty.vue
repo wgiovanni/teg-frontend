@@ -239,7 +239,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.bar, this.data, layout, config).then(function(gd) {
+      Plotly.react(this.$refs.bar, this.data, layout, config).then(function(gd) {
         //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 

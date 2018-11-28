@@ -1,8 +1,11 @@
 <template>
-<div>    
-   <!--FORM -->
-    <div>
-        <form class="col-md-10"  @submit.prevent="getStudent">
+<div>     
+      
+      <div class="row">
+        
+        <div class="col-xl-8 col-md-8 col-sm-12">
+
+          <form class="col-md-10"  @submit.prevent="getStudent">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <div class="form-group form-row">
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Facultad</label>
@@ -32,93 +35,100 @@
                 </div>
             </div>
         </form>
-      </div>
-        <!--REPORTS LIST-->
-      <div class="card border-students mb-6 text-center custom-list">
-        <div class="card-header">        
-            <h5 class="card-tile text-dark">Estudiantes</h5>         
         </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>                
-                <tr>
-                  <router-link to="/report/UndergraduateStudentsNationality" class="text-dark"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/UndergraduateStudentsSex" class="text-dark"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
-                </tr>
-                 <tr>
-                  <router-link to="/report/StudentsDisabilityPerFaculty" class="text-dark"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
-                </tr>
-                 <tr>
-                  <router-link to="/report/ForeignStudentsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
-                </tr>                  
-                <tr>
-                  <router-link to="/report/StudentsEthnicGroupsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
-                </tr>
-                <tr>
-                   <router-link to="/report/StudentsPerYear" class="text-dark"><td class="td-table">Estudiantes por Año</td></router-link>   
-                </tr>    
-                <tr>
-                  <td class="td-table students-color">Estudiantes por Año y Facultad</td>    
-                </tr>                
-              </tbody>
-            </table>
-            <!--Ranking Reports-->
-            <div class="card-header text-dark">
-              <h6>Indicadores para el Ranking QS</h6>
-            </div>
-            <table class="table table-hover bg-light group">
-              <tbody>        
-                <tr>
-                  <router-link to="/report/ProportionOfInternationalStudents" class="text-dark"><td>Estudiantes Extranjeros</td></router-link>    
-                </tr>               
-                <tr>
-                  <router-link to="/report/ProportionOfStudentsPerFaculty" class="text-dark"><td>Estudiantes por Facultad</td></router-link> 
-                </tr>
-                
-                <tr>
-                  <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <!--END OF REPORT LIST-->
+    </div> 
 
-       <!--GRAPH-->
-    <div> 
-      <!--Title-->
-        <h1 id="report" class="title-customized"/>    
+
+    <div class="row">
+    
+    <!--GRAPH-->
+    <div class="col-md-9 col-xl-9"> 
+        
+        <!--Title-->
+        <h1 id="report" class="col-md-12  title-customized"/>    
   
-      <div id="graph">         
+        <div id="graph">         
 
-        <!--Plotly-->
-        <div ref="scatter" class="vue-plotly"/> 
+          <!--Plotly-->
+          <div ref="scatter" class="vue-plotly"/> 
 
-         <!--Download buttons--> 
-      <div id="download-buttons" class="col-md-10 text-center" style="display:none">
-                
-        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
-        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
-      </div>
+          <!--Download buttons--> 
+          <div id="download-buttons" class="col-md-10 text-center" style="display: none">
+                            
+              <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
+              <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
+          </div>
 
-      <!--Return button-->
-       <div class="col-md-8 text-center">
-        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>  
+          <!--Return button-->
+          <div class="col-md-8 text-center">
+            <router-link to="/reports"><button class="button button-back button-margin">Regresar</button></router-link>        
+          </div>  
 
-        <!--Saves plot as image-->
-        <img id="jpg-export" class="hidden"/>
-      </div>    
+          <!--Saves plot as image-->
+          <img id="jpg-export" class="hidden"/>
+      </div><!--div id=graph-->  
       
     </div>
- 
+    <!--END OF GRAPH-->
+
+        <!--REPORTS LIST-->
+        <div class="card border-students text-center custom-margin col-xl-3 col-md-3 col-sm-12">
+          <div class="card-header">        
+              <h5 class="card-tile text-dark">Estudiantes</h5>         
+          </div>
+          <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
+            <div class="card-body text-center">
+              <table class="table table-hover group">
+                <tbody>                
+                  <tr>
+                    <router-link to="/report/UndergraduateStudentsNationality" class="text-dark"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
+                  </tr>
+                  <tr>
+                    <router-link to="/report/UndergraduateStudentsSex" class="text-dark"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
+                  </tr>
+                  <tr>
+                    <router-link to="/report/StudentsDisabilityPerFaculty" class="text-dark"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
+                  </tr>
+                  <tr>
+                    <router-link to="/report/ForeignStudentsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
+                  </tr>                  
+                  <tr>
+                    <router-link to="/report/StudentsEthnicGroupsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
+                  </tr>
+                  <tr>
+                    <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
+                  </tr>
+                  <tr>
+                    <td class="td-table students-color">Estudiantes por Año</td>    
+                  </tr>  
+                  <tr>
+                    <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
+                  </tr>                           
+                </tbody>
+              </table>
+              <!--Ranking Reports-->
+              <div class="card-header text-dark">
+                <h6>Indicadores para el Ranking QS</h6>
+              </div>
+              <table class="table table-hover bg-light group">
+                <tbody>        
+                  <tr>
+                    <router-link to="/report/ProportionOfInternationalStudents" class="text-dark"><td>Estudiantes Extranjeros</td></router-link>    
+                  </tr>               
+                  <tr>
+                    <router-link to="/report/ProportionOfStudentsPerFaculty" class="text-dark"><td>Estudiantes por Facultad</td></router-link> 
+                  </tr>
+                  <tr>
+                    <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--END OF REPORT LIST-->
+    </div>
+
     
 </div>
 </template>
@@ -296,7 +306,7 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.plot(this.$refs.scatter, this.data, layout, config).then(function(
+      Plotly.react(this.$refs.scatter, this.data, layout, config).then(function(
         gd
       ) {
         //Saves plot as image
