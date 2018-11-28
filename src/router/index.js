@@ -21,6 +21,7 @@ import FacultyStudentRatioTeacher from '@/components/reports/qs/FacultyStudentRa
 import ProportionOfInternationalFaculty from '@/components/reports/qs/ProportionOfInternationalFaculty'
 import ProportionOfInternationalStudents from '@/components/reports/qs/ProportionOfInternationalStudents'
 import ProportionOfStudentsPerFaculty from '@/components/reports/qs/ProportionOfStudentsPerFaculty'
+import PublicationsPerTeacher from '@/components/reports/qs/PublicationsPerTeacher'
 import StaffWithAPhD from '@/components/reports/qs/StaffWithAPhD'
 
 
@@ -214,6 +215,22 @@ export const router = new Router({
           path: '/report/StaffWithAPhD',
           name: 'StaffWithAPhD',
           component: StaffWithAPhD,
+          beforeEnter (to, from, next) {
+            console.log("AQYUIIIIIII: " + store.state.user);
+            //store.state.user = JSON.parse(store.state.user);
+            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+              console.log("No entro");
+              next('/home')
+            } else {
+              console.log("vamos a integracion");
+              next()
+            }
+          }
+        },
+        {
+          path: '/report/PublicationsPerTeacher',
+          name: 'PublicationsPerTeacher',
+          component: PublicationsPerTeacher,
           beforeEnter (to, from, next) {
             console.log("AQYUIIIIIII: " + store.state.user);
             //store.state.user = JSON.parse(store.state.user);

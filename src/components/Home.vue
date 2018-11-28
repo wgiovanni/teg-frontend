@@ -18,17 +18,7 @@
           </div>
         </div>
         <div class="carousel-item">
-          <img class="second-slide" src="../assets/qs-banner.jpg" alt="Second slide">
-          <div class="container">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 class="home-title">Ranking QS</h1>
-              <p class="second-title">Considerado como el ranking global con más influencia, el Ranking QS de Universidades es una publicación anual de rankings de universidades realizado por Quacquarelli Symonds (QS)</p>
-              
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img class="third-slide" src="../assets/the-2019.jpg" alt="Third slide">
+          <img class="third-slide" src="../assets/the-2019.jpg" alt="Second slide">
           <div class="container">
             <div class="carousel-caption d-none d-md-block text-right">
               <h1 class="home-title">Rankings Universitarios</h1>
@@ -37,6 +27,17 @@
           </div>
         </div>
       </div>
+        <div class="carousel-item">
+          <img class="second-slide" src="../assets/qs-banner.jpg" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption d-none d-md-block">
+              <h1 class="home-title">Ranking QS</h1>
+              <p class="second-title">Considerado como el ranking global con más influencia, el Ranking QS de Universidades es una publicación anual de rankings de universidades realizado por Quacquarelli Symonds (QS)</p>
+              
+            </div>
+          </div>
+        </div>
+        
       <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>

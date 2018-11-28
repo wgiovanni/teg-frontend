@@ -1,84 +1,109 @@
 <template>
-    <div class="row row-view">
+  <div class="row row-view">
     <!--GRAPH-->
-    <!--Title-->  
+    <!--Title-->
     <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
-    <h1 id="report" class="title"/> 
+      <h1 id="report" class="title"/>
 
-    <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
-      
-    
-    <!--Download buttons--> 
+      <!--Plotly-->
+      <div ref="bar" class="vue-plotly"/>
+
+      <!--Download buttons-->
       <div class="col-md-12 text-center">
-              
-        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
-        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
-        <button class="button button-excel" @click="download_excel"><i class="fa fa-file-excel fa-lg"></i>   Descargar Excel</button>        
+                
+        <button class="button button-pdf" @click="download_pdf">
+          <i class="fa fa-file-pdf fa-lg"></i> Descargar PDF
+        </button>
+        <button class="button button-img" @click="download_img">
+          <i class="fa fa-file-image fa-lg"></i> Descargar JPG
+        </button>
+        <button class="button button-excel" @click="download_excel">
+          <i class="fa fa-file-excel fa-lg"></i> Descargar Excel
+        </button>
       </div>
-    <!--Return button-->
-       <div class="col-md-16 text-center">
-        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>   
+      <!--Return button-->
+      <div class="col-md-16 text-center">
+        <router-link to="/reports">
+          <button class="button button-back">Regresar</button>
+        </router-link>
+      </div>
 
-    <!--Saves plot as image-->
-    <img id="jpg-export" class="hidden"/>
+      <!--Saves plot as image-->
+      <img id="jpg-export" class="hidden">
     </div>
 
-  <!--REPORTS LIST-->
-      <div class="card border-teachers mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
-        <div class="card-header">        
-            <h5 class="card-tile text-dark">Docentes</h5>         
-        </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>
-                <tr>
-                  <router-link to="/report/TeachersWithAPhDPerFaculty" class="text-dark"><td class="td-table">Docentes con Doctorado por Facultad</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/TeachersNationalityFaculty" class="text-dark"><td class="td-table">Docentes Extranjeros por Facultad</td></router-link>    
-                </tr>
-                    <tr>
-                  <router-link to="/report/ProportionOfTeachersByRank" class="text-dark"><td class="td-table">Docentes por Escalafón</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/TeachersSexFaculty" class="text-dark"><td class="td-table">Docentes por Sexo</td></router-link>    
-                </tr>               
-                <tr>
-                  <td class="td-table teachers-color">Publicaciones por Facultad</td>   
-                </tr>               
-              </tbody>
-            </table>
-            <!--Ranking Reports-->
-            <div class="card-header text-dark">
-              <h6>Indicadores para el Ranking QS</h6>
-            </div>
-            <table class="table table-hover bg-light group">
-              <tbody>        
-               <tr>
-                  <router-link to="/report/CitationsPerFaculty" class="text-dark"><td>Citaciones por Facultad</td></router-link>     
-                </tr>
-                <tr>
-                  <router-link to="/report/StaffWithAPhD" class="text-dark"><td>Docentes con Doctorado</td></router-link>    
-                </tr>  
-                <tr>
-                  <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark"><td>Docentes Extranjeros</td></router-link>    
-                </tr> 
-                <tr>
-                  <router-link to="/report/PublicationsPerTeacher" class="text-dark"><td>Publicaciones por Docente</td></router-link> 
-                </tr>          
-                <tr>
-                  <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                </tr>
-              </tbody>
-            </table>
+    <!--REPORTS LIST-->
+    <div class="card border-teachers mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
+      <div class="card-header">
+        <h5 class="card-tile text-dark">Docentes</h5>
+      </div>
+      <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
+        <div class="card-body text-center">
+          <table class="table table-hover group">
+            <tbody>
+              <tr>
+                <router-link to="/report/TeachersWithAPhDPerFaculty" class="text-dark">
+                  <td class="td-table">Docentes con Doctorado por Facultad</td>
+                </router-link>
+              </tr>
+              <tr>
+                <router-link to="/report/TeachersNationalityFaculty" class="text-dark">
+                  <td class="td-table">Docentes Extranjeros por Facultad</td>
+                </router-link>
+              </tr>
+              <tr>
+                <router-link to="/report/ProportionOfTeachersByRank" class="text-dark">
+                  <td class="td-table">Docentes por Escalafón</td>
+                </router-link>
+              </tr>
+              <tr>
+                <router-link to="/report/TeachersSexFaculty" class="text-dark">
+                  <td class="td-table">Docentes por Sexo</td>
+                </router-link>
+              </tr>
+              <tr>
+                <router-link to="/report/" class="text-dark">
+                  <td class="td-table">Publicaciones por Facultad</td>
+                </router-link>
+              </tr>
+            </tbody>
+          </table>
+          <!--Ranking Reports-->
+          <div class="card-header text-dark">
+            <h6>Indicadores para el Ranking QS</h6>
           </div>
+          <table class="table table-hover bg-light group">
+            <tbody>
+              <tr>
+                <router-link to="/report/CitationsPerFaculty" class="text-dark">
+                  <td>Citaciones por Facultad</td>
+                </router-link>
+              </tr>
+              <tr>
+                <router-link to="/report/StaffWithAPhD" class="text-dark">
+                  <td>Docentes con Doctorado</td>
+                </router-link>
+              </tr>
+              <tr>
+                <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark">
+                  <td>Docentes Extranjeros</td>
+                </router-link>
+              </tr>
+                <tr>
+                <td class="td-table teachers-color">Publicaciones por Docente</td>
+              </tr>
+              <tr>
+                <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark">
+                  <td>Docentes Empleados / Estudiantes Matriculados</td>
+                </router-link>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <!--END OF REPORT LIST-->
-  </div>  
+    </div>
+    <!--END OF REPORT LIST-->
+  </div>
 </template>
 
 
@@ -89,14 +114,14 @@
   font-weight: bold;
 }
 
-.teachers-color:hover{
-   background-color: #006d55;
+.teachers-color:hover {
+  background-color: #006d55;
 }
 
 .border-teachers {
   border-left-color: #006d55;
   min-height: 100%;
-  border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>
 
@@ -109,10 +134,10 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Publicaciones por Facultad";
+var reportName = "Publicaciones por Docente";
 var img;
-var info = []; //Saves data for verification
-var saved = [];
+//var info = []; //Saves data for verification
+//var saved = [];
 var date = new Date();
 
 export default {
@@ -136,7 +161,7 @@ export default {
 
     
      load() {
-      const path = "http://127.0.0.1:5000/api/v1/profesor-publicacion-facultad";
+      const path = "http://127.0.0.1:5000/api/v1/profesor-publicacion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -146,13 +171,21 @@ export default {
     successful(req) {    
 
       var datos = []; // Saves data from JSON
-      var facultades = [];
-      var numPublicaciones = [];
-      var nombreFacultad = [];
+      var cedulas = [];
+      var nombres = [];
+      var apellidos = [];      
+      var areasInv = [];
+      var nombres = [];
+      var publicaciones = [];
+      var nombrePublicacion = [];
+      var numCitas = [];
+
+     
       var i;
       var size = req.data.length;
       var d = req.data;
 
+ /*
        // Saves data for verification
       info = d["items"];
       info.unshift({
@@ -170,29 +203,61 @@ export default {
       console.log("info ", info);
 
       saved = d["recuperado"];
+*/
+
+ var publication = [];
+ var citation = [];
 
 
-      facultades = d["facultades"];
+      for (i = 0; i < size; i++) {
+        cedulas.push(d[i]["cedula"]);
+        nombres.push(d[i]["primer_nombre"]);
+        apellidos.push(d[i]["primer_apellido"]);
+        areasInv.push(d[i]["area_de_investigacion"]);
+        publicaciones.push(d[i]["publicaciones"]);
+          nombrePublicacion.push(publicaciones[i]["titulo_publicacion"]);
+          numCitas.push(publicaciones[i]["citas"]);
+            publication.push(nombrePublicacion[i]["titulo_publicacion"]);
+            citation.push(numCitas[i]["citas"]);
 
-      for (i = 0; i < 7; i++) {
-        nombreFacultad.push(facultades[i]["facultad"]);
-        numPublicaciones.push(facultades[i]["cantidad_publicaciones"]);
       }
 
-    
-      console.log(nombreFacultad);
-      console.log(numPublicaciones);
+     
+      console.log("publicacion", publicaciones);   
+
+      console.log("nombre ", nombrePublicacion);
+
+      console.log("publication ", publication);
+      console.log("citation ", citation);
+
+      var values = [
+        cedulas,
+        nombres,
+        apellidos,
+        areasInv,
+        numCitas,
+        nombrePublicacion
+      ];
+
+
 
       datos.push({
-        x: nombreFacultad,
-        y: numPublicaciones,
-        name: "Cantidad de Publicaciones",
-        type: "bar",
-        marker: { color: "#badc58" },
-        hoverlabel: { font:{size:18}},
-        insidetextfont: {color: "#FFFFFF", 
-                         size: 16,                                         
-                         }
+
+        type: 'table',
+        header: {
+          values: [["Cédula"], ["Nombre"], ["Apellido"], ["Área de Investigación"], ["Número de Citas"], ["Nombre de Publicación"]],
+          align: ["left", "center"],
+         // line: {width: 1, color: '#506784'},
+          fill: {color: '#119DFF'},
+          font: {family: "Arial", size: 12, color: "white"}
+        },
+        cells: {
+          values: values,
+          align: ["left", "center"],
+         // line: {color: "#506784", width: 1},
+          fill: {color: ['#25FEFD', 'white']},
+          font: {size: 11, color: ["#506784"]}
+        }
       });
 
 
@@ -308,7 +373,7 @@ export default {
           });
       
       });
-
+/*
       doc.addPage();
       doc.setFont("helvetica");
       doc.setFontSize(8);
@@ -359,7 +424,7 @@ export default {
         doc.text(saved[j]["address"], 150, aux); 
         aux = aux + 5;       
       }
-
+*/
       doc.save(reportName + ".pdf");
     }, //end_of_download()
 
