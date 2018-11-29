@@ -11,7 +11,7 @@
       <!--Download buttons-->
       <!--div class="col-md-12 text-center">
                 
-<!--        <button class="button button-pdf" @click="download_pdf">
+        <button class="button button-pdf" @click="download_pdf">
           <i class="fa fa-file-pdf fa-lg"></i> Descargar PDF
         </button>
         
@@ -21,7 +21,6 @@
 
       </div>
 
--->
 
       </div-->
 
