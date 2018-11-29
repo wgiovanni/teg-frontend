@@ -1,3 +1,4 @@
+
 <template>
   <div class="row row-view">
     <!--GRAPH-->
@@ -11,7 +12,7 @@
       <!--Download buttons-->
       <div class="col-md-12 text-center">
                 
-<!--        <button class="button button-pdf" @click="download_pdf">
+        <button class="button button-pdf" @click="download_pdf">
           <i class="fa fa-file-pdf fa-lg"></i> Descargar PDF
         </button>
         
@@ -19,8 +20,6 @@
           <i class="fa fa-file-excel fa-lg"></i> Descargar Excel
         </button>
       </div>
-
--->
       <!--Return button-->
       <div class="col-md-16 text-center">
         <router-link to="/reports">
@@ -134,10 +133,9 @@ import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
 
-var reportName = "Publicaciones por Docente";
+var reportName = "Citas por Publicación";
 var img;
-var info = []; //Saves data for verification
-var json;
+//var info = []; //Saves data for verification
 //var saved = [];
 var date = new Date();
 
@@ -162,7 +160,7 @@ export default {
 
     
      load() {
-      const path = "http://127.0.0.1:5000/api/v1/profesor-publicacion";
+      const path = "http://127.0.0.1:5000/api/v1/citas-publicacion";
       axios
         .get(path)
         .then(request => this.successful(request))
@@ -179,7 +177,8 @@ export default {
       var nombres = [];
       var publicaciones = [];
       var nombrePublicacion = [];
-
+      var numCitas = [];
+   
       var i;
       var j;
       var k;
@@ -189,54 +188,33 @@ export default {
       var aux;
       var auxPub = [];
       var publication = [];
+      var citation = [];
       var flag = true;
   
-     
 
     for (i = 0; i < size; i++) {
 
-     
         cedulas.push(d[i]["cedula"]);
         nombres.push(d[i]["primer_nombre"]);
         apellidos.push(d[i]["primer_apellido"]);
         areasInv.push(d[i]["area_de_investigacion"]);
         publicaciones.push(d[i]["publicaciones"]);
 
-      info.unshift({
-        cedula: cedulas[i],
-        primer_nombre: nombres[i],
-        primer_apellido:apellidos[i],        
-        area_de_investigacion: areasInv[i],       
-        
-      });
+        console.log("publicacion", publicaciones);  
 
-    /*    info.push(cedulas[i]);
-        info.push(nombres[i]);
-        info.push(apellidos[i]);
-        info.push(areasInv[i]);
-     */  
-       
-        console.log("publicacion", publicaciones);  //array de publicaciones
-
-        auxPub = publicaciones[i]; //publicaciones del docente en la posición i
-
-      info.unshift({
-        num_publicaciones: auxPub.length        
-      });
-        
-       // info.push(auxPub.length);//agrega cantidad de publicaciones
-  
+        auxPub = publicaciones[i];
    
         console.log("auxpub ", auxPub);
         
         for (j = 0; j < auxPub.length; j++) {       
           nombrePublicacion.push(auxPub[j]["titulo_publicacion"]);
-                       
+          numCitas.push(auxPub[j]["citas"]);         
         }
  
         console.log("nombre ", nombrePublicacion);
         
-        for (k = 0; k < nombrePublicacion.length; k++) {           
+        for (k = 0; k < nombrePublicacion.length; k++) { 
+          
           if(flag){
             aux = nombrePublicacion[k];
             flag = false;
@@ -250,29 +228,30 @@ export default {
         console.log("publication ", publication); 
 
         flag = true;          
-        publication.push(aux);    
-
-        info.unshift({
-          segundo: aux        
-        });
-
-        //info.push(aux); 
+        publication.push(aux);      
         aux = "";    
       }    
 
-       console.log("info ", info);
-
-       
+       /*
+       // Saves data for verification
+      info = d["items"];
       info.unshift({
         cedula: "Cédula",
-        primer_nombre: "Nombre",
-        primer_apellido: "Apellido",      
+        nombre: "Nombre",
+        apellido: "Apellido",
+        correo: "Correo",
         area_de_investigacion: "Área de Investigación",
-        num_publicaciones: "Número de Publicaciones",
-        publicaciones: "Publicaciones"
-        
+        publicacion: "Publicación",
+        url_citacion: "Link a Citación",
+        url_publicacion: "Link a Publicación",
+        numero_citas: "Número de Citas",
+        facultad: "Facultad"
       });
-      console.log("info 2", info);
+      console.log("info ", info);
+
+      saved = d["recuperado"];
+*/
+
 
       var values = [
         cedulas,
@@ -287,7 +266,7 @@ export default {
 
         type: 'table',
         header: {
-          values: [["Cédula"], ["Nombre"], ["Apellido"], ["Área de Investigación"], ["Publicaciones"]],
+          values: [["Cédula"], ["Nombre"], ["Apellido"], ["Área de Investigación"], ["Nombre de Publicación"]],
           align: ["center"],
           line: {width: 1, color: '#506784'},
           fill: {color: '#119DFF'},
@@ -388,7 +367,7 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.setFontSize(16);
-      doc.text("Datos de Referencia", 25, 25);
+      doc.text("Datos de Referencia", 20, 20);
       
       // Table
       doc.setFontSize(7);
@@ -398,21 +377,19 @@ export default {
       $.each(info, function(i, row) {
        
           $.each(row, function(j, cell) {
-
-              if ( j =="publicaciones") {
-                  doc.cell(10, 25, 70, 15, cell, i);
-                } else              
-              if ( j =="correo") {
+            if (cell != "Publicación" & cell!="Link a Citación" & cell!="Link a Publicación") {
+              if(j!="publicacion" & j!="url_citacion" & j!="url_publicacion"){
+                if (j == "facultad" | j =="correo") {
                   doc.cell(10, 25, 60, 15, cell, i);
                 } else if (j == "area_de_investigacion") {
                   doc.cell(10, 25, 40, 15, cell, i);
-                } else if (j == "cedula") {
+                } else if (j == "cedula" | j == "numero_citas") {
                   doc.cell(10, 25, 25, 15, cell, i);
                 } else{
                   doc.cell(10, 25, 35, 15, cell, i);
                 }
-              
-          
+              }
+            }
           });
       
       });
@@ -489,13 +466,16 @@ export default {
 
       // Column Properties
       var wscols = [
-        { wch: 12 },
+        { wch: 10 },
         { wch: 20 },
         { wch: 20 },
         { wch: 40 },
         { wch: 30 },
-        { wch: 8 },
-        { wch: 100 }
+        { wch: 50 },
+        { wch: 50 },
+        { wch: 50 },
+        { wch: 20 },
+        { wch: 40 }
       ];
       ws["!cols"] = wscols;
 
