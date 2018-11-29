@@ -11,13 +11,10 @@
         <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">FECHAS TOPES</a>
         </div>
       
-      
                     <blockquote>
-                      <header>
-                        <br>
-                      <h2 id="titulo" class="text-center menu ">Pre-grado</h2>
-                      </header>
+                      
                     </blockquote>
+                  
     </div>
 
     <div class="col-11">
@@ -55,10 +52,26 @@
 
 
                   </nav>
+                   <blockquote>
+                      
+                    </blockquote>
+                            <div class="intru">
+                              <h4 >Pasos a seguir</h4>
+                                <p >1-haga click en el boton seleccionar archivo.</p>
+                                <p >2-seleccione el archivo csv que desea ingresar en el sistema.</p>
+                                <p >3-Presione el boton de enviar.</p>
+                                <p >4-En caso que ocurra  un error , modifique el archivo seleccionado y vuelva a intentarlo.</p>
+                                
+                            </div>
                 </div>
                 
                 <div class="col-sm-8">
-                  
+                    <blockquote>
+                      <header>
+                        <br>
+                      <h2 id="titulo" class="text-center menu ">Pre-grado</h2>
+                      </header>
+                    </blockquote>
                           <!-- <ul class="" id="resul">	
                       
                           </ul>
@@ -79,32 +92,25 @@
                           <div class="container">
                               <ul class="" id="resul">	
                       
-                          </ul>
+                              </ul>
                             <div id="columna_principal" class="large-12 medium-12 small-12 cell">
-                              <div id= "alert" class="alert alert-secondary" role="alert">
-                              <h6 id= "i" >Selecione un archivo</h6>
+                                <div id= "alert" class="alert alert-secondary" role="alert">
+                                  <h6 id= "i" >Selecione un archivo</h6>
+                                </div>
+                                     
                             </div>
-                            <!-- <p >Fecha tope de subida: 2-11-2018</p> -->
-                            <!-- <div v-if="loading==true">
-                              <Spinner style="display:block; margin:auto;"></Spinner>
-                            </div> -->
-                            <div class="archivo normal rounded" id="alert">
-                              <label>Archivo
-                                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-                              </label>
-                              <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button>
-                              
-                              </div>
-                              <div class="intru">
-                              <h4 >Pasos a seguir</h4>
-                                <p >1-haga click en el boton seleccionar archivo.</p>
-                                <p >2-seleccione el archivo csv que desea ingresar en el sistema.</p>
-                                <p >3-Presione el boton de enviar.</p>
-                                <p >4-En caso que ocurra  un error , modifique el archivo seleccionado y vuelva a intentarlo.</p>
+                                <div class="archivo normal rounded" >
+                                  <label>Archivo
+                                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload();"/>
+                                  <!-- <input type="file" class="btn btn-primary" id="file" ref="file" v-on:change="handleFileUpload();"/> -->
+                                  </label>
+                                  <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button>
                                 
-                              </div>
+                                </div>
+                              
 
-                            </div>
+                            
+
                           </div>
 
                     
@@ -116,7 +122,7 @@
         <div class="tab-pane fade " id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" :load="cargar_fecha()"  >
           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
               
-                <div class="col s12 margen"  >
+                <div class="col s12 "  >
                     <h4>PREGRADO</h4>
                     
                     <div class="form-group row">
@@ -167,7 +173,7 @@
                 </div>
 
                 
-                <div class="col s12 margen"  >
+                <div class="col s12 "  >
                     <h4>POSTGRADO</h4>
                     
                     <div class="form-group row">
@@ -293,18 +299,15 @@
                       
                           </ul>
                             <div id="columna_principal" class="large-12 medium-12 small-12 cell">
-                              <div id= "alert" class="alert alert-secondary" role="alert">
-                              <h6 id= "i" >Selecione un archivo</h6>
+                                  <div id= "alert" class="alert alert-secondary" role="alert">
+                                     <h6 id= "i" >Selecione un archivo</h6>
+                                  </div>
                             </div>
-                            <!-- <p >Fecha tope de subida: 2-11-2018</p> -->
-                            <!-- <div v-if="loading==true">
-                              <Spinner style="display:block; margin:auto;"></Spinner>
-                            </div> -->
-                            <div class="archivo normal rounded" id="alert">
-                              <label>Archivo
-                                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-                              </label>
-                              <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button>
+                              <div class="archivo normal rounded" >
+                                  <label>Archivo
+                                    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                                  </label>
+                                  <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button>
                               
                               </div>
                               <!-- <div class="intru">
@@ -315,7 +318,7 @@
                                 <p >4-En caso que ocurra  un error , modifique el archivo seleccionado y vuelva a intentarlo.</p>
                                 
                               </div> -->
-                            </div>
+                            
                           </div>
                     
                 </div>
@@ -323,7 +326,7 @@
                 <div class="col-md-1"  >
                   
                         <div class="input-group center">             
-                              <div  class="alert  alert-success " role="alert">
+                              <div id="colorfecha" class="alert  alert-success " role="alert">
                                 Fecha tope de subida:
                                 <input type="date" id="fecha_tope"  disabled=true value= "2010-01-01"  />    
                               </div>  
@@ -344,24 +347,8 @@
 </template>
 
 <script>                       
-$(document).ready(function(){          
-    $("#LinkFecha").click(function(){
 
-     $( "#LinkArchivo" ).removeClass( "active" )
-      $( "#LinkFecha" ).addClass( "active" )
-      $("#carga").css("display", "none");
-      $("#fecha").css("display", "block");
-       
-    });
-     $("#LinkArchivo").click(function(){
-     $( "#LinkFecha" ).removeClass( "active" )
-      $( "#LinkArchivo" ).addClass( "active" )
-      $("#fecha").css("display", "none");
-      $("#carga").css("display", "block");
-     
-    
-    });
-});
+
 import Vue from 'vue';
 import axios from 'axios';
 import {mapState,mapGetters} from "vuex"
@@ -530,7 +517,10 @@ mymethod(){
 
                      if(res.data["exitosa"].length>0){
                         if(document.getElementById("alert")){
-                         document.getElementById("alert").remove();
+                        //  console.log(document.getElementById("alert"));
+                          
+                          document.getElementById("alert").remove();
+                         console.log("elimino alert");
                         }
 
                     }else{
@@ -538,12 +528,12 @@ mymethod(){
                             var div = document.getElementById("alert");
                             div.setAttribute('class','alert text-center alert-success');
                             div.textContent= "Se han guardado los cambios";
-                            //  console.log("entroo2")
+                              console.log("entroo2")
                            }else{
                     
                             document.getElementById("columna_principal").innerHTML = " <div id='alert' class='alert text-center alert-success col-lg-11' role='alert'><h6 id= 'i'>Se han guardado los cambios</h6> </div>  ";
                             document.getElementById("resul").innerHTML = "";
-                            //  console.log("entroo3")
+                              console.log("entroo3")
                           }
                       
                     }
@@ -556,7 +546,8 @@ mymethod(){
                           div.textContent= "Error al cargar el archivo";
                     }else{
                    
-                           document.getElementById("columna_principal").innerHTML = " <div id='alert' class='alert text-center alert-danger col-lg-11' role='alert'><h6 id= 'i'>Error al cargar el archivo</h6> </div>  ";
+                           document.getElementById("columna_principal").innerHTML =  " <div id='alert' class='alert text-center alert-danger col-lg-11' role='alert'><h6 id= 'i'>Error al cargar el archivo</h6> </div>  ";
+                          
                           document.getElementById("resul").innerHTML = "";
                     }
               }
@@ -659,6 +650,7 @@ mymethod(){
 </script>
 
  <style>
+ 
  .archivo{
           
           background: rgba(155,155,155,0.3);
@@ -731,6 +723,7 @@ mymethod(){
    .intru {
           
            padding: 0px 0px;
+           
         }
 
 
@@ -741,6 +734,7 @@ mymethod(){
    .intru {
           
           display:none;
+          /* margin-top: 20%; */
         }
 
  

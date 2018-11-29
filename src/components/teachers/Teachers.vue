@@ -25,7 +25,7 @@
               <label>
                 <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
               </label>
-              <button class="btn btn-light" id="enviar"v-on:click="submitFile()">Enviar</button>
+              <button class="btn btn-light" id="enviar" v-on:click="submitFile()">Enviar</button>
             </div>
           </div>
           <div class="col-xl-4 col-md-4 col-sm-0">
@@ -102,8 +102,6 @@
                   </form>
   </div>
   </div>
-</div>
-</div>
 
 </template>
 
