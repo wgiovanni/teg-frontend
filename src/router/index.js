@@ -56,10 +56,10 @@ import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 import Delete from '@/components/admin/Delete'
 import store from '@/store'
-
 Vue.use(Router)
 
 export const router = new Router({
+  // base: '/ucrankings',
   routes: [
     {
       path: '/login',
@@ -621,8 +621,8 @@ export const router = new Router({
               console.log("vamos a integracion");
               next()
             }
+          }
         }
-      }
       ]
     }
   ],

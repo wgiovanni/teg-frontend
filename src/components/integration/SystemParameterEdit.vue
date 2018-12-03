@@ -4,21 +4,21 @@
           <div class="col s12"><h2>Editar parámetro del sistema</h2></div>
             <form class="col s12" @submit.prevent="save">
               <div class="alert alert-danger" v-if="error">{{ error }}</div>
-              <div class="form-group">
-                <label for="codigo">Código</label>
+              <div class="form-group required">
+                <label for="codigo" class="control-label">Código</label>
                 <input v-model="codigo" type="text" id="codigo" class="form-control" placeholder="Código" readonly>
               </div>            
-              <div class="form-group">
-                <label for="nombre">Nombre</label>
+              <div class="form-group required">
+                <label for="nombre" class="control-label">Nombre</label>
                 <input v-model="nombre" type="text" id="nombre" class="form-control" placeholder="Nombre" required>
               </div>
-              <div class="form-group">
-                <label for="descripcion">Descripción</label>
+              <div class="form-group required">
+                <label for="descripcion" class="control-label">Descripción</label>
                 <!--input v-model="descripcion" type="text" id="descripcion" class="form-control" placeholder="Descripción" required-->
                 <textarea v-model="descripcion" class="form-control" id="descripcion" rows="3" required></textarea>
               </div>
-              <div class="form-group">
-                <label for="definicion">Definición</label>
+              <div class="form-group required">
+                <label for="definicion" class="control-label">Definición</label>
                 <!--input v-model="definicion" type="text" id="definicion" class="form-control" placeholder="Definición" required-->
                 <textarea v-model="definicion" class="form-control" id="definicion" rows="3" required></textarea>
               </div>
@@ -40,6 +40,7 @@
 <script>
 import axios from 'axios';
 import { mapState, mapGetters } from "vuex";
+import { URL_INTEGRATION } from "@/common/constants"
 
 export default {
   name: 'SystemParameterEdit',
@@ -55,7 +56,7 @@ export default {
   },
    methods: {
     save: function () {
-    const path = 'http://localhost:5000/api/v1/parametroSistema' + '/' + this.id;
+    const path = URL_INTEGRATION + '/parametroSistema' + '/' + this.id;
     axios.put(path, {
       id: this.id, 
       codigo: this.codigo, 
@@ -74,7 +75,7 @@ export default {
       this.error = 'System Parameter failed!'
     },
     findById () {
-        const path = 'http://localhost:5000/api/v1/parametroSistema'.concat('/' + this.id);
+        const path = URL_INTEGRATION + '/parametroSistema'.concat('/' + this.id);
         axios.get(path)
         .then(request => this.findByIdSuccess(request))
         .catch(() => console.log("Error FINDBYID"))

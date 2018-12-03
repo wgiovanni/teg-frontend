@@ -5,36 +5,36 @@
             <form class="col s12" @submit.prevent="savePost">
               <!--h2 class="form-signin-heading">Please sign in</h2-->
               <div class="alert alert-danger" v-if="error">{{ error }}</div>
-              <div class="form-group">
-                <label for="first_name">Nombre</label>
+              <div class="form-group required">
+                <label for="first_name" class="control-label">Nombre</label>
                 <input v-model="first_name" type="text" id="first_name" class="form-control" placeholder="Nombre" required>
               </div>            
-              <div class="form-group">
-                <label for="last_name">Apellido</label>
+              <div class="form-group required">
+                <label for="last_name" class="control-label">Apellido</label>
                 <input v-model="last_name" type="text" id="last_name" class="form-control" placeholder="Apellido" required>
               </div>
-              <div class="form-group">
-                <label for="username">Nombre de usuario</label>
-                <input v-model="username" type="text" id="username" class="form-control" placeholder="Nombre de usuario" required>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail">Correo Electrónico</label>
+              <div class="form-group required">
+                <label for="inputEmail" class="control-label">Correo Electrónico</label>
                 <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required autofocus>
               </div>
-              <div class="form-group">
-                <label for="inputPhone">Teléfono</label>
+              <div class="form-group required">
+                <label for="inputPhone" class="control-label">Teléfono</label>
                 <input v-model="phone" type="text" id="inputPhone" class="form-control" placeholder="Teléfono" required>
               </div>
-              <div class="form-group">
-                <label for="inputAddress">Dirección</label>
+              <div class="form-group required">
+                <label for="inputAddress" class="control-label">Dirección</label>
                 <textarea v-model="address" class="form-control" id="inputAddress" rows="3" required></textarea>
               </div>
-              <div class="form-group">
-                <label for="inputPassword">Contraseña</label>
+              <div class="form-group required">
+                <label for="username" class="control-label">Nombre de usuario</label>
+                <input v-model="username" type="text" id="username" class="form-control" placeholder="Nombre de usuario" required>
+              </div>
+              <div class="form-group required">
+                <label for="inputPassword" class="control-label">Contraseña</label>
                 <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
               </div>
-              <div class="form-group">
-                <label for="inputRole">Role</label>
+              <div class="form-group required">
+                <label for="inputRole" class="control-label">Role</label>
                 <select class="form-control" :required="true" v-model="id_role">
                   <!--option :selected="true"></option-->
                   <option v-for="role in roles" :key="role.id" v-bind:value="role.id">{{ role.name }}</option>
@@ -59,7 +59,7 @@
 <script>
 import axios from 'axios';
 import { mapState, mapGetters } from "vuex";
-
+import { URL_USER } from "@/common/constants"
 
 export default {
   name: 'Edit',
@@ -81,7 +81,7 @@ export default {
   },
    methods: {
     savePost: function () {
-    const path = 'http://localhost:8084/api/v1/user' + '/' + this.id;
+    const path = URL_USER + '/user' + '/' + this.id;
     axios.put(path, {
       id: this.id, 
       first_name: this.first_name, 
@@ -108,7 +108,7 @@ export default {
     this.error = 'User failed!'
     },
     findById () {
-        const path = 'http://localhost:8084/api/v1/user'.concat('/' + this.id);
+        const path = URL_USER + '/user'.concat('/' + this.id);
         axios.get(path)
         .then(request => this.findByIdSuccess(request))
         .catch(() => console.log("Error Login"))
@@ -130,7 +130,7 @@ export default {
         
     },
     roleAll () {
-      const path = 'http://localhost:8084/api/v1/role';
+      const path = URL_USER + '/role';
       axios.get(path)
        .then(request => this.roleSuccessful(request))
         .catch(() => this.roleFailed())

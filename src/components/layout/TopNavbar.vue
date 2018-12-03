@@ -1,11 +1,10 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light header-border fixed-top">
        
-       
-        <a class="navbar-brand mr-auto text-center uc-ranking" href="/">
+        <router-link class="navbar-brand mr-auto text-center uc-ranking" to="/" tag="a">
             <img src="../../assets/escudo.png" width="52" height="58" class="d-inline-block align-top" alt="">
             UC RANKING 
-        </a>
+        </router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,13 +25,9 @@
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <div v-if="this.user.name=='vicerrector'">
-                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
-                        </div>
-                        <div v-if="this.user.name=='verificador'">
-                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
-                        </div>
-                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                        <router-link to="/login" tag="a" class="btn btn-danger">
+                            Salir
+                        </router-link>
                     </div>
                 </li>   
             </ul>          
@@ -54,13 +49,9 @@
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <div v-if="this.user.name=='vicerrector'">
-                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
-                        </div>
-                        <div v-if="this.user.name=='verificador'">
-                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
-                        </div>
-                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                        <router-link to="/login" tag="a" class="btn btn-danger">
+                            Salir
+                        </router-link>
                     </div>
                 </li>   
             </ul>          
@@ -89,18 +80,20 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         <div v-if="this.user.name=='vicerrector'">
-                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
+                            <a class="btn btn-light" v-on:click="changeRoleVerify">Cambiar a rol de Verificador</a>
                         </div>
                         <div v-if="this.user.name=='verificador'">
-                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
+                            <a class="btn btn-light" v-on:click="changeRoleVicerector">Cambiar a rol de Vicerrector</a>
                         </div>
-                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                        <router-link to="/login" tag="a" class="btn btn-danger">
+                            Salir
+                        </router-link>
                     </div>
                 </li>   
             </ul>          
         </div>
-        <!--Verificador-->
-        <div v-if="this.user.name=='verificador'" class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!--Vicerrector-->
+        <div v-if="this.user.name=='verificador' && this.user.username == 'vicerrector'" class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Parte central del Narbar -->
              <ul class="navbar-nav ml-auto">
                 <router-link tag="li" class="nav-item" 
@@ -117,12 +110,37 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         <div v-if="this.user.name=='vicerrector'">
-                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
+                            <a class="btn btn-light" v-on:click="changeRoleVerify">Cambiar a rol de Verificador</a>
                         </div>
                         <div v-if="this.user.name=='verificador'">
-                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
+                            <a class="btn btn-light" v-on:click="changeRoleVicerector">Cambiar a rol de Vicerrector</a>
                         </div>
-                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                        <router-link to="/login" tag="a" class="btn btn-danger">
+                            Salir
+                        </router-link>
+                    </div>
+                </li>   
+            </ul>          
+        </div>
+        <div v-if="this.user.name=='verificador' && this.user.username == 'verificador'" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Parte central del Narbar -->
+             <ul class="navbar-nav ml-auto">
+                <router-link tag="li" class="nav-item" 
+                v-bind:key="links[3].id" 
+                :to="`${links[3].path}`"><a class="nav-link">{{links[3].name}}</a></router-link>  
+            </ul>
+            
+            <!--Parte izquierdo del Narbar-->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">person</i>{{this.user.username}}
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <router-link to="/login" tag="a" class="btn btn-danger">
+                            Salir
+                        </router-link>
                     </div>
                 </li>   
             </ul>          
@@ -146,13 +164,9 @@
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <div v-if="this.user.name=='vicerrector'">
-                            <a class="btn btn-light" v-on:click="changeRoleVerify">Rol {{this.user.name}}</a>
-                        </div>
-                        <div v-if="this.user.name=='verificador'">
-                            <a class="btn btn-secondary" v-on:click="changeRoleVicerector">Rol {{this.user.name}}</a>
-                        </div>
-                        <a class="btn btn-danger" href="/login" role="button">Salir</a>
+                        <router-link to="/login" tag="a" class="btn btn-danger">
+                            Salir
+                        </router-link>
                     </div>
                 </li>   
             </ul>          
@@ -202,6 +216,7 @@
 import axios from "axios";
 import { mapState, mapGetters } from "vuex";
 import { logout } from "@/store";
+import { URL_USER } from "@/common/constants"
 export default {
   name: "TopNavbar",
   data() {
@@ -224,7 +239,7 @@ export default {
             },*/
         {
           id: 2,
-          name: "Integración",
+          name: "Configuración",
           path: "/integration"
         },
         {
@@ -248,7 +263,7 @@ export default {
   methods: {
     changeRoleVerify: function() {
       const path =
-        "http://localhost:8084/api/v1/userVerify" + "/" + this.user.id;
+        URL_USER + "/userVerify" + "/" + this.user.id;
       axios
         .get(path)
         .then(request => {
@@ -262,7 +277,7 @@ export default {
     },
     changeRoleVicerector: function() {
       const path =
-        "http://localhost:8084/api/v1/userVicerector" + "/" + this.user.id;
+        URL_USER + "/userVicerector" + "/" + this.user.id;
       axios
         .get(path)
         .then(request => {

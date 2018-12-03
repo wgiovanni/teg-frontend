@@ -1,9 +1,9 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light header-border fixed-top">
-        <a class="navbar-brand mr-auto text-center uc-ranking" href="/">
+                <router-link class="navbar-brand mr-auto text-center uc-ranking" to="/" tag="a">
             <img src="../assets/escudo.png" width="52" height="58" class="d-inline-block align-top" alt="">
             UC RANKING 
-        </a>
+        </router-link>
     </nav>
 </template>
 

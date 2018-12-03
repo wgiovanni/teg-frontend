@@ -1,32 +1,27 @@
 //api/index.js
 import axios from 'axios'
-
-const API_URL = "http://localhost:8084/api/v1"
+import { URL_USER } from "@/common/constants";
 
 export function fetchUsers() {
-    return axios.get(`${API_URL}/user`)
+    return axios.get(`${URL_USER}/user`)
 }
 
 export function fetchUser(userId) {
-    return axios.get(`${API_URL}/user/${userId}`)
+    return axios.get(`${URL_USER}/user/${userId}`)
 }
 
-/*export function getByUsername(username) {
-    return axios.get(`${API_URL}/username/${username}`)
-}*/
-
 export function updateUser (userResponse) {
-    return axios.put(`${API_URL}/user/${userResponse.id}/`, userResponse)
+    return axios.put(`${URL_USER}/user/${userResponse.id}/`, userResponse)
 }
   
 export function saveUser (user, jwt) {
-    return axios.post(`${API_URL}/user`, user, { headers: { Authorization: `Bearer: ${jwt}` } })
+    return axios.post(`${URL_USER}/user`, user, { headers: { Authorization: `Bearer: ${jwt}` } })
 }
 
 export function deleteUser (userId) {
-    return axios.delete(`${API_URL}/user/${userId}`)
+    return axios.delete(`${URL_USER}/user/${userId}`)
 }
 
 export function authenticate (userData) {
-    return axios.post(`${API_URL}/login`, userData)
+    return axios.post(`${URL_USER}/login`, userData)
 }

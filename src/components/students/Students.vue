@@ -3,12 +3,16 @@
 <div  id="funcion"  class="container-fluid marge">
     
 
-  <div v-if="this.user.username=='vicerrector'" class="row ">
+  <div v-if="this.user.username=='vicerrector' || this.user.username=='Admin'" class="row ">
     <div class="col" >
-        <div class="nav nav-item nav-pills text-center "   role="tablist" aria-orientation="vertical">
+      
+                    <blockquote>
+                      
+                    </blockquote>
+        <div class="nav nav-item nav-pills text-center " @click="limpiar();"  role="tablist" aria-orientation="vertical">
       <!-- <div class="nav nav-item nav-pills  text-center fondo" id="v-pills-tab" role="tablist" aria-orientation="vertical" > -->
-        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true" >CARGA DE ARCHIVO</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">FECHAS TOPES</a>
+        <a class="nav-link active" id="v-pills-home-tab"  @click="limpiar();" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true" >CARGA DE ARCHIVO</a>
+        <a class="nav-link" id="v-pills-profile-tab"  @click="limpiar();" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">FECHAS TOPES</a>
         </div>
       
                     <blockquote>
@@ -220,7 +224,9 @@
                         <input type="date" id="fcs2" value="2018-01-01" class="form-control" >
                       </div>
                     </div>
-                  
+                  <ul class="" id="resul2">	
+                      
+                          </ul>
                 
                     <div class="form-group" id="boton">
                         
@@ -352,6 +358,8 @@
 import Vue from 'vue';
 import axios from 'axios';
 import {mapState,mapGetters} from "vuex"
+
+
   export default{
     /*
       Defines the data used by the component
@@ -379,6 +387,15 @@ import {mapState,mapGetters} from "vuex"
     var heightBrowser = window.outerHeight;
     console.log("Tamaño de la pantalla del navegador: width=" + widthBrowser + ", height=" + heightBrowser);
 },
+
+limpiar: function(){
+  if(document.getElementById('resul2')){
+
+           document.getElementById('resul2').innerHTML = "";
+           };//numero de empleados online
+
+},
+ 
      
       guardarfechas: function(){
     console.log("entrooo carga fecha");
@@ -410,17 +427,42 @@ import {mapState,mapGetters} from "vuex"
                 
               }
             ).then(function(res){
-           console.log(res.data);            
-          
+           console.log(res.data);  
+           if(res.data[0]=='exito'){          
+                              var li=document.createElement('LI');
+                    li.innerHTML="<h6 id= 'i'>Se han guardado los cambios</h6>";
+                    li.setAttribute('class','alert text-center alert-success');
+                    document.getElementById('resul2').appendChild(li);
+            }
           console.log('SUCCESS!!');
+
+            
+//           setInterval(function(){
+//  if(document.getElementById('resul2')){
+
+//           document.getElementById('resul2').innerHTML = "";
+//           };//numero de empleados online
+//   },15000);
+
         })
         .catch(res=> {
          console.log(res);
+          var li=document.createElement('LI');
+                    li.innerHTML="<h6 id= 'i'>'"+res+"'</h6>";
+                    li.setAttribute('class','alert text-center alert-danger');
+                    document.getElementById('resul2').appendChild(li);
+
           console.log('FAILURE!!');
         });
-        
-     
+        console.log("deberia eliminar")
+        document.getElementById('resul2').innerHTML = "";
+        if(document.getElementById('resul2')){
+          document.getElementById('resul2').innerHTML = "";
+          };
+      // setInterval("if(document.getElementById('resul2')){document.getElementById('resul2').innerHTML = '';",3000);
+      
       },
+     
       
 mymethod(){
   

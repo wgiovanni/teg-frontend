@@ -104,23 +104,28 @@
 
 <style>
 
-.custom-list{
-    margin-left: 60rem;
-    margin-top: -10rem;
-}
+
+.custom-margin{
+    margin-top: -100px;
+}  
 
 .title-customized{
-    margin-top: -30rem;
-    margin-left: 20rem;    
+    margin-top: 5rem;
+    margin-left: 20rem;  
+    margin-bottom: -40rem;  
 }
 
-.vue-plotly {
-    margin-left: 10rem;
+.vue-plotly {    
+    margin-left: 0rem;
+    margin-top: 40rem;
 }
+
 
 .form-row{
     margin-top: 10rem;
+    margin-left: 8rem;  
 }
+
 
 .form-control:hover {
   border-color: gray;

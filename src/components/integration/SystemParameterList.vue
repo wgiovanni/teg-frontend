@@ -36,9 +36,9 @@
 <script>
 import axios from 'axios';
 
-//import New from '@/components/admin/New'
-//import Edit from '@/components/admin/Edit'
+
 import Spinner from '@/components/Spinner'
+import { URL_INTEGRATION } from "@/common/constants"
 
 export default {
   name: 'SystemParameterList',
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     systemParameterAll () {
-      const path = 'http://localhost:5000/api/v1/parametroSistema';
+      const path = URL_INTEGRATION + '/parametroSistema';
       this.loading = true; 
       axios.get(path)
        .then(request => this.successful(request))

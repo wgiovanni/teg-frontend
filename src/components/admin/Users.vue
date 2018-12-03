@@ -14,7 +14,7 @@
                 <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
-                    <th scope="col">Usuario</th>
+                    <th scope="col">Nombre de Usuario</th>
                     <th scope="col">Correo</th>
                     <th scope="col">Teléfono</th>
                     <th scope="col">Dirección</th>
@@ -56,6 +56,7 @@ import axios from 'axios';
 import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 import Spinner from '@/components/Spinner'
+import { URL_USER } from "@/common/constants"
 
 export default {
   name: 'List',
@@ -72,7 +73,7 @@ export default {
   },
   methods: {
     usersAll () {
-      const path = 'http://localhost:8084/api/v1/user';
+      const path = URL_USER + '/user';
       this.loading = true;
       axios.get(path)
        .then(request => this.userSuccessful(request))

@@ -1,11 +1,11 @@
 <template>
 
-<div class="container marge">
-   <div  class="row" id="submenu">
+<div class="container marger">
+   <div  class="row" v-if="this.user.username=='vicerrector' || this.user.username=='Admin'" id="submenu">
       <div class="col">
         <div class="nav nav-item nav-pills text-center fondo"   role="tablist" aria-orientation="vertical">
-          <a class="nav-link active" id="LinkArchivo" href="#" >CARGA DE ARCHIVO</a>
-          <a class="nav-link" id="LinkFecha" href="#" >FECHAS TOPES</a>
+          <a class="nav-link active" id="LinkArchivo" @click="cambiar2()" href="#" >CARGA DE ARCHIVO</a>
+          <a class="nav-link" id="LinkFecha"   @click="cambiar()" href="#" >FECHAS TOPES</a>
         </div>
       </div>
     </div>
@@ -33,6 +33,7 @@
                <h4 >Pasos a seguir</h4>
                 <p >1-haga click en el boton seleccionar archivo.</p>
                 <p >2-seleccione el archivo csv que desea ingresar en el sistema.</p>
+                 <button class="btn btn-light" id="centar" @click="Ver()" >Ver ejemplo archivo </button>
                 <p >3-Presione el boton de enviar.</p>
                 <p >4-En caso que ocurra  un error , modifique el archivo y vuelva a intentarlo.</p>
               </div>
@@ -101,7 +102,14 @@
                       </div>
                   </form>
   </div>
+  <div id="Ver">
+    <h2>Ejemplo</h2>
+    <div id="imagen" class="zoom"><img src="../../assets/Screenshot_1.png" ></div>
+     <button class="btn btn-light" id="Centar" @click="Regresar()" >Regresar </button>
+
   </div>
+</div>
+
 
 </template>
 
@@ -239,7 +247,34 @@ import Spinner from '@/components/Spinner'
          
           console.log(res.data); 
           console.log('SUCCESS!!');
-        },
+        }, cambiar()
+          {
+          $( "#LinkArchivo" ).removeClass( "active" )
+          $( "#LinkFecha" ).addClass( "active" )
+          $("#carga").css("display", "none");
+          $("#fecha").css("display", "block");
+            console.log("HOLA");
+          },
+          Ver() {
+          $("#submenu").css("display", "none");
+          $("#fecha").css("display", "none");
+          $("#carga").css("display", "none");
+          $("#Ver").css("display", "block");
+      
+          },
+          cambiar2()
+          {
+          $( "#LinkFecha" ).removeClass( "active" )
+          $( "#LinkArchivo" ).addClass( "active" )
+          $("#fecha").css("display", "none");
+          $("#carga").css("display", "block");
+          },
+          Regresar()
+          {
+          $("#submenu").css("display", "block");
+          $("#Ver").css("display", "none");
+          $("#carga").css("display", "block");
+          },
 
       /*
         Handles a change on the file upload
@@ -281,7 +316,12 @@ import Spinner from '@/components/Spinner'
       #fecha{
            display:none;
          
+        }.marger{
+          
+               margin-top:8%;
+           
         }
+        
       .copyright{
           
           
@@ -373,6 +413,37 @@ import Spinner from '@/components/Spinner'
           margin:auto;
        
         }
+         #fecha,#Ver{
+           display:none;
+         
+        }
+  #imagen img{
+             width:1200px;
+              margin-left:-90px;
+        
+        }
+.zoom {
+    padding: 50px;
+    
+    transition: transform .2s; /* Animation */
+    width: 200px;
+    height: 200px;
+   
+}
+#centar{
+          display:block;margin:auto;
+           margin-bottom:20px; margin-top:20px;
+        }
+        
+        #Centar{
+          display:block;margin:auto;
+           margin-bottom:20px; margin-top:220px;
+        }
+.zoom:hover {
+    transform: scale(1.3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    margin-left:-100px;
+     margin-bottom:159px;
+}
 </style>
 
 

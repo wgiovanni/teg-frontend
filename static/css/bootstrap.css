@@ -9349,3 +9349,8 @@ a.text-dark:hover, a.text-dark:focus {
 .header-border{
   border-bottom: 4px solid #981E32;
 }
+
+.form-group.required .control-label:after {
+  content:" *";
+  color:red;
+}

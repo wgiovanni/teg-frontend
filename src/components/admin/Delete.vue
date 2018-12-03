@@ -18,6 +18,7 @@
 <script>
 import axios from 'axios';
 import { mapState, mapGetters } from "vuex";
+import { URL_USER } from "@/common/constants"
 
 export default {
     name: 'Delete',
@@ -34,7 +35,7 @@ export default {
     },
     methods: {
         findById () {
-            const path = 'http://localhost:8084/api/v1/user'.concat('/' + this.id);
+            const path = URL_USER + '/user'.concat('/' + this.id);
             axios.get(path)
             .then(request => this.findByIdSuccess(request))
             .catch(() => console.log("Error Login"))
@@ -48,7 +49,7 @@ export default {
             this.username = request.data.username;
         },
         deleteUser () {
-            const path = 'http://localhost:8084/api/v1/user/' + this.id;
+            const path = URL_USER + '/user/' + this.id;
             axios.delete(path, {data: {user: this.user.username}})
                 .then(request => this.userSuccessful(request))
                 .catch(() => this.userFailed())
