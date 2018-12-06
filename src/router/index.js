@@ -49,13 +49,25 @@ import GraduatesPerFaculty from '@/components/reports/graduates/GraduatesPerFacu
 import GraduatesPerYear from '@/components/reports/graduates/GraduatesPerYear'
 import GraduatesYearFaculty from '@/components/reports/graduates/GraduatesYearFaculty'
 
-//import Integration from '@/components/integration/Integration'
-import SystemParameterList from '@/components/integration/SystemParameterList'
-import SystemParameterEdit from '@/components/integration/SystemParameterEdit'
+import SystemParameterList from '@/components/config/integration/SystemParameterList'
+import SystemParameterEdit from '@/components/config/integration/SystemParameterEdit'
 import New from '@/components/admin/New'
 import Edit from '@/components/admin/Edit'
 import Delete from '@/components/admin/Delete'
 import store from '@/store'
+
+import Config from '@/components/Config'
+import Main from '@/components/Main'
+import Faculty from '@/components/config/faculty/Faculty'
+import Profession from '@/components/config/profession/Profession'
+import NewFaculty from '@/components/config/faculty/NewFaculty'
+import EditFaculty from '@/components/config/faculty/EditFaculty'
+import DeleteFaculty from '@/components/config/faculty/DeleteFaculty'
+import NewProfession from '@/components/config/profession/NewProfession'
+import EditProfession from '@/components/config/profession/EditProfession'
+import DeleteProfession from '@/components/config/profession/DeleteProfession'
+
+
 Vue.use(Router)
 
 export const router = new Router({
@@ -105,31 +117,7 @@ export const router = new Router({
               next()
             }
           }
-        },/*,
-        {
-          path: '/graduates',
-          name: 'Graduates',
-          component: Graduates
-        },*/
- /*
-        {
-          path: '/reports',
-          name: 'Report',
-          component: Report,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
         },
-        
-       */
         {
           path: '/reports',
           name: 'ReportsHome',
@@ -516,37 +504,80 @@ export const router = new Router({
           }
         },
         {
-          path: '/integration',
-          name: 'SystemParameterList',
-          component: SystemParameterList,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-
-        {
-          path: '/integration/edit/:id',
-          name: 'SystemParameterEdit',
-          component: SystemParameterEdit,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
+          path: '/config',
+          name: 'Config',
+          component: Config,
+          children: [
+            {
+              path: '/Main',
+              name: 'Main',
+              component: Main
+            },
+            {
+              path: '/faculty',
+              name: 'Faculty',
+              component: Faculty
+            },
+            {
+              path: '/faculty/new',
+              name: 'NewFaculty',
+              component: NewFaculty
+            },
+            {
+              path: '/faculty/edit/:id',
+              name: 'EditFaculty',
+              component: EditFaculty
+            },
+            {
+              path: '/faculty/delete/:id',
+              name: 'DeleteFaculty',
+              component: DeleteFaculty
+            },
+            {
+              path: '/profession',
+              name: 'Profession',
+              component: Profession
+            },
+            {
+              path: '/profession/new',
+              name: 'NewProfession',
+              component: NewProfession
+            },
+            {
+              path: '/profession/edit/:id',
+              name: 'EditProfession',
+              component: EditProfession
+            },
+            {
+              path: '/profession/delete/:id',
+              name: 'DeleteProfession',
+              component: DeleteProfession
+            },
+            {
+              path: '/integration',
+              name: 'SystemParameterList',
+              component: SystemParameterList,
+              beforeEnter (to, from, next) {
+                if (store.state.user.name != "administrador") {
+                  next('/home')
+                } else {
+                  next()
+                }
+              }
+            },
+            {
+              path: '/integration/edit/:id',
+              name: 'SystemParameterEdit',
+              component: SystemParameterEdit,
+              beforeEnter (to, from, next) {
+                if (store.state.user.name != "administrador") {
+                  next('/home')
+                } else {
+                  next()
+                }
+              }
+            },
+          ]
         },
         {
           path: '/admin',
