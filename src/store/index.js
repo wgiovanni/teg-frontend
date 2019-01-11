@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 // imports of AJAX functions will go here
 import { fetchUsers, fetchUser, updateUser, saveUser, deleteUser, authenticate } from '@/api'
 import { isValidJwt, EventBus } from '@/utils'
+import { URL_USER } from "@/common/constants";
 
 Vue.use(Vuex)
 
@@ -36,15 +37,15 @@ const actions = {
     },
     login(context, userData) {
         //context.commit('setUserData', { userData })
-        return authenticate(userData)
+        return axios.post(`${URL_USER}/login`, userData)
             .then(response => {
-                console.log(response.data.user);
+                //console.log(response.data.user);
                 context.commit('setJwtToken', { jwt: response.data });
                 //localStorage.setItem('username', response.data.user.username);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
             })
             .catch(error => {
-                console.log('Error Authenticating: ', error)
+                //console.log('Error Authenticating: ', error)
                 //localStorage.removeItem('username');
                 localStorage.removeItem('user');
                 EventBus.emit('failedAuthentication', error)

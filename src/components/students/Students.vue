@@ -1,24 +1,19 @@
 <template>
-
 <div  id="funcion"  class="container-fluid marge">
     
 
   <div v-if="this.user.username=='vicerrector' || this.user.username=='Admin'" class="row ">
-    <div class="col" >
-      
+    <div class="col" > 
                     <blockquote>
                       
                     </blockquote>
         <div class="nav nav-item nav-pills text-center " @click="limpiar();"  role="tablist" aria-orientation="vertical">
-      <!-- <div class="nav nav-item nav-pills  text-center fondo" id="v-pills-tab" role="tablist" aria-orientation="vertical" > -->
-        <a class="nav-link active" id="v-pills-home-tab"  @click="limpiar();" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true" >CARGA DE ARCHIVO</a>
-        <a class="nav-link" id="v-pills-profile-tab"  @click="limpiar();" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">FECHAS TOPES</a>
-        </div>
-      
+          <a class="nav-link active" id="v-pills-home-tab"  @click="limpiar();" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true" >CARGA DE ARCHIVO</a>
+          <a class="nav-link" id="v-pills-profile-tab"  @click="limpiar();" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">FECHAS TOPES</a>
+        </div>     
                     <blockquote>
                       
-                    </blockquote>
-                  
+                    </blockquote>               
     </div>
 
     <div class="col-11">
@@ -39,16 +34,14 @@
 
                                 <div class="form-check selec ">
                                   <input type="radio" class="custom-control-input " id="Pre-grado" value="0"  v-on:change="cambia_titulo(0);" v-model= "pre_post" name="groupOfMaterialRadios"  checked>
-                                  <label class="custom-control-label"  for="Pre-grado"><br>Pre-grado</label>
+                                  <label class="custom-control-label"  for="Pre-grado"><br>PREGRADO</label>
                                 </div>
 
 
                                 <div class="form-check selec ">
                                   <input type="radio" class="custom-control-input "  id="Post-grado" value="1"  v-on:change="cambia_titulo(1);" v-model= "pre_post" name="groupOfMaterialRadios" >
-                                  <label class="custom-control-label"  for="Post-grado"><br>Post-grado</label>
+                                  <label class="custom-control-label"  for="Post-grado"><br>POSTGRADO</label>
                                 </div>
-
-
 
                               </div>
 
@@ -58,63 +51,30 @@
                   </nav>
                    <blockquote>
                       
-                    </blockquote>
-                            <div class="intru">
-                              <h4 >Pasos a seguir</h4>
-                                <p >1-haga click en el boton seleccionar archivo.</p>
-                                <p >2-seleccione el archivo csv que desea ingresar en el sistema.</p>
-                                <p >3-Presione el boton de enviar.</p>
-                                <p >4-En caso que ocurra  un error , modifique el archivo seleccionado y vuelva a intentarlo.</p>
-                                
-                            </div>
+                  </blockquote>
+                            
                 </div>
                 
                 <div class="col-sm-8">
                     <blockquote>
                       <header>
                         <br>
-                      <h2 id="titulo" class="text-center menu ">Pre-grado</h2>
+                        <h2 id="titulo" class="text-center menu ">DIRECCION ESTUDIANTIL DE PREGRADO</h2>
                       </header>
                     </blockquote>
-                          <!-- <ul class="" id="resul">	
-                      
-                          </ul>
-
-                          <div id="columna_principal" class=" fondo2 selec" >
-                              <div id="alert" class="alert  alert-success " role="alert">
-                                
-                              <h6 id= "i" >Selecione un archivo</h6>
-                              </div>         
-                            
-                          </div>
-
-                          <div class="btn-group text-center ">
-                                  <input type="file" class="btn btn-primary" id="file" ref="file" v-on:change="handleFileUpload()"/> 
-                                  <button @click="submitFile({pre_post})" class=" btn btn-primary color">Enviar</button>  
-                          </div> -->
-
                           <div class="container">
-                              <ul class="" id="resul">	
-                      
-                              </ul>
+                            <ul class="" id="resul">	             
+                            </ul>
                             <div id="columna_principal" class="large-12 medium-12 small-12 cell">
                                 <div id= "alert" class="alert alert-secondary" role="alert">
                                   <h6 id= "i" >Selecione un archivo</h6>
                                 </div>
-                                     
+                                   
                             </div>
-                                <div class="archivo normal rounded" >
-                                  <label>Archivo
-                                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload();"/>
-                                  <!-- <input type="file" class="btn btn-primary" id="file" ref="file" v-on:change="handleFileUpload();"/> -->
-                                  </label>
-                                  <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button>
-                                
-                                </div>
-                              
-
-                            
-
+                            <div class="archivo normal rounded" >
+                                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload();">                     
+                                  <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button> 
+                            </div>
                           </div>
 
                     
@@ -124,112 +84,168 @@
 
         </div>
         <div class="tab-pane fade " id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" :load="cargar_fecha()"  >
-          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-              
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                <br>
                 <div class="col s12 "  >
-                    <h4>PREGRADO</h4>
-                    
+                    <h5>FECHAS TOPES PARA DIRECCION ESTUDIANTIL DE PREGRADO</h5>               
                     <div class="form-group row">
-                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Faces</label>
-                      <div class="col-md-6">
+                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Faces</label>
+                      <div class="col-md-3">
                         <input type="date"  id="faces" value="2018-01-01" class="form-control" >
                       </div>
-                    </div>
-                  <div class="form-group row">
-                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Facyt</label>
-                      <div class="col-md-6">
+                        <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="faces3" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+                    </div>                 
+                    <div class="form-group row">
+                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Facyt</label>
+                      <div class="col-md-3">
                         <input type="date"  id="facyt" value="2018-01-01" class="form-control"   >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="facyt3" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
                     </div>
                     <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Faces</label>
-                      <div class="col-md-6">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Faces</label>
+                      <div class="col-md-3">
                         <input type="date"  id="face" value="2018-01-01" class="form-control" >
                       </div>
-                    </div>
-                  
-                  <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Fcjp</label>
-                      <div class="col-md-6">
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="face3" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+                    </div>                
+                    <div class="form-group row">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fcjp</label>
+                      <div class="col-md-3">
                         <input type="date"  id="fcjp" value="2018-01-01" class="form-control" >
                       </div>
-                    </div>
-                  
-                  <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Odontologia</label>
-                      <div class="col-md-6">
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="fcjp3" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
+                    </div>                
+                    <div class="form-group row">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Odontologia</label>
+                      <div class="col-md-3">
                         <input type="date"  id="odontologia" value="2018-01-01" class="form-control" >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="odontologia3" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
                     </div>
                     <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Ingieneria</label>
-                      <div class="col-md-6">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Ingieneria</label>
+                      <div class="col-md-3">
                         <input type="date"  id="ingenieria" value="2018-01-01" class="form-control" >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="ingenieria3" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
                     </div>
                     <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Fcs</label>
-                      <div class="col-md-6">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fcs</label>
+                      <div class="col-md-3">
                         <input type="date" id="fcs" value="2018-01-01" class="form-control" >
+                      </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="fcs3" disabled=true value="2018-01-01" class="form-control" >
                       </div>
                     </div>
                   
                 </div>
-
                 
                 <div class="col s12 "  >
-                    <h4>POSTGRADO</h4>
-                    
+                    <br><h5>FECHAS TOPES PARA DIRECCION ESTUDIANTIL DE POSTGRADO</h5>
                     <div class="form-group row">
-                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Faces</label>
-                      <div class="col-md-6">
+                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Faces</label>
+                      <div class="col-md-3">
                         <input type="date"  id="faces2" value="2018-01-01" class="form-control" >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="faces4" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
                     </div>
-                  <div class="form-group row">
-                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Facyt</label>
-                      <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="first_name"  class="col-sm-4 col-form-label text-md-right">Facyt</label>
+                      <div class="col-md-3">
                         <input type="date"  id="facyt2" value="2018-01-01" class="form-control"   >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="facyt4" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
                     </div>
                     <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Faces</label>
-                      <div class="col-md-6">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Faces</label>
+                      <div class="col-md-3">
                         <input type="date"  id="face2" value="2018-01-01" class="form-control" >
                       </div>
-                    </div>
-                  
-                  <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Fcjp</label>
-                      <div class="col-md-6">
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="face4" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
+                    </div>                 
+                    <div class="form-group row">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fcjp</label>
+                      <div class="col-md-3">
                         <input type="date"  id="fcjp2" value="2018-01-01" class="form-control" >
                       </div>
-                    </div>
-                  
-                  <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Odontologia</label>
-                      <div class="col-md-6">
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="fcjp4" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
+                    </div>                  
+                    <div class="form-group row">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Odontologia</label>
+                      <div class="col-md-3">
                         <input type="date"  id="odontologia2" value="2018-01-01" class="form-control" >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="odontologia4" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
                     </div>
                     <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Ingieneria</label>
-                      <div class="col-md-6">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Ingieneria</label>
+                      <div class="col-md-3">
                         <input type="date"  id="ingenieria2" value="2018-01-01" class="form-control" >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="ingenieria4" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
                     </div>
                     <div class="form-group row">
-                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Fcs</label>
-                      <div class="col-md-6">
+                      <label for="first_name" class="col-sm-4 col-form-label text-md-right">subida Fcs</label>
+                      <div class="col-md-3">
                         <input type="date" id="fcs2" value="2018-01-01" class="form-control" >
                       </div>
+                      <label for="first_name"  class="col col-form-label text-md-right">Ultimos cambios</label>
+                      <div class="col-md-3">
+                        <input type="date"  id="fcs4" disabled=true value="2018-01-01" class="form-control" >
+                      </div>
+
                     </div>
-                  <ul class="" id="resul2">	
-                      
-                          </ul>
-                
-                    <div class="form-group" id="boton">
-                        
+                    <ul class="" id="resul2">	  
+                    </ul>
+                    <div class="form-group" id="boton">                       
                         <button @click="guardarfechas()" class=" btn btn-primary" >Guardar</button>
                     </div>
                 </div>
@@ -239,116 +255,65 @@
       </div>
     </div>
   </div>
-
+  
   <div v-else>
-        <blockquote style="margin-top: 6%;">
-                      <header>
-                        <br>
-                      <h2 id="titulo" class="text-center menu ">Pre-grado</h2>
-                      </header>
-        </blockquote>
+              <blockquote style="margin-top: 6%;">
+                            <header>
+                              <br>
+                              <h2 id="titulo" class="text-center menu ">DIRECCION ESTUDIANTIL DE PREGRADO</h2>
+                            </header>
+              </blockquote>
               <div class="row">         
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                   <nav class="navbar navbar-default selec ">
                           <div class="container-fluid btn-group-vertical ">
                               <div class="navbar-header ">
-                                <h5>RANKING</h5>
-                              
+                                <h5>RANKING</h5>                       
                               </div>
 
                               <div class="btn-group-vertical btn-group-toggle  " id="prueb">
-
-
                                 <div class="form-check selec ">
                                   <input type="radio" class="custom-control-input " id="Pre-grado" value="0"  v-on:change="cambia_titulo(0);" v-model= "pre_post" name="groupOfMaterialRadios"  checked>
-                                  <label class="custom-control-label"  for="Pre-grado"><br>Pre-grado</label>
+                                  <label class="custom-control-label"  for="Pre-grado"><br>PREGRADO</label>
                                 </div>
-
-
                                 <div class="form-check selec ">
                                   <input type="radio" class="custom-control-input "  id="Post-grado" value="1"  v-on:change="cambia_titulo(1);" v-model= "pre_post" name="groupOfMaterialRadios" >
-                                  <label class="custom-control-label"  for="Post-grado"><br>Post-grado</label>
+                                  <label class="custom-control-label"  for="Post-grado"><br>POSTGRADO</label>
                                 </div>
-
-
-
                               </div>
 
                           </div>
-
-
                   </nav>
-                </div>
-                
-                <div class="col-sm-6">
-<!--                   
-                          <ul class="" id="resul">	
-                      
-                          </ul>
-
-                          <div id="columna_principal" class=" fondo2 selec" >
-                              <div id="alert" class="alert  alert-success " role="alert">
-                                
-                              <h6 id= "i" >Selecione un archivo</h6>
-                              </div>         
-                            
-                          </div>
-
-                          <div class="btn-group text-center ">
-                                  <input type="file" class="btn btn-primary" id="file" ref="file" v-on:change="handleFileUpload();"/> 
-                                  <button @click="submitFile({pre_post})" class=" btn btn-primary color">Enviar</button>  
-                          </div> -->
-
-                          
-                          <div class="container">
-                              <ul class="" id="resul">	
-                      
-                          </ul>
+                </div>               
+                <div class="col-sm-6">                          
+                      <div class="container">
+                            <ul class="" id="resul">	                     
+                            </ul>
                             <div id="columna_principal" class="large-12 medium-12 small-12 cell">
                                   <div id= "alert" class="alert alert-secondary" role="alert">
                                      <h6 id= "i" >Selecione un archivo</h6>
                                   </div>
                             </div>
-                              <div class="archivo normal rounded" >
-                                  <label>Archivo
-                                    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-                                  </label>
-                                  <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button>
-                              
-                              </div>
-                              <!-- <div class="intru">
-                              <h4 >Pasos a seguir</h4>
-                                <p >1-haga click en el boton seleccionar archivo.</p>
-                                <p >2-seleccione el archivo csv que desea ingresar en el sistema.</p>
-                                <p >3-Presione el boton de enviar.</p>
-                                <p >4-En caso que ocurra  un error , modifique el archivo seleccionado y vuelva a intentarlo.</p>
-                                
-                              </div> -->
-                            
-                          </div>
-                    
-                </div>
-                
-                <div class="col-md-1"  >
-                  
-                        <div class="input-group center">             
-                              <div id="colorfecha" class="alert  alert-success " role="alert">
-                                Fecha tope de subida:
-                                <input type="date" id="fecha_tope"  disabled=true value= "2010-01-01"  />    
-                              </div>  
-                        </div>
+                            <div class="archivo normal rounded" >
+                                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                                  <button class="btn btn-light" id="enviar" @click="submitFile({pre_post})" >Enviar</button>                              
+                            </div>
 
-                      
-                    
+                      </div>                    
+                </div>               
+                <div class="col-md-4"  >               
+                   <div class="form-group row">
+                      <label for="first_name"  class=" col-form-label text-md-right">Fecha tope de subida:</label>
+                      <input type="date"  id="fecha_tope" disabled=true  value="2018-01-01" class="form-control"   >
+                      <label for="first_name"  class=" col-form-label text-md-right">Ultimos cambios:</label>
+                      <input type="date"  id="fecha_tope2" disabled=true value="2018-01-01" class="form-control" >
+                    </div>        
                 </div>
-                
-    
-
               </div>
 
   </div>
-</div>
 
+</div>
 
 </template>
 
@@ -357,15 +322,17 @@
 
 import Vue from 'vue';
 import axios from 'axios';
+import jsPDF from "jsPDF";
 import {mapState,mapGetters} from "vuex"
 
 
-  export default{
+export default{
     /*
       Defines the data used by the component
     */
     mounted() {
-    if(!(this.user.username=='vicerrector')){       
+    if(!(this.user.username=='vicerrector' || this.user.username=='Admin')){       
+
      this.mymethod();
      }
    
@@ -376,29 +343,24 @@ import {mapState,mapGetters} from "vuex"
       return {
         file: '',
         pre_post: '0',
-       fecha: '2018-10-29',
+        fecha: '2018-10-29',
         
       }
     },
 
-    methods: {
-      FuntionResize: function () {
-    var widthBrowser = window.outerWidth;
-    var heightBrowser = window.outerHeight;
-    console.log("Tamaño de la pantalla del navegador: width=" + widthBrowser + ", height=" + heightBrowser);
-},
+methods: {
 
+// Funcion para limpiar el elemento con ID "result2"
 limpiar: function(){
   if(document.getElementById('resul2')){
 
            document.getElementById('resul2').innerHTML = "";
-           };//numero de empleados online
+           };
 
 },
- 
-     
-      guardarfechas: function(){
-    console.log("entrooo carga fecha");
+
+// Funcion para hacer la solicitud al Backend de guardar las fechas
+guardarfechas: function(){
           let formData = new FormData();
          var facyt_pregrado=   document.getElementById("facyt").value;
          var faces_pregrado=   document.getElementById("faces").value;
@@ -415,7 +377,7 @@ limpiar: function(){
          var ingenieria_postgrado=   document.getElementById("ingenieria2").value;
          var fcs_postgrado=   document.getElementById("fcs2").value;
          var odontologia_postgrado=   document.getElementById("odontologia2").value;  
-         console.log(facyt_pregrado); 
+
          var path = 'http://localhost:8082/insertarfecha/' +facyt_pregrado+ '/'+faces_pregrado + '/'+face_pregrado+  '/'+ fcjp_pregrado+ '/'+ ingenieria_pregrado+ '/'+ fcs_pregrado+ '/'+ odontologia_pregrado+ '/' +facyt_postgrado+ '/'+faces_postgrado + '/'+face_postgrado+  '/'+ fcjp_postgrado+ '/'+ ingenieria_postgrado+ '/'+ fcs_postgrado+ '/'+ odontologia_postgrado ;
             
             axios.post(path,
@@ -426,8 +388,7 @@ limpiar: function(){
                 }
                 
               }
-            ).then(function(res){
-           console.log(res.data);  
+            ).then(function(res){  
            if(res.data[0]=='exito'){          
                               var li=document.createElement('LI');
                     li.innerHTML="<h6 id= 'i'>Se han guardado los cambios</h6>";
@@ -435,14 +396,6 @@ limpiar: function(){
                     document.getElementById('resul2').appendChild(li);
             }
           console.log('SUCCESS!!');
-
-            
-//           setInterval(function(){
-//  if(document.getElementById('resul2')){
-
-//           document.getElementById('resul2').innerHTML = "";
-//           };//numero de empleados online
-//   },15000);
 
         })
         .catch(res=> {
@@ -454,23 +407,17 @@ limpiar: function(){
 
           console.log('FAILURE!!');
         });
-        console.log("deberia eliminar")
-        document.getElementById('resul2').innerHTML = "";
-        if(document.getElementById('resul2')){
-          document.getElementById('resul2').innerHTML = "";
-          };
-      // setInterval("if(document.getElementById('resul2')){document.getElementById('resul2').innerHTML = '';",3000);
-      
-      },
-     
-      
+        
+},
+   
+// Funcion para obtener la fecha asociada a una facultad en particular   
 mymethod(){
   
   let formData2 = new FormData();
   var path2 = ''
   if(this.pre_post==0){
               
-    path2 = 'http://localhost:8082/fecha_tope/11/'+ this.user.username
+    path2 = 'http://localhost:8082/fecha_tope/11/'+ this.user.username;
                     
   }else{
               
@@ -486,13 +433,9 @@ mymethod(){
                 
               }
             ).then(function(res){
-              // res.data["exitosa"][i]
-              var fecha=document.getElementById("fecha_tope");
-              //console.log("entroofecha")
-              var string_fecha= res.data['exitosa'][0].split("\"")[3];
-              // console.log(string_fecha); 
-              fecha.setAttribute('value',string_fecha);
 
+              document.getElementById("fecha_tope").setAttribute('value',res.data[0].substring(2, 12));
+              document.getElementById("fecha_tope2").setAttribute('value',res.data[0].substring(25, 35));
               
          console.log('SUCCESS!!');
         })
@@ -504,11 +447,13 @@ mymethod(){
 
 
 },
-      submitFile(pre_post){
+
+// Funcion para hacer la solicitud de verificacion del archivo csv en particular
+submitFile(pre_post){
         /*
                 Initialize the form data
             */
-           console.log("entrooo");
+   
             let formData = new FormData();
 
             /*
@@ -520,7 +465,7 @@ mymethod(){
           Make the request to the POST /single-file URL
         */
         var path = '';
-            
+            // console.log(this.user.username);
             if(pre_post.pre_post==0){
               
                         path = 'http://localhost:8082/upload/11/'+ this.user.username;
@@ -530,7 +475,6 @@ mymethod(){
               
                      path = 'http://localhost:8082/upload/21/'+ this.user.username;   
             }
-            console.log(path);
             axios.post(path,
                 formData,
                 {
@@ -547,22 +491,30 @@ mymethod(){
                    if(document.getElementById("resul")){
                      document.getElementById("resul").innerHTML = "";
                    }
-                    console.log(localStorage.getItem('user'))
-                    for(var i=0;i<res.data["exitosa"].length;i++){
-                    
-                    var li=document.createElement('LI');
-                    li.innerHTML=res.data["exitosa"][i];
-                    li.setAttribute('class','alert text-center alert-danger');
-                    document.getElementById('resul').appendChild(li);
 
+                  var lMargin=15; //left margin in mm
+                  var rMargin=15; //right margin in mm
+                  var pdfInMM=210;  // width of A4 in mm
+                  var doc = new jsPDF("p","mm","a4");
+                  var j=1;
+                  doc.text(50, 20, 'Error(s) de la carga de datos Estudiantes');
+                    for(var i=0;i<res.data["exitosa"].length;i++){
+                          doc.setFontSize(12);
+                      var lines =doc.splitTextToSize("- "+res.data["exitosa"][i]+"\n\n", (pdfInMM-lMargin-rMargin));
+                          doc.text(lMargin,30 + (j * 10),lines);
+                            if((j * 10)%240==0 ){
+                                doc.addPage();
+                                j=0;
+                            }
+                            j=j+1;
                     }
+                  
 
                      if(res.data["exitosa"].length>0){
                         if(document.getElementById("alert")){
-                        //  console.log(document.getElementById("alert"));
-                          
                           document.getElementById("alert").remove();
-                         console.log("elimino alert");
+                         document.getElementById("columna_principal").innerHTML =  " <div id='alert' class='alert text-center alert-danger col-lg-11' role='alert'><h6 id= 'i'>Error al cargar el archivo. Revice el archivo 'Error(s).pdf'</h6> </div>  ";
+                         doc.save('Error(s).pdf'); 
                         }
 
                     }else{
@@ -570,12 +522,12 @@ mymethod(){
                             var div = document.getElementById("alert");
                             div.setAttribute('class','alert text-center alert-success');
                             div.textContent= "Se han guardado los cambios";
-                              console.log("entroo2")
+                             
                            }else{
                     
                             document.getElementById("columna_principal").innerHTML = " <div id='alert' class='alert text-center alert-success col-lg-11' role='alert'><h6 id= 'i'>Se han guardado los cambios</h6> </div>  ";
                             document.getElementById("resul").innerHTML = "";
-                              console.log("entroo3")
+                            
                           }
                       
                     }
@@ -601,13 +553,10 @@ mymethod(){
           console.log('FAILURE!!');
         });
 
-      },
+},
 
-  // Setup the dnd listeners.
-      /*
-        Handles a change on the file upload
-      */
-      handleFileUpload(){
+// Funcion para cambiar los bordes de la seleccion del archivo a cargar. 
+handleFileUpload(){
         this.file = this.$refs.file.files[0];
        
         if(this.$refs.file.files[0].name){
@@ -616,12 +565,13 @@ mymethod(){
                     div.setAttribute('class','alert text-center alert-success');
                     div.textContent= "Archivo: " + this.$refs.file.files[0].name ;
             }
-            // var div = document.getElementById("i");
-            // div.textContent  = "Archivo: " + this.$refs.file.files[0].name ; 
+
         }
         
-      },
-      cargar_fecha: function(){
+},
+
+// Funcion para realizar la solicitud al backend de todas las fechas topes. 
+cargar_fecha: function(){
 
          console.log("entrooo carga fecha");
             let formData = new FormData();
@@ -637,24 +587,51 @@ mymethod(){
                 
               }
             ).then(function(res){
-              
+
                   document.getElementById("facyt").setAttribute('value',res.data[0][0].substring(0, 10));
+                  document.getElementById("facyt3").setAttribute('value',res.data[0][2].substring(0, 10));
+
                   document.getElementById("fcjp").setAttribute('value',res.data[1][0].substring(0, 10));
+                  document.getElementById("fcjp3").setAttribute('value',res.data[1][2].substring(0, 10));
+
                   document.getElementById("odontologia").setAttribute('value',res.data[2][0].substring(0, 10));
+                  document.getElementById("odontologia3").setAttribute('value',res.data[2][2].substring(0, 10));
+
                   document.getElementById("ingenieria").setAttribute('value',res.data[3][0].substring(0, 10));
+                  document.getElementById("ingenieria3").setAttribute('value',res.data[3][2].substring(0, 10));
+
                   document.getElementById("fcs").setAttribute('value',res.data[4][0].substring(0, 10));
-                  document.getElementById("face").setAttribute('value',res.data[5][0].substring(0, 10));
-                  document.getElementById("faces").setAttribute('value',res.data[6][0].substring(0, 10));
+                  document.getElementById("fcs3").setAttribute('value',res.data[4][2].substring(0, 10));
                   
+                  document.getElementById("face").setAttribute('value',res.data[5][0].substring(0, 10));
+                  document.getElementById("face3").setAttribute('value',res.data[5][2].substring(0, 10));
+
+                  document.getElementById("faces").setAttribute('value',res.data[6][0].substring(0, 10));
+                  document.getElementById("faces3").setAttribute('value',res.data[6][2].substring(0, 10));
+                  
+
+
                   document.getElementById("facyt2").setAttribute('value',res.data[7][0][0].substring(0, 10));
+                  document.getElementById("facyt4").setAttribute('value',res.data[7][0][2].substring(0, 10));
+
                   document.getElementById("fcjp2").setAttribute('value',res.data[7][1][0].substring(0, 10));
+                  document.getElementById("fcjp4").setAttribute('value',res.data[7][1][2].substring(0, 10));
+
                   document.getElementById("odontologia2").setAttribute('value',res.data[7][2][0].substring(0, 10));
+                  document.getElementById("odontologia4").setAttribute('value',res.data[7][2][2].substring(0, 10));
+
                   document.getElementById("ingenieria2").setAttribute('value',res.data[7][3][0].substring(0, 10));
+                  document.getElementById("ingenieria4").setAttribute('value',res.data[7][3][2].substring(0, 10));
+
                   document.getElementById("fcs2").setAttribute('value',res.data[7][4][0].substring(0, 10));
+                  document.getElementById("fcs4").setAttribute('value',res.data[7][4][2].substring(0, 10));
+
                   document.getElementById("face2").setAttribute('value',res.data[7][5][0].substring(0, 10));
+                  document.getElementById("face4").setAttribute('value',res.data[7][5][2].substring(0, 10));
+
                   document.getElementById("faces2").setAttribute('value',res.data[7][6][0].substring(0, 10));
+                  document.getElementById("faces4").setAttribute('value',res.data[7][6][2].substring(0, 10));
               
-         
           console.log('SUCCESS!!');
         })
         .catch(res=> {
@@ -662,13 +639,15 @@ mymethod(){
           console.log('FAILURE!!');
         });
         
-      },
-      cambia_titulo(instancia){
+},
+
+// Funcion para cambiar el nombre del titulo, una vez cambiado el check de la facultad
+cambia_titulo(instancia){
         if(instancia==0){
-          document.getElementById("titulo").innerHTML = "Pre-grado";
+          document.getElementById("titulo").innerHTML = "DIRECCION DE ASUNTOS ESTUDIANTIL PARA PREGRADO";
          
         }else{
-          document.getElementById("titulo").innerHTML = "Post-grado";
+          document.getElementById("titulo").innerHTML = "DIRECCION DE ASUNTOS ESTUDIANTIL PARA POSTGRADO";
         
         }
         if(!(this.user.username=='vicerrector')){
@@ -676,19 +655,16 @@ mymethod(){
         this.mymethod();
         }
 
-       }, 
+}, 
 
-       
-       
-    
-    },
-    computed:{
+},
+
+computed:{
          ...mapGetters(["user"])
-       }
+}
 
-  }
+}
 
- 
 </script>
 
  <style>
@@ -772,32 +748,21 @@ mymethod(){
  }
  @media (max-width: 768px) { 
 
-
    .intru {
           
           display:none;
           /* margin-top: 20%; */
         }
-
- 
-
-    
-
-
  }
 
   @media (max-width: 1000px) { 
 
-
-  
      #enviar {
           margin-top:10px;
           width:100%;
         }
 
-    
-
-
+  
  }
   .margen{
           
@@ -813,15 +778,6 @@ mymethod(){
        
         }
   
-
-
-
-
-
-
-
-
-
 
 .vice{
   margin-top: 5%;
@@ -1070,97 +1026,3 @@ mymethod(){
   
 }
         </style>
-
-     
-          <!-- <div class="form-group">
-              <div class="row">
-                <div class="col-sm-3">
-                  <div class="form-group">
-                  <h4>FACULTAD:</h4>
-                  <h5>FACYT</h5>
-                  <h5>FACE</h5>
-                  <h5>FACES</h5>
-                  <h5>INGENIERIA</h5>
-                  <h5>FCJP</h5>
-                  <h5>ODONTOLOGIA</h5>
-                  <h5>FCS</h5>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                  <h4>FECHA TOPE:</h4>
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28" max="2018-05-10"  class="form-control" >
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28" max="2018-05-10"  class="form-control" >
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28" max="2018-05-10"  class="form-control" >
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28" max="2018-05-10"  class="form-control" >
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28" max="2018-05-10"  class="form-control" >
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28" max="2018-05-10"  class="form-control" >
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28" max="2018-05-10"  class="form-control" >
-                  </div>
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-group">
-                  <h4>ACTUALIZAR:</h4>
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  </div>
-                  </div>
-              </div>
-          </div>
-              -->
-              
-
-              
-
-            <!-- <div class="form-group container-fluid ">
-          
-              <div class="row ">
-
-                
-
-
-                <div class="input-group mb-3">
-                  <div class="col-sm-2 ">
-                  <h5>FACYT</h5>
-                  </div>
-                  <div class="col-sm-4 ">
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28"  class="form-control" >
-                  </div>
-                  <div class="col-sm-2">
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  </div>
-                    
-                </div>
-
-                <div class="input-group mb-3">
-                  <div class="col-sm-2">
-                  <h5>FACE</h5>
-                  </div>
-                  <div class="col-sm-4">
-                  <input type="date" name="date" id="dateFin"  value="2018-05-10" min="2016-04-28"   class="form-control" >
-                  </div>
-                  <div class="col-sm-2">
-                  <button type="button"  class="btn btn-default">GUARDAR</button>
-                  </div>
-                    
-                </div>
-
-              </div>
-
-            </div>
-            
-            
-            // for(var i=0;i<string_fecha.length;i++){
-              //     console.log(string_fecha[i]);
-              //     console.log(i);
-
-              // }
-              
-              //this.fecha=string_fecha;
-              //fecha='2010-05-05'; -->
-            

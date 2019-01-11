@@ -5,10 +5,16 @@
       </div>
       <div v-else>
         <div><h2>Listado de carreras</h2></div>
-        <input v-model="search" name="search" type="text" id="search" class="form-control col-3" placeholder="Buscar">
-        <router-link to="/profession/new" tag="button" class="btn btn-primary" style="display: -webkit-inline-box;">
-          <i class="material-icons">add</i>
-        </router-link>
+        <div class="row">
+            <div class="col">
+                <router-link to="/profession/new" tag="button" class="btn btn-primary float-left" style="display: -webkit-inline-box;">
+                    <i class="material-icons">add</i>
+                </router-link>
+            </div>
+            <input v-model="search" name="search" type="text" id="search" class="form-control col-3" placeholder="Buscar" style="margin-right: 1%;">
+        </div>
+       
+        
         <div class="table-responsive-md">
           <table class="table table-striped">
             <thead>

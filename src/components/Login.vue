@@ -62,6 +62,7 @@
 import { mapState, mapActions } from 'vuex'
 
 import { EventBus } from '@/utils'
+
 import Navbar from '@/components/Navbar'
 
 export default {
@@ -81,7 +82,7 @@ export default {
   },
   methods: {
     authenticate () {
-      this.$store.dispatch('login', { 
+      store.dispatch('login', { 
         username: this.username, 
         password: this.password
         })

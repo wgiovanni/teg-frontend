@@ -65,13 +65,8 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-<<<<<<< HEAD
-          <h2 class="featurette-heading">ESTUDIANTES<span class="text-muted" style="font-size: 34px"><br>Indicadores sobre estudiantes</br></span></h2>
-         <!--  <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>-->
-=======
           <h2 class="featurette-heading">ESTUDIANTES<span class="text-muted" style="font-size: 34px"></span></h2><!--br>Indicadores sobre estudiantes</br></span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p-->
->>>>>>> 07828e894b045e707576333d5d2fe554a3bc0df1
         </div>
         <div class="col-md-5">
           <img class="featurette-image img-fluid mx-auto" src="../assets/students.jpg" alt="Generic placeholder image">
@@ -82,13 +77,8 @@
 
       <div class="row featurette">
         <div class="col-md-7 push-md-5">
-<<<<<<< HEAD
-          <h2 class="featurette-heading">DOCENTES<span class="text-muted" style="font-size: 34px"><br>Indicadores sobre docentes</br></span></h2>
-          <!--<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>-->
-=======
           <h2 class="featurette-heading">DOCENTES<span class="text-muted" style="font-size: 34px"></span></h2><!--br>Indicadores sobre docentes</br></span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p-->
->>>>>>> 07828e894b045e707576333d5d2fe554a3bc0df1
         </div>
         <div class="col-md-5 pull-md-7">
           <img class="featurette-image img-fluid mx-auto" src="../assets/teachers.jpg" alt="Generic placeholder image">
@@ -99,13 +89,8 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-<<<<<<< HEAD
-          <h2 class="featurette-heading">EGRESADOS<span class="text-muted" style="font-size: 34px"><br>Indicadores sobre egresados</br></span></h2>
-          <!--<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>-->
-=======
           <h2 class="featurette-heading">EGRESADOS<span class="text-muted" style="font-size: 34px"></span></h2><!--br>Indicadores sobre egresados</br></span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p-->
->>>>>>> 07828e894b045e707576333d5d2fe554a3bc0df1
         </div>
         <div class="col-md-5">
           <img class="featurette-image img-fluid mx-auto" src="../assets/graduates.jpg" alt="Generic placeholder image">
@@ -116,13 +101,8 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-<<<<<<< HEAD
-          <h2 class="featurette-heading">REPORTES<span class="text-muted" style="font-size: 34px"><br>Rankings universitarios</br></span></h2>
-          <!--<p class="lead">Los rankings globales principalmente miden el desempeño de de investigación de las universidades.</p>-->
-=======
           <h2 class="featurette-heading">REPORTES<span class="text-muted" style="font-size: 34px"></span></h2><!--br>Rankings universitarios</br></span></h2>
           <p class="lead">Los rankings globales principalmente miden el desempeño de de investigación de las universidades.</p-->
->>>>>>> 07828e894b045e707576333d5d2fe554a3bc0df1
         </div>
         <div class="col-md-5">
           <img class="featurette-image img-fluid mx-auto" src="../assets/rankings.png" alt="Generic placeholder image">
