@@ -60,9 +60,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-
+import axios from 'axios';
 import { EventBus } from '@/utils'
-
+import { URL_USER } from "@/common/constants"
 import Navbar from '@/components/Navbar'
 
 export default {
@@ -82,15 +82,21 @@ export default {
   },
   methods: {
     authenticate () {
-      store.dispatch('login', { 
+      const path = URL_USER + '/login';
+      axios.post(path, { 
         username: this.username, 
         password: this.password
         })
         .then((response) => {
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          console.log("Registro auditoria")
           this.$router.push('/')
           })
-          .then((response) => console.log("Registro auditoria"))
-        .catch(() => this.error ="Fallo")
+        .catch((error) => {
+          this.error ="Fallo";
+          localStorage.removeItem('user');
+          EventBus.emit('failedAuthentication', error)
+        })
     }
   },
   mounted () {

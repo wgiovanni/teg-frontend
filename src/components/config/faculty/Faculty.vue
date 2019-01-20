@@ -15,18 +15,18 @@
                     <th scope="col">Código</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Acciones</th>
-                    <th></th>
+                    <!-- <th></th> -->
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="faculty in faculties" :key="faculty.id">
                     <td>{{ faculty.codigo }}</td>
                     <td>{{ faculty.nombre }}</td>
-                    <td>
+                    <!-- <td>
                       <router-link :to="`/faculty/edit/${faculty.id}`" tag="button" class="btn btn-warning">
                         <i class="material-icons">edit</i>
                       </router-link>
-                    </td>
+                    </td> -->
                     <td>
                       <router-link :to="`/faculty/delete/${faculty.id}`" tag="button" class="btn btn-danger">
                         <i class="material-icons">delete</i>

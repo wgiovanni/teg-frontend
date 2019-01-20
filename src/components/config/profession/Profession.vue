@@ -25,7 +25,7 @@
                     <th scope="col">Semestre o Año</th>
                     <th scope="col">Pregrado o Postgrado</th>
                     <th scope="col">Acciones</th>
-                    <th></th>
+                    <!-- <th></th> -->
                 </tr>
             </thead>
             <tbody>
@@ -37,11 +37,11 @@
                     <td v-else>Año</td>
                     <td v-if="profession.tipo_pregrado == 1">Pregrado</td>
                     <td v-else>Postgrado</td>
-                    <td>
+                    <!-- <td>
                       <router-link :to="`/profession/edit/${profession.id}`" tag="button" class="btn btn-warning">
                         <i class="material-icons">edit</i>
                       </router-link>
-                    </td>
+                    </td> -->
                     <td>
                       <router-link :to="`/profession/delete/${profession.id}`" tag="button" class="btn btn-danger">
                         <i class="material-icons">delete</i>
