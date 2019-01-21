@@ -115,7 +115,7 @@ var img;
 var info = []; //Saves data for verification
 var saved = [];
 var date = new Date();
-var fecha;
+var fecha = [];
 
 
 export default {
@@ -172,7 +172,7 @@ export default {
 
       fecha = d["fecha"];
 
-      console.log("fecha: ", fecha);
+      console.log("fecha: ", fecha[0]);
 
            // Saves data for verification
       info = d["items"];
