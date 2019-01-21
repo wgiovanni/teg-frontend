@@ -125,18 +125,32 @@ export default {
 
   created() {
     this.load();
+    this.loadDate();
   },
 
   methods: {
     load() {
       const path =
-        "http://127.0.0.1:5000/api/v1/profesores-escalafon-proporcion";
+        URL_INTEGRATION+"/profesores-escalafon-proporcion";
 
       axios
-        .get(path)
+
+        .get(path)        
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
+
+    loadDate() {
+      const date =
+        URL_INTEGRATION+"/fecha";
+
+      axios
+
+        .get(date)        
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
 
     successful(req) {
 
@@ -152,6 +166,11 @@ export default {
       var i;
       var size = req.data.length;
       var d = req.data;
+
+      var fecha = d["fecha"];
+
+      console.log("fecha", fecha);
+
 
       // Saves data for verification
       info = d["items"];
