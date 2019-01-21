@@ -115,6 +115,7 @@ var img;
 var info = []; //Saves data for verification
 var saved = [];
 var date = new Date();
+var fecha;
 
 
 export default {
@@ -169,12 +170,9 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      var fecha = d["fecha"];
+      fecha = d["fecha"];
 
-      console.log("fecha", fecha);
-
-
-      // Saves data for verification
+           // Saves data for verification
       info = d["items"];
       info.unshift({
         cedula: "Cédula",
@@ -294,7 +292,9 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.setFontSize(20);
-      doc.text(reportName, 15, 15);
+      doc.text(reportName, 15, 15);      
+      doc.text(fecha, 18, 18);    
+
       doc.addImage(img, "JPG", 20, 20);
 
       doc.setProperties({
@@ -371,6 +371,8 @@ export default {
         doc.text(saved[j]["address"], 150, aux); 
         aux = aux + 5;       
       }
+
+     
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()
