@@ -172,6 +172,8 @@ export default {
 
       fecha = d["fecha"];
 
+      console.log("fecha: ", fecha);
+
            // Saves data for verification
       info = d["items"];
       info.unshift({
