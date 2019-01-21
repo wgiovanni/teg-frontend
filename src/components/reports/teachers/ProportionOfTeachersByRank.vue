@@ -107,6 +107,8 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import { URL_INTEGRATION } from "@/common/constants"
+
 
 var reportName = "Docentes por Escalafón";
 var img;
