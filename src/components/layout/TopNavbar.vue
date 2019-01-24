@@ -225,35 +225,25 @@ export default {
         {
           id: 0,
           name: "Estudiantes",
-          path: "/students"
+          path: "/CargaDeArchivoStudents"
         },
         {
           id: 1,
           name: "Docentes",
-          path: "/teachers"
+          path: "/CargaDeArchivoTeachers"
         },
-        /*{
-                id: 2,
-                name: "Egresados",
-                path: "/graduates"
-            },*/
         {
           id: 2,
           name: "Configuración",
-          path: "/integration"
+          path: "/admin"
         },
         {
           id: 3,
           name: "Reportes",
           path: "/reports"
         },
-        {
+        { 
           id: 4,
-          name: "Administración",
-          path: "/admin"
-        },
-        {
-          id: 5,
           name: "Auditoría",
           path: "/audit"
         }

@@ -8,7 +8,7 @@
 
 
 <script>
-import Sidebar from '@/components/SidebarDocente'
+import SidebarDocente from '@/components/SidebarDocente'
 import Main from '@/components/Main'
 export default {
     name: 'Config',

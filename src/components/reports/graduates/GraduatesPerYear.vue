@@ -3,32 +3,32 @@
 
        <div class="row">
         
-        <div class="col-xl-8 col-md-8 col-sm-12">
+        <!-- <div class="col-xl-8 col-md-8 col-sm-12"> -->
 
-           <form class="col-md-12"  @submit.prevent="getGraduates">
+           <form class="col-md-10"  @submit.prevent="getGraduates">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <div class="form-group form-row">
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Desde</label>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <select class="form-control" v-model="desde">
-                        <option value="">Seleccionar año desde</option>
+                        <option value="">Seleccionar</option>
                         <option v-for="year in arrayDateFrom" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
                     </select>
                 </div>
 
                 <label for="inputTo" class="col-sm-1 col-form-label text-form">Hasta</label>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <select class="form-control" v-model="hasta">
-                        <option value="">Seleccionar año hasta</option>
+                        <option value="">Seleccionar</option>
                         <option v-for="year in arrayDateTo" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
                     </select>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <button type="submit" class="btn button-back">Buscar</button>
                 </div>
             </div>
         </form>
-        </div>
+        <!-- </div> -->
     </div> 
 
 

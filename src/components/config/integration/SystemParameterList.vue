@@ -12,7 +12,7 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripción</th>
                         <th scope="col">Definición</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Editar</th>
                     </tr>
                 </thead>
                 <tbody>

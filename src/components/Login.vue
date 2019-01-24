@@ -1,33 +1,34 @@
 <template>
 <div>
   <Navbar class="header-border uc-ranking"></Navbar>
-  <div class="container container-login-register">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Iniciar Sesión</div>
-          <div class="card-body">
-            <form class="col s12" @submit.prevent="authenticate">
-              <!--h2 class="form-signin-heading">Please sign in</h2-->
-              <div class="alert alert-danger" v-if="error">{{ error }}</div>
-              <div class="form-group row">
-                <label for="inputUsername" class="col-sm-4 col-form-label text-md-right">Usuario</label>
-                <div class="col-md-6">
-                  <input v-model="username" type="username" id="inputUsername" class="form-control" placeholder="Nombre de usuario" required autofocus>
+  <div class="fondo-login">
+    <div class="container container-login-register">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header"><strong>Iniciar Sesión</strong></div>
+            <div class="card-body">
+              <form class="col s12" @submit.prevent="authenticate">
+                <div class="alert alert-danger" v-if="error">{{ error }}</div>
+                <div class="form-group row">
+                  <label for="inputUsername" class="col-sm-4 col-form-label text-md-right">Usuario</label>
+                  <div class="col-md-6">
+                    <input v-model="username" type="username" id="inputUsername" class="form-control" placeholder="Nombre de usuario" required autofocus>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputPassword" class="col-md-4 col-form-label text-md-right">Contraseña</label>
-                <div class="col-md-6">
-                  <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                <div class="form-group row">
+                  <label for="inputPassword" class="col-md-4 col-form-label text-md-right">Contraseña</label>
+                  <div class="col-md-6">
+                    <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-4 button-iniciar-sesion">
-                  <button type="submit" class="btn btn-primary row">Iniciar Sesión</button>
+                <div class="form-group row mb-0">
+                  <div class="col-md-8 offset-md-4 button-iniciar-sesion">
+                    <button type="submit" class="btn btn-primary row">Iniciar Sesión</button>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -56,6 +57,7 @@
   align-content: center;
   line-height: 50px;
 }
+
 </style>
 
 <script>

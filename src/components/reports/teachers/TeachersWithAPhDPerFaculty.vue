@@ -53,6 +53,8 @@ import Plotly from "plotly.js";
 import XLSX from "xlsx";
 import { URL_INTEGRATION } from "@/common/constants"
 
+import Spinner from '@/components/Spinner'
+
 var reportName = "Docentes con Doctorado por Facultad";
 var img;
 var info = []; //Saves data for verification
@@ -67,7 +69,7 @@ export default {
   },
 
   components: {
-   
+    Spinner
   },
 
   data() {

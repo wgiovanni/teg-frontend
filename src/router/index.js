@@ -2,12 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Login from '@/components/Login'
-import Students from '@/components/students/Students'
 import Home from '@/components/Home'
 import Users from '@/components/admin/Users'
 import Dashboard from '@/components/layout/Dashboard'
-import Teachers from '@/components/teachers/Teachers'
-import Graduates from '@/components/graduates/Graduates'
 import AuditList from '@/components/audit/AuditList'
 
 // Reports
@@ -31,6 +28,12 @@ import StaffWithAPhD from '@/components/reports/qs/StaffWithAPhD'
 
 //Students
 
+import ConfigEstudiante from '@/components/ConfigEstudiante'
+import CargaDeArchivoStudents from '@/components/students/CargaDeArchivoStudents'
+import FechaTopeStudents from '@/components/students/FechaTopeStudents'
+import FechaActualizacionStudents from '@/components/students/FechaActualizacionStudents'
+
+
 import ForeignStudentsPerFaculty from '@/components/reports/students/ForeignStudentsPerFaculty'
 import StudentsDisabilityPerFaculty from '@/components/reports/students/StudentsDisabilityPerFaculty'
 import StudentsEthnicGroupsPerFaculty from '@/components/reports/students/StudentsEthnicGroupsPerFaculty'
@@ -42,6 +45,11 @@ import UndergraduateStudentsSex from '@/components/reports/students/Undergraduat
 
 
 //Teachers
+import ConfigDocente from '@/components/ConfigDocente'
+import CargaDeArchivoTeachers from '@/components/teachers/CargaDeArchivoTeachers'
+import FechaTopeTeachers from '@/components/teachers/FechaTopeTeachers'
+import FechaA from '@/components/teachers/FechaA'
+
 import ProportionOfTeachersByRank from '@/components/reports/teachers/ProportionOfTeachersByRank'
 import PublicationsPerFaculty from '@/components/reports/teachers/PublicationsPerFaculty'
 import TeachersNationalityFaculty from '@/components/reports/teachers/TeachersNationalityFaculty'
@@ -70,6 +78,7 @@ import DeleteFaculty from '@/components/config/faculty/DeleteFaculty'
 import NewProfession from '@/components/config/profession/NewProfession'
 import EditProfession from '@/components/config/profession/EditProfession'
 import DeleteProfession from '@/components/config/profession/DeleteProfession'
+import MicroservicesError from '@/components/microservices/MicroservicesError'
 
 
 Vue.use(Router)
@@ -89,36 +98,6 @@ export const router = new Router({
               path: '/home',
               name: 'Home',
               component: Home
-            },
-            {
-              path: '/students',
-              name: 'Students',
-              component: Students,
-              beforeEnter(to, from, next) {
-                console.log(store.state.user.name);
-                if (store.state.user.name != "facultad_estudiante" && store.state.user.name != "administrador" && store.state.user.name != "vicerrector") {
-                  console.log("No entro");
-                  next('/home')
-                } else {
-                  console.log("vamos a integracion");
-                  next()
-                }
-              }
-            },
-            {
-              path: '/teachers',
-              name: 'Teachers',
-              component: Teachers,
-              beforeEnter(to, from, next) {
-                console.log(store.state.user.name);
-                if (store.state.user.name != "facultad_docente" && store.state.user.name != "administrador" && store.state.user.name != "vicerrector") {
-                  console.log("No entro");
-                  next('/home')
-                } else {
-                  console.log("vamos a integracion");
-                  next()
-                }
-              }
             },
             {
               path: '/reports',
@@ -822,6 +801,21 @@ export const router = new Router({
                         next()
                       }
                     }
+                  },
+                  {
+                    path: '/microservices',
+                    name: 'MicroservicesError',
+                    component: MicroservicesError,
+                    beforeEnter (to, from, next) {
+                      console.log(store.state.user.name);
+                      if (store.state.user.name != "administrador") {
+                        console.log("No entro");
+                        next('/home')
+                      } else {
+                        console.log("vamos a integracion");
+                        next()
+                      }
+                    }
                   }
                 ]
               },
@@ -839,6 +833,61 @@ export const router = new Router({
                     next()
                   }
                 }
+              },
+              {
+                path: '/configStudents',
+                name: 'Students',
+                component: ConfigEstudiante,
+                children: [
+                  {
+                    path: '/mainStudents',
+                    name: 'MainStudents',
+                    component: Main,
+                  },
+                  {
+                    path: '/CargaDeArchivoStudents',
+                    name: 'CargaDeArchivoStudents',
+                    component: CargaDeArchivoStudents,
+                  },
+                  {
+                    path: '/FechaTopeStudents',
+                    name: 'FechaTopeStudents',
+                    component: FechaTopeStudents,
+                  },
+                  {
+                    path: '/FechaActualizacionStudents',
+                    name: 'FechaActualizacionStudents',
+                    component: FechaActualizacionStudents,
+                  }
+                ]
+              },
+              , 
+              {
+                path: '/configTeachers',
+                name: 'Teachers',
+                component: ConfigDocente,
+                children: [
+                  {
+                    path: '/main',
+                    name: 'Main',
+                    component: Main,
+                  },
+                  {
+                    path: '/CargaDeArchivoTeachers',
+                    name: 'CargaDeArchivoTeachers',
+                    component: CargaDeArchivoTeachers,
+                  },
+                  {
+                    path: '/FechaTopeTeachers',
+                    name: 'FechaTopeTeachers',
+                    component: FechaTopeTeachers,
+                  },
+                  {
+                    path: '/FechaA',
+                    name: 'FechaA',
+                    component: FechaA,
+                  }
+                ]
               }
             ]
           }

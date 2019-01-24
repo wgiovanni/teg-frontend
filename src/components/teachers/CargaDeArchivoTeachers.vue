@@ -58,7 +58,7 @@
 
  <div id="Ver">
     <h2>Ejemplo</h2>
-    <div id="imagen" class="zoom"><img src="/static/Screenshot_1.png" ></div>
+    <div id="imagen" class="zoom"><img src="/static/img/ejemploTeachers.png" ></div>
      <button class="btn btn-light" id="centar" @click="Regresar()" >Regresar </button>
 
   </div>

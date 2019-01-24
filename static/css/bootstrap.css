@@ -9361,3 +9361,11 @@ a.text-dark:hover, a.text-dark:focus {
   content:" *";
   color:red;
 }
+
+.fondo-login {
+  background: url('/static/img/fondo2.jpg') no-repeat center center fixed;
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}

@@ -154,6 +154,7 @@ export default {
     getTask() {
         const path = URL_INTEGRATION + '/taskScheduler';
         // this.loading = true;
+        console.log("get "+ this.task);
         axios.get(path)
         .then(request => {
             if (request.data.definicion == "0")
@@ -166,6 +167,7 @@ export default {
     taskActive(active) {
         const path = URL_INTEGRATION + '/taskScheduler';
         // this.loading = true;
+        console.log("entro "+ this.task);
         axios.post(path, {
             "active": active
         })

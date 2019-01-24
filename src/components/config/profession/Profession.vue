@@ -24,7 +24,7 @@
                     <th scope="col">Facultad</th>
                     <th scope="col">Semestre o Año</th>
                     <th scope="col">Pregrado o Postgrado</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">Inactivar</th>
                     <!-- <th></th> -->
                 </tr>
             </thead>
@@ -44,7 +44,7 @@
                     </td> -->
                     <td>
                       <router-link :to="`/profession/delete/${profession.id}`" tag="button" class="btn btn-danger">
-                        <i class="material-icons">delete</i>
+                        <i class="fas fa-ban" style="color:black;"></i>
                       </router-link>
                     </td>
                 </tr>

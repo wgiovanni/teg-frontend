@@ -14,7 +14,7 @@
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">Inactivar</th>
                     <!-- <th></th> -->
                 </tr>
             </thead>
@@ -29,7 +29,7 @@
                     </td> -->
                     <td>
                       <router-link :to="`/faculty/delete/${faculty.id}`" tag="button" class="btn btn-danger">
-                        <i class="material-icons">delete</i>
+                        <i class="fas fa-ban" style="color:black;"></i>
                       </router-link>
                     </td>
                 </tr>
