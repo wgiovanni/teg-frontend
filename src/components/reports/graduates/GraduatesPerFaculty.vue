@@ -24,33 +24,6 @@
     <img id="jpg-export" class="hidden"/>
     </div>
 
-
-
-     <!--REPORTS LIST-->
-      <div class="card border-graduates mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
-        <div class="card-header">        
-            <h5 class="card-tile text-dark">Egresados</h5>         
-        </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>                
-                 <tr>
-                  <td class="td-table graduates-color">Egresados por Facultad</td> 
-                </tr>  
-                <tr>
-                  <router-link to="/report/GraduatesPerYear" class="text-dark"><td class="td-table">Egresados por Año</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/GraduatesYearFaculty" class="text-dark"><td class="td-table">Egresados por Año y por Facultad</td></router-link>    
-                </tr>              
-                
-              </tbody>
-            </table>           
-        </div>
-        </div>
-        </div>
-      <!--END OF REPORT LIST-->
   </div>  
 </template>
 
@@ -79,15 +52,18 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import { URL_INTEGRATION } from "@/common/constants"
 
 var reportName = "Egresados por Facultad";
 var img;
 var info = []; //Saves data for verification
 //var saved = [];
 var date = new Date();
+var fecha;
 
 export default {
   mounted() {
+    this.loadDate();
     
     return {
       data: []
@@ -96,15 +72,27 @@ export default {
 
   created() {
     this.load();
+    this.loadDate();
   },
 
   methods: {
     load() {
       const path =
-        "http://127.0.0.1:5000/api/v1/egresado-facultad";
+        URL_INTEGRATION+"/egresado-facultad";
 
       axios
         .get(path)
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
+     loadDate() {
+      const date =
+        URL_INTEGRATION+"/fecha-egresados";
+
+      axios
+
+        .get(date)        
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
@@ -121,6 +109,8 @@ export default {
       var i;
       var size = req.data.length;
       var d = req.data;
+
+        fecha = d["fecha"];
 
        // Saves data for verification
       info = d["items"];
@@ -158,8 +148,16 @@ export default {
       console.log(datos);
       this.data = datos;
       // LAYOUT
+      var auxDate = "Fecha de recuperación de datos: "+fecha;
 
       var layout = {
+        title: {
+          text: auxDate,
+          font: {
+            family: 'Courier New, monospace',
+            size: 12
+         },
+        },
         xaxis: {
           fixedrange: true
         },

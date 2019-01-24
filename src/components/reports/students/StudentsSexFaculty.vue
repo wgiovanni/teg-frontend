@@ -25,63 +25,6 @@
     <img id="jpg-export" class="hidden"/>
     </div>
 
-  <!--REPORTS LIST-->
-      <div class="card border-students mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
-        <div class="card-header">        
-            <h5 class="card-tile text-dark">Estudiantes</h5>         
-        </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>
-                <tr>
-                  <router-link to="/report/UndergraduateStudentsNationality" class="text-dark"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/UndergraduateStudentsSex" class="text-dark"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
-                </tr>
-                 <tr>
-                  <router-link to="/report/StudentsDisabilityPerFaculty" class="text-dark"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
-                </tr>
-                 <tr>
-                  <router-link to="/report/ForeignStudentsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
-                </tr>                  
-                <tr>
-                  <router-link to="/report/StudentsEthnicGroupsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
-                </tr>
-                <tr>
-                  <td class="td-table students-color">Estudiantes por Sexo</td>   
-                </tr>
-                <tr>
-                   <router-link to="/report/StudentsPerYear" class="text-dark"><td class="td-table">Estudiantes por Año</td></router-link>   
-                </tr> 
-                <tr>
-                   <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
-                </tr>                 
-              </tbody>
-            </table>
-            <!--Ranking Reports-->
-            <div class="card-header text-dark">
-              <h6>Indicadores para el Ranking QS</h6>
-            </div>
-            <table class="table table-hover bg-light group">
-              <tbody>
-        
-                <tr>
-                  <router-link to="/report/ProportionOfInternationalStudents" class="text-dark"><td>Estudiantes Extranjeros</td></router-link>    
-                </tr>               
-                <tr>
-                  <router-link to="/report/ProportionOfStudentsPerFaculty" class="text-dark"><td>Estudiantes por Facultad</td></router-link> 
-                </tr>
-                <tr>
-                  <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <!--END OF REPORT LIST-->
   </div>  
 </template>
 
@@ -112,15 +55,19 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import { URL_INTEGRATION } from "@/common/constants"
 
 var reportName = "Estudiantes por Sexo";
 var img;
 var info = []; //Saves data for verification
 var saved = [];
 var date = new Date();
+var fecha;
 
 export default {
   mounted() {
+
+    this.loadDate();
     
    },
 
@@ -132,14 +79,26 @@ export default {
 
   created() {
     this.load();
+    this.loadDate();
   },
 
   methods: {
 
      load() {
-      const path = "http://127.0.0.1:5000/api/v1/estudiantes-sexo-facultad";
+      const path = URL_INTEGRATION+"/estudiantes-sexo-facultad";
       axios
         .get(path)
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
+    loadDate() {
+      const date =
+        URL_INTEGRATION+"/fecha-estudiantes";
+
+      axios
+
+        .get(date)        
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
@@ -157,6 +116,9 @@ export default {
       var i;
       var size = req.data.length;
       var d = req.data;
+
+      
+      fecha = d["fecha"];
 
       // Saves data for verification
       info = d["items"];
@@ -216,11 +178,17 @@ export default {
       this.data = datos;
 
       /*** LAYOUT ***/
+  
+      var auxDate = "Fecha de recuperación de datos: "+fecha;
 
       var layout = {
-        //title:"",
-        //titlefont:{size: 24}, 
-        //annotations: [{}],             
+        title: {
+          text: auxDate,
+          font: {
+            family: 'Courier New, monospace',
+            size: 12
+         },
+        },       
         xaxis: {
           fixedrange: true
         },

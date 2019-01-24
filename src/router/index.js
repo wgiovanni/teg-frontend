@@ -13,6 +13,10 @@ import AuditList from '@/components/audit/AuditList'
 // Reports
 //import Report from '@/components/reports/Reports'
 import ReportsHome from '@/components/reports/ReportsHome'
+import ConfigReportsStudents from '@/components/ConfigReportsStudents'
+import ConfigReportsTeachers from '@/components/ConfigReportsTeachers'
+import ConfigReportsGraduates from '@/components/ConfigReportsGraduates'
+
 
 //QS Ranking
 import CitationsPerFaculty from '@/components/reports/qs/CitationsPerFaculty'
@@ -71,610 +75,791 @@ import DeleteProfession from '@/components/config/profession/DeleteProfession'
 Vue.use(Router)
 
 export const router = new Router({
-  // base: '/ucrankings',
-  routes: [
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/',
-      component: Dashboard,
-      redirect: '/home',
-      children: [
-        {
-          path:'/home',
-          name: 'Home',
-          component: Home
+      // base: '/ucrankings',
+      routes: [{
+          path: '/login',
+          name: 'Login',
+          component: Login
         },
         {
-          path: '/students',
-          name: 'Students',
-          component: Students,
-          beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
-            if (store.state.user.name != "facultad_estudiante" && store.state.user.name != "administrador" && store.state.user.name != "vicerrector") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/teachers',
-          name: 'Teachers',
-          component: Teachers,
-          beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
-            if (store.state.user.name != "facultad_docente" && store.state.user.name != "administrador"  && store.state.user.name != "vicerrector") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/reports',
-          name: 'ReportsHome',
-          component: ReportsHome,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },        
-        
-        {
-          path: '/report/ProportionOfInternationalFaculty',
-          name: 'ProportionOfInternationalFaculty',
-          component: ProportionOfInternationalFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/ProportionOfInternationalStudents',
-          name: 'ProportionOfInternationalStudents',
-          component: ProportionOfInternationalStudents,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/CitationsPerFaculty',
-          name: 'CitationsPerFaculty',
-          component: CitationsPerFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/ProportionOfStudentsPerFaculty',
-          name: 'ProportionOfStudentsPerFaculty',
-          component: ProportionOfStudentsPerFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/StaffWithAPhD',
-          name: 'StaffWithAPhD',
-          component: StaffWithAPhD,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/PublicationsPerTeacher',
-          name: 'PublicationsPerTeacher',
-          component: PublicationsPerTeacher,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/FacultyStudentRatioStudent',
-          name: 'FacultyStudentRatioStudent',
-          component: FacultyStudentRatioStudent,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/FacultyStudentRatioTeacher',
-          name: 'FacultyStudentRatioTeacher',
-          component: FacultyStudentRatioTeacher,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/ForeignStudentsPerFaculty',
-          name: 'ForeignStudentsPerFaculty',
-          component: ForeignStudentsPerFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },         
-     
-        
-        {
-          path: '/report/StudentsDisabilityPerFaculty',
-          name: 'StudentsDisabilityPerFaculty',
-          component: StudentsDisabilityPerFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },               
-        {
-          path: '/report/StudentsEthnicGroupsPerFaculty',
-          name: 'StudentsEthnicGroupsPerFaculty',
-          component: StudentsEthnicGroupsPerFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/StudentsSexFaculty',
-          name: 'StudentsSexFaculty',
-          component: StudentsSexFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/StudentsPerYear',
-          name: 'StudentsPerYear',
-          component: StudentsPerYear,
-          beforeEnter (to, from, next) {
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              next('/home')
-            } else {
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/StudentsYearFaculty',
-          name: 'StudentsYearFaculty',
-          component: StudentsYearFaculty,
-          beforeEnter (to, from, next) {
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              next('/home')
-            } else {
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/UndergraduateStudentsNationality',
-          name: 'UndergraduateStudentsNationality',
-          component: UndergraduateStudentsNationality,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/UndergraduateStudentsSex',
-          name: 'UndergraduateStudentsSex',
-          component: UndergraduateStudentsSex,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        
-     
-        {
-          path: '/report/ProportionOfTeachersByRank',
-          name: 'ProportionOfTeachersByRank',
-          component: ProportionOfTeachersByRank,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/PublicationsPerFaculty',
-          name: 'PublicationsPerFaculty',
-          component: PublicationsPerFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/TeachersNationalityFaculty',
-          name: 'TeachersNationalityFaculty',
-          component: TeachersNationalityFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/TeachersSexFaculty',
-          name: 'TeachersSexFaculty',
-          component: TeachersSexFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/TeachersWithAPhDPerFaculty',
-          name: 'TeachersWithAPhDPerFaculty',
-          component: TeachersWithAPhDPerFaculty,
-          beforeEnter (to, from, next) {
-            console.log("AQYUIIIIIII: " + store.state.user);
-            //store.state.user = JSON.parse(store.state.user);
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/GraduatesPerFaculty',
-          name: 'GraduatesPerFaculty',
-          component: GraduatesPerFaculty,
-          beforeEnter (to, from, next) {
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              next('/home')
-            } else {
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/GraduatesPerYear',
-          name: 'GraduatesPerYear',
-          component: GraduatesPerYear,
-          beforeEnter (to, from, next) {
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              next('/home')
-            } else {
-              next()
-            }
-          }
-        },
-        {
-          path: '/report/GraduatesYearFaculty',
-          name: 'GraduatesYearFaculty',
-          component: GraduatesYearFaculty,
-          beforeEnter (to, from, next) {
-            if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-              next('/home')
-            } else {
-              next()
-            }
-          }
-        },
-        {
-          path: '/config',
-          name: 'Config',
-          component: Config,
-          children: [
-            {
-              path: '/Main',
-              name: 'Main',
-              component: Main
+          path: '/',
+          component: Dashboard,
+          redirect: '/home',
+          children: [{
+              path: '/home',
+              name: 'Home',
+              component: Home
             },
             {
-              path: '/faculty',
-              name: 'Faculty',
-              component: Faculty
-            },
-            {
-              path: '/faculty/new',
-              name: 'NewFaculty',
-              component: NewFaculty
-            },
-            {
-              path: '/faculty/edit/:id',
-              name: 'EditFaculty',
-              component: EditFaculty
-            },
-            {
-              path: '/faculty/delete/:id',
-              name: 'DeleteFaculty',
-              component: DeleteFaculty
-            },
-            {
-              path: '/profession',
-              name: 'Profession',
-              component: Profession
-            },
-            {
-              path: '/profession/new',
-              name: 'NewProfession',
-              component: NewProfession
-            },
-            {
-              path: '/profession/edit/:id',
-              name: 'EditProfession',
-              component: EditProfession
-            },
-            {
-              path: '/profession/delete/:id',
-              name: 'DeleteProfession',
-              component: DeleteProfession
-            },
-            {
-              path: '/integration',
-              name: 'SystemParameterList',
-              component: SystemParameterList,
-              beforeEnter (to, from, next) {
-                if (store.state.user.name != "administrador") {
+              path: '/students',
+              name: 'Students',
+              component: Students,
+              beforeEnter(to, from, next) {
+                console.log(store.state.user.name);
+                if (store.state.user.name != "facultad_estudiante" && store.state.user.name != "administrador" && store.state.user.name != "vicerrector") {
+                  console.log("No entro");
                   next('/home')
                 } else {
+                  console.log("vamos a integracion");
                   next()
                 }
               }
             },
             {
-              path: '/integration/edit/:id',
-              name: 'SystemParameterEdit',
-              component: SystemParameterEdit,
-              beforeEnter (to, from, next) {
-                if (store.state.user.name != "administrador") {
+              path: '/teachers',
+              name: 'Teachers',
+              component: Teachers,
+              beforeEnter(to, from, next) {
+                console.log(store.state.user.name);
+                if (store.state.user.name != "facultad_docente" && store.state.user.name != "administrador" && store.state.user.name != "vicerrector") {
+                  console.log("No entro");
                   next('/home')
                 } else {
+                  console.log("vamos a integracion");
                   next()
                 }
               }
             },
-          ]
-        },
-        {
-          path: '/admin',
-          name: 'Admin',
-          component: Users,
-          beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
-            if (store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/admin/new',
-          name: 'New',
-          component: New,
-          beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
-            if (store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/admin/edit/:id',
-          name: 'Edit',
-          component: Edit,
-          beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
-            if (store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/admin/delete/:id',
-          name: 'Delete',
-          component: Delete,
-          beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
-            if (store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        },
-        {
-          path: '/audit',
-          name: 'AuditList',
-          component: AuditList,
-          beforeEnter (to, from, next) {
-            console.log(store.state.user.name);
-            if (store.state.user.name != "administrador") {
-              console.log("No entro");
-              next('/home')
-            } else {
-              console.log("vamos a integracion");
-              next()
-            }
-          }
-        }
-      ]
-    }
-  ],
-  mode: 'history',
-});
+            {
+              path: '/reports',
+              name: 'ReportsHome',
+              component: ReportsHome,
+              beforeEnter(to, from, next) {
+                console.log("AQYUIIIIIII: " + store.state.user);
+                //store.state.user = JSON.parse(store.state.user);
+                if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                  console.log("No entro");
+                  next('/home')
+                } else {
+                  console.log("vamos a integracion");
+                  next()
+                }
+              }
+            },
 
-router.beforeEach((to, from, next) => {
-  // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login'];
-  const authRequired = !publicPages.includes(to.path);
+            // {
+            //   path: '/report/ProportionOfInternationalFaculty',
+            //   name: 'ProportionOfInternationalFaculty',
+            //   component: ProportionOfInternationalFaculty,
+            //   beforeEnter(to, from, next) {
+            //     console.log("AQYUIIIIIII: " + store.state.user);
+            //     //store.state.user = JSON.parse(store.state.user);
+            //     if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+            //       console.log("No entro");
+            //       next('/home')
+            //     } else {
+            //       console.log("vamos a integracion");
+            //       next()
+            //     }
+            //   }
+            // },
+            // {
+            //   path: '/report/ProportionOfInternationalStudents',
+            //   name: 'ProportionOfInternationalStudents',
+            //   component: ProportionOfInternationalStudents,
+            //   beforeEnter(to, from, next) {
+            //     console.log("AQYUIIIIIII: " + store.state.user);
+            //     //store.state.user = JSON.parse(store.state.user);
+            //     if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+            //       console.log("No entro");
+            //       next('/home')
+            //     } else {
+            //       console.log("vamos a integracion");
+            //       next()
+            //     }
+            //   }
+            // },
+            // {
+            //   path: '/report/CitationsPerFaculty',
+            //   name: 'CitationsPerFaculty',
+            //   component: CitationsPerFaculty,
+            //   beforeEnter(to, from, next) {
+            //     console.log("AQYUIIIIIII: " + store.state.user);
+            //     //store.state.user = JSON.parse(store.state.user);
+            //     if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+            //       console.log("No entro");
+            //       next('/home')
+            //     } else {
+            //       console.log("vamos a integracion");
+            //       next()
+            //     }
+            //   }
+           // },
 
-  if (authRequired && !localStorage.getItem('user')){
-    
-    store.user = {};
-    next('/login');
+            
+            /**STUDENTS REPORTS */
 
-  } else {
-    store.state.user = JSON.parse(localStorage.getItem('user'));
 
-    next();
-  }
- 
-})
+            {
+              path: '/configreportsstudents',
+              name: 'ConfigReportsStudents',
+              component: ConfigReportsStudents,
+              children: [{
+                  path: '/Main',
+                  name: 'Main',
+                  component: Main
+                },
+                {
+                  path: '/report/ProportionOfStudentsPerFaculty',
+                  name: 'ProportionOfStudentsPerFaculty',
+                  component: ProportionOfStudentsPerFaculty
+                },
 
+                {
+                  path: '/report/StudentsDisabilityPerFaculty',
+                  name: 'StudentsDisabilityPerFaculty',
+                  component: StudentsDisabilityPerFaculty,
+                },
+                {
+                  path: '/report/StudentsEthnicGroupsPerFaculty',
+                  name: 'StudentsEthnicGroupsPerFaculty',
+                  component: StudentsEthnicGroupsPerFaculty
+                },
+                {
+                  path: '/report/StudentsSexFaculty',
+                  name: 'StudentsSexFaculty',
+                  component: StudentsSexFaculty
+                },
+                {
+                  path: '/report/StudentsPerYear',
+                  name: 'StudentsPerYear',
+                  component: StudentsPerYear
+                },
+                {
+                  path: '/report/ForeignStudentsPerFaculty',
+                  name: 'ForeignStudentsPerFaculty',
+                  component: ForeignStudentsPerFaculty
+                },
+                {
+                  path: '/report/StudentsYearFaculty',
+                  name: 'StudentsYearFaculty',
+                  component: StudentsYearFaculty
+                },
+                {
+                  path: '/report/UndergraduateStudentsNationality',
+                  name: 'UndergraduateStudentsNationality',
+                  component: UndergraduateStudentsNationality
+                },
+                {
+                  path: '/report/UndergraduateStudentsSex',
+                  name: 'UndergraduateStudentsSex',
+                  component: UndergraduateStudentsSex,
+                },
+
+                {
+                  path: '/report/ProportionOfInternationalStudents',
+                  name: 'ProportionOfInternationalStudents',
+                  component: ProportionOfInternationalStudents,
+                },
+
+                {
+                  path: '/report/ProportionOfStudentsPerFaculty',
+                  name: 'ProportionOfStudentsPerFaculty',
+                  component: ProportionOfStudentsPerFaculty,
+                },
+                {
+                  path: '/report/FacultyStudentRatioStudent',
+                  name: 'FacultyStudentRatioStudent',
+                  component: FacultyStudentRatioStudent,
+                }
+
+              ]
+            },
+
+        
+
+            {
+              path: '/configreportsteachers',
+              name: 'ConfigReportsTeachers',
+              component: ConfigReportsTeachers,
+              children: [{
+                  path: '/Main',
+                  name: 'Main',
+                  component: Main
+                },
+                {
+                  path: '/report/TeachersWithAPhDPerFaculty',
+                  name: 'TeachersWithAPhDPerFaculty',
+                  component: TeachersWithAPhDPerFaculty
+                },
+
+                {
+                  path: '/report/TeachersNationalityFaculty',
+                  name: 'TeachersNationalityFaculty',
+                  component: TeachersNationalityFaculty,
+                },
+                {
+                  path: '/report/ProportionOfTeachersByRank',
+                  name: 'ProportionOfTeachersByRank',
+                  component: ProportionOfTeachersByRank
+                },
+                {
+                  path: '/report/TeachersSexFaculty',
+                  name: 'TeachersSexFaculty',
+                  component: TeachersSexFaculty
+                },
+                {
+                  path: '/report/PublicationsPerFaculty',
+                  name: 'PublicationsPerFaculty',
+                  component: PublicationsPerFaculty
+                },
+                {
+                  path: '/report/CitationsPerFaculty',
+                  name: 'CitationsPerFaculty',
+                  component: CitationsPerFaculty
+                },
+                {
+                  path: '/report/StaffWithAPhD',
+                  name: 'StaffWithAPhD',
+                  component: StaffWithAPhD
+                },
+                {
+                  path: '/report/ProportionOfInternationalFaculty',
+                  name: 'ProportionOfInternationalFaculty',
+                  component: ProportionOfInternationalFaculty
+                },
+                {
+                  path: '/report/PublicationsPerTeacher',
+                  name: 'PublicationsPerTeacher',
+                  component: PublicationsPerTeacher,
+                },
+
+                {
+                  path: 'report/FacultyStudentRatioTeacher',
+                  name: 'FacultyStudentRatioTeacher',
+                  component: FacultyStudentRatioTeacher,
+                }
+              ]
+            },
+
+          
+            {
+              path: '/configreportsgraduates',
+              name: 'ConfigReportsGraduates',
+              component: ConfigReportsGraduates,
+              children: [{
+                  path: '/Main',
+                  name: 'Main',
+                  component: Main
+                },
+                {
+                  path: '/report/GradutesPerFaculty',
+                  name: 'GradutesPerFaculty',
+                  component: GradutesPerFaculty
+                },
+
+                {
+                  path: '/report/GraduatesPerYear',
+                  name: 'GraduatesPerYear',
+                  component: GraduatesPerYear,
+                },
+                {
+                  path: '/report/GraduatesYearFaculty',
+                  name: 'GraduatesYearFaculty',
+                  component: GraduatesYearFaculty
+                }
+              
+              ]
+
+            },
+
+
+
+              /*
+                      {
+                        path: '/report/ProportionOfStudentsPerFaculty',
+                        name: 'ProportionOfStudentsPerFaculty',
+                        component: ConfigReportsStudents,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+
+                      
+                      {
+                        path: '/report/StaffWithAPhD',
+                        name: 'StaffWithAPhD',
+                        component: StaffWithAPhD,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/PublicationsPerTeacher',
+                        name: 'PublicationsPerTeacher',
+                        component: PublicationsPerTeacher,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/FacultyStudentRatioStudent',
+                        name: 'FacultyStudentRatioStudent',
+                        component: FacultyStudentRatioStudent,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/FacultyStudentRatioTeacher',
+                        name: 'FacultyStudentRatioTeacher',
+                        component: FacultyStudentRatioTeacher,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/ForeignStudentsPerFaculty',
+                        name: 'ForeignStudentsPerFaculty',
+                        component: ForeignStudentsPerFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },         
+                   
+                      
+                      {
+                        path: '/report/StudentsDisabilityPerFaculty',
+                        name: 'StudentsDisabilityPerFaculty',
+                        component: StudentsDisabilityPerFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },               
+                      {
+                        path: '/report/StudentsEthnicGroupsPerFaculty',
+                        name: 'StudentsEthnicGroupsPerFaculty',
+                        component: StudentsEthnicGroupsPerFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/StudentsSexFaculty',
+                        name: 'StudentsSexFaculty',
+                        component: StudentsSexFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/StudentsPerYear',
+                        name: 'StudentsPerYear',
+                        component: StudentsPerYear,
+                        beforeEnter (to, from, next) {
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            next('/home')
+                          } else {
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/StudentsYearFaculty',
+                        name: 'StudentsYearFaculty',
+                        component: StudentsYearFaculty,
+                        beforeEnter (to, from, next) {
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            next('/home')
+                          } else {
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/UndergraduateStudentsNationality',
+                        name: 'UndergraduateStudentsNationality',
+                        component: UndergraduateStudentsNationality,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/UndergraduateStudentsSex',
+                        name: 'UndergraduateStudentsSex',
+                        component: UndergraduateStudentsSex,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      
+                   
+                      {
+                        path: '/report/ProportionOfTeachersByRank',
+                        name: 'ProportionOfTeachersByRank',
+                        component: ProportionOfTeachersByRank,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/PublicationsPerFaculty',
+                        name: 'PublicationsPerFaculty',
+                        component: PublicationsPerFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/TeachersNationalityFaculty',
+                        name: 'TeachersNationalityFaculty',
+                        component: TeachersNationalityFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/TeachersSexFaculty',
+                        name: 'TeachersSexFaculty',
+                        component: TeachersSexFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/TeachersWithAPhDPerFaculty',
+                        name: 'TeachersWithAPhDPerFaculty',
+                        component: TeachersWithAPhDPerFaculty,
+                        beforeEnter (to, from, next) {
+                          console.log("AQYUIIIIIII: " + store.state.user);
+                          //store.state.user = JSON.parse(store.state.user);
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            console.log("No entro");
+                            next('/home')
+                          } else {
+                            console.log("vamos a integracion");
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/GraduatesPerFaculty',
+                        name: 'GraduatesPerFaculty',
+                        component: GraduatesPerFaculty,
+                        beforeEnter (to, from, next) {
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            next('/home')
+                          } else {
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/GraduatesPerYear',
+                        name: 'GraduatesPerYear',
+                        component: GraduatesPerYear,
+                        beforeEnter (to, from, next) {
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            next('/home')
+                          } else {
+                            next()
+                          }
+                        }
+                      },
+                      {
+                        path: '/report/GraduatesYearFaculty',
+                        name: 'GraduatesYearFaculty',
+                        component: GraduatesYearFaculty,
+                        beforeEnter (to, from, next) {
+                          if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                            next('/home')
+                          } else {
+                            next()
+                          }
+                        }
+                      },
+
+              */
+              {
+                path: '/config',
+                name: 'Config',
+                component: Config,
+                children: [{
+                    path: '/Main',
+                    name: 'Main',
+                    component: Main
+                  },
+                  {
+                    path: '/faculty',
+                    name: 'Faculty',
+                    component: Faculty
+                  },
+                  {
+                    path: '/faculty/new',
+                    name: 'NewFaculty',
+                    component: NewFaculty
+                  },
+                  {
+                    path: '/faculty/edit/:id',
+                    name: 'EditFaculty',
+                    component: EditFaculty
+                  },
+                  {
+                    path: '/faculty/delete/:id',
+                    name: 'DeleteFaculty',
+                    component: DeleteFaculty
+                  },
+                  {
+                    path: '/profession',
+                    name: 'Profession',
+                    component: Profession
+                  },
+                  {
+                    path: '/profession/new',
+                    name: 'NewProfession',
+                    component: NewProfession
+                  },
+                  {
+                    path: '/profession/edit/:id',
+                    name: 'EditProfession',
+                    component: EditProfession
+                  },
+                  {
+                    path: '/profession/delete/:id',
+                    name: 'DeleteProfession',
+                    component: DeleteProfession
+                  },
+                  {
+                    path: '/integration',
+                    name: 'SystemParameterList',
+                    component: SystemParameterList,
+                    beforeEnter(to, from, next) {
+                      if (store.state.user.name != "administrador") {
+                        next('/home')
+                      } else {
+                        next()
+                      }
+                    }
+                  },
+                  {
+                    path: '/integration/edit/:id',
+                    name: 'SystemParameterEdit',
+                    component: SystemParameterEdit,
+                    beforeEnter(to, from, next) {
+                      if (store.state.user.name != "administrador") {
+                        next('/home')
+                      } else {
+                        next()
+                      }
+                    }
+                  },
+                  {
+                    path: '/admin',
+                    name: 'Admin',
+                    component: Users,
+                    beforeEnter(to, from, next) {
+                      console.log(store.state.user.name);
+                      if (store.state.user.name != "administrador") {
+                        console.log("No entro");
+                        next('/home')
+                      } else {
+                        console.log("vamos a integracion");
+                        next()
+                      }
+                    }
+                  },
+                  {
+                    path: '/admin/new',
+                    name: 'New',
+                    component: New,
+                    beforeEnter(to, from, next) {
+                      console.log(store.state.user.name);
+                      if (store.state.user.name != "administrador") {
+                        console.log("No entro");
+                        next('/home')
+                      } else {
+                        console.log("vamos a integracion");
+                        next()
+                      }
+                    }
+                  },
+                  {
+                    path: '/admin/edit/:id',
+                    name: 'Edit',
+                    component: Edit,
+                    beforeEnter(to, from, next) {
+                      console.log(store.state.user.name);
+                      if (store.state.user.name != "administrador") {
+                        console.log("No entro");
+                        next('/home')
+                      } else {
+                        console.log("vamos a integracion");
+                        next()
+                      }
+                    }
+                  },
+                  {
+                    path: '/admin/delete/:id',
+                    name: 'Delete',
+                    component: Delete,
+                    beforeEnter(to, from, next) {
+                      console.log(store.state.user.name);
+                      if (store.state.user.name != "administrador") {
+                        console.log("No entro");
+                        next('/home')
+                      } else {
+                        console.log("vamos a integracion");
+                        next()
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                path: '/audit',
+                name: 'AuditList',
+                component: AuditList,
+                beforeEnter(to, from, next) {
+                  console.log(store.state.user.name);
+                  if (store.state.user.name != "administrador") {
+                    console.log("No entro");
+                    next('/home')
+                  } else {
+                    console.log("vamos a integracion");
+                    next()
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        mode: 'history',
+      });
+
+    router.beforeEach((to, from, next) => {
+      // redirect to login page if not logged in and trying to access a restricted page
+      const publicPages = ['/login'];
+      const authRequired = !publicPages.includes(to.path);
+
+      if (authRequired && !localStorage.getItem('user')) {
+
+        store.user = {};
+        next('/login');
+
+      } else {
+        store.state.user = JSON.parse(localStorage.getItem('user'));
+
+        next();
+      }
+
+    })

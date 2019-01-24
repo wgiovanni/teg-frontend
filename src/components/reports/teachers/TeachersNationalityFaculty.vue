@@ -23,59 +23,7 @@
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
- <!--REPORTS LIST-->
-      <div class="card border-teachers mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
-        <div class="card-header">        
-            <h5 class="card-tile text-dark">Docentes</h5>         
-        </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>
-                <tr>
-                  <router-link to="/report/TeachersWithAPhDPerFaculty" class="text-dark"><td class="td-table">Docentes con Doctorado por Facultad</td></router-link>    
-                </tr>
-                <tr>
-                  <td class="td-table teachers-color">Docentes Extranjeros por Facultad</td> 
-                </tr>
-                    <tr>
-                  <router-link to="/report/ProportionOfTeachersByRank" class="text-dark"><td class="td-table">Docentes por Escalafón</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/TeachersSexFaculty" class="text-dark"><td class="td-table">Docentes por Sexo</td></router-link>    
-                </tr>               
-                <tr>
-                  <router-link to="/report/PublicationsPerFaculty" class="text-dark"><td class="td-table">Publicaciones por Facultad</td></router-link>    
-                </tr>             
-              </tbody>
-            </table>
-            <!--Ranking Reports-->
-            <div class="card-header text-dark">
-              <h6>Indicadores para el Ranking QS</h6>
-            </div>
-            <table class="table table-hover bg-light group">
-              <tbody>        
-               <tr>
-                  <router-link to="/report/CitationsPerFaculty" class="text-dark"><td>Citaciones por Facultad</td></router-link>     
-                </tr>
-                <tr>
-                  <router-link to="/report/StaffWithAPhD" class="text-dark"><td>Docentes con Doctorado</td></router-link>    
-                </tr>  
-                <tr>
-                  <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark"><td>Docentes Extranjeros</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/PublicationsPerTeacher" class="text-dark"><td>Publicaciones por Docente</td></router-link> 
-                </tr>           
-                <tr>
-                  <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <!--END OF REPORT LIST-->
+ 
   </div>  
 </template>
 
@@ -105,16 +53,20 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import { URL_INTEGRATION } from "@/common/constants"
 
 var reportName = "Docentes Extranjeros por Facultad";
 var img;
 var info = []; //Saves data for verification
 var saved = [];
 var date = new Date();
+var fecha;
 
 
 export default {
   mounted() {
+
+    this.loadDate();
     
     return {
       data: []
@@ -123,18 +75,31 @@ export default {
 
   created() {
     this.load();
+    this.loadDate();
   },
 
   methods: {
     load() {
       const path =
-        "http://127.0.0.1:5000/api/v1/profesores-nacionalidad-facultad";
+        URL_INTEGRATION+"/profesores-nacionalidad-facultad";
 
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
+
+     loadDate() {
+      const date =
+        URL_INTEGRATION+"/fecha-docentes";
+
+      axios
+
+        .get(date)        
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
 
     successful(req) {
 
@@ -150,6 +115,10 @@ export default {
       var d = req.data;
       var i;
       var size = req.data.length;
+
+      
+      fecha = d["fecha"];
+
 
       // Saves data for verification
       info = d["items"];
@@ -204,9 +173,19 @@ export default {
       console.log(datos);
       this.data = datos;
 
+      var auxDate = "Fecha de recuperación de datos: "+fecha;
+
+
       // LAYOUT
 
       var layout = {
+        title: {
+          text: auxDate,
+          font: {
+            family: 'Courier New, monospace',
+            size: 12
+         },
+        },
         xaxis: {
           fixedrange: true
         },

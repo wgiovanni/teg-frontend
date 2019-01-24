@@ -1,84 +1,36 @@
 <template>
   <div class="row row-view">
     <!--GRAPH-->
-    <!--Title-->  
+    <!--Title-->
     <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
-    <h1 id="report" class="title"/>    
+      <h1 id="report" class="title"/>
 
-    <!--Plotly-->
-    <div ref="bar" class="vue-plotly"/>
-      
-    <!--Download buttons--> 
+      <!--Plotly-->
+      <div ref="bar" class="vue-plotly"/>
+
+      <!--Download buttons-->
       <div class="col-md-12 text-center">
-        
-        <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
-        <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
-        <button class="button button-excel" @click="download_excel"><i class="fa fa-file-excel fa-lg"></i>   Descargar Excel</button>        
+        <button class="button button-pdf" @click="download_pdf">
+          <i class="fa fa-file-pdf fa-lg"></i> Descargar PDF
+        </button>
+        <button class="button button-img" @click="download_img">
+          <i class="fa fa-file-image fa-lg"></i> Descargar JPG
+        </button>
+        <button class="button button-excel" @click="download_excel">
+          <i class="fa fa-file-excel fa-lg"></i> Descargar Excel
+        </button>
       </div>
-    <!--Return button-->
-       <div class="col-md-16 text-center">
-        <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>      
+      <!--Return button-->
+      <div class="col-md-16 text-center">
+        <router-link to="/reports">
+          <button class="button button-back">Regresar</button>
+        </router-link>
+      </div>
 
-    <!--Saves plot as image-->
-    <img id="jpg-export" class="hidden"/>
+      <!--Saves plot as image-->
+      <img id="jpg-export" class="hidden">
     </div>
-
- 
-     <!--REPORTS LIST-->
-      <div class="card border-teachers mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
-        <div class="card-header">        
-            <h5 class="card-tile text-dark">Docentes</h5>         
-        </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>
-                <tr>
-                  <router-link to="/report/TeachersWithAPhDPerFaculty" class="text-dark"><td class="td-table">Docentes con Doctorado por Facultad</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/TeachersNationalityFaculty" class="text-dark"><td class="td-table">Docentes Extranjeros por Facultad</td></router-link>    
-                </tr>
-                 <tr>
-                  <td class="td-table teachers-color">Docentes por Escalafón</td>
-                </tr>
-                <tr>
-                  <router-link to="/report/TeachersSexFaculty" class="text-dark"><td class="td-table">Docentes por Sexo</td></router-link>    
-                </tr>               
-                <tr>
-                  <router-link to="/report/PublicationsPerFaculty" class="text-dark"><td class="td-table">Publicaciones por Facultad</td></router-link>    
-                </tr>               
-              </tbody>
-            </table>
-            <!--Ranking Reports-->
-            <div class="card-header text-dark">
-              <h6>Indicadores para el Ranking QS</h6>
-            </div>
-            <table class="table table-hover bg-light group">
-              <tbody>        
-               <tr>
-                  <router-link to="/report/CitationsPerFaculty" class="text-dark"><td>Citaciones por Facultad</td></router-link>     
-                </tr>
-                <tr>
-                  <router-link to="/report/StaffWithAPhD" class="text-dark"><td>Docentes con Doctorado</td></router-link>    
-                </tr>  
-                <tr>
-                  <router-link to="/report/ProportionOfInternationalFaculty" class="text-dark"><td>Docentes Extranjeros</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/PublicationsPerTeacher" class="text-dark"><td>Publicaciones por Docente</td></router-link> 
-                </tr>           
-                <tr>
-                  <router-link to="/report/FacultyStudentRatioTeacher" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <!--END OF REPORT LIST-->
-  </div>  
+  </div>
 </template>
 
 
@@ -89,14 +41,14 @@
   font-weight: bold;
 }
 
-.teachers-color:hover{
-   background-color: #006d55;
+.teachers-color:hover {
+  background-color: #006d55;
 }
 
 .border-teachers {
   border-left-color: #006d55;
   min-height: 100%;
-  border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>
 
@@ -119,7 +71,9 @@ var fecha;
 
 
 export default {
-  mounted() {    
+  mounted() {   
+
+    this.loadDate();
 
     return {
       data: []
@@ -145,7 +99,7 @@ export default {
 
     loadDate() {
       const date =
-        URL_INTEGRATION+"/fecha";
+        URL_INTEGRATION+"/fecha-docentes";
 
       axios
 
@@ -206,9 +160,11 @@ export default {
       console.log(nombreEscalafon);
       console.log(totalEscalafon);
 
+  
    datos.push({
         x: totalEscalafon,
-        y: nombreEscalafon,     
+        y: nombreEscalafon,
+       
         name: "Cantidad de Profesores en el Escalafón",
         orientation: 'h',
         type: "bar",
@@ -236,7 +192,16 @@ export default {
 
       // LAYOUT
 
+      var auxDate = "Fecha de recuperación de datos: "+fecha;
+
       var layout = {
+        title: {
+          text: auxDate,
+          font: {
+            family: 'Courier New, monospace',
+            size: 12
+         },
+        },
         xaxis: {
           fixedrange: true
         },
@@ -416,10 +381,11 @@ export default {
       var wsrows = [{ hpt: 20 }];
       ws["!rows"] = wsrows;
 
-
+      
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws, "Reporte");
 
+     
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
     } //end_of_download

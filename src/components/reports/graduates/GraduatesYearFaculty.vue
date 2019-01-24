@@ -6,18 +6,18 @@
         
         <div class="col-xl-8 col-md-8 col-sm-12">
 
-           <form class="col-md-10"  @submit.prevent="getGraduates">
+           <form class="col-md-12"  @submit.prevent="getGraduates">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <div class="form-group form-row">
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Facultad</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select class="form-control" v-model="facultad" required>
                         <option value="">Seleccionar facultad</option>
                         <option v-for="facultad in facultades" :key="facultad.id" v-bind:value="facultad.id">{{ facultad.nombre }} ({{facultad.codigo}})</option>
                     </select>
                 </div>
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Desde</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select class="form-control" v-model="desde">
                         <option value="">Seleccionar año desde</option>
                         <option v-for="year in arrayDateFrom" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
@@ -25,7 +25,7 @@
                 </div>
 
                 <label for="inputTo" class="col-sm-1 col-form-label text-form">Hasta</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select class="form-control" v-model="hasta">
                         <option value="">Seleccionar año hasta</option>
                         <option v-for="year in arrayDateTo" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
@@ -72,30 +72,6 @@
     </div>
     <!--END OF GRAPH-->
 
-        <!--REPORTS LIST-->
-        <div class="card border-graduates text-center custom-margin col-xl-3 col-md-3 col-sm-12">
-         <div class="card-header">        
-            <h5 class="card-tile text-dark">Egresados</h5>         
-        </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>                
-                 <tr>
-                  <router-link to="/report/GraduatesPerFaculty" class="text-dark"><td class="td-table">Egresados por Facultad</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/GraduatesPerYear" class="text-dark"><td class="td-table">Egresados por Año</td></router-link>    
-                </tr>
-                <tr>
-                  <td class="td-table graduates-color">Egresados por Año y por Facultad</td>    
-                </tr>                 
-              </tbody>
-            </table>           
-        </div>
-        </div>
-        </div>
-        <!--END OF REPORT LIST-->
     </div>
 
 
@@ -172,11 +148,13 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import { URL_INTEGRATION } from "@/common/constants"
 
 var reportName = "Egresados por Año y por Facultad";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
+var fecha;
 
 export default {
   name: 'GraduateYearFaculty',
@@ -193,7 +171,7 @@ export default {
   },
   methods: {
     getGraduates: function () {
-        const path = 'http://localhost:5000/api/v1/egresado-ano-facultad';
+        const path = URL_INTEGRATION+'/egresado-ano-facultad';
         console.log(this.desde);
         console.log(this.hasta);
         console.log(this.facultad)
@@ -212,6 +190,17 @@ export default {
         }
     
     },
+    loadDate() {
+      const date =
+        URL_INTEGRATION+"/fecha-egresados";
+
+      axios
+
+        .get(date)        
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
     successful (req) {
         console.log(req.data);
         document.getElementById("report").innerHTML = reportName;
@@ -226,6 +215,8 @@ export default {
       var years = [];
       var total = [];
       var i;
+
+       fecha = d["fecha"];
 
       allYears = d["anos"];
       size = allYears.length;
@@ -252,8 +243,16 @@ export default {
       this.data = datos;
 
       // LAYOUT
+  var auxDate = "Fecha de recuperación de datos: "+fecha;
 
-      var layout = {               
+      var layout = {
+        title: {
+          text: auxDate,
+          font: {
+            family: 'Courier New, monospace',
+            size: 12
+         },
+        },           
         editable: false,
         //autosize: true,
         //responsive: true,
@@ -328,7 +327,7 @@ export default {
         this.error = 'Fallo estudiantes por facultad y por año!'
     },
     getYears() {
-        const path = 'http://localhost:5000/api/v1/year';
+        const path = URL_INTEGRATION+'/year';
         this.error = '';
         axios.get(path)
         .then(request => this.yearSuccess(request))
@@ -342,7 +341,7 @@ export default {
         this.error = 'Fallo busqueda en Años!'
     },
     getFaculty() {
-        const path = 'http://localhost:5000/api/v1/faculty';
+        const path = URL_INTEGRATION+'/faculty';
         this.error = '';
         axios.get(path)
         .then(request => this.facultySuccess(request))

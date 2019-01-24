@@ -24,62 +24,7 @@
     <img id="jpg-export" class="hidden"/>
     </div>
     
-<!--REPORTS LIST-->
-      <div class="card border-students mb-6 text-center col-md-3 col-xs-1 p-l-0 p-r-0">
-        <div class="card-header">        
-            <h5 class="card-tile text-dark">Estudiantes</h5>         
-        </div>
-        <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-          <div class="card-body text-center">
-            <table class="table table-hover group">
-              <tbody>
-                <tr>
-                  <router-link to="/report/UndergraduateStudentsNationality" class="text-dark"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
-                </tr>
-                <tr>
-                  <router-link to="/report/UndergraduateStudentsSex" class="text-dark"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
-                </tr>
-                 <tr>
-                  <router-link to="/report/StudentsDisabilityPerFaculty" class="text-dark"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
-                </tr>
-                 <tr>
-                  <router-link to="/report/ForeignStudentsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
-                </tr>                  
-                <tr>
-                 <td class="td-table students-color">Estudiantes Pertenecientes a Grupos Étnicos</td> 
-                </tr>
-                <tr>
-                  <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
-                </tr>
-                <tr>
-                   <router-link to="/report/StudentsPerYear" class="text-dark"><td class="td-table">Estudiantes por Año</td></router-link>   
-                </tr> 
-                <tr>
-                   <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
-                </tr>                 
-              </tbody>
-            </table>
-            <!--Ranking Reports-->
-            <div class="card-header text-dark">
-              <h6>Indicadores para el Ranking QS</h6>
-            </div>
-            <table class="table table-hover bg-light group">
-              <tbody>
-        
-                <tr>
-                  <router-link to="/report/ProportionOfInternationalStudents" class="text-dark"><td>Estudiantes Extranjeros</td></router-link>    
-                </tr>               
-                <tr>
-                  <router-link to="/report/ProportionOfStudentsPerFaculty" class="text-dark"><td>Estudiantes por Facultad</td></router-link> 
-                </tr>
-                <tr>
-                  <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+
       <!--END OF REPORT LIST-->
   </div>  
 </template>

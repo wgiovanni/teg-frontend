@@ -4,12 +4,12 @@
         
         <div class="col-xl-8 col-md-8 col-sm-12">
 
-          <form class="col-md-10"  @submit.prevent="getStudent">
+          <form class="col-md-12"  @submit.prevent="getStudent">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
 
             <div class="form-group form-row">
                 <label for="inputFrom" class="col-sm-1 col-form-label text-form">Desde</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select class="form-control" v-model="desde">
                         <option value="">Seleccionar año desde</option>
                         <option v-for="year in arrayDateFrom" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
@@ -17,7 +17,7 @@
                 </div>
 
                 <label for="inputTo" class="col-sm-1 col-form-label text-form">Hasta</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select class="form-control" v-model="hasta">
                         <option value="">Seleccionar año hasta</option>
                         <option v-for="year in arrayDateTo" :key="year.id" v-bind:value="year.id">{{ year.codigo }}</option>
@@ -64,62 +64,6 @@
     </div>
     <!--END OF GRAPH-->
 
-        <!--REPORTS LIST-->
-        <div class="card border-students text-center custom-margin col-xl-3 col-md-3 col-sm-12">
-          <div class="card-header">        
-              <h5 class="card-tile text-dark">Estudiantes</h5>         
-          </div>
-          <div id="collapseFIRST" class="collapse show" data-parent="#accordion">
-            <div class="card-body text-center">
-              <table class="table table-hover group">
-                <tbody>                
-                  <tr>
-                    <router-link to="/report/UndergraduateStudentsNationality" class="text-dark"><td class="td-table">Estudiantes de Pregrado Extranjeros</td></router-link>    
-                  </tr>
-                  <tr>
-                    <router-link to="/report/UndergraduateStudentsSex" class="text-dark"><td class="td-table">Estudiantes de Pregrado por Sexo</td></router-link>    
-                  </tr>
-                  <tr>
-                    <router-link to="/report/StudentsDisabilityPerFaculty" class="text-dark"><td class="td-table">Estudiantes con Discapacidad</td></router-link>    
-                  </tr>
-                  <tr>
-                    <router-link to="/report/ForeignStudentsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Extranjeros por Facultad</td></router-link>    
-                  </tr>                  
-                  <tr>
-                    <router-link to="/report/StudentsEthnicGroupsPerFaculty" class="text-dark"><td class="td-table">Estudiantes Pertenecientes a Grupos Étnicos</td></router-link>    
-                  </tr>
-                  <tr>
-                    <router-link to="/report/StudentsSexFaculty" class="text-dark"><td class="td-table">Estudiantes por Sexo</td></router-link>    
-                  </tr>
-                  <tr>
-                    <td class="td-table students-color">Estudiantes por Año</td>    
-                  </tr>  
-                  <tr>
-                    <router-link to="/report/StudentsYearFaculty" class="text-dark"><td class="td-table">Estudiantes por Año y Facultad</td></router-link>   
-                  </tr>                           
-                </tbody>
-              </table>
-              <!--Ranking Reports-->
-              <div class="card-header text-dark">
-                <h6>Indicadores para el Ranking QS</h6>
-              </div>
-              <table class="table table-hover bg-light group">
-                <tbody>        
-                  <tr>
-                    <router-link to="/report/ProportionOfInternationalStudents" class="text-dark"><td>Estudiantes Extranjeros</td></router-link>    
-                  </tr>               
-                  <tr>
-                    <router-link to="/report/ProportionOfStudentsPerFaculty" class="text-dark"><td>Estudiantes por Facultad</td></router-link> 
-                  </tr>
-                  <tr>
-                    <router-link to="/report/FacultyStudentRatioStudent" class="text-dark"><td>Docentes Empleados / Estudiantes Matriculados</td></router-link>    
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <!--END OF REPORT LIST-->
     </div>
 
       
@@ -216,7 +160,7 @@ export default {
   },
   methods: {
     getStudent: function () {
-        const path = 'http://localhost:5000/api/v1/estudiantes-ano';
+        const path = URL_INTEGRATION+'/estudiantes-ano';
         console.log(this.desde);
         console.log(this.hasta);
         this.error = '';
@@ -233,6 +177,17 @@ export default {
         }
     
     },
+     loadDate() {
+      const date =
+        URL_INTEGRATION+"/fecha-estudiantes";
+
+      axios
+
+        .get(date)        
+        .then(request => this.successful(request))
+        .catch(() => this.failed());
+    },
+
     successful (req) {
         console.log(req.data);
 
@@ -248,6 +203,8 @@ export default {
       var years = [];
       var total = [];
       var i;
+
+      fecha = d["fecha"];
 
       allYears = d["anos"];
       size = allYears.length;
@@ -280,10 +237,16 @@ export default {
 
       // LAYOUT
 
-      var layout = {               
-        //editable: false,
-        //autosize: true,
-        //responsive: true,
+      var auxDate = "Fecha de recuperación de datos: "+fecha;
+
+      var layout = {
+        title: {
+          text: auxDate,
+          font: {
+            family: 'Courier New, monospace',
+            size: 12
+         },
+        },
         xaxis: {
           fixedrange: true
         },
