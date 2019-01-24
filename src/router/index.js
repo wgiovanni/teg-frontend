@@ -343,9 +343,9 @@ export const router = new Router({
                   component: Main
                 },
                 {
-                  path: '/report/GradutesPerFaculty',
-                  name: 'GradutesPerFaculty',
-                  component: GradutesPerFaculty
+                  path: '/report/GraduatesPerFaculty',
+                  name: 'GraduatesPerFaculty',
+                  component: GraduatesPerFaculty
                 },
 
                 {
