@@ -67,7 +67,7 @@ export default {
   },
 
   components: {
-    Spinner
+   
   },
 
   data() {
