@@ -304,7 +304,7 @@ export const router = new Router({
                 },
 
                 {
-                  path: 'report/FacultyStudentRatioTeacher',
+                  path: '/report/FacultyStudentRatioTeacher',
                   name: 'FacultyStudentRatioTeacher',
                   component: FacultyStudentRatioTeacher,
                 }
