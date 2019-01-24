@@ -16,11 +16,11 @@
                     <th scope="col">Apellido</th>
                     <th scope="col">Nombre de Usuario</th>
                     <th scope="col">Correo</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">Dirección</th>
+                    <!-- <th scope="col">Teléfono</th>
+                    <th scope="col">Dirección</th> -->
                     <th scope="col">Role</th>
-                    <th scope="col">Acciones</th>
-                    <th></th>
+                    <th scope="col">Editar</th>
+                    <th>Inactivar</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,8 +28,8 @@
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.phone }}</td>
+                    <!-- <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td> -->
                     <td>{{ user.address }}</td>
                     <td>{{ user.name }}</td> <!--El nombre del role-->
                     <td>
@@ -39,7 +39,7 @@
                     </td>
                     <td>
                       <router-link :to="`/admin/delete/${user.id}`" tag="button" class="btn btn-danger">
-                        <i class="material-icons">delete</i>
+                       <i class="fas fa-ban" style="color:black;"></i>
                       </router-link>
                     </td>
                 </tr>
