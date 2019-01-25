@@ -3,12 +3,27 @@
         <div class="sidebar-sticky">
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             </h6>
-            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Reportes Estudiantes
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Reportes Egresados
             </h4>  
             <hr>
             <ul class="nav flex-column">
                 <router-link tag="li" class="nav-item"
                     v-for="link in links"
+                    v-bind:key="link.id"
+                    :to="`${link.path}`">
+                    <a class="nav-link" style= "font-size:16px !important">
+                        {{link.name}}
+                    </a>
+                </router-link>
+            </ul>
+             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            </h6>
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Indicadores para el Ranking QS
+            </h4>  
+            <hr>
+            <ul class="nav flex-column">
+                <router-link tag="li" class="nav-item"
+                    v-for="link in linksrank"
                     v-bind:key="link.id"
                     :to="`${link.path}`">
                     <a class="nav-link" style= "font-size:16px !important">
@@ -45,7 +60,16 @@ export default {
           name: "Egresados por Año y Facultad",
           path: "/report/GraduatesYearFaculty"
         }       
+      ],
+       linksrank: [
+
+        {
+          id: 0,
+          name: "Empleabilidad",
+          path: "/report/Employability"
+        }    
       ]
+ 
     };
   }
 }

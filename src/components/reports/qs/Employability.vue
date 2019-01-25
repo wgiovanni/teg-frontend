@@ -1,13 +1,12 @@
 <template>
-   <div class="row row-view">
+  <div class="row row-view">
     <!--GRAPH-->
     <!--Title-->  
     <div id="graph" class="col-md-9 col-xs-11 p-l-2 p-t-2">
     <h1 id="report" class="title"/>  
-    <h4 id="reportDate" class="title"/>  
 
     <!--Plotly-->
-    <div ref="pie" class="vue-plotly"/>
+    <div ref="bar" class="vue-plotly "/>
       
     <!--Download buttons--> 
       <div class="col-md-12 text-center">
@@ -19,12 +18,12 @@
     <!--Return button-->
        <div class="col-md-16 text-center">
         <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
-      </div>     
-  
+      </div>
 
-    <!--Saves plot as image-->
+    <!--Save graph as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
+
   </div>  
 </template>
 
@@ -56,7 +55,7 @@ import Plotly from "plotly.js";
 import XLSX from "xlsx";
 import { URL_INTEGRATION } from "@/common/constants"
 
-var reportName = "Estudiantes de Pregrado Extranjeros";
+var reportName = "Empleabilidad";
 var img;
 var info = []; //Saves data for verification
 var saved = [];
@@ -64,10 +63,8 @@ var date = new Date();
 var fecha;
 
 export default {
-  mounted() {    
-
+  mounted() {
     this.loadDate();
-
     return {
       data: []
     };
@@ -80,18 +77,16 @@ export default {
 
   methods: {
     load() {
-      const path =
-        URL_INTEGRATION+"/estudiantes-pregrado-nacionalidad";
-
+      const path = URL_INTEGRATION+"/egresado-trabajos";
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
-    loadDate() {
+     loadDate() {
       const date =
-        URL_INTEGRATION+"/fecha-estudiantes";
+        URL_INTEGRATION+"/fecha-egresados";
 
       axios
 
@@ -101,58 +96,65 @@ export default {
     },
 
     successful(req) {
-
       document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
 
       var datos = []; // Saves data from JSON
-      var estudiantesV;
-      var estudiantesE;
-      var totalEstudiantes;  
+    
+      var empresas = [];
+      var egresados = [];
+      var numEgresados = [];
+     
+      var i;
+      var size = req.data.length;
       var d = req.data;
 
       fecha = d["fecha"];
-
-     console.log("FECHA ",fecha);
 
       // Saves data for verification
       info = d["items"];
       info.unshift({
         cedula: "Cédula",
-        nacionalidad: "Nacionalidad",
         nombre: "Nombre",
-        apellido: "Apellido",        
-        email: "Correo",     
-        tipo: "Tipo"
+        apellido: "Apellido",
+        correo: "Correo",
+        telefono: "Teléfono",
+        nombre_empresa: "Nombre de Empresa",
+        
       });
       console.log("info ", info);
 
       saved = d["recuperado"];
 
-      estudiantesV = d["Venezolano"];
-      estudiantesE = d["Extranjero"];
-      totalEstudiantes = d["total-estudiantes-pregrado"];
+      
+      egresados = d["egresados"];
 
-      console.log(estudiantesV);
-      console.log(estudiantesE);
-
+      for (i = 0; i < egresados.length; i++) {
+        numEgresados.push(egresados[i]["cantidad_egresados"]);
+        empresas.push(egresados[i]["nombre_empresa"]);
+      }
+  
       datos.push({
-        
-        values: [estudiantesV, estudiantesE],
-        labels: ['Estudiantes Venezolanos', 'Estudiantes Extranjeros'],
-        type: "pie",
-        marker: { colors:['#cf6a87','#2d98da'],
-                  line: {color: "#FFFFFF"}  },
-        insidetextfont: {color: "#FFFFFF",
-                         size: 16},
-        hoverlabel: { font:{size:18}},
-       
+        x: empresas,
+        y: numEgresados,
+        name: "Empleabilidad",
+        type: "bar",
+        marker: {
+          color: "#D6757F",
+          width: 1
+        },
+        hoverlabel: { font: { size: 18 } },
+        insidetextfont: {
+          color: "#FFFFFF",
+          size: 16
+        }
       });
 
       console.log(datos);
       this.data = datos;
 
       // LAYOUT
+ 
       var auxDate = "Fecha de recuperación de datos: "+fecha;
 
       var layout = {
@@ -169,16 +171,13 @@ export default {
         yaxis: {
           fixedrange: true
         },
+        barmode: "stack",
         editable: false,
         autosize: true,
         responsive: true,
-        legend: {                
-          y: 0.8,
-          font: {size: 16}
-        },
         margin: {
-          l: 100,
-          r: 130,
+          l: 250,
+          r: 100,
           b: 100,
           t: 100,
           pad: -1
@@ -196,19 +195,19 @@ export default {
 
       // GRAPH
 
-      // Exports plot as image
+      //Exports plot as image
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.react(this.$refs.pie, this.data, layout, config).then(function(gd) {
-        //  Saves plot as image
+      Plotly.react(this.$refs.bar, this.data, layout, config).then(function(gd) {
+        //Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
-        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
+        Plotly.toImage(gd, { height: 728, width: 1024 }).then(function(url) {
           img_jpg.attr("src", url);
           return Plotly.toImage(gd, {
             format: "jpeg",
-            height: 768,
+            height: 728,
             width: 1024
           });
         });
@@ -225,93 +224,66 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 17, 17);
-      
-       doc.setProperties({
+      doc.addImage(img, "JPG", 16, 16);
+      doc.save(reportName + ".pdf");
+
+      doc.setProperties({
         title: reportName,
         subject: "Reporte",
         author: "UC Ranking",
         date: date
       });
 
-      //Info for verification
+       //Info for verification
       doc.addPage();
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.setFontSize(16);
-      doc.text("Datos de Referencia", 17, 15);
+      doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(9);
+      doc.setFontSize(7);
       doc.cellInitialize();
 
       var flag = true;
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
-          
+
           if(flag){            
             doc.setFontType("bold");
-            if(cell == "Tipo")
+            if(cell == "Cédula")
               flag = false;
           }else{
             doc.setFontType("normal");
           }
-          
-          if (j == "email") {
-            doc.cell(15, 25, 70, 15, cell, i);        
+
+
+          if ((j == "correo") | (j == "nombre_empresa")) {
+            doc.cell(7, 25, 60, 15, cell, i);
+
           } else if (j == "cedula") {
-            doc.cell(15, 25, 30, 15, cell, i);      
+            doc.cell(7, 25, 20, 15, cell, i);
           } else {
-            doc.cell(15, 25, 40, 15, cell, i);
+            doc.cell(7, 25, 25, 15, cell, i);
           }
         });
       });
 
-      //Saved from
+          //Saved from
       doc.addPage();
       doc.setFont("helvetica");
       doc.setFontType("bolditalic");
       doc.setFontSize(16);
       doc.text("Recuperado de:", 15, 15);      
-      var j = 0;
-      var aux = 15;
+     
+     
+    doc.setFontSize(14);
+    doc.setFontType("bold");      
+       
+    doc.text(saved[0], 15, 15);
 
-      for(j = 0; j < 4; j++){
-
-        doc.setFontSize(14);
-        doc.setFontType("bold");      
-        aux = aux + 15;
-        doc.text(saved[j]["first_name"], 15, aux);
-
-        doc.setFontSize(10);         
-        aux = aux + 5;
-        doc.text(saved[j]["email"], 15, aux);
-        aux = aux + 5;
-        doc.text(saved[j]["phone"], 15, aux);
-        aux = aux + 5;
-        doc.text(saved[j]["address"], 15, aux);  
-        aux = aux + 5;      
-      }
-
-        aux = 15;
-
-       for(j = 4; j < 7; j++){
-
-        doc.setFontSize(14);
-        doc.setFontType("bold");      
-        aux = aux + 15;
-        doc.text(saved[j]["first_name"], 150, aux);
-
-        doc.setFontSize(10);         
-        aux = aux + 5;
-        doc.text(saved[j]["email"], 150, aux);
-        aux = aux + 5;
-        doc.text(saved[j]["phone"], 150, aux);
-        aux = aux + 5;
-        doc.text(saved[j]["address"], 150, aux); 
-        aux = aux + 5;         
-      }      
+    
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()
@@ -325,7 +297,7 @@ export default {
       document.body.removeChild(a);
     }, //end_of_download()
 
-     download_excel() {
+    download_excel() {
       // Data from JSON
       var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
 
@@ -342,12 +314,14 @@ export default {
 
       // Column Properties
       var wscols = [
-        { wch: 12 },
-        { wch: 35 },
+        { wch: 10 },
         { wch: 20 },
         { wch: 20 },
+        { wch: 20 },
+        { wch: 25 },
         { wch: 40 },
-        { wch: 20 }
+        { wch: 25 },
+        { wch: 40 }
       ];
       ws["!cols"] = wscols;
 
@@ -360,7 +334,6 @@ export default {
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
     } //end_of_download
-
   }
 };
 </script>

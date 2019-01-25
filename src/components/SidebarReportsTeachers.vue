@@ -3,7 +3,7 @@
         <div class="sidebar-sticky">
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             </h6>
-            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Reportes Estudiantes
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Reportes Docentes
             </h4>  
             <hr>
             <ul class="nav flex-column">
@@ -46,7 +46,7 @@ export default {
       links: [
         {
           id: 0,
-          name: "Docentes con Doctorado por Facultad<",
+          name: "Docentes con Doctorado por Facultad",
           path: "/report/TeachersWithAPhDPerFaculty"
         },
         {
