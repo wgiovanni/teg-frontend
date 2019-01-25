@@ -157,7 +157,7 @@ export default {
         areasInv.push(d[i]["area_de_investigacion"]);
         publicaciones.push(d[i]["publicaciones"]);
       
-
+/*
         if(publicaciones[i].length>1){
 
           for(m = 0; m < publicaciones[i].length; m++ ){
@@ -170,7 +170,7 @@ export default {
           }
 
         }
-
+*/
 
       info.unshift({
         cedula: cedulas[i],
@@ -221,7 +221,7 @@ export default {
         aux = "";    
       }    
 
-      console.log("EJEMPLO HOPE: ", hope);
+  /*   console.log("EJEMPLO HOPE: ", hope);
 
       
       json = JSON.stringify(hope);
@@ -232,8 +232,8 @@ export default {
         
      
 
-       console.log("EJEMPLO HOPE22: ", hope);
-
+      console.log("EJEMPLO HOPE22: ", hope);
+ */
        
       info.unshift({
         cedula: "Cédula",
@@ -244,7 +244,7 @@ export default {
         publicaciones: "Publicaciones"
         
       });
-      console.log("info 2", info);
+    /*   console.log("info 2", info); */
 
       var values = [
         cedulas,
@@ -252,7 +252,7 @@ export default {
         apellidos,
         areasInv,
         publication
-      ];
+      ]; 
 
 
       datos.push({
@@ -371,7 +371,7 @@ export default {
       doc.cellInitialize();
 
 
-      $.each(hope, function(i, row) {
+      $.each(info, function(i, row) {
        
           $.each(row, function(j, cell) {
 
