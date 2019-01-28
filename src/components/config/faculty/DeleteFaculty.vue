@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container margen">
-            <div class="col s12"><h2>Eliminar el facultad {{codigo}}</h2></div>
+            <div class="col s12"><h2>Inactivar la facultad {{codigo}}</h2></div>
             <form class="col s12" @submit.prevent="deleteFaculty">
                 <div class="form-group">
                     <p>La acción no puede deshacerse.</p>

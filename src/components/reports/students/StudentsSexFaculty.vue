@@ -24,7 +24,7 @@
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
-
+    <div>Fecha: {{this.fecha}}</div>
   </div>  
 </template>
 
@@ -73,7 +73,8 @@ export default {
 
   data() {
     return {
-      data: []
+      data: [],
+      fecha: ''
     };
   },
 
@@ -97,10 +98,12 @@ export default {
         URL_INTEGRATION+"/fecha-estudiantes";
 
       axios
-
         .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
 
     successful(req) { 
@@ -118,7 +121,7 @@ export default {
       var d = req.data;
 
       
-      fecha = d["fecha"];
+      // fecha = d["fecha"];
 
       // Saves data for verification
       info = d["items"];
@@ -179,7 +182,8 @@ export default {
 
       /*** LAYOUT ***/
   
-      var auxDate = "Fecha de recuperación de datos: "+fecha;
+      console.log("fecha pdf" + this.fecha);
+      var auxDate = "Fecha de recuperación de datos: "+ this.fecha;
 
       var layout = {
         title: {
@@ -346,6 +350,7 @@ export default {
         doc.text(saved[j]["address"], 150, aux); 
         aux = aux + 5;       
       }
+      doc.text(this.fecha, 150, 15);
 
 
       doc.save(reportName + ".pdf");

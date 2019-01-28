@@ -173,11 +173,7 @@ export const router = new Router({
               path: '/configreportsstudents',
               name: 'ConfigReportsStudents',
               component: ConfigReportsStudents,
-              children: [{
-                  path: '/Main',
-                  name: 'Main',
-                  component: Main
-                },
+              children: [
                 {
                   path: '/report/ProportionOfStudentsPerFaculty',
                   name: 'ProportionOfStudentsPerFaculty',
@@ -366,11 +362,7 @@ export const router = new Router({
               path: '/configreportsteachers',
               name: 'ConfigReportsTeachers',
               component: ConfigReportsTeachers,
-              children: [{
-                  path: '/Main',
-                  name: 'Main',
-                  component: Main
-                },
+              children: [
                 {
                   path: '/report/TeachersWithAPhDPerFaculty',
                   name: 'TeachersWithAPhDPerFaculty',
@@ -541,11 +533,7 @@ export const router = new Router({
               path: '/configreportsgraduates',
               name: 'ConfigReportsGraduates',
               component: ConfigReportsGraduates,
-              children: [{
-                  path: '/Main',
-                  name: 'Main',
-                  component: Main
-                },
+              children: [
                 {
                   path: '/report/GraduatesPerFaculty',
                   name: 'GraduatesPerFaculty',
@@ -579,22 +567,22 @@ export const router = new Router({
                     }
                   }
                 },
-                {
-                  path: '/report/GraduatesYearFaculty',
-                  name: 'GraduatesYearFaculty',
-                  component: GraduatesYearFaculty,
-                  beforeEnter (to, from, next) {
-                    console.log("AQYUIIIIIII: " + store.state.user);
-                    //store.state.user = JSON.parse(store.state.user);
-                    if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
-                      console.log("No entro");
-                      next('/home')
-                    } else {
-                      console.log("vamos a integracion");
-                      next()
-                    }
-                  }
-                },
+                // {
+                //   path: '/report/GraduatesYearFaculty',
+                //   name: 'GraduatesYearFaculty',
+                //   component: GraduatesYearFaculty,
+                //   beforeEnter (to, from, next) {
+                //     console.log("AQYUIIIIIII: " + store.state.user);
+                //     //store.state.user = JSON.parse(store.state.user);
+                //     if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                //       console.log("No entro");
+                //       next('/home')
+                //     } else {
+                //       console.log("vamos a integracion");
+                //       next()
+                //     }
+                //   }
+                // },
                 {
                   path: '/report/GraduatesYearFaculty',
                   name: 'GraduatesYearFaculty',
@@ -963,11 +951,7 @@ export const router = new Router({
                 path: '/config',
                 name: 'Config',
                 component: Config,
-                children: [{
-                    path: '/Main',
-                    name: 'Main',
-                    component: Main
-                  },
+                children: [
                   {
                     path: '/faculty',
                     name: 'Faculty',
@@ -1130,11 +1114,6 @@ export const router = new Router({
                 component: ConfigEstudiante,
                 children: [
                   {
-                    path: '/mainStudents',
-                    name: 'MainStudents',
-                    component: Main,
-                  },
-                  {
                     path: '/CargaDeArchivoStudents',
                     name: 'CargaDeArchivoStudents',
                     component: CargaDeArchivoStudents,
@@ -1157,11 +1136,6 @@ export const router = new Router({
                 name: 'Teachers',
                 component: ConfigDocente,
                 children: [
-                  {
-                    path: '/main',
-                    name: 'Main',
-                    component: Main,
-                  },
                   {
                     path: '/CargaDeArchivoTeachers',
                     name: 'CargaDeArchivoTeachers',

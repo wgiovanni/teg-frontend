@@ -12,21 +12,21 @@
   
                         <label for="first_name"  class="col col-form-label text-md-center">Faces</label>
                         <div class="col">
-                          <input type="date"  id="fechaAFaces"  disabled=true value="2018-01-01" class="form-control" >
+                          <input type="text"  id="fechaAFaces"  disabled=true value="2018-01-01" class="form-control" >
                         </div>
 
                       </div>
                       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                           <label for="first_name"  class="col col-form-label text-md-center">Facyt</label>
                           <div class="col">
-                            <input type="date"  id="fechaAFacyt" disabled=true value="2018-01-01" class="form-control"   >
+                            <input type="text"  id="fechaAFacyt" disabled=true value="2018-01-01" class="form-control"   >
                           </div>
 
                       </div>
                       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                           <label for="first_name"  class="col col-form-label text-md-center">Face</label>
                           <div class="col">
-                            <input type="date" id="fechaAFace" disabled=true value="2018-01-01" class="form-control" >
+                            <input type="text" id="fechaAFace" disabled=true value="2018-01-01" class="form-control" >
                           </div>
 
                       </div>
@@ -34,7 +34,7 @@
   
                           <label for="first_name"  class="col col-form-label text-md-center">Fcjp</label>
                           <div class="col">
-                            <input type="date"  id="fechaAFcjp" disabled=true value="2018-01-01" class="form-control" >
+                            <input type="text"  id="fechaAFcjp" disabled=true value="2018-01-01" class="form-control" >
                           </div>
 
                       </div>
@@ -43,19 +43,19 @@
                       
                           <label for="first_name"   class="col col-form-label text-md-center">Odontología</label>
                           <div class="col">
-                            <input type="date"  id="fechaAOdontologia" disabled=true value="2018-01-01" class="form-control" >
+                            <input type="text"  id="fechaAOdontologia" disabled=true value="2018-01-01" class="form-control" >
                           </div>
                       </div>
                       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12"> 
                           <label for="first_name"  class="col col-form-label text-md-center">Ingeniería</label>
                           <div class="col">
-                            <input type="date"  id="fechaAIngieneria" disabled=true value="2018-01-01" class="form-control" >
+                            <input type="text"  id="fechaAIngieneria" disabled=true value="2018-01-01" class="form-control" >
                           </div>
                       </div>
                       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                           <label for="first_name"  class="col col-form-label text-md-center">Fcs</label>
                           <div class="col">
-                            <input type="date" id="fechaADerecho" disabled=true value="2018-01-01" class="form-control" >
+                            <input type="text" id="fechaADerecho" disabled=true value="2018-01-01" class="form-control" >
                           </div>
                        </div>
 
@@ -191,12 +191,15 @@ import { URL_TEACHERS } from "@/common/constants"
               }
             ).then(function(res){
           
+          console.log(res);
           var con = document.getElementById("e");
           con.textContent  = res.data["exitosa"];
 
        
              $( "#e" ).addClass( "verde" )
               console.log(res.data); 
+
+
               console.log('SUCCESS!!');
            
        
@@ -344,7 +347,10 @@ import { URL_TEACHERS } from "@/common/constants"
       $("#Ver").css("display", "none");
       $("#UltimaFecha").css("display", "none");
       $("#carga").css("display", "block");
-      }, ultima()
+      },
+      
+      
+      ultima()
       {
         $( "#LinkFecha" ).removeClass( "active" )
         $( "#LinkArchivo" ).removeClass( "active" )
@@ -357,16 +363,9 @@ import { URL_TEACHERS } from "@/common/constants"
           let formData = new FormData();
            const path = URL_TEACHERS+ '/ultimaFecha' ;
         
-             axios.post(path,
-                  formData,
-                  {
-                  headers: {
-                      'Content-Type': 'multipart/form-data'
-                  }
-                  
-                }
-              ).then(function(res){
-            
+             axios.get(path)
+      .then(res => {
+            console.log(res.data["Faces"].substring(0, 10))
 
             $(fechaAFaces).val(res.data["Faces"])
             $(fechaAFacyt).val(res.data["Facyt"])

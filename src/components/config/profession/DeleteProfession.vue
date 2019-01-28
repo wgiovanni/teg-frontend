@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container margen">
-            <div class="col s12"><h2>Eliminar el carrera {{codigo}}</h2></div>
+            <div class="col s12"><h2>Inactivar la carrera {{codigo}}</h2></div>
             <form class="col s12" @submit.prevent="deleteProfession">
                 <div class="form-group">
                     <p>La acción no puede deshacerse.</p>

@@ -133,7 +133,7 @@
 import { mapState, mapGetters } from "vuex";
 import jsPDF from "jsPDF";
 import axios from 'axios';
-// import { URL_TEACHERS } from "@/common/constants"
+import { URL_STUDENTS } from "@/common/constants"
 
   export default {
 
@@ -163,7 +163,7 @@ cargar_fecha: function(){
    
             let formData = new FormData();
 
-        var path = 'http://localhost:8082/fechasvicerrector';
+        var path = URL_STUDENTS + '/fechasvicerrector';
             
             axios.post(path,
                 formData,

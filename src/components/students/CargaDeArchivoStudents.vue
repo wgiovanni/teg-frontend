@@ -104,7 +104,7 @@
 import { mapState, mapGetters } from "vuex";
 import jsPDF from "jsPDF";
 import axios from 'axios';
-import { URL_TEACHERS } from "@/common/constants"
+import { URL_STUDENTS } from "@/common/constants"
 
   export default {
     /*
@@ -149,12 +149,12 @@ import { URL_TEACHERS } from "@/common/constants"
             // console.log(this.user.username);
             if(pre_post==0){
               
-                        path = 'http://localhost:8082/upload/11/'+ this.user.username;
+                        path = URL_STUDENTS + '/upload/11/'+ this.user.username;
                           // path = 'http://localhost:8082/api/v1/estudiantes';
                     
             }else{
               
-                     path = 'http://localhost:8082/upload/21/'+ this.user.username;   
+                     path = URL_STUDENTS + '/upload/21/'+ this.user.username;   
             }
           console.log(pre_post);
             axios.post(path,
@@ -247,16 +247,16 @@ import { URL_TEACHERS } from "@/common/constants"
       
       // Funcion para obtener la fecha asociada a una facultad en particular   
       mymethod(){
-  
+        // console.log("user"+this.user);
           let formData2 = new FormData();
           var path2 = ''
           if(this.pre_post==0){
                       
-            path2 = 'http://localhost:8082/fecha_tope/11/'+ this.user.username;
+            path2 = URL_STUDENTS + '/fecha_tope/11/'+ this.user.username;
                             
           }else{
                       
-            path2 = 'http://localhost:8082/fecha_tope/21/'+ this.user.username;   
+            path2 = URL_STUDENTS + '/fecha_tope/21/'+ this.user.username;   
           }
 
             axios.post(path2,
@@ -311,7 +311,9 @@ import { URL_TEACHERS } from "@/common/constants"
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
       }
-    },computed: {
+    },
+    
+    computed: {
       ...mapGetters(["user"])
     }
   }

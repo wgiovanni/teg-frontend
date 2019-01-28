@@ -179,7 +179,7 @@ import { URL_TEACHERS } from "@/common/constants"
       }
     }, mounted(){
      // invocar los métodos
-     this.cambiar();
+     this.ultima();
     },
 
     methods: {
@@ -363,39 +363,34 @@ import { URL_TEACHERS } from "@/common/constants"
       $("#Ver").css("display", "none");
       $("#UltimaFecha").css("display", "none");
       $("#carga").css("display", "block");
-      }, ultima()
+      }, 
+      
+      ultima()
       {
-        $( "#LinkFecha" ).removeClass( "active" )
-        $( "#LinkArchivo" ).removeClass( "active" )
-        $( "#FechasA" ).addClass( "active" )
-        $("#fecha").css("display", "none");
-        $("#carga").css("display", "none");
-        $("#Ver").css("display", "none");
-         $("#UltimaFecha").css("display", "block");
+        // $( "#LinkFecha" ).removeClass( "active" )
+        // $( "#LinkArchivo" ).removeClass( "active" )
+        // $( "#FechasA" ).addClass( "active" )
+        // $("#fecha").css("display", "none");
+        // $("#carga").css("display", "none");
+        // $("#Ver").css("display", "none");
+        //  $("#UltimaFecha").css("display", "block");
           
           let formData = new FormData();
-           const path = URL_TEACHERS+ '/ultimaFecha' ;
+           const path = URL_TEACHERS+ '/fechatope' ;
         
-             axios.post(path,
-                  formData,
-                  {
-                  headers: {
-                      'Content-Type': 'multipart/form-data'
-                  }
-                  
-                }
+             axios.get(path
               ).then(function(res){
             
-           
+           console.log(res.data["Faces"].fecha);
 
-            $(fechaAFaces).val(res.data["Faces"])
-            $(fechaAFacyt).val(res.data["Facyt"])
-            $(fechaAFace).val(res.data["Face"])
-            $(fechaADerecho).val(res.data["Fcs"])
-            $(fechaAOdontologia).val(res.data["Odontologia"])
-            $(fechaAFcjp).val(res.data["Fcjp"])
-            $(fechaAIngieneria).val(res.data["Ingieneria"])
-            $(API).val(res.data["APi"])   
+            $(fechaFaces).val(res.data["Faces"].fecha)
+            $(fechaFacyt).val(res.data["Facyt"].fecha)
+            $(fechaFace).val(res.data["Face"].fecha)
+            $(fechaDerecho).val(res.data["Fcs"].fecha)
+            $(fechaOdontologia).val(res.data["Odontologia"].fecha)
+            $(fechaFcjp).val(res.data["Fcjp"].fecha)
+            $(fechaIngieneria).val(res.data["Ingieneria"].fecha)
+            // $(API).val(res.data["APi"])   
             console.log(res.data); 
             console.log('SUCCESS!!');
            

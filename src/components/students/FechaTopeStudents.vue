@@ -188,7 +188,7 @@
 import { mapState, mapGetters } from "vuex";
 import jsPDF from "jsPDF";
 import axios from 'axios';
-// import { URL_TEACHERS } from "@/common/constants"
+import { URL_STUDENTS } from "@/common/constants"
 
   export default {
     /*
@@ -215,7 +215,7 @@ cargar_fecha: function(){
         //  console.log("entrooo carga fecha");
             let formData = new FormData();
 
-        var path = 'http://localhost:8082/fechasvicerrector';
+        var path = URL_STUDENTS + '/fechasvicerrector';
             
             axios.post(path,
                 formData,
@@ -265,7 +265,7 @@ guardarfechas: function(){
          var fcs_postgrado=   document.getElementById("FCS2").value;
          var odontologia_postgrado=   document.getElementById("ODONTOLOGIA2").value;  
 
-         var path = 'http://localhost:8082/insertarfecha/' +facyt_pregrado+ '/'+faces_pregrado + '/'+face_pregrado+  '/'+ fcjp_pregrado+ '/'+ ingenieria_pregrado+ '/'+ fcs_pregrado+ '/'+ odontologia_pregrado+ '/' +facyt_postgrado+ '/'+faces_postgrado + '/'+face_postgrado+  '/'+ fcjp_postgrado+ '/'+ ingenieria_postgrado+ '/'+ fcs_postgrado+ '/'+ odontologia_postgrado ;
+         var path = URL_STUDENTS + '/insertarfecha/' +facyt_pregrado+ '/'+faces_pregrado + '/'+face_pregrado+  '/'+ fcjp_pregrado+ '/'+ ingenieria_pregrado+ '/'+ fcs_pregrado+ '/'+ odontologia_pregrado+ '/' +facyt_postgrado+ '/'+faces_postgrado + '/'+face_postgrado+  '/'+ fcjp_postgrado+ '/'+ ingenieria_postgrado+ '/'+ fcs_postgrado+ '/'+ odontologia_postgrado ;
             
             axios.post(path,
                 formData,

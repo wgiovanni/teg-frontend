@@ -4,18 +4,136 @@
             <Spinner></Spinner>
         </div>
         <div v-else class="table-responsive-md">
-            <div><h2>Monitoreo de errores de microservicios</h2></div>
-            <div class="row" style="margin-left: 0px">
+            <div><h2>Monitoreo de microservicios</h2></div>
+            <div class="d-flex bd-highlight mb-4" style="margin-left: 0px">
                 
-                <input v-model="search" name="search" type="text" id="search" class="form-control col-3" placeholder="Buscar">
-                <div v-if="this.task==true" class="col text-rigth" style="text-align: right;">
-                    <button class="btn btn-secondary" v-on:click="taskActive(false)"><i class="fas fa-pause"></i> Detener tarea programada</button>
-                    <button class="btn btn-success" v-on:click="createPDF()"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
-                    <button class="btn btn-danger float-right" v-on:click="clear()"><i class="fas fa-broom"></i> Limpiar</button>
+                <div class="mr-auto bd-highlight">
+                    <input v-model="search" name="search" type="text" id="search" class="form-control" placeholder="Buscar">
                 </div>
-                <div v-if="this.task==false" class="col text-rigth" style="text-align: right;">
-                    <button class="btn btn-secondary" v-on:click="taskActive(true)"><i class="fas fa-play"></i> Activar tarea programada</button>
+                <!-- 1 todas activadas -->
+                <div v-if="this.taskStudents==true && this.taskTeachers==true && this.taskGraduates==true" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(false)"><i class="fas fa-pause"></i> Detener tares para estudiantes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(false)"><i class="fas fa-pause"></i> Detener tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(false)"><i class="fas fa-pause"></i> Detener tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2 todas desactivadas -->
+                <div v-if="this.taskStudents==false && this.taskTeachers==false && this.taskGraduates==false" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(true)"><i class="fas fa-play"></i> Activar tarea para estudiante</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(true)"><i class="fas fa-play"></i> Activar tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(true)"><i class="fas fa-play"></i> Activar tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3 verdad, falso, falso -->
+                <div v-if="this.taskStudents==true && this.taskTeachers==false && this.taskGraduates==false" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(false)"><i class="fas fa-pause"></i> Detener tares para estudiantes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(true)"><i class="fas fa-play"></i> Activar tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(true)"><i class="fas fa-play"></i> Activar tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 4 verdad, verdad, falso -->
+                <div v-if="this.taskStudents==true && this.taskTeachers==true && this.taskGraduates==false" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(false)"><i class="fas fa-pause"></i> Detener tares para estudiantes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(false)"><i class="fas fa-pause"></i> Detener tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(true)"><i class="fas fa-play"></i> Activar tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 5 falso, falso, verdad -->
+                <div v-if="this.taskStudents==false && this.taskTeachers==false && this.taskGraduates==true" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(true)"><i class="fas fa-play"></i> Activar tarea para estudiante</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(true)"><i class="fas fa-play"></i> Activar tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(false)"><i class="fas fa-pause"></i> Detener tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 6 verdad, falso, verdad -->
+                 <div v-if="this.taskStudents==true && this.taskTeachers==false && this.taskGraduates==true" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(false)"><i class="fas fa-pause"></i> Detener tares para estudiantes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(true)"><i class="fas fa-play"></i> Activar tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(false)"><i class="fas fa-pause"></i> Detener tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 7 falso, verdad, verdad -->
+                <div v-if="this.taskStudents==false && this.taskTeachers==true && this.taskGraduates==true" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(true)"><i class="fas fa-play"></i> Activar tarea para estudiante</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(false)"><i class="fas fa-pause"></i> Detener tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(false)"><i class="fas fa-pause"></i> Detener tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 8 falso, verdad, falso -->
+                <div v-if="this.taskStudents==false && this.taskTeachers==true && this.taskGraduates==false" class="bd-highlight" style="text-align: right;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i> Tareas programadas
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(true)"><i class="fas fa-play"></i> Activar todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskAll(false)"><i class="fas fa-pause"></i> Detener todas las tares</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveStudents(true)"><i class="fas fa-play"></i> Activar tarea para estudiante</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveTeachers(false)"><i class="fas fa-pause"></i> Detener tarea para docentes</a>
+                            <a class="btn btn-secondary dropdown-item" v-on:click="taskActiveGraduates(true)"><i class="fas fa-play"></i> Activar tarea para egresados</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bd-highlight">
                     <button class="btn btn-success" v-on:click="createPDF()"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+                </div>
+                <div class="bd-highlight">
                     <button class="btn btn-danger float-right" v-on:click="clear()"><i class="fas fa-broom"></i> Limpiar</button>
                 </div>
             </div>
@@ -24,6 +142,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th scope="col">Actividad</th>
                         <th scope="col">Mensaje de error</th>
                         <th scope="col">Tipo de error</th>
                         <th scope="col">URL del microservicio</th>
@@ -33,8 +152,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="audit in filteredAudit" :key="audit.id">
+                        <td>{{ audit.activity }}</td>
                         <td>{{ audit.message }}</td>
-                        <td><i class="fas fa-exclamation-circle" style="color:red"></i> {{ audit.type }}</td>
+                        <td>{{ audit.type }}</td>
                         <td>{{ audit.endpoint }}</td>
                         <td>{{ audit.date }}</td>
                     </tr>
@@ -46,7 +166,7 @@
 
 <script>
 import axios from 'axios';
-
+import { mapState, mapGetters } from "vuex";
 import Spinner from '@/components/Spinner'
 import { URL_INTEGRATION } from '@/common/constants'
 import jsPDF from "jsPDF";
@@ -66,7 +186,9 @@ export default {
           loading: true,
           search: '',
           error: false,
-          task: true
+          taskStudents: true,
+          taskTeachers: true,
+          taskGraduates: true
       };  
   },
   methods: {
@@ -78,12 +200,9 @@ export default {
         .catch(() => this.auditFailed())
     },
     auditSuccessful (req) {
-        console.log(req);
+        console.log(req.data);
         this.loading = false;
-        this.microservicesError = req.data;
-        // var size = req.data.length;
-        // var d = req.data;
-        
+        this.microservicesError = req.data     
     },
     auditFailed () {
         this.error = 'Fallo Auditoría';
@@ -104,17 +223,18 @@ export default {
         var info = this.microservicesError;
         info.unshift({
             id: "ID",
+            activity: "Actividad",
             message: "Mensaje de error",
             type: "Tipo de error",
-            endpoint: "URL",
+            endpoint: "URL del microservicio",
             date: "Fecha"
         });
         console.log("info ", info);
         var doc = new jsPDF("l", "mm", "a4");
 
         doc.setProperties({
-            title: "Errores de microservicios",
-            subject: "Errores de microservicios",
+            title: "Monitoreo de microservicios",
+            subject: "Monitoreo de microservicios",
             author: "UC Ranking",
             date: date
         });
@@ -122,7 +242,7 @@ export default {
         doc.setFont("helvetica");
         doc.setFontType("bold");
         doc.setFontSize(20);
-        doc.text("Monitoreo de errores de microservicios", 15, 15);
+        doc.text("Monitoreo de microservicios", 15, 15);
 
         // doc.text("Mensaje de error", 5, 20);
 
@@ -132,18 +252,20 @@ export default {
 
         $.each(info, function(i, row) {
             $.each(row, function(j, cell) {
-            if ((cell != "ID")) {
-                if ((j != "id")) {
-                    if ((j == "message")) {
-                        doc.cell(5, 25, 150, 15, cell, i);
+            if ((cell != "ID") & (cell != "status")) {
+                if ((j != "id") & (j != "status")) {
+                    if ((j == "activity")) {
+                        doc.cell(5, 25, 62, 15, cell, i);
+                    }else if ((j == "message")) {
+                        doc.cell(5, 25, 110, 15, cell, i);
                     } else if (j == "endpoint") {
-                    
-                        doc.cell(5, 25, 60, 15, cell, i);
-                    
+                        doc.cell(5, 25, 45, 15, cell, i);
+                    } else if (j == "date") {
+                        doc.cell(5, 25, 25, 15, cell, i);
                     } else {
-                            doc.cell(5, 25, 30, 15, cell, i);
-                        
-                }}
+                        doc.cell(5, 25, 25, 15, cell, i);      
+                    }
+                }
             }
             });
         });
@@ -151,52 +273,138 @@ export default {
         info = [];
         this.microservicesError.shift();
     },
-    getTask() {
-        const path = URL_INTEGRATION + '/taskScheduler';
-        // this.loading = true;
-        console.log("get "+ this.task);
+    getTaskStudents() {
+        const path = URL_INTEGRATION + '/taskSchedulerStudents';
         axios.get(path)
         .then(request => {
-            if (request.data.definicion == "0")
-                this.task = false;
-            else
-                this.task = true;
+            if (request.data.definicion == "0"){
+                this.taskStudents = false;
+            } else {
+                this.taskStudents = true;
+            }
+                
             })
-            .catch(() => {console.log("Error buscando tarea programada")})
+        .catch(() => {console.log("Error buscando tarea programada")})
     },
-    taskActive(active) {
-        const path = URL_INTEGRATION + '/taskScheduler';
-        // this.loading = true;
-        console.log("entro "+ this.task);
+    getTaskTeachers() {
+        const path = URL_INTEGRATION + '/taskSchedulerTeachers';
+        axios.get(path)
+        .then(request => {
+            if (request.data.definicion == "0"){
+                this.taskTeachers = false;
+            } else {
+                this.taskTeachers = true;
+            }
+                
+            })
+        .catch(() => {console.log("Error buscando tarea programada")})
+    },
+    getTaskGraduates() {
+        const path = URL_INTEGRATION + '/taskSchedulerGraduates';
+        axios.get(path)
+        .then(request => {
+            if (request.data.definicion == "0"){
+                this.taskGraduates = false;
+            }
+            else
+            {
+                this.taskGraduates = true;
+            }
+                
+            })
+        .catch(() => {console.log("Error buscando tarea programada")})
+    },
+    taskActiveStudents(active) {
+        const path = URL_INTEGRATION + '/taskSchedulerStudents';
         axios.post(path, {
-            "active": active
+            "active": active,
+            user: this.user.username
         })
         .then(request => {
-            if (request.data.definicion == "0")
-                this.task = false;
-            else
-                this.task = true;
+            if (request.data.definition.definicion == "0"){
+                this.taskStudents = false;
+            } else {
+                this.taskStudents = true;
+            }
+            this.microservicesError = request.data.activityMicroservices;
+            })
+        .catch(() => {console.log("Error buscando tarea programada")})
+    },
+    taskActiveTeachers(active) {
+        const path = URL_INTEGRATION + '/taskSchedulerTeachers';
+        axios.post(path, {
+            "active": active,
+            user: this.user.username
+        })
+        .then(request => {
+            if (request.data.definition.definicion == "0"){
+                this.taskTeachers = false;
+            } else {
+                this.taskTeachers = true;
+            }
+            this.microservicesError = request.data.activityMicroservices;
+            })
+        .catch(() => {console.log("Error buscando tarea programada")})
+    },
+    taskActiveGraduates(active) {
+        const path = URL_INTEGRATION + '/taskSchedulerGraduates';
+        axios.post(path, {
+            "active": active,
+            user: this.user.username
+        })
+        .then(request => {
+            console.log(request.data);
+            if (request.data.definition.definicion == "0"){
+                this.taskGraduates = false;
+            } else {
+                this.taskGraduates = true;
+            }
+            this.microservicesError = request.data.activityMicroservices;
+            })
+        .catch(() => {console.log("Error buscando tarea programada")})
+    },
+    taskAll(active) {
+        const path = URL_INTEGRATION + '/taskSchedulerAll';
+
+        axios.post(path, {"active": active, user: this.user.username})
+            .then(request => {
+                if (request.data.definicion == "0"){
+                    this.taskGraduates = false;
+                    this.taskTeachers = false;
+                    this.taskStudents = false;
+                } else {
+                    this.taskGraduates = true;
+                    this.taskTeachers = true;
+                    this.taskStudents = true;
+                }
+                this.microservicesError = request.data.activityMicroservices;
             })
             .catch(() => {console.log("Error buscando tarea programada")})
     }
   },
   created() {
-      this.auditsAll();
-      this.getTask();
+    this.auditsAll();
+    this.getTaskStudents();
+    this.getTaskTeachers();
+    this.getTaskGraduates();
   },
   mounted() {
     this.auditsAll();
-    this.getTask();
+    this.getTaskStudents();
+    this.getTaskTeachers();
+    this.getTaskGraduates();
   },
   computed: {
       filteredAudit: function () {
           return this.microservicesError.filter((microservices) => {
-              return microservices.message.match(this.search) ||
-              microservices.type.match(this.search) || 
-              microservices.endpoint.match(this.search) ||
-              microservices.date.match(this.search)
+              return microservices.activity.toLowerCase().match(this.search) || 
+              microservices.message.toLowerCase().match(this.search) ||
+              microservices.type.toLowerCase().match(this.search) || 
+              microservices.endpoint.toLowerCase().match(this.search) ||
+              microservices.date.toLowerCase().match(this.search)
           })
-      }
+      },
+      ...mapGetters(["user"])
   }
   
 }

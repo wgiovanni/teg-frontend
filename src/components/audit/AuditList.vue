@@ -122,15 +122,15 @@ export default {
         doc.text("Auditoría de las acciones de los usuarios", 15, 15);
 
         // Table
-        doc.setFontSize(8);
+        doc.setFontSize(6);
         doc.cellInitialize();
 
         $.each(info, function(i, row) {
             $.each(row, function(j, cell) {
             if ((cell != "ID") & (cell != "status")) {
                 if ((j != "id") & (j != "status")) {
-                    if ((j == "action") | (j == "date")) {
-                        doc.cell(10, 25, 60, 15, cell, i);
+                    if ((j == "action")) {
+                        doc.cell(10, 25, 62, 15, cell, i);
                     } else {
                         doc.cell(10, 25, 40, 15, cell, i);
                     }
