@@ -24,6 +24,7 @@
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
+     <div>Fecha de actualización: {{this.fecha}}</div>
 
  
   </div>  
@@ -75,7 +76,8 @@ export default {
 
   data() {
     return {
-      data: []
+      data: [],
+      fecha: ''
     };
   },
 
@@ -101,9 +103,13 @@ export default {
 
       axios
 
-        .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+        
+         .get(date)        
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
 
     successful(req) {    

@@ -23,6 +23,7 @@
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
+     <div>Fecha de actualización: {{this.fecha}}</div>
  
   </div>  
 </template>
@@ -68,9 +69,17 @@ export default {
 
     this.loadDate();
     
-    return {
-      data: []
+   
+  },
+
+  data(){
+
+ return {
+      data: [],
+      fecha: ''
+
     };
+
   },
 
   created() {
@@ -95,9 +104,13 @@ export default {
 
       axios
 
-        .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+        
+         .get(date)        
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
 
 
@@ -117,8 +130,6 @@ export default {
       var size = req.data.length;
 
       
-      fecha = d["fecha"];
-
 
       // Saves data for verification
       info = d["items"];
@@ -173,7 +184,7 @@ export default {
       console.log(datos);
       this.data = datos;
 
-      var auxDate = "Fecha de recuperación de datos: "+fecha;
+      var auxDate = "Fecha de recuperación de datos: "+this.fecha;
 
 
       // LAYOUT
@@ -249,6 +260,11 @@ export default {
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
+
+       doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
 
        doc.setProperties({
         title: reportName,

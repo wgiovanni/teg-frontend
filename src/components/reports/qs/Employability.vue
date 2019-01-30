@@ -20,10 +20,11 @@
         <router-link to="/reports"><button class="button button-back">Regresar</button></router-link>        
       </div>
 
-    <!--Save graph as image-->
+
+ <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
-
+    <div>Fecha de actualización: {{this.fecha}}</div>
   </div>  
 </template>
 
@@ -65,8 +66,13 @@ var fecha;
 export default {
   mounted() {
     this.loadDate();
-    return {
-      data: []
+
+  },
+
+  data() {
+     return {
+      data: [],
+      fecha: ''
     };
   },
 
@@ -91,8 +97,11 @@ export default {
       axios
 
         .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
 
     successful(req) {
@@ -109,7 +118,6 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      fecha = d["fecha"];
 
       // Saves data for verification
       info = d["items"];
@@ -155,7 +163,7 @@ export default {
 
       // LAYOUT
  
-      var auxDate = "Fecha de recuperación de datos: "+fecha;
+      var auxDate = "Fecha de recuperación de datos: "+this.fecha;
 
       var layout = {
         title: {
@@ -225,6 +233,12 @@ export default {
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 16, 16);
+
+      doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+
       doc.save(reportName + ".pdf");
 
       doc.setProperties({
@@ -282,7 +296,6 @@ export default {
     doc.setFontType("bold");      
        
     doc.text(saved[0], 15, 15);
-
     
 
       doc.save(reportName + ".pdf");
@@ -317,8 +330,6 @@ export default {
         { wch: 10 },
         { wch: 20 },
         { wch: 20 },
-        { wch: 20 },
-        { wch: 25 },
         { wch: 40 },
         { wch: 25 },
         { wch: 40 }

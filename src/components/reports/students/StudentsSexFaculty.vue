@@ -24,7 +24,7 @@
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
-    <div>Fecha: {{this.fecha}}</div>
+    <div>Fecha de actualización: {{this.fecha}}</div>
   </div>  
 </template>
 
@@ -259,6 +259,11 @@ export default {
       doc.text(reportName, 15, 15);     
       doc.addImage(img, "JPG", 16, 16);
 
+      doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+
       doc.setProperties({
         title: reportName,
         subject: "Reporte",
@@ -350,6 +355,7 @@ export default {
         doc.text(saved[j]["address"], 150, aux); 
         aux = aux + 5;       
       }
+      
       doc.text(this.fecha, 150, 15);
 
 

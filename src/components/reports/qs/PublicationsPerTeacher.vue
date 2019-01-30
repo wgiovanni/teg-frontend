@@ -11,13 +11,13 @@
       <!--Download buttons-->
       <div class="col-md-12 text-center">
                 
-        <button class="button button-pdf" @click="download_pdf">
+        <!--button class="button button-pdf" @click="download_pdf">
           <i class="fa fa-file-pdf fa-lg"></i> Descargar PDF
         </button>
         
         <button class="button button-excel" @click="download_excel">
           <i class="fa fa-file-excel fa-lg"></i> Descargar Excel
-        </button>
+        </button-->
 
       </div>
 
@@ -31,7 +31,9 @@
 
       <!--Saves plot as image-->
       <img id="jpg-export" class="hidden">
+       <div>Fecha de actualización: {{this.fecha}}</div>
     </div>
+   
 
   </div>
 </template>
@@ -84,7 +86,8 @@ export default {
 
   data() {
     return {
-      data: []
+      data: [],
+      fecha:''
     };
   },
 
@@ -110,9 +113,12 @@ export default {
 
       axios
 
-        .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+     .get(date)        
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
 
 
@@ -128,10 +134,7 @@ export default {
       var publicaciones = [];
       var nombrePublicacion = [];
 
-       fecha = d["fecha"];
-
-
-     
+        
       var m;
       var n;
 
@@ -278,7 +281,7 @@ export default {
       console.log(datos);
       this.data = datos;
 
-       var auxDate = "Fecha de recuperación de datos: "+fecha;
+       var auxDate = "Fecha de recuperación de datos: "+this.fecha;
 
       var layout = {
         title: {
@@ -350,6 +353,11 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);     
+
+      doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
       
       
       doc.setProperties({
@@ -375,10 +383,14 @@ export default {
        
           $.each(row, function(j, cell) {
 
-              if ( j =="publicaciones") {
+            if (cell != "Publicaciones"){
+
+              if(j!="publicaciones"){
+
+                if ( j =="publicaciones") {
                   doc.cell(10, 25, 70, 15, cell, i);
                 } else              
-              if ( j =="correo") {
+                if ( j =="correo") {
                   doc.cell(10, 25, 60, 15, cell, i);
                 } else if (j == "area_de_investigacion") {
                   doc.cell(10, 25, 40, 15, cell, i);
@@ -387,8 +399,11 @@ export default {
                 } else{
                   doc.cell(10, 25, 35, 15, cell, i);
                 }
-              
-          
+
+              }
+
+            }
+           
           });
       
       });

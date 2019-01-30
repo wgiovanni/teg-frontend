@@ -23,6 +23,7 @@
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>        
+      <div>Fecha de actualización: {{this.fecha}}</div>
   </div>  
 </template>
 
@@ -53,7 +54,7 @@ import Plotly from "plotly.js";
 import XLSX from "xlsx";
 import { URL_INTEGRATION } from "@/common/constants"
 
-import Spinner from '@/components/Spinner'
+
 
 var reportName = "Docentes con Doctorado por Facultad";
 var img;
@@ -69,13 +70,14 @@ export default {
   },
 
   components: {
-    Spinner
+   
   },
 
   data() {
     return {
       data: [],
-      loading: true
+      fecha: ''
+     
     };
   },
 
@@ -101,8 +103,11 @@ export default {
       axios
 
         .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
 
 
@@ -121,7 +126,7 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      fecha = d["fecha"];
+  
 
       // Saves data for verification
       info = d["items"];
@@ -170,7 +175,7 @@ export default {
 
       // LAYOUT
 
-      var auxDate = "Fecha de recuperación de datos: "+fecha;
+      var auxDate = "Fecha de recuperación de datos: "+this.fecha;
 
       var layout = {
         title: {
@@ -239,6 +244,11 @@ export default {
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
+
+       doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
 
       doc.setProperties({
         title: reportName,

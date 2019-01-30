@@ -30,6 +30,7 @@
       <!--Saves plot as image-->
       <img id="jpg-export" class="hidden">
     </div>
+    <div>Fecha de actualización: {{this.fecha}}</div>
   </div>
 </template>
 
@@ -59,8 +60,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
-import { URL_INTEGRATION } from "@/common/constants"
-
+import { URL_INTEGRATION } from "@/common/constants";
 
 var reportName = "Docentes por Escalafón";
 var img;
@@ -69,14 +69,15 @@ var saved = [];
 var date = new Date();
 var fecha;
 
-
 export default {
-  mounted() {   
-
+  mounted() {
     this.loadDate();
+  },
 
+  data() {
     return {
-      data: []
+      data: [],
+      fecha: ""
     };
   },
 
@@ -87,30 +88,31 @@ export default {
 
   methods: {
     load() {
-      const path =
-        URL_INTEGRATION+"/profesores-escalafon-proporcion";
+      const path = URL_INTEGRATION + "/profesores-escalafon-proporcion";
 
       axios
 
-        .get(path)        
+        .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
     },
 
     loadDate() {
-      const date =
-        URL_INTEGRATION+"/fecha-docentes";
+      const date = URL_INTEGRATION + "/fecha-docentes";
 
       axios
 
-        .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+        .get(date)
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {
+          console.log("fallo fecha");
+        });
     },
 
-
     successful(req) {
-
       document.getElementById("report").innerHTML = reportName;
       img = document.getElementById("jpg-export"); // Gets image
 
@@ -124,18 +126,16 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      fecha = d["fecha"];
-
       console.log("fecha: ", fecha);
 
-           // Saves data for verification
+      // Saves data for verification
       info = d["items"];
       info.unshift({
         cedula: "Cédula",
         nombre: "Nombre",
         apellido: "Apellido",
         correo: "Correo",
-        nacionalidad: "Nacionalidad",       
+        nacionalidad: "Nacionalidad",
         escalafon: "Escalafón"
       });
       console.log("info ", info);
@@ -144,38 +144,31 @@ export default {
 
       totalProfesores = d["total-profesores"];
       escalafones = d["escalafon"];
-      
 
       for (i = 0; i < 5; i++) {
         totalTeachers[i] = totalProfesores;
       }
 
-      
       for (i = 0; i < 5; i++) {
         nombreEscalafon.push(escalafones[i]["nombre"]);
         totalEscalafon.push(escalafones[i]["total"]);
       }
 
-      
       console.log(nombreEscalafon);
       console.log(totalEscalafon);
 
-  
-   datos.push({
+      datos.push({
         x: totalEscalafon,
         y: nombreEscalafon,
-       
+
         name: "Cantidad de Profesores en el Escalafón",
-        orientation: 'h',
+        orientation: "h",
         type: "bar",
-        marker: { color: "#F97F51",
-                  width: 1 },
-        hoverlabel: { font:{size:18}},
-        insidetextfont: {color: "#FFFFFF", 
-                         size: 16,                                         
-                         }
+        marker: { color: "#F97F51", width: 1 },
+        hoverlabel: { font: { size: 18 } },
+        insidetextfont: { color: "#FFFFFF", size: 16 }
       });
-/*
+      /*
       datos.push({
         x: totalTeachers,
         y: nombreEscalafon,
@@ -192,15 +185,15 @@ export default {
 
       // LAYOUT
 
-      var auxDate = "Fecha de recuperación de datos: "+fecha;
+      var auxDate = "Fecha de recuperación de datos: " + this.fecha;
 
       var layout = {
         title: {
           text: auxDate,
           font: {
-            family: 'Courier New, monospace',
+            family: "Courier New, monospace",
             size: 12
-         },
+          }
         },
         xaxis: {
           fixedrange: true
@@ -235,7 +228,9 @@ export default {
       var d3 = Plotly.d3;
       var img_jpg = d3.select("#jpg-export");
       // Displays graph
-      Plotly.react(this.$refs.bar, this.data, layout, config).then(function(gd) {
+      Plotly.react(this.$refs.bar, this.data, layout, config).then(function(
+        gd
+      ) {
         //  Saves plot as image
         gd.on("plotly_legendclick", () => false);
 
@@ -259,10 +254,15 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("bold");
       doc.setFontSize(20);
-      doc.text(reportName, 15, 15);      
-      doc.text(fecha, 18, 18);    
+      doc.text(reportName, 15, 15);
+      doc.text(fecha, 18, 18);
 
       doc.addImage(img, "JPG", 20, 20);
+
+      doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: " + this.fecha, 170, 15);
 
       doc.setProperties({
         title: reportName,
@@ -277,7 +277,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(16);
       doc.text("Datos de Referencia", 15, 15);
-      
+
       // Table
       doc.setFontSize(8);
       doc.cellInitialize();
@@ -286,15 +286,15 @@ export default {
         $.each(row, function(j, cell) {
           if (j == "cedula") {
             doc.cell(10, 25, 30, 15, cell, i);
-          } else if(j=="correo"){
-            doc.cell(10, 25, 65, 15, cell, i);            
-          }else{
+          } else if (j == "correo") {
+            doc.cell(10, 25, 65, 15, cell, i);
+          } else {
             doc.cell(10, 25, 45, 15, cell, i);
           }
         });
       });
 
-        //Saved from
+      //Saved from
       doc.addPage();
       doc.setFont("helvetica");
       doc.setFontType("bolditalic");
@@ -303,43 +303,39 @@ export default {
       var j = 0;
       var aux = 15;
 
-      for(j = 0; j < 4; j++){
-
+      for (j = 0; j < 4; j++) {
         doc.setFontSize(14);
-        doc.setFontType("bold");      
+        doc.setFontType("bold");
         aux = aux + 15;
         doc.text(saved[j]["first_name"], 15, aux);
 
-        doc.setFontSize(10);         
+        doc.setFontSize(10);
         aux = aux + 5;
         doc.text(saved[j]["email"], 15, aux);
         aux = aux + 5;
         doc.text(saved[j]["phone"], 15, aux);
         aux = aux + 5;
-        doc.text(saved[j]["address"], 15, aux);  
-        aux = aux + 5;      
+        doc.text(saved[j]["address"], 15, aux);
+        aux = aux + 5;
       }
 
-        aux = 15;
+      aux = 15;
 
-       for(j = 4; j < 7; j++){
-
+      for (j = 4; j < 7; j++) {
         doc.setFontSize(14);
-        doc.setFontType("bold");      
+        doc.setFontType("bold");
         aux = aux + 15;
         doc.text(saved[j]["first_name"], 150, aux);
 
-        doc.setFontSize(10);         
+        doc.setFontSize(10);
         aux = aux + 5;
         doc.text(saved[j]["email"], 150, aux);
         aux = aux + 5;
         doc.text(saved[j]["phone"], 150, aux);
         aux = aux + 5;
-        doc.text(saved[j]["address"], 150, aux); 
-        aux = aux + 5;       
+        doc.text(saved[j]["address"], 150, aux);
+        aux = aux + 5;
       }
-
-     
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()
@@ -354,7 +350,7 @@ export default {
     }, //end_of_download()
     download_excel() {
       // Data from JSON
-      var ws = XLSX.utils.json_to_sheet(info, {skipHeader:true});
+      var ws = XLSX.utils.json_to_sheet(info, { skipHeader: true });
 
       // A workbook is the name given to an Excel file
       var wb = XLSX.utils.book_new(); // make Workbook of Excel
@@ -371,8 +367,8 @@ export default {
       var wscols = [
         { wch: 12 },
         { wch: 20 },
-        { wch: 20 }, 
-        { wch: 40 },   
+        { wch: 20 },
+        { wch: 40 },
         { wch: 30 },
         { wch: 30 }
       ];
@@ -381,15 +377,12 @@ export default {
       var wsrows = [{ hpt: 20 }];
       ws["!rows"] = wsrows;
 
-      
       // add Worksheet to Workbook
       XLSX.utils.book_append_sheet(wb, ws, "Reporte");
 
-     
       // export Excel file
       XLSX.writeFile(wb, reportName + ".xlsx");
     } //end_of_download
-
   }
 };
 </script>

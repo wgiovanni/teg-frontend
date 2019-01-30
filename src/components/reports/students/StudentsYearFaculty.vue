@@ -67,6 +67,7 @@
           <!--Saves plot as image-->
           <img id="jpg-export" class="hidden"/>
       </div><!--div id=graph-->  
+      <div>Fecha de actualización: {{this.fecha}}</div>
       
     </div>
     <!--END OF GRAPH-->
@@ -163,7 +164,8 @@ export default {
       arrayDateTo: [],
       error: "",
       facultad: "",
-      facultades: []
+      facultades: [],
+      fecha: ''
     };
   },
   methods: {
@@ -195,8 +197,11 @@ export default {
       axios
 
         .get(date)        
-        .then(request => this.successful(request))
-        .catch(() => this.failed());
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
     successful(req) {
       document.getElementById("report").innerHTML = reportName;
@@ -212,7 +217,7 @@ export default {
       var total = [];
       var i;
 
-      fecha = d["fecha"];
+  
 
       allYears = d["anos"];
       size = allYears.length;
@@ -239,7 +244,7 @@ export default {
       this.data = datos;
 
       // LAYOUT
-      var auxDate = "Fecha de recuperación de datos: "+fecha;
+      var auxDate = "Fecha de recuperación de datos: "+this.fecha;
 
       var layout = {
         title: {
@@ -302,6 +307,12 @@ export default {
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
 
+      
+      doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+
       doc.setProperties({
         title: reportName,
         subject: "Reporte",
@@ -358,6 +369,7 @@ export default {
   created() {
     this.getYears();
     this.getFaculty();
+    this.loadDate();
   }
 };
 </script>

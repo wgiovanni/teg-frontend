@@ -89,11 +89,11 @@ export default {
           name: "Docentes Extranjeros",
           path: "/report/ProportionOfInternationalFaculty"
         },
-      /*   {
+         {
           id: 3,
           name: "Publicaciones por Docente",
           path: "/report/PublicationsPerTeacher"
-        }, */
+        }, 
         {
           id: 3,
           name: "Docentes Empleados / Estudiantes Matriculados",

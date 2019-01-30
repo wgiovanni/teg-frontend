@@ -23,6 +23,7 @@
     <!--Saves plot as image-->
     <img id="jpg-export" class="hidden"/>
     </div>
+     <div>Fecha de actualización: {{this.fecha}}</div>
     
 
       <!--END OF REPORT LIST-->
@@ -55,35 +56,59 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import { URL_INTEGRATION } from "@/common/constants"
 
 var reportName = "Estudiantes Pertenecientes a Grupos Étnicos";
 var img;
 var info = []; //Saves data for verification
 var saved = [];
 var date = new Date();
+var fecha;
 
 export default {
   mounted() {
     
+    this.loadDate();
 
+   
+  },
+
+  
+  data(){
+    
     return {
-      data: []
+      data: [],
+      fecha: ''
     };
   },
 
   created() {
     this.load();
+    this.loadDate();
   },
 
   methods: {
     load() {
       const path =
-        "http://127.0.0.1:5000/api/v1/estudiantes-etnia-facultad";
+        URL_INTEGRATION+"/estudiantes-etnia-facultad";
 
       axios
         .get(path)
         .then(request => this.successful(request))
         .catch(() => this.failed());
+    },
+     loadDate() {
+      const date =
+        URL_INTEGRATION+"/fecha-egresados";
+
+      axios
+
+        .get(date)        
+        .then(request => {
+          console.log("fecha " + this.fecha);
+          this.fecha = request.data.fecha;
+        })
+        .catch(() => {console.log("fallo fecha");});
     },
 
     successful(req) {
@@ -200,6 +225,11 @@ export default {
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 16, 16);
+
+      doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
 
        doc.setProperties({
         title: reportName,
