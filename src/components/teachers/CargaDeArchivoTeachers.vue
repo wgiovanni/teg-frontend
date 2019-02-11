@@ -4,7 +4,7 @@
 <div class="container margen" >
 
 <div id="carga" >
-  <h2>Carga de archivos con información de docentes de la UC</h2>
+  <h2>Carga de archivos con información de los docentes de la UC</h2>
     <div class="large-12 medium-12 small-12 cell" >
       <div id= "i" class="alert alert-secondary" role="alert">
       </div>
@@ -32,9 +32,9 @@
              </div>
 
             <div class="intru">
-              <h4 >Ayuda</h4>
-              <p >¿No sabe que archivo subir?</p>
-              <button class="btn btn-light" id="centar" @click="Ver()" >Ver ejemplo archivo </button>     
+              <h4 >Ejemplo de formato</h4>
+             
+              <button class="btn btn-light" id="centar" @click="Ver()" >Ver </button>     
              
               </div>
           
@@ -62,8 +62,8 @@
 </div>
 
  <div id="Ver">
-    <h2>Ejemplo</h2>
-    <div id="imagen" class="zoom"><img src="/static/img/ejemploTeachers.png" ></div>
+    <h2>Ejemplo de un formato válido</h2>
+    <div id="imagen"><img src="/static/img/ejemploTeachers.png" ></div>
      <button class="btn btn-light" id="centar" @click="Regresar()" >Regresar </button>
 
   </div>
@@ -534,11 +534,12 @@ console.log(request.data["Facyt"].split('-'));
         }
         #submenu {
        
-         margin-top:10px;
-        margin-bottom:10px;
+          margin-top:10px;
+          margin-bottom:10px;
         }
         #imagen img{
-             min-width:990px;
+             width:1263px;
+             height: 332px;
               margin-left:-90px;
         
         }
@@ -559,29 +560,13 @@ console.log(request.data["Facyt"].split('-'));
  }
  @media (max-width: 768px) { 
 
-
-   .intru {
-          
-          display:none;
-        }
-
- 
-
-    
-
+.intru {display:none;}
 
  }
 
   @media (max-width: 1000px) { 
 
-
-  
-     #enviar {
-          margin-top:10px;
-          width:100%;
-        }
-
-    
+    #enviar {margin-top:10px;width:100%;}
 
 
  }
@@ -599,20 +584,7 @@ console.log(request.data["Facyt"].split('-'));
         }
 
  
-.zoom {
-    padding: 50px;
-    
-    transition: transform .2s; /* Animation */
-    width: 200px;
-    height: 200px;
-   
-}
 
-.zoom:hover {
-    transform: scale(1.3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-    margin-left:100px;
-     margin-bottom:80px;
-}
 
 .form-group{
     margin-top:-10px;

@@ -95,7 +95,7 @@ export default {
           this.$router.push('/')
           })
         .catch((error) => {
-          this.error ="Fallo";
+          this.error ="Usuario o contraseña incorrecta";
           localStorage.removeItem('user');
           EventBus.emit('failedAuthentication', error)
         })

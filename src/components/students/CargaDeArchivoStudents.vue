@@ -5,8 +5,9 @@
 
 <div id="carga" >
   <h2>Carga de archivo con información de estudiantes de la UC</h2>
-    <div class="large-12 medium-12 small-12 cell" >
+    <div id= "j" class="large-12 medium-12 small-12 cell" >
       <div id= "i" class="alert alert-secondary" role="alert">
+
       </div>
     </div>
 
@@ -49,9 +50,9 @@
                     </div>  
 
                     <div class="intru">
-                      <h4 >Ayuda</h4>
-                      <p >¿No sabe que archivo subir?</p>
-                      <button class="btn btn-light" id="centar" @click="Ver()" >Ver ejemplo archivo </button>     
+                      <h4 >Ejemplo de formato</h4>
+                      <!-- <p >¿No sabe que archivo cargar?</p> -->
+                      <button class="btn btn-light" id="centar" @click="Ver()" >Ver</button>     
                     
                     </div>
              
@@ -156,7 +157,6 @@ import { URL_STUDENTS } from "@/common/constants"
               
                      path = URL_STUDENTS + '/upload/21/'+ this.user.username;   
             }
-          console.log(pre_post);
             axios.post(path,
                 formData,
                 {
@@ -223,16 +223,38 @@ import { URL_STUDENTS } from "@/common/constants"
 
                         doc.save("LISTA_ERRORES" + ".pdf");
 
-                    }else{
-                         
-                          $('#enviar').attr("disabled", true); 
-                        $( "#i" ).removeClass( "alert alert-secondary" ).addClass( "alert alert-success" );
+                                if(document.getElementById("j")){
+                                  
+                            document.getElementById("j").innerHTML = "<div id= 'i' class='alert alert-secondary' role='alert'>"+
+
+                                                                      "<h6>Error a procesar el archivo. Por favor revise el pdf LISTA_ERRORES para conocer los errores del archivo ingresado al sistema</h6>"+
+                                                                      "</div>";
+                                                                      document.getElementById("i").setAttribute("class","alert alert-danger");
+                               } 
+
+                    }else{                         
+                       
                          $('#exampleModalCenter').modal('show');
+
+                        document.getElementById("j").innerHTML = "<div id= 'i' class='alert alert-secondary' role='alert'>"+
+                                                                  "</div>";
+                        document.getElementById("i").setAttribute("class","alert alert-success");
+
                     }
 
 
                 }else{
                     $( "#i" ).removeClass( "alert alert-secondary" ).addClass( "alert alert-danger" );
+                    
+
+                     if(document.getElementById("j")){
+                     document.getElementById("j").innerHTML = "<div id= 'i' class='alert alert-secondary' role='alert'>"+
+
+                                                              "<h4>Error a procesar el archivo. Por favor revise el pdf LISTA_ERRORES para conocer los errores del archivo ingresado al sistema</h4>"+
+                                                              "</div>";
+                   } 
+
+      
                 }
 
 
