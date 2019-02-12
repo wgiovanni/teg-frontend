@@ -268,7 +268,7 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
 
       // Table
-      doc.setFontSize(9);
+      doc.setFontSize(7);
       doc.cellInitialize();
 
       var flag = true;
@@ -283,7 +283,7 @@ export default {
           }
 
           if (j == "email") {
-            doc.cell(15, 25, 65, 15, cell, i);
+            doc.cell(15, 25, 70, 15, cell, i);
           } else if (j == "facultad") {
             doc.cell(15, 25, 55, 15, cell, i);
           } else if (j == "nacionalidad") {

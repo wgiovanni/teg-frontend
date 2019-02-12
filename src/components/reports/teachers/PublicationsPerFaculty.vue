@@ -266,13 +266,26 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(7);
+      doc.setFontSize(6);
       doc.cellInitialize();
+
+      let flag = true;
 
 
       $.each(info, function(i, row) {
        
           $.each(row, function(j, cell) {
+
+            
+          if (flag) {
+            doc.setFontType("bold");
+            if (cell == "Facultad") flag = false;
+          } else {
+            doc.setFontType("normal");
+          }
+
+
+
             if (cell != "Publicación" & cell!="Link a Citación" & cell!="Link a Publicación") {
               if(j!="publicacion" & j!="url_citacion" & j!="url_publicacion"){
                 if (j == "facultad" | j =="correo") {

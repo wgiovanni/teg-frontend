@@ -264,22 +264,22 @@ export default {
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
 
-          if(flag){            
+           if (flag) {
             doc.setFontType("bold");
-            if(cell == "Cédula")
-              flag = false;
-          }else{
+            if (cell == "Nombre de Empresa") flag = false;
+          } else {
             doc.setFontType("normal");
           }
 
 
+          
           if ((j == "correo") | (j == "nombre_empresa")) {
-            doc.cell(7, 25, 60, 15, cell, i);
+            doc.cell(10, 25, 70, 15, cell, i);
 
           } else if (j == "cedula") {
-            doc.cell(7, 25, 20, 15, cell, i);
+            doc.cell(10, 25, 25, 15, cell, i);
           } else {
-            doc.cell(7, 25, 25, 15, cell, i);
+            doc.cell(10, 25, 30, 15, cell, i);
           }
         });
       });
@@ -295,7 +295,7 @@ export default {
     doc.setFontSize(14);
     doc.setFontType("bold");      
        
-    doc.text(saved[0], 15, 15);
+    doc.text(saved, 15, 30);
     
 
       doc.save(reportName + ".pdf");

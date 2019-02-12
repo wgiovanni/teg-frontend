@@ -256,12 +256,12 @@ return {
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 16, 16);
-      doc.save(reportName + ".pdf");
+     
 
        doc.setFont("helvetica");
       doc.setFontType("normal");
       doc.setFontSize(16);
-      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+      doc.text("Fecha actualización: "+this.fecha, 170, 17);
 
       doc.setProperties({
         title: reportName,
@@ -295,8 +295,10 @@ return {
           }
 
 
-          if ((j == "email") | (j == "facultad")) {
-            doc.cell(7, 25, 60, 15, cell, i);
+          if ((j == "email") ) {
+            doc.cell(7, 25, 65, 15, cell, i);
+          } else if((j == "facultad")){
+            doc.cell(7, 25, 50, 15, cell, i);
           } else if ((j == "fecha_nacimiento") | (j == "estado_procedencia")) {
             doc.cell(7, 25, 35, 15, cell, i);
           } else if (j == "cedula") {

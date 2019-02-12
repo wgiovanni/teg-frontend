@@ -248,13 +248,14 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(9);
+      doc.setFontSize(8);
+      oc.setFontType("normal");
       doc.cellInitialize();
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
           if (j == "email" | j == "facultad") {
-            doc.cell(15, 25, 70, 15, cell, i);  
+            doc.cell(15, 25, 80, 15, cell, i);  
           } else if (j == "cedula") {
             doc.cell(15, 25, 30, 15, cell, i);         
           } else {

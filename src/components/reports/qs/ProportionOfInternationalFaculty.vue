@@ -233,6 +233,11 @@ export default {
       doc.text(reportName, 15, 15);
       doc.addImage(img, "JPG", 20, 20);
 
+       doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+
        doc.setProperties({
         title: reportName,
         subject: "Reporte",
@@ -251,8 +256,18 @@ export default {
       doc.setFontSize(7);
       doc.cellInitialize();
 
+      let flag = true;
+
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
+
+          if (flag) {
+            doc.setFontType("bold");
+            if (cell == "Facultad") flag = false;
+          } else {
+            doc.setFontType("normal");
+          }
+
           if (j == "correo" | j =="facultad") {
             doc.cell(10, 25, 60, 15, cell, i);       
           

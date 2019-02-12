@@ -95,7 +95,7 @@ export default {
           path: "/report/PublicationsPerTeacher"
         }, 
         {
-          id: 3,
+          id: 4,
           name: "Docentes Empleados / Estudiantes Matriculados",
           path: "/report/FacultyStudentRatioTeacher"
         }          

@@ -126,7 +126,7 @@ export default {
       var size = req.data.length;
       var d = req.data;
 
-      console.log("fecha: ", fecha);
+      console.log("fecha: ", this.fecha);
 
       // Saves data for verification
       info = d["items"];
@@ -255,8 +255,7 @@ export default {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
-      doc.text(fecha, 18, 18);
-
+      
       doc.addImage(img, "JPG", 20, 20);
 
       doc.setFont("helvetica");
@@ -279,22 +278,34 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
 
       // Table
-      doc.setFontSize(8);
+      doc.setFontSize(7);
       doc.cellInitialize();
+
+      let flag = true;
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
+
+
+           if (flag) {
+            doc.setFontType("bold");
+            if (cell == "Escalafón") flag = false;
+          } else {
+            doc.setFontType("normal");
+          }
+
+
           if (j == "cedula") {
             doc.cell(10, 25, 30, 15, cell, i);
           } else if (j == "correo") {
-            doc.cell(10, 25, 65, 15, cell, i);
+            doc.cell(10, 25, 70, 15, cell, i);
           } else {
             doc.cell(10, 25, 45, 15, cell, i);
           }
         });
       });
 
-      //Saved from
+    /*   //Saved from
       doc.addPage();
       doc.setFont("helvetica");
       doc.setFontType("bolditalic");
@@ -335,7 +346,7 @@ export default {
         aux = aux + 5;
         doc.text(saved[j]["address"], 150, aux);
         aux = aux + 5;
-      }
+      } */
 
       doc.save(reportName + ".pdf");
     }, //end_of_download()

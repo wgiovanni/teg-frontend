@@ -253,7 +253,7 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
 
       // Table
-      doc.setFontSize(8);
+      doc.setFontSize(6);
       doc.cellInitialize();
 
       var flag = true;
@@ -268,7 +268,7 @@ export default {
           }
 
           if ((j == "email") | (j == "discapacidad")) {
-            doc.cell(8, 25, 65, 15, cell, i);
+            doc.cell(8, 25, 70, 15, cell, i);
           } else if (
             (j == "fecha_nacimiento") |
             (j == "estado_procedencia") |

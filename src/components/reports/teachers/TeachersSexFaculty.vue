@@ -278,13 +278,24 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(8);
+      doc.setFontSize(7);
       doc.cellInitialize();
+
+      let flag = true;
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
+
+          
+          if (flag) {
+            doc.setFontType("bold");
+            if (cell == "Facultad") flag = false;
+          } else {
+            doc.setFontType("normal");
+          }
+
           if (j == "correo" | j =="facultad") {
-            doc.cell(15, 25, 60, 15, cell, i);      
+            doc.cell(15, 25, 65, 15, cell, i);      
           
           } else if (j == "cedula") {
             doc.cell(15, 25, 30, 15, cell, i);

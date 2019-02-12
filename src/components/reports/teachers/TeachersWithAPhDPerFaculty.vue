@@ -265,15 +265,26 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(8);
+      doc.setFontSize(7);
       doc.cellInitialize();
+
+      let flag = true;
 
       $.each(info, function(i, row) {
         $.each(row, function(j, cell) {
+
+          if (flag) {
+            doc.setFontType("bold");
+            if (cell == "Facultad") flag = false;
+          } else {
+            doc.setFontType("normal");
+          }
+
+
           if(cell != "Segundo Nombre" & cell != "Segundo Apellido"){
             if(j != "segundo_nombre" & j != "segundo_apellido"){
               if (j == "correo" | j == "facultad") {
-                doc.cell(15, 25, 65, 15, cell, i);
+                doc.cell(15, 25, 70, 15, cell, i);
               } else if ((j == "area_de_investigacion")) {
                 doc.cell(15, 25, 45, 15, cell, i);
               } else if (j == "cedula") {

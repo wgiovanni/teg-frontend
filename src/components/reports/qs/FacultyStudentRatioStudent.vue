@@ -223,12 +223,12 @@ return {
       doc.setFontType("bold");
       doc.setFontSize(20);
       doc.text(reportName, 15, 15);
-      doc.addImage(img, "JPG", 16, 16);
+      doc.addImage(img, "JPG", 16, 17);
 
        doc.setFont("helvetica");
       doc.setFontType("normal");
       doc.setFontSize(16);
-      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+      doc.text("Fecha actualización: "+this.fecha, 170, 18);
 
       doc.setProperties({
         title: reportName,
@@ -245,7 +245,7 @@ return {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(10);
+      doc.setFontSize(8);
       doc.cellInitialize();
 
       var flag = true;
@@ -262,7 +262,7 @@ return {
           }
 
           if (j == "correo") {
-            doc.cell(15, 25, 60, 15, cell, i);
+            doc.cell(15, 25, 80, 15, cell, i);
            } else if (j == "facultad") {
             doc.cell(15, 25, 55, 15, cell, i);
           } else if (j == "cargo") {
@@ -270,7 +270,7 @@ return {
           } else if (j == "cedula") {
             doc.cell(15, 25, 25, 15, cell, i);
           } else {
-            doc.cell(15, 25, 40, 15, cell, i);
+            doc.cell(15, 25, 35, 15, cell, i);
           }
         });
       });

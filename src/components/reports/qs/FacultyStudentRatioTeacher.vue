@@ -229,7 +229,7 @@ export default {
       doc.setFont("helvetica");
       doc.setFontType("normal");
       doc.setFontSize(16);
-      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+      doc.text("Fecha actualización: "+this.fecha, 170, 18);
 
       doc.setProperties({
         title: reportName,
@@ -263,7 +263,7 @@ export default {
           }
 
           if (j == "correo") {
-            doc.cell(15, 25, 60, 15, cell, i);
+            doc.cell(15, 25, 80, 15, cell, i);
            } else if (j == "facultad") {
             doc.cell(15, 25, 55, 15, cell, i);
           } else if (j == "cargo") {

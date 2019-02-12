@@ -279,7 +279,7 @@ export default {
       doc.text("Datos de Referencia", 15, 15);
       
       // Table
-      doc.setFontSize(7);
+      doc.setFontSize(6);
       doc.cellInitialize();
 
       var flag = true;

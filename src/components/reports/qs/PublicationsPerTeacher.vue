@@ -261,19 +261,21 @@ export default {
       datos.push({
 
         type: 'table',
+        columnwidth: [600, 600, 600, 600, 600],
         header: {
           values: [["Cédula"], ["Nombre"], ["Apellido"], ["Área de Investigación"], ["Publicaciones"]],
           align: ["center"],
           line: {width: 1, color: '#506784'},
           fill: {color: '#119DFF'},
-          font: {size: 12, color: "white"}
+          font: {size: 18, color: "white"}
         },
         cells: {
           values: values,
           align: ["center"],
+          height: 40,
           line: {color: "#506784", width: 1},
           fill: {color: [/*'#25FEFD',*/ 'white']},
-          font: {size: 11, color: ["#506784"]}
+          font: {size: 16, color: ["#506784"]}
         }
       });
 
@@ -290,15 +292,8 @@ export default {
             family: 'Courier New, monospace',
             size: 12
          },
-        },            
-        xaxis: {
-          fixedrange: true
-        },
-        yaxis: {
-          fixedrange: true
-        },
-        editable: false,
-        autosize: true,
+        },           
+      
         responsive: true,
         margin: {
           l: 200,
@@ -307,8 +302,8 @@ export default {
           t: 100,
           pad: -1
         },
-        //width: 720,
-        //height: 480,
+        width: 1080,
+        height: 720,
       };
 
       var config = {
