@@ -42,35 +42,36 @@
 
     <div class="row">
     
-    <!-- GRAPH -->
-    <!-- <div class="col-md-9 col-xl-9">  -->
+    <!-- <GRAPH> -->
+    <div class="col-md-9 col-xl-9"> 
         
         <!--Title-->
-        <!-- <h1 id="report" class="col-md-12  title-customized"/>     -->
+        <h1 id="report" class="col-md-12  title-customized"/>     
   
-        <!-- <div id="graph">          -->
+        <div id="graph">         
 
           <!--Plotly-->
-          <!-- <div ref="scatter" class="vue-plotly"/>  -->
+          <div ref="bar" class="vue-plotly"/> 
 
           <!--Download buttons--> 
-          <!-- <div id="download-buttons" class="col-md-12 text-center" style="display: none">
+          <div id="download-buttons" class="col-md-12 text-center" style="display: none">
                             
               <button class="button button-pdf" @click="download_pdf"><i class="fa fa-file-pdf fa-lg"></i>   Descargar PDF</button>
               <button class="button button-img" @click="download_img"><i class="fa fa-file-image fa-lg"></i>   Descargar JPG</button>
-          </div> -->
+          </div>
 
           <!--Return button-->
-          <!-- <div class="col-md-12 text-center">
+          <div class="col-md-12 text-center">
             <router-link to="/reports"><button class="button button-back button-margin">Regresar</button></router-link>        
-          </div>   -->
+          </div>  
 
           <!--Saves plot as image-->
-          <!-- <img id="jpg-export" class="hidden"/> -->
-      <!-- </div>div id=graph   -->
-      <!-- <div>Fecha de actualización: {{this.fecha}}</div> -->
+          <img id="jpg-export" class="hidden"/>
+      </div>
+      <!-- <div>Fecha de actualización: {{this.fecha}}</div-->
       
-    <!-- </div> -->
+    </div>
+    
     <!--END OF GRAPH-->
 
     </div>
@@ -151,7 +152,7 @@ import Plotly from "plotly.js";
 import XLSX from "xlsx";
 import { URL_INTEGRATION } from "@/common/constants"
 
-var reportName = "Egresados por Año y por Facultad";
+var reportName = "Nivel de Confianza Empleados";
 var img;
 var info = []; //Saves data for verification
 var date = new Date();
@@ -192,147 +193,165 @@ export default {
         }
     
     },
-    // loadDate() {
-    //   const date =
-    //     URL_INTEGRATION+"/fecha-egresados";
+    /*  loadDate() {
+       const date =
+         URL_INTEGRATION+"/fecha-egresados";
 
-    //   axios
+       axios
 
-    //     .get(date)        
-    //     .then(request => {
-    //       console.log("fecha " + this.fecha);
-    //       this.fecha = request.data.fecha;
-    //     })
-    //     .catch(() => {console.log("fallo fecha");});
-    // },
-
+         .get(date)        
+         .then(request => {
+           console.log("fecha " + this.fecha);
+           this.fecha = request.data.fecha;
+         })
+         .catch(() => {console.log("fallo fecha");});
+     },
+ */
     successful (req) {
         console.log(req.data);
-//         document.getElementById("report").innerHTML = reportName;
-//       img = document.getElementById("jpg-export"); // Gets image
+        document.getElementById("report").innerHTML = reportName;
+      img = document.getElementById("jpg-export"); // Gets image
 
-//       document.getElementById("download-buttons").style.display = "block";
+      document.getElementById("download-buttons").style.display = "block";
 
-//       var datos = []; // Saves data from JSON
-//       var d = req.data;
-//       var size;
-//       var allYears = [];
-//       var years = [];
-//       var total = [];
-//       var i;
+      var datos = []; // Saves data from JSON
+      var d = req.data;
+      var size;
+      var egresados = [];
+      var confianza = [];
+      var total = [];
+      var i;
 
        
 
-//       allYears = d["anos"];
-//       size = allYears.length;
-//       console.log(allYears);
-//       console.log("size ", size);
+      egresados = d["egresados"];
+      size = egresados.length;
+      console.log(egresados);
+      console.log("size ", size);
 
-//       for (i = 0; i < size; i++) {
-//         years.push(allYears[i]["ano"]);
-//         total.push(allYears[i]["total"]);
-//       }
+      for (i = 0; i < size; i++) {
+        confianza.push(egresados[i]["confianza"]);
+        total.push(egresados[i]["cantidad_egresados"]);
+      }
 
-//       console.log(years);
-//       console.log(total);
+      console.log("confianza ", confianza);
+      console.log("total ", total);
 
-//       datos.push({
-//         x: years,
-//         y: total,
-//         type: 'scatter',
-//         mode: 'lines+markers',
-//         marker: { color: "#29f1c3" },        
-//         hoverlabel: { font:{size:18}},
-//       });
+      datos.push({
+        x: confianza,
+        y: total,
+        name: "Nivel de Confianza",
+        type: 'bar',
+         marker: {
+          color: "#fc5c65",
+          width: 1
+        },
+        hoverlabel: { font: { size: 18 } },
+        insidetextfont: {
+          color: "#FFFFFF",
+          size: 16
+        }       
+      });
 
-//       this.data = datos;
+      this.data = datos;
 
-//       // LAYOUT
-//   var auxDate = "Fecha de recuperación de datos: "+this.fecha;
+      // LAYOUT
+ 
 
-//       var layout = {
-//         title: {
-//           text: auxDate,
-//           font: {
-//             family: 'Courier New, monospace',
-//             size: 12
-//          },
-//         },           
-//         editable: false,
-//         //autosize: true,
-//         //responsive: true,
-//         xaxis: {
-//           fixedrange: true
-//         },
-//         yaxis: {
-//           fixedrange: true
-//         },       
-//         //width: 720,
-//         //height: 480,
-//       };
+      var layout = {
+        title: {
+          text: auxDate,
+          font: {
+            family: 'Courier New, monospace',
+            size: 12
+         },
+        },           
+        editable: false,
+        //autosize: true,
+        //responsive: true,
+        xaxis: {
+          fixedrange: true
+        },
+        yaxis: {
+          fixedrange: true
+        },
+         barmode: "stack",
+        editable: false,
+        autosize: true,
+        responsive: true,
+        margin: {
+          l: 250,
+          r: 100,
+          b: 100,
+          t: 100,
+          pad: -1
+        }    
+        //width: 720,
+        //height: 480,
+      };
 
-//       var config = {
-//         displaylogo: false,
-//         displayModeBar: false,
-//         doubleClick: "reset+autosize",
-//         responsive: true
-//       };
+      var config = {
+        displaylogo: false,
+        displayModeBar: false,
+        doubleClick: "reset+autosize",
+        responsive: true
+      };
 
-//       // GRAPH
+      // GRAPH
 
-//       //Exports plot as image
-//       var d3 = Plotly.d3;
-//       var img_jpg = d3.select("#jpg-export");
-//       // Displays graph
-//       Plotly.react(this.$refs.scatter, this.data, layout, config).then(function(
-//         gd
-//       ) {
-//         //Saves plot as image
-//         gd.on("plotly_legendclick", () => false);
+      //Exports plot as image
+      var d3 = Plotly.d3;
+      var img_jpg = d3.select("#jpg-export");
+      // Displays graph
+      Plotly.react(this.$refs.bar, this.data, layout, config).then(function(
+        gd
+      ) {
+        //Saves plot as image
+        gd.on("plotly_legendclick", () => false);
 
-//         Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
-//           img_jpg.attr("src", url);
-//           return Plotly.toImage(gd, {
-//             format: "jpeg",
-//             height: 768,
-//             width: 1024
-//           });
-//         });
-//       }); //plotly_plot
-//     },
+        Plotly.toImage(gd, { height: 768, width: 1024 }).then(function(url) {
+          img_jpg.attr("src", url);
+          return Plotly.toImage(gd, {
+            format: "jpeg",
+            height: 768,
+            width: 1024
+          });
+        });
+      }); //plotly_plot
+    },
 
-//      download_pdf() {      
-//       var doc = new jsPDF("l", "mm", "a4");
-//       doc.setFont("helvetica");
-//       doc.setFontType("bold");
-//       doc.setFontSize(20);
-//       doc.text(reportName, 15, 15);
-//       doc.addImage(img, "JPG", 20, 20);
+     download_pdf() {      
+      var doc = new jsPDF("l", "mm", "a4");
+      doc.setFont("helvetica");
+      doc.setFontType("bold");
+      doc.setFontSize(20);
+      doc.text(reportName, 15, 15);
+      doc.addImage(img, "JPG", 20, 20);
 
-//       doc.setFont("helvetica");
-//       doc.setFontType("normal");
-//       doc.setFontSize(16);
-//       doc.text("Fecha actualización: "+this.fecha, 170, 15);
+     /*  doc.setFont("helvetica");
+      doc.setFontType("normal");
+      doc.setFontSize(16);
+      doc.text("Fecha actualización: "+this.fecha, 170, 15);
+ */
 
+      doc.setProperties({
+        title: reportName,
+        subject: "Reporte",
+        author: "UC Ranking",
+        date: date
+      });
 
-//       doc.setProperties({
-//         title: reportName,
-//         subject: "Reporte",
-//         author: "UC Ranking",
-//         date: date
-//       });
-
-//       doc.save(reportName + ".pdf");
+      doc.save(reportName + ".pdf");
     }, //end_of_download()
 
-    // download_img() {
-    //   var a = document.createElement("a");
-    //   a.href = img.src;
-    //   a.download = reportName + ".jpg";
-    //   document.body.appendChild(a);
-    //   a.click();
-    //   document.body.removeChild(a);
-    // }, //end_of_download()
+    download_img() {
+      var a = document.createElement("a");
+      a.href = img.src;
+      a.download = reportName + ".jpg";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, //end_of_download()
 
     failed () {
         this.error = 'Fallo buscando egresados!';
@@ -351,7 +370,7 @@ export default {
   },
   created() {
       this.getTrust();
-    //   this.loadDate();
+      //this.loadDate();
   },
 }
 </script>
