@@ -60,6 +60,7 @@ import TeachersWithAPhDPerFaculty from '@/components/reports/teachers/TeachersWi
 import GraduatesPerFaculty from '@/components/reports/graduates/GraduatesPerFaculty'
 import GraduatesPerYear from '@/components/reports/graduates/GraduatesPerYear'
 import GraduatesYearFaculty from '@/components/reports/graduates/GraduatesYearFaculty'
+import GraduatesTrust from '@/components/reports/graduates/GraduatesTrust'
 
 import SystemParameterList from '@/components/config/integration/SystemParameterList'
 import SystemParameterEdit from '@/components/config/integration/SystemParameterEdit'
@@ -587,6 +588,22 @@ export const router = new Router({
                   path: '/report/GraduatesYearFaculty',
                   name: 'GraduatesYearFaculty',
                   component: GraduatesYearFaculty,
+                  beforeEnter (to, from, next) {
+                    console.log("AQYUIIIIIII: " + store.state.user);
+                    //store.state.user = JSON.parse(store.state.user);
+                    if (store.state.user.name != "verificador" && store.state.user.name != "vicerrector" && store.state.user.name != "administrador") {
+                      console.log("No entro");
+                      next('/home')
+                    } else {
+                      console.log("vamos a integracion");
+                      next()
+                    }
+                  }
+                },
+                {
+                  path: '/report/GraduatesTrust',
+                  name: 'GraduatesTrust',
+                  component: GraduatesTrust,
                   beforeEnter (to, from, next) {
                     console.log("AQYUIIIIIII: " + store.state.user);
                     //store.state.user = JSON.parse(store.state.user);
