@@ -137,6 +137,7 @@ $(document).ready(function(){
 import axios from 'axios';
 import { mapState, mapGetters } from "vuex";
 import Spinner from '@/components/Spinner'
+import { URL_TEACHERS } from '@/common/constants'
   export default {
     /*
       Defines the data used by the component
@@ -165,7 +166,7 @@ import Spinner from '@/components/Spinner'
           var Fcjpfecha=$(fechaFcjp).val()
           var Ingieneriafecha=$(fechaIngieneria).val()
           let formData = new FormData();
-         const path = 'http://localhost:8083/fechas/' +Facesfecha+ '/' +Facytfecha+ '/' +Facefecha+'/'+Odontologiafecha+'/'+Fcjpfecha+'/'+Ingieneriafecha +'/'+Derechofecha;
+         const path = URL_TEACHERS + '/fechas/' +Facesfecha+ '/' +Facytfecha+ '/' +Facefecha+'/'+Odontologiafecha+'/'+Fcjpfecha+'/'+Ingieneriafecha +'/'+Derechofecha;
       
            axios.post(path,
                 formData,
@@ -207,7 +208,7 @@ import Spinner from '@/components/Spinner'
         /*
           Make the request to the POST /single-file URL
         */
-            const path = 'http://localhost:8083/upload/'+ this.user.username;
+            const path = URL_TEACHERS + '/upload/'+ this.user.username;
             this.loading=true;
           
 

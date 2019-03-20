@@ -60,11 +60,11 @@ export default {
           name: "Egresados por Año y Facultad",
           path: "/report/GraduatesYearFaculty"
         },
-        {
-          id: 3,
-          name: "Egresados según nivel de confianza",
-          path: "/report/GraduatesTrust"
-        }              
+        // {
+        //   id: 3,
+        //   name: "Egresados según nivel de confianza",
+        //   path: "/report/GraduatesTrust"
+        // }              
       ],
        linksrank: [
 

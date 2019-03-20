@@ -334,7 +334,7 @@ export default {
         this.error = 'Fallo estudiantes por año!'
     },
     getYears() {
-        const path = 'http://localhost:5000/api/v1/year';
+        const path = URL_INTEGRATION + '/year';
         axios.get(path)
         .then(request => this.yearSuccess(request))
         .catch(() => this.yearFailed())

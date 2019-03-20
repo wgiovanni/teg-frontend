@@ -324,6 +324,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import jsPDF from "jsPDF";
 import {mapState,mapGetters} from "vuex"
+import { URL_STUDENTS } from '@/common/constants'
 
 
 export default{
@@ -378,7 +379,7 @@ guardarfechas: function(){
          var fcs_postgrado=   document.getElementById("fcs2").value;
          var odontologia_postgrado=   document.getElementById("odontologia2").value;  
 
-         var path = 'http://localhost:8082/insertarfecha/' +facyt_pregrado+ '/'+faces_pregrado + '/'+face_pregrado+  '/'+ fcjp_pregrado+ '/'+ ingenieria_pregrado+ '/'+ fcs_pregrado+ '/'+ odontologia_pregrado+ '/' +facyt_postgrado+ '/'+faces_postgrado + '/'+face_postgrado+  '/'+ fcjp_postgrado+ '/'+ ingenieria_postgrado+ '/'+ fcs_postgrado+ '/'+ odontologia_postgrado ;
+         var path = URL_STUDENTS + '/insertarfecha/' +facyt_pregrado+ '/'+faces_pregrado + '/'+face_pregrado+  '/'+ fcjp_pregrado+ '/'+ ingenieria_pregrado+ '/'+ fcs_pregrado+ '/'+ odontologia_pregrado+ '/' +facyt_postgrado+ '/'+faces_postgrado + '/'+face_postgrado+  '/'+ fcjp_postgrado+ '/'+ ingenieria_postgrado+ '/'+ fcs_postgrado+ '/'+ odontologia_postgrado ;
             
             axios.post(path,
                 formData,
@@ -417,11 +418,11 @@ mymethod(){
   var path2 = ''
   if(this.pre_post==0){
               
-    path2 = 'http://localhost:8082/fecha_tope/11/'+ this.user.username;
+    path2 = URL_STUDENTS + '/fecha_tope/11/'+ this.user.username;
                     
   }else{
               
-    path2 = 'http://localhost:8082/fecha_tope/21/'+ this.user.username;   
+    path2 = URL_STUDENTS + '/fecha_tope/21/'+ this.user.username;   
   }
 
     axios.post(path2,
@@ -468,12 +469,12 @@ submitFile(pre_post){
             // console.log(this.user.username);
             if(pre_post.pre_post==0){
               
-                        path = 'http://localhost:8082/upload/11/'+ this.user.username;
+                        path = URL_STUDENTS + '/upload/11/'+ this.user.username;
                           // path = 'http://localhost:8082/api/v1/estudiantes';
                     
             }else{
               
-                     path = 'http://localhost:8082/upload/21/'+ this.user.username;   
+                     path = URL_STUDENTS +'/upload/21/'+ this.user.username;   
             }
             axios.post(path,
                 formData,
@@ -576,7 +577,7 @@ cargar_fecha: function(){
          console.log("entrooo carga fecha");
             let formData = new FormData();
 
-        var path = 'http://localhost:8082/fechasvicerrector';
+        var path = URL_STUDENTS + '/fechasvicerrector';
             
             axios.post(path,
                 formData,

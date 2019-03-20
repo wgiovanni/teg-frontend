@@ -376,7 +376,7 @@ import { URL_TEACHERS } from "@/common/constants"
         //  $("#UltimaFecha").css("display", "block");
           
           let formData = new FormData();
-           const path = URL_TEACHERS+ '/fechatope' ;
+           const path = URL_TEACHERS + '/fechatope' ;
         
              axios.get(path
               ).then(function(res){

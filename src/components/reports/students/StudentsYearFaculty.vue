@@ -337,7 +337,7 @@ export default {
       this.error = "Fallo estudiantes por facultad y por año!";
     },
     getYears() {
-      const path = "http://localhost:5000/api/v1/year";
+      const path = URL_INTEGRATION + "/year";
       this.error = "";
       axios
         .get(path)
@@ -352,7 +352,7 @@ export default {
       this.error = "Fallo busqueda en Años!";
     },
     getFaculty() {
-      const path = "http://localhost:5000/api/v1/faculty";
+      const path = URL_INTEGRATION + "/faculty";
       this.error = "";
       axios
         .get(path)

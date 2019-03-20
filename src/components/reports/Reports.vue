@@ -97,6 +97,7 @@ import JQuery from "jquery";
 import jsPDF from "jsPDF";
 import Plotly from "plotly.js";
 import XLSX from "xlsx";
+import { URL_INTEGRATION } from '@/common/constants'
 
 var reportName = "Reporte Prueba";
 var img;
@@ -118,7 +119,7 @@ export default {
   },
   methods: {
     getStudent: function() {
-      const path = "http://localhost:5000/api/v1/estudiantes-ano-facultad";
+      const path = URL_INTEGRATION + "/estudiantes-ano-facultad";
       console.log(this.desde);
       console.log(this.hasta);
       console.log(this.facultad);
@@ -228,7 +229,7 @@ export default {
       this.error = "Fallo estudiantes por facultad y por año!";
     },
     getYears() {
-      const path = "http://localhost:5000/api/v1/year";
+      const path = URL_INTEGRATION + "/year";
       this.error = "";
       axios
         .get(path)
@@ -243,7 +244,7 @@ export default {
       this.error = "Fallo busqueda en Años!";
     },
     getFaculty() {
-      const path = "http://localhost:5000/api/v1/faculty";
+      const path = URL_INTEGRATION + "/faculty";
       this.error = "";
       axios
         .get(path)
